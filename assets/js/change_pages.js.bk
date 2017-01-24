@@ -1,0 +1,16 @@
+$( document ).ready(function() {
+	$("a#submenu").click(function(){
+		var pages = $(this).attr('href');		
+		
+		var data = pages.substr(1);
+		var titulo = $(this).text();
+		//var titulo = $("#titulo_sub").val();
+		
+
+		$(".titulo_submenu").html("<span>"+titulo+"</span>");
+
+		$(".pages").load("http://45.33.3.227/lapizzeria/index.php/"+data);		
+
+	});
+})
+	

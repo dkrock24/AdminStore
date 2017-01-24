@@ -1,0 +1,118 @@
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="">
+<style>
+
+	#bg_url,#bg_url_container,#bg_option,#bg_url_container{
+		opacity:0;
+		visibility:hidden;
+	}
+	#bg_url:hover,#bg_url_container:hover,#bg_option:hover,#bg_url_container:hover{
+		opacity:0;
+		visibility:hidden;
+	}
+</style>
+
+
+<body>
+	<div id="bodytable" style="height:100%;width:100%">
+			<div id="bodypadding"></div>
+			<div id="stripH"></div>
+		<div id="middletable" style="width:100%">
+		<div style="width:100%;position:relative">
+			<div id="allcontent"><div>
+		<div id="inputs">
+			<div class="tr">
+				<div class="timerInput">
+					<form id="timerForm">
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" size="1" value="" placeholder="h">
+						<span class="inputSep"></span>
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" size="1" value="" placeholder="m">
+						<span class="inputSep s"></span>
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" size="1" value="" placeholder="s" class="s"><br><br>
+						<button form="timerForm" id="timerButton" tabindex="-1" type="submit"></button>
+					</form>
+				</div>
+				<div class="timerInput">
+					<form id="alarmForm">
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" max="23" maxlength="2" placeholder="h">
+						<span class="inputSep"></span>
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" max="59" maxlength="2" placeholder="m">
+						<span class="inputSep s"></span>
+						<input type="tel" autocomplete="off" spellcheck="false" min="0" max="59" maxlength="2" placeholder="s" class="s" value=""><br><br>
+						<button form="alarmForm" id="alarmButton" tabindex="-1" type="submit"></button>
+					</form>
+				</div>
+				<div class="timerInput">
+					<form id="stopwForm">
+						<input type="tel" maxlength="2" style="display: block;position:relative;z-index: -10;visibility:hidden"><br>
+						<button form="stopwForm" id="stopwButton" type="submit"></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div>
+	<div id="vertical" style="position:relative">
+		<div id="stripV"></div>
+			<div id="head" style="width:100%;height:100%">
+				<div>
+					<div>
+						<div id="counter"></div>
+						<div>
+							<div id="alarmTime"></div>
+							<button type="button" tabindex="-1" id="pause"></button>
+						</div>
+					</div>
+				</div>
+			<div id="yt">
+				
+			</div>
+
+	<div id="filler" style="height:100%;width:100%"></div>
+	<div id="verticalBottom" style="font-size: 14px;vertical-align: bottom;overflow:hidden">
+		<div id="settingsWrapper" style="text-align: left;margin-bottom: 2px">
+			<div style="background: #f5f5f5">
+				<div id="me"></div>
+				
+				<div><span id="install" style="display: none"></span></div>
+				<div><label id="hNoti"></label></div>
+
+				<table id="bg_option" style="width:100%;white-space:nowrap">
+					<tr>						
+						<td id="bg_url_container" style="width:100%"></td>
+					</tr>
+				</table>				
+			</div>
+		</div>
+
+		<a id="promo" rel="nofollow" tabindex="-1" target="_blank" style="display:none;color:inherit;text-align:center">
+			<div style="background: #ccc;opacity:.7;padding:7px;padding-bottom: 10px">
+				<div></div>
+				<div></div>
+			</div>
+		</a>
+	</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+if(window.navigator.product=="Gecko")document.documentElement.removeAttribute("manifest")
+</script>
+
+<!--
+<script src="js/all.min.js"></script>
+-->
+

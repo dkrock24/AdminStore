@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+	
+		function newAlertOpen(msg, withClose, autoCloseSeconds)
+		{
+		    var $msgDiv;
+
+		    if ($("#msgNewAlert").length > 0)
+		    {
+		        $msgDiv = $("#msgNewAlert");
+		    }
+		    else
+		    {
+		        $msgDiv = $('<div id="msgNewAlert" class="msgNewAlertStyle"></div>');
+		        $("body").append($msgDiv);
+		    }
+
+		    var closeButton = "";
+		    if (withClose)
+		        closeButton = "&nbsp;&nbsp;<a class=\"msgNewAlertCloseButton\" href=\"javascript:void(0);\" onclick=\"newAlertClose();\"></a>";
+		    if (autoCloseSeconds > 0)
+		        setTimeout(function () { newAlertClose() }, autoCloseSeconds * 1000);
+
+		    $msgDiv.html("<div>" + msg + closeButton + "</div>");
+		    $msgDiv.fadeIn();
+		}
+
+		function newAlertClose()
+		{
+		    if ($("#msgNewAlert").length > 0)
+		        $("#msgNewAlert").fadeOut();
+		}
+
+	//newAlertOpen("Tiempo Finalizado", true, 60);      
+	</script>
+
+<style type="text/css">
+	.msgNewAlertStyle {
+	    position: fixed;
+	    top: 20px;
+	    left: 50%;
+	    z-index: 5000;    
+	    display: none;
+	    width:50%;
+	    height:50%;
+	}	
+
+.msgNewAlertStyle div {
+	    position: relative; 
+	    width: 100%;
+	    height:100%;
+	    left: -50%;
+	    background-color: #f9edbe;
+	    border: 2px solid #f0c36d;
+	    color: #000000;
+	    font-weight: bold;
+	    font-size: 20px;
+	    padding: 6px;
+	    -moz-border-radius: 2px 2px 2px 2px;
+	    -webkit-border-radius: 2px 2px 2px 2px;
+	    border-radius: 2px 2px 2px 2px;
+	}
+
+.msgNewAlertCloseButton 
+{
+    display: inline-block;
+    width:10px;
+    height:10px;
+    background-image: url(http://i48.tinypic.com/1zovm6h.png);
+}
+.msgNewAlertCloseButton:hover
+{
+    background-image: url(http://i45.tinypic.com/34oat0m.png);
+}
+
+#tlife{
+	text-align: center;
+}
+
+
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+	    $(function ()
+	    {
+	         //newAlertOpen("<h5 style:'center'>Tiempo <br>Finalizado.</h5>", true, 0);              
+	    });
+	</script>
+	<div id="tlife">
+	
+		<img src="2.png" width="50%" id="clock">
+		<audio autoplay>
+			<source src="AntiqueClockAlarm.mp3" type="audio/mp3">
+			
+		  	Your browser does not support the audio tag.
+		  	<script>
+			alert("Alarm.......");
+			</script>
+		</audio>
+		
+		
+		
+	</div>
+	
+</body>
+</html>
+

@@ -1,0 +1,239 @@
+.modzzz_polls_view_unit{
+  margin:0 10px 0 10px; 
+}
+
+.voteblock{
+  margin:5px 0 5px 5px; 
+}
+
+.poll_unit_info{
+	vertical-align:middle;
+}
+ 
+.answer_row{
+	vertical-align:middle;
+	padding-top:5px;
+}
+
+.resultAnswer{
+  clear: both;
+  margin-bottom:5px; 
+}
+ 
+.resultPercent{
+  float: left;
+ /*  width: 22%; */
+  text-align: right;
+}
+.resultBarContainer{
+  width: 75%;
+  float: left;
+  padding: 0px 0 0 0px;
+  margin-left:5px; 
+  border:1px solid #CCCCCC;   
+
+}
+.resultBar{
+  display: block;
+  height: 8px;
+}
+.answerText{
+  float: left;
+  margin-left:5px;
+}
+.resultResults{
+  height: 25px;
+  line-height: 20px;
+}
+
+
+
+div.voter_wrapper {
+	/*margin:10px;*/
+	position:relative;
+	white-space:normal;
+	padding-bottom:10px;
+}
+ 
+div.voter_wrapper div.thumb_wrapper{
+	position:absolute;
+	left:0;
+	top:0;
+}
+ 
+div.voter_wrapper div.event_info{
+	padding-left:50px;
+}
+
+.voter_unit {
+	padding: 0px;
+	margin: 10px;
+	min-height: 45px;
+	position: relative; 
+}
+
+table.modzzz_polls_fields {
+    border-collapse:collapse;
+    margin:10px;
+    padding:0;
+}
+
+td.modzzz_polls_field_name {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    color:#999;
+    font-size:11px;
+}
+
+td.modzzz_polls_field_value {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    font-size:11px;
+}
+
+.modzzz_polls_description {
+    padding:10px;
+    font-size:11px;
+}
+
+.modzzz_polls_profile_unit {
+    width:70px;    
+    margin:0px 5px 4px 5px;
+    overflow:hidden;
+    float:left;
+}
+
+/* Poll result block */
+  
+.color0{
+  color: #999;
+} 
+.color1{
+  color: #5e9215;
+}
+.color2{
+  color: #0d8cdc;
+}
+.color3{
+  color: #d87412;
+}
+.color4{
+  color: #c50000;
+}
+.color5{
+  color: #923aff;
+}
+.color6{
+  color: #007d55;
+}
+.color7{
+  color: #a49601;
+}
+.color8{
+  color: #2fbf15;
+}
+.color9{
+  color: #cb00d8;
+}
+.color10{
+  color: #119a9c;
+}
+.color11{
+  color: #697200;
+}
+.color12{
+  color: #cd5005;
+}
+.color13{
+  color: #f956ff;
+}
+.color14{
+  color: #9c7849;
+}
+.color15{
+  color: #5d5dfd;
+}
+.color16{
+  color: #2280ff;
+}
+.color17 {
+	color: #ff0000;
+}
+.color18 {
+	color: #00ff00;
+}
+.color19 {
+	color: #0000ff;
+}
+.color20 {
+	color: #ffff00;
+}
+.color21 {
+	color: #00ffff;
+}
+.color22 {
+	color: #ff00ff;
+}
+
+.bgcolor0{
+  background-color: #999;
+}
+.bgcolor1{
+  background-color: #5e9215;
+}
+.bgcolor2{
+  background-color: #0d8cdc;
+}
+.bgcolor3{
+  background-color: #d87412;
+}
+.bgcolor4{
+  background-color: #c50000;
+}
+.bgcolor5{
+  background-color: #923aff;
+}
+.bgcolor6{
+  background-color: #007d55;
+}
+.bgcolor7{
+  background-color: #a49601;
+}
+.bgcolor8{
+  background-color: #2fbf15;
+}
+.bgcolor9{
+  background-color: #cb00d8;
+}
+.bgcolor10{
+  background-color: #119a9c;
+}
+.bgcolor11{
+  background-color: #697200;
+}
+.bgcolor12{
+  background-color: #cd5005;
+}
+.bgcolor13{
+  background-color: #f956ff;
+}
+.bgcolor17 {
+	background-color: #ff0000;
+} 
+.bgcolor18 {
+	background-color: #00ff00;
+} 
+.bgcolor19 {
+	background-color: #0000ff;
+} 
+.bgcolor20 {
+	background-color: #ffff00;
+} 
+.bgcolor21 {
+	background-color: #00ffff;
+} 
+.bgcolor22 {
+	background-color: #ff00ff;
+}
