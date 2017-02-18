@@ -113,6 +113,10 @@
 				  		<td> <input type="text" class="form-control" name="zona" value=""></td>
 				  	</a>
 				  	<a  class="list-group-item">
+				  		<td>Cantidad de Mesas :</td>
+				  		<td> <input type="number" class="form-control" name="mesas" value=""></td>
+				  	</a>
+				  	<a  class="list-group-item">
 				  		<td>Estado :</td>
 				  		<td> 
 				  		<select name="estado" class="form-control">

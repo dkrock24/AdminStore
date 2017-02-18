@@ -6,7 +6,7 @@
             $(".pages").load(ruta);
         });
 
-        $("a#usuarios").click(function(){        
+        $("a#sucursales").click(function(){        
             var ruta = $(this).attr('name');           
             $(".pages").load(ruta);
             $(".A").removeClass("active");
@@ -87,11 +87,13 @@
 #btn-emilinar:hover{
     color: black;   
 }
+#sucursales{
+	cursor: pointer;
+}
 </style>
 
 <ul class="nav nav-tabs">
-    <li id="menu_li" class="A active"><a href="#tab1_1" id="usuarios" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-home'></i>Lista</a></li>
-    <li id="menu_li" class="B "><a href="#tab1_2" id="usuarios" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-user'></i>Usuario</a></li>  
+    <li id="menu_li" class="A active"><a href="#tab1_1" id="sucursales" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-arrow-left'></i>Regresar</a></li>   
 </ul>
 <br>
 <div class="container">
@@ -150,6 +152,10 @@
 				  	<a  class="list-group-item">
 				  		<td>Zona Referencia :</td>
 				  		<td> <input type="text" class="form-control" name="zona" value="<?php echo $sucursales[0]->referencia_zona; ?>"></td>
+				  	</a>
+				  	<a  class="list-group-item">
+				  		<td>Cantidad de Mesas :</td>
+				  		<td> <input type="number" class="form-control" name="mesas" value="<?php echo $sucursales[0]->numero_mesas; ?>"></td>
 				  	</a>
 				  	<a  class="list-group-item">
 				  		<td>Estado :</td>

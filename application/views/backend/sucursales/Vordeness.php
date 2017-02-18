@@ -1,6 +1,4 @@
-<?php
-	
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +6,10 @@
 	
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="../../../../../assets/js/jquery.qtip.js"></script>
+	<script src="../../../../../assets/js/pedidos.js"></script>
+	<link rel="stylesheet" href="../../../../../assets/css/jquery.qtip.css" />
+	<link rel="stylesheet" href="../../../../../assets/css/estilos_pedidos.css" />
 	<style type="text/css">
 
 		#cabecera {
@@ -137,7 +139,7 @@
   				<div class="search">
   					<div class="input-group">
 					  	<span class="input-group-addon"><i class="fa fa-search fa-2x pull-left searchicon"></i></span>
-					  	<input type="search" class="form-control" id="search" placeholder="Buscar ....">
+					  	<input type="search" class="form-control key enfocar" id="search" key="88" placeholder="Buscar ....">
 					</div>
 				
 				</div>		
@@ -155,9 +157,15 @@
             	<div class="items-collection">
 				<?php
 					$contador=0;
+					if($productos !="")
+					{
 		            foreach ($productos as $value) {
 		                ?>
-		                <div class="items">
+		                <div class="items agregar_producto" 
+		                	tabindex="<?php echo $contador; ?>"
+		                	producto="<?php echo $value->id_producto; ?>" 
+		                	nombre="<?php 	echo $value->nombre_producto; ?>"
+		                	precio="<?php 	echo $value->precio; ?>">
 		                    <div class="itemcontent">		                                    
 		                    	<div class="row elemento">
 		                    		<div class="col-md-6">
@@ -175,12 +183,13 @@
 		                <?php
 		                $contador++;
 		            }
+		        	}
 				?>
 				</div>
   			</div>
   			<div class="col-sm-5 col-md-5 col-lg-5"> 
-  				<div class="enproceso">
-  					Demo
+  				<div id="info_principal">
+  					
   				</div>
   			</div>	
   		</div>
@@ -195,50 +204,6 @@ $(function () {
         $('.items-collection .items').filter(function () {
             return $(this).text().match(new RegExp(pattern, 'i'));
         }).show();
-    });
-});
-
-$(window).load(function(){
-    $("#search").focus();
-});
-
-$(function(){  
-    rsv_solicitar('producto_ingredientes_y_adicionales',{}, function(datos){
-        for (x in datos.aux.adicionables)
-        {
-            _adicionales[datos.aux.adicionables[x].ID_adicional] = datos.aux.adicionables[x];
-        }
-    }, true);
-
-
-    $('#buscar_producto').qtip({
-        content: {
-            text: 'Presione [ENTER] o flecha [ABAJO] para pasar a los resultados.'
-        }
-    });
-
-    $(document).on('focus mouseover', '.agregar_producto', function(event) {
-        $(this).qtip({
-            overwrite: true,
-            content: '[ENTER] para agregar el producto.<br />[ESPACIO] para personalizar<br />[1] a [9] para agregar x cantidad de veces',
-            show: {
-                solo: true,
-                event: event.type,
-                ready: true 
-            }
-        }, event);
-    });
-    
-    $(document).on('mouseover', '#busqueda_adicionales', function(event) {
-        $(this).qtip({
-            overwrite: true,
-            content: 'Presione [ENTER] o flecha [ABAJO] para pasar a los resultados.',
-            show: {
-                solo: true,
-                event: event.type,
-                ready: true 
-            }
-        }, event);
     });
 });
 </script>

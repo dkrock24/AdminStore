@@ -206,8 +206,8 @@
 <ul class="nav nav-tabs">
     <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-home'></i>Lista</a></li>
     <li id="menu_li" class="B "><a href="#tab1_2" id="usuarios" name="../admin/Csucursales/acceso" data-toggle="tab"><i class='fa fa-user'></i>Usuarios</a></li>  
-    <li id="menu_li" class="C "><a href="#tab1_3" id="nodos" name="../admin/Csucursales/nodos" data-toggle="tab"><i class='fa fa-user'></i>Nodos Sucursal</a></li>  
-    <li id="menu_li" class="D "><a href="#tab1_4" id="getNodos" name="../admin/Csucursales/getNodos" data-toggle="tab"><i class='fa fa-user'></i>Lista Nodos</a></li> 
+    <li id="menu_li" class="C "><a href="#tab1_3" id="nodos" name="../admin/Csucursales/nodos" data-toggle="tab"><i class='fa fa-desktop'></i>Nodos Sucursal</a></li>  
+    <li id="menu_li" class="D "><a href="#tab1_4" id="getNodos" name="../admin/Csucursales/getNodos" data-toggle="tab"><i class='fa fa-th-list'></i>Lista Nodos</a></li> 
 </ul>
 <form action="../usuarios/Cusuarios/guardar_usuario" id="usuario" method="POST">
     <div class="tab-content">

@@ -1,7 +1,7 @@
 <script>
   $(document).ready(function(){
       // CONVERTIR FECHAS A TEXTO
-        $("a#sucursal").click(function(){        
+        $("a#sucursales").click(function(){        
             var ruta = $(this).attr('name');           
             $(".pages").load(ruta);
         });
@@ -110,10 +110,13 @@
 #btn-emilinar:hover{
     color: black;   
 }
+#sucursales{
+    cursor: pointer;
+}
 </style>
 
 <ul class="nav nav-tabs">
-    <li id="menu_li" class="A active"><a id="" name="../admin/Csucursales/index"><i class='fa fa-arrow-left'></i>Regresar</a></li>
+    <li id="menu_li" class="A active"><a id="sucursales" name="../admin/Csucursales/index"><i class='fa fa-arrow-left'></i>Regresar</a></li>
 </ul>
 <br>
 <div class="container">

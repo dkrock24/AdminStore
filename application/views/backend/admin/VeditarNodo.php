@@ -87,11 +87,13 @@
 #btn-emilinar:hover{
     color: black;   
 }
+#usuarios{
+    cursor: pointer;
+}
 </style>
 
 <ul class="nav nav-tabs">
-    <li id="menu_li" class="A active"><a href="#tab1_1" id="usuarios" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-home'></i>Lista</a></li>
-    <li id="menu_li" class="B "><a href="#tab1_2" id="usuarios" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-user'></i>Usuario</a></li>  
+    <li id="menu_li" class="A active"><a href="#tab1_1" id="usuarios" name="../admin/Csucursales/index" data-toggle="tab"><i class='fa fa-arrow-left'></i>Regresar</a></li>
 </ul>
 <br>
 <div class="container">
