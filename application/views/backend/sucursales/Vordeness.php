@@ -81,12 +81,14 @@
 			background: #007ba7;
 		}
 		.items{
-			width: 45%;
+			width: 25%;
+			height: 50px;
 			margin-left: 15px;
 			display: inline-block;
 			background: #007ba7;
 			color: white;
 			padding: 5px;
+			margin-bottom: 5px;
 			border-radius: 5px;
 		}
 		.items:hover{
@@ -110,6 +112,12 @@
 		}
 		.searchicon{
 			display: inline-block;
+		}
+		.itemcontent{
+			position: relative;
+		}
+		.producto{
+			overflow: hidden;
 		}
 	</style>
 </head>
@@ -135,7 +143,7 @@
   		</div>
 
   		<div class="row" id="contenido">
-  			<div class="col-sm-7 col-md-7 col-lg-7"> 
+  			<div class="col-sm-6 col-md-6"> 
   				<div class="search">
   					<div class="input-group">
 					  	<span class="input-group-addon"><i class="fa fa-search fa-2x pull-left searchicon"></i></span>
@@ -144,15 +152,15 @@
 				
 				</div>		
   			</div>
-  			<div class="col-sm-5 col-md-5 col-lg-5"> 
+  			<div class="col-sm-4 col-md-5"> 
   				<div class="orden">
-					<h3>ORDENES EN PROCESO</h3>
+					<h3>CREANDO ORDEN</h3>
 				</div>		
   			</div>	
   		</div>
 
   		<div class="row">
-  			<div class="col-sm-7 col-md-7 col-lg-7"> 
+  			<div class="col-sm-11 col-md-12"> 
 
             	<div class="items-collection">
 				<?php
@@ -168,10 +176,10 @@
 		                	precio="<?php 	echo $value->precio; ?>">
 		                    <div class="itemcontent">		                                    
 		                    	<div class="row elemento">
-		                    		<div class="col-md-6">
-		                    			<h4><?php   echo $value->nombre_producto; ?></h4>
-		                    		</div>
-		                    		<div class="col-md-6">
+		                    		<div class="col-md-12">
+		                    			<span class="producto">
+		                    				<?php   echo $value->nombre_producto; ?>
+		                    			</span>
 		                    			<span class="monto">
 		                    				<h4><b><?php echo $value->moneda; ?> <?php echo $value->precio; ?></b></h4>	
 		                    			</span>		                    			
@@ -187,7 +195,7 @@
 				?>
 				</div>
   			</div>
-  			<div class="col-sm-5 col-md-5 col-lg-5"> 
+  			<div class="col-md-2"> 
   				<div id="info_principal">
   					
   				</div>
