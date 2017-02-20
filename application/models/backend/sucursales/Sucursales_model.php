@@ -14,6 +14,7 @@ class sucursales_model extends CI_Model
     const sys_sucursal_nodo = 'sys_sucursal_nodo';
     const sys_productos = 'sys_productos';
     const sys_productos_sucursal = 'sys_productos_sucursal';
+    const categorias = 'sys_categoria_producto';
     
     
 
@@ -115,6 +116,17 @@ class sucursales_model extends CI_Model
         $this->db->where(self::usuarios.'.password',$id_nodo);
         $query = $this->db->get();
         //echo $this->db->queries[0];
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
+    public function getCategorias(){
+        $this->db->select('*');
+        $this->db->from(self::categorias);        
+        $query = $this->db->get();
         
         if($query->num_rows() > 0 )
         {

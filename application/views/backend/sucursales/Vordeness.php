@@ -119,6 +119,9 @@
 		.producto{
 			overflow: hidden;
 		}
+		.key{
+			color: black;
+		}
 	</style>
 </head>
 <body>
@@ -131,7 +134,13 @@
 	  				<table>
 	  					<tr>
 	  						<td><strong>SUCURSAL :</strong></td>
-	  						<td><?php echo $sucursales[0]->nombre_sucursal; ?></td>
+	  						<td><?php echo $sucursales[0]->nombre_sucursal; ?></td>  						
+	  						<td>
+	  							[ <input type="checkbox" id="modo_tactil" value="1" /> <label style="font-size:10pt" for="modo_tactil">táctil</label> ]&nbsp; 
+            					<button class="key" key="66" id="borrar_orden"><b>B</b>orrar</button>&nbsp;
+            					<button class="key" key="82" id="ver_resumen"><b>R</b>esumen</button>
+            					<button class="key" key="69" id="enviar_orden_a_cocina"><b>E</b>nviar</button>
+	  						</td>
 	  					</tr>
 	  					<tr>
 	  						<td>CAJERO : </td>
@@ -200,6 +209,16 @@
   					
   				</div>
   			</div>	
+  		</div>
+
+  		<div class="row" id="menu_productos">		
+			    <?php
+			    foreach ($categorias as $categoria) {
+			    	?>
+			    	<a class="mp" href="#"><?php echo $categoria->nombre_categoria_producto; ?></a>
+			    	<?php
+			    }
+			    ?>
   		</div>
 
 	</div>
