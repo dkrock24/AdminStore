@@ -61,6 +61,7 @@ class sucursales_model extends CI_Model
             'celular'           => $sucursal['celular'],
             'referencia_zona'   => $sucursal['zona'],
             'estado'            => $sucursal['estado'],
+            'centro_produccion' => $sucursal['CProduccion'],
             'creado_usuario'    => $_SESSION['idUser']
         );
         $this->db->insert(self::sys_sucursal,$data);

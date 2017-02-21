@@ -32,7 +32,20 @@
             });
         });
 
+        $("#CProduccion").click( function()
+ 	 	{
+ 	 		if( $(this).is(':checked') ) 
+      		{
+      			$(this).val("1");
+      		}
+      		else
+      		{
+      			$(this).val("0");
+      		}
+ 	 	});
+
         $("#guardar").click(function(){
+        	//alert($('#crearSucursal').serialize());
         	$.ajax({
             url: "../admin/Csucursales/saveSucursal/",  
             type: "post",
@@ -119,6 +132,12 @@
 				  			<option value="1">Activo</option>
 				  			<option value="0">Inactivo</option>
 				  		</select>
+				  		</td>
+				  	</a>
+				  	<a  class="list-group-item">
+				  		<td>Centro de produccion :</td>
+				  		<td> 
+				  		<input type="checkbox" name="CProduccion" id="CProduccion" value="0">
 				  		</td>
 				  	</a>
 				  	<a class="list-group-item active save" id="guardar" alt="Guarda">
