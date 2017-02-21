@@ -31,5 +31,15 @@ class Csobras extends CI_Controller {
 		$this->load->view('backend/sobras/VviewSobras.php',$data);
 
 	}
+	
+	public function approved_sobras()
+	{
+		 $this->sobras_model->approved_sobras($_POST);
+	}
+
+	public function disapproved_sobras()
+	{
+		 $this->sobras_model->disapproved_sobras($_POST);
+	}
 
 }

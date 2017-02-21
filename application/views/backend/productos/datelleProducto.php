@@ -38,14 +38,53 @@
   });
 
  //---------------------  Add checkec ingredientes completos----------
-  $("#ingredientteCompleto").click( function(){
+  $("#ingredientteCompleto").click( function()
+  {
+      var productoID = $(".agregarIngrediente").find(".detalleID").val();
+      //alert(productoID);    
       if( $(this).is(':checked') ) 
       {
-        alert("Ingredientes completos!!!");
+         //alert('estoy cehcked');
+         $.ajax
+          ({
+            url: "../productos/Cproductos/completos_ingrediente",
+            type: "post",
+            data: {IngrendienteStatus:"1",productoID:productoID},                                
+          
+            success: function(data)
+            {                                                  
+             
+              alert(data);
+               $(".pages").load("../productos/Cproductos/index"); 
+            },
+            error:function()
+            {
+
+            }
+          });
+        
       }
       else
       {
-        alert("A este producto le hacen falta ingredientes"); 
+         //alert('estoy uncehcked');
+         $.ajax
+          ({
+            url: "../productos/Cproductos/incompletos_ingrediente",
+            type: "post",
+            data: {IngrendienteStatus:"0",productoID:productoID},                           
+          
+            success: function(data)
+            {                                                  
+             
+               alert("A este producto le hacen falta ingredientes");
+                $(".pages").load("../productos/Cproductos/index"); 
+            },
+            error:function()
+            {
+
+            }
+          });
+        
       }  
   });
  //----------------End ingredientes comletos------------------------- 
@@ -117,6 +156,7 @@
                 <?php
                     if (!empty($detalle)) 
                     {
+                      //var_dump($detalle);
                       foreach ($detalle as $value) 
                       {
                       ?>
@@ -144,7 +184,21 @@
     </tbody>   
   </table>
   <div style="font-size:14px; font-weight: bold;margin: 8px;">
-    <input type="checkbox" id="ingredientteCompleto" name="ingredientteCompleto" value="1"> Ingredientes completos<br>
+  <?php
+  //var_dump($ingredienteC);
+  if ($ingredienteC[0]['ingredientes_completos'] != "0") 
+  {
+  ?>
+
+    <input type="checkbox" id="ingredientteCompleto" name="ingredientteCompleto" checked> Ingredientes completos<br>
+  <?php
+  }
+  else
+  {?>
+        <input type="checkbox" id="ingredientteCompleto" name="ingredientteCompleto" > Ingredientes completos<br>
+  <?php
+  }
+  ?>
   </div>
   <div class="bar-other-actions">
       <button type="button" style="background-color: #c75757; float: left;" class="btn btn-success agregarIngrediente">

@@ -75,14 +75,37 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
-              <div class="thumbnail" style="height: 350px;">
+               <div class="thumbnail" style="height: 400px;">
+              <?php if($value->precio != 0)
+                {?>
+                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                <?php }
+                else{?>
+                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                <?php
+                } 
+                ?>
+                <?php if($value->ingredientes_completos != 0)
+                {?>
+                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                <?php }
+                else{?>
+                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                <?php
+                } 
+                ?>
                 <img src="../../../assets/images/productos/<?php echo $value->image ?>">
-                <div class="caption" style="word-wrap: break-word;">
+                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                   <h3><?php echo $value->nombre_producto ?></h3>
                    <span class="precioData">Precio: <?php echo $precio = ($value->precio == null) ? "Null" : $value->precio; ?></span>
                   <p>
                     <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
                     Asignar Precio 
+                    <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
+
+                    </a> 
+                    <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
+                    Asignar Nodo 
                     <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
 
                     </a> 

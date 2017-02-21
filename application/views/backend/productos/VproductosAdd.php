@@ -87,20 +87,32 @@ $(document).ready(function()
             contentType: false,  // tell jQuery not to set contentType
             data: formData,
 
-                success: function()
+                success: function(data)
                 {
-                  $(".loading").hide();
-                  $("#list").hide();
-                  $('#nombre').val("");
-                  $('#descripcion').val("");
-                  $('#precio').val("");
-                  document.getElementById("files").value = "";
-                  //$('#files').val("");
-                  $('#video').val("");
-                   $(".pages").load("../productos/Cproductos/index");
+                  if (data == "3") 
+                  {
+                    alert("El tamaño de la imagen no es correcto");
+                    $(".loading").hide();
+                  }
+                  else
+                  {
+                    $(".loading").hide();
+                    $("#list").hide();
+                    $('#nombre').val("");
+                    $('#descripcion').val("");
+                    $('#precio').val("");
+                    document.getElementById("files").value = "";
+                    //$('#files').val("");
+                    $('#video').val("");
+                    $(".pages").load("../productos/Cproductos/index");
+                    
+                  }
+                  
+                  
                 },
-                error:function(){
-                    alert("Error.. No se subio la imagen");
+                error:function(data)
+                {
+                    alert(data);
                 }
             });
 
@@ -354,6 +366,18 @@ $(document).ready(function()
 {
   overflow: auto;
 }
+.icoAlert
+{
+  font-size: 22px;
+  float: right;
+  color: #3e9b48;
+}
+.icoAlertError
+{
+  font-size: 22px;
+  float: right;
+  color: red;
+}
 
 </style>
 
@@ -387,19 +411,41 @@ $(document).ready(function()
         <?php
             if (!empty($producto)) 
             {
+              //var_dump($producto);
               foreach ($producto as $value) 
               {
               ?>
                 
               <!--  Vista dinamica de prodcutos --> 
                 <div class="col-md-4">
-                  <div class="thumbnail" style="height: 400px;">
+
+                  <div class="thumbnail" style="height: 450px;padding: 0px;">
+                  <?php if($value->ingredientes_completos != 0)
+                {?>
+                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                <?php }
+                else{?>
+                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                <?php
+                } 
+                ?>  
+                <?php 
+                  if($value->video != 'NULL')
+                  {
+                  ?>
+                  <p class="video-div" style="position: absolute;background: #3e9b48;z-index: 1001;bottom: 221px;width: 89%;color: #fff;padding: 4px;cursor: pointer;text-align:center; opacity: 0.9;font-weight: bold;">Ver Video</p> 
+                <?php 
+                  }
+                ?>   
+                    
                     <img src="../../../assets/images/productos/<?php echo $value->image ?>" alt="...">
-                    <div class="caption" style="word-wrap: break-word;">
-                      <h3><?php echo $value->nombre_producto ?></h3>
-                      <p><?php echo $value->description_producto ?></p>
-                      <p>
-                        <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
+                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
+                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
+                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
+                    </div>
+
+                    <div class="action-btn-img">
+                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
 
                         </a> 
@@ -409,10 +455,12 @@ $(document).ready(function()
                           <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
                           <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
                         </a>
-  
-                      </p>
+
+                 
                     </div>
+
                   </div>
+                
                 </div>
                 <!--  Vista dinamica de prodcutos -->
               <?php

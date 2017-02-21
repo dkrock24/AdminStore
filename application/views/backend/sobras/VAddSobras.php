@@ -129,7 +129,8 @@
         </div>
         <div class="modal-footer">
         <div id="msg" class="msgShow">
-        </div> 
+        </div>
+         
           <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
         </div>
       </div>

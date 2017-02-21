@@ -174,14 +174,14 @@
 
 .cont-sucursales
 {
-  width: 200px;
+  width: 250px;
   border: 1px solid #445a18;
   text-align: center;
   float: left;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin: 7px;
+  margin: 15px;
 }
 
 .cont-sucursales:hover

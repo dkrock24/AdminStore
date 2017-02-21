@@ -70,14 +70,14 @@
   }
 .cont-sucursales
 {
-  width: 200px;
+  width: 250px;
   border: 1px solid #445a18;
   text-align: center;
   float: left;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin: 7px;
+  margin: 15px;
 }
 
 .cont-sucursales:hover
@@ -117,7 +117,7 @@
                 <input type="hidden" name="SucursalId" class="SucursalId" value="<?php echo $value->id ?>">
                 <input type="hidden" name="idProveedor" class="idProveedor" value="<?php echo $proveedor[0]->id_proveedor ?>">
                 <i class='fa fa-home' style="font-size: 150px;color:#88b32f;"></i>
-                <div class="name-sucursal"><?php echo $value->nombre_pais."(".$value->name.")"; ?> 
+                <div class="name-sucursal"><?php echo $value->name; ?> 
                 <?php if($value->validate != null)
                 {?>
                     <p class="fa fa-check-circle activePS" aria-hidden="true"></p>

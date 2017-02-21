@@ -49,6 +49,7 @@ class productos_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from(self::sucursales);
+        $this->db->where(self::sucursales.'.centro_produccion',0);
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
@@ -66,7 +67,7 @@ class productos_model extends CI_Model
             inner join sys_pais_departamento pd on pd.id_departamento = s.id_departamento
             inner join sys_pais p on p.id_pais = pd.id_pais
             left join sys_productos_sucursal ps on ps.id_sucursal = s.id_sucursal 
-            and ps.id_producto ='.$prodcutoID);
+            and ps.id_producto ='.$prodcutoID.' where s.centro_produccion = 0');
          return $query->result();
          //return $query->result_array();
     
@@ -80,7 +81,10 @@ class productos_model extends CI_Model
         
         if (isset($_FILES['files']['tmp_name'])) 
         {
-            //-----------File Imagen profuctos--------------------------------------
+            $dataImg = getimagesize($_FILES['files']['tmp_name']);
+            if ($dataImg[0] >= 200 or $dataImg[0] <= 350  and $dataImg[1] >= 100 or $dataImg[1] <= 200) 
+            {
+                //-----------File Imagen profuctos--------------------------------------
                 $name = $dateNow."_".$_FILES['files']['name'];
                 $fileType = $_FILES['files']['type'];
                 $fileError = $_FILES['files']['error'];
@@ -88,7 +92,14 @@ class productos_model extends CI_Model
                 $imagen = "assets/images/productos/".$dateNow."_".$_FILES['files']['name'];
 
                 move_uploaded_file($_FILES['files']['tmp_name'], $imagen);
-            //----------------------------------------------------------------------
+                //----------------------------------------------------------------------
+            }
+            else
+            {
+                echo "3";
+                die();
+            }
+            
         }
         else 
         {
@@ -224,6 +235,16 @@ class productos_model extends CI_Model
     
     }
 
+    public function getNumIngrendientes($producID)
+    {
+        $query = $this->db->query('Select count(*) as numData from sys_detalle_producto dp 
+        inner join sys_productos p on p.id_producto = dp.id_producto 
+        where dp.id_producto ='.$producID['productoID']);
+         //echo $this->db->queries[0];
+        return $query->result_array();
+    
+    }
+
     public function getProductorByCategory($producID)
     {
         $this->db->select('*');
@@ -261,14 +282,26 @@ class productos_model extends CI_Model
     public function getDetalle($producID)
     {
          $query = $this->db->query('Select dp.id_detalle_producto, dp.name_detalle, dp.id_producto, dp.descripcion, dp.cantidad, dp.unidad_medida_id,
-            cm.nombre_matarial, um.nombre_unidad_medida from sys_detalle_producto dp
+            cm.nombre_matarial, um.nombre_unidad_medida, p.ingredientes_completos
+            from sys_detalle_producto dp
             inner join sys_catalogo_materiales cm ON cm.codigo_material = dp.name_detalle
             inner join sys_unidad_medida um ON um.id_unidad_medida = dp.unidad_medida_id
+            inner join sys_productos p on p.id_producto = dp.id_producto
             where dp.id_producto ='.$producID);
          //echo $this->db->queries[0];
         return $query->result();
        
     }
+    public function getStatusIngrediente($producID)
+    {
+         $query = $this->db->query('select p.ingredientes_completos from sys_productos p
+            where p.id_producto='.$producID);
+         //echo $this->db->queries[0];
+        return $query->result_array();
+
+       
+    }
+    
 
     public function unidadMedida()
     {
@@ -416,6 +449,24 @@ class productos_model extends CI_Model
          //echo $this->db->queries[0];
          return $query->result_array();
         
+    }
+
+    public function completos_ingrediente($completoMateriales)
+    {
+      $data = array( 
+            'ingredientes_completos'   => $completoMateriales['IngrendienteStatus'] 
+        );
+        $this->db->where('id_producto', $completoMateriales['productoID']);    
+        $this->db->update(self::producto,$data);
+    }
+
+    public function incompletos_ingrediente($incompletoMateriales)
+    {
+        $data = array( 
+            'ingredientes_completos'   => $incompletoMateriales['IngrendienteStatus'] 
+        );
+        $this->db->where('id_producto', $incompletoMateriales['productoID']);    
+        $this->db->update(self::producto,$data);
     }
 
 

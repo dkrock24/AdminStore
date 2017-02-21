@@ -49,12 +49,22 @@
  //-----------------Jquery insercion de  productos----------------
       $("#saveSobras").click(function()
       {
-
+        var formData = new FormData();
+                formData.append('files', $('#files')[0].files[0]);
+                formData.append('ingrediente', $('#ingrediente').val());
+                formData.append('cantidad', $('#cantidad').val());
+                formData.append('sucursal', $('#sucursal').val());
+                formData.append('unidaMedida', $('#unidaMedida').val());
+                formData.append('userID', $('#userID').val());
+      //alert(formData);
         $.ajax
            ({
             url: "../sobras/Csobras/save_sobras",
             type:"post",
-            data: $("#sobrasForm").serialize(),
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            data: formData,
+
             success: function()
             {
               $(".pages").load("../sobras/Csobras/index"); 
@@ -76,6 +86,7 @@
           });
       var sobrasID = $(this).find('.sobrasID').val();
       $(".modalViewCOntent").load("../sobras/Csobras/viewSobras/"+sobrasID);
+      //$(".modal-footer").append("<button type='button' class='btn btn-primary changeStatus'>Revisado</button> ")
     });
 
 
@@ -158,11 +169,19 @@
                // echo '<pre>';
                 //print_r($_SESSION);
                 //echo '</pre>';
+                //var_dump($datosSobras);
                       foreach ($datosSobras as $value) 
                       {
                       ?>
                     <tr>
-                        <td><?php echo $value->nombre_sucursal;  ?></td>
+                        <td>
+                         <?php if ($value->estatus_registro == "1") 
+                          {
+                            ?>
+                          
+                             <p style="margin-right: 10px;color: #3e9b48;font-size: 25px;" class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                          <?php } ?>
+                        <?php echo $value->nombre_sucursal;  ?></td>
                         <td><?php echo $value->nombre_matarial;  ?></td>
                         <td><?php echo $value->cantidad_sobras;  ?></td>
                         <td><?php echo $value->nombre_unidad_medida;  ?></td>
@@ -171,7 +190,7 @@
                           <button type="button" class="btn btn-primary viewDataM">
                             <input type="hidden" name="sobrasID" class="sobrasID" value="<?php echo $value->id_sobras ?>">Ver
                           </button>
-                          
+                         
                         </td>
                     </tr>        
                  <!--  Vista dinamica de prodcutos -->
@@ -200,7 +219,7 @@
 
 
 <div class="addSobras" style="display:none;">
-    <form id="sobrasForm" action="post">
+    <form enctype="multipart/form-data" id="productos" method="POST">
       <div class="col-md-12">
 
               <div class="col-md-6">
@@ -223,7 +242,8 @@
                     </div>
                       
 
-      </div>              
+      </div> 
+      
       <div class="col-md-12">
                     <div class="col-md-6"> 
                        <span class="input input--hoshi">
@@ -261,12 +281,21 @@
                         
                             
                          </span>
+                      </div>
+
+
+                        <div class="col-md-6"> 
+                       <span class="input input--hoshi">
+                       <span class="input__label-content">Imagen de refencia</span>
+                      <input class="input__field input__field--hoshi" type="file" id="files" name="files[]" required />
+                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">   
+                        </span>
                       </div>  
                       
 
                     <div class="col-md-12"> 
                        <span class="input input--hoshi">
-                       <input type="hidden" name="userID" class="userID" value="<?php echo $_SESSION['idUser'] ?>">
+                       <input type="hidden" name="userID" class="userID" id="userID" value="<?php echo $_SESSION['idUser'] ?>">
                          <button type="button" id="saveSobras" class="btn btn-primary">Guardar</button>
                       </span>
                     </div>

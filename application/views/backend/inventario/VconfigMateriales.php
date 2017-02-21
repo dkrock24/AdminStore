@@ -16,7 +16,7 @@
             success: function(data)
             {                                                  
               //alert("vengo");
-              $(".load-config-material").load("../inventario/Cinventario/config_meteriales/"+materialSucursalId);
+              $(".pages").load("../inventario/Cinventario/config_meteriales/"+materialSucursalId);
           
             },
             error:function()
@@ -72,7 +72,7 @@
             success: function(data)
             {                                                  
             
-              $(".load-config-material").load("../inventario/Cinventario/config_meteriales/"+materialSucursalId);
+              $(".pages").load("../inventario/Cinventario/config_meteriales/"+materialSucursalId);
           
             },
             error:function()
@@ -176,7 +176,7 @@
   <div class="col-md-12">
     <h1>
     <?php
-     // var_dump($materialSucursal);
+     //var_dump($materialSucursal);
      ?> 
       <?php echo $materialSucursal[0]['nombre_matarial']."<br>";?>  
        <?php echo "Unidad medida: ".$materialSucursal[0]['nombre_unidad_medida']."<br>";?>  
@@ -227,7 +227,7 @@
                         <td><?php echo $value['nombre_proveedor'];  ?></td>
                         <td>
                         <?php
-                            if ($value['listInventarioProvee'] == 'Asociada') 
+                            if ($value['listInventarioProvee'] == 'Desasociar') 
                             {
                         ?>
 

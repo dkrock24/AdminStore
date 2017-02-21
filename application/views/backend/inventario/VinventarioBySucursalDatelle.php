@@ -151,6 +151,21 @@ $(document).ready(function()
   });
   //-------------------------Fin -----------------------------------
 
+
+//-------- mostrar la configuracion del material-------------------
+  $(".addPeidos").click(function()
+  {
+      var inventarioSucursal = $(this).find(".IdCatalogoInventario").val();
+      //var sucursalID = $(this).find(".IdSucursalInventario").val();
+      //alert(inventarioSucursal);
+    
+      $(".data-materiales").hide();
+      $(".load-config-material").show();
+      $(".load-config-material").load("../inventario/Cinventario/add_pedidoMateriales/"+inventarioSucursal);
+
+  });
+  //-------------------------Fin -----------------------------------
+
 //----------------- Open modal view data-------------------
   $(".viewDataM").click(function()
   {
@@ -224,31 +239,68 @@ $(document).ready(function()
                       {
                       ?>
                     <tr>
+            
                         <td><?php echo $value->codigo_material;  ?></td>
                         <td><?php echo $value->nombre_matarial;  ?></td>
                         <td><?php echo $value->nombre_categoria_materia; ?></td>
-                        <td>
-                        <p class="inpuExist" style="display: none;"> 
-                          <input type="text" name="firstname">
-                        </p>
-                        <p class="valCelda">
-                          <?php echo $value->total_existencia; ?></td>                         
-                        </p>
-                        <td>
                         
-                        <button type="button" class="btn btn-primary  btn-sm configMateriales">
-                    <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
-                    <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config Material
-                            </button>
+                        <?php if($value->total_existencia < $value->minimo_existencia)
+                        {
+                        ?>
+                        <td style="background-color: rgba(199, 87, 87, 0.67);">
+                          <p class="valCelda" style="font-size: 20px;text-align: center;">
+                          <?php echo $value->total_existencia; ?>
+                          </p>
+                        </td>  
+
+                        <?php
+                        }
+                        else{
+                        ?>
+
+                        <td>
+                          <p class="valCelda" style="font-size: 20px;text-align: center;">
+                          <?php echo $value->total_existencia; ?>
+                          </p>
+                        </td>                         
+                        <?php } ?>  
+
+                        <td>
+                        <?php if($value->minimo_existencia != 0)
+                        {
+                        ?>
+                         <button type="button" class="btn btn-primary  btn-sm configMateriales">
+                        <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
+                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config Material
+                        <li class='fa fa-check-circle-o' style="font-size: 20px;"></li>
+                        </button>
+
+                        <?php
+                        }
+                        else{
+                        ?>
+
+                         <button type="button" class="btn btn-primary  btn-sm configMateriales">
+                        <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
+                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config Material
+                        </button>                     
+                        <?php } ?>  
+                       
                                   
                             
                             <button type="button" class="btn btn-primary  btn-sm viewDataM">
-                            <input type="hidden" name="viewDataIDM" class="viewDataIDM" value="<?php echo $value->id_inventario ?>">Ver
+                            <input type="hidden" name="viewDataIDM" class="viewDataIDM" value="<?php echo $value->id_inventario_sucursal ?>">Ver
                             </button>
 
 
                             <button type="button" class="btn btn-primary  btn-sm quitarMaterial">
                             <input type="hidden" name="inventarioSucursalQ" class="inventarioSucursalQ" value="<?php echo $value->id_inventario_sucursal ?>">Quitar
+                            </button>
+
+
+                            <button type="button" class="btn btn-primary  btn-sm addPeidos">
+                            <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">Agregar  Pedido
+                            <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">
                             </button>
 
                                                   

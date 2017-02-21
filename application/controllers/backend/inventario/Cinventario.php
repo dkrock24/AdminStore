@@ -178,6 +178,14 @@ class Cinventario extends CI_Controller {
 
 	}
 
+	public function add_pedidoMateriales($inventarioSucursal)
+	{	
+		$data['unidaMedida'] = $this->inventario_model->getUnidadMedida();
+		$data['materialSucursal'] = $this->inventario_model->dataCatalogoInventarioSucursal($inventarioSucursal);
+		$this->load->view('backend/inventario/VaddMateriales.php',$data);
+
+	}
+
 	public function asociar_proveedor_meterial()
 	{	
 		$this->inventario_model->asociar_proveedor_meterial($_POST);
@@ -196,6 +204,13 @@ class Cinventario extends CI_Controller {
 	{
 		
 		$this->inventario_model->save_config_material($_POST);
+		
+	}
+
+	public function save_add_material()
+	{
+		//var_dump($_POST);
+		$this->inventario_model->save_add_material($_POST);
 		
 	}
 

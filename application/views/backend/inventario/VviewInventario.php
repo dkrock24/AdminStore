@@ -28,7 +28,7 @@
 </style>
 <div class="addIngredientes">
  <?php
-    
+    //var_dump($material);
     foreach ($material as $value) 
       {
   ?>
@@ -50,6 +50,15 @@
        
        <dt>Unidad de medida</dt> 
           <dd><?php echo $value->nombre_unidad_medida;  ?></dd> 
+
+       <dt>Minimo existencia</dt> 
+          <dd><?php echo $value->minimo_existencia;  ?></dd> 
+          
+       <dt>Maximos existencia</dt> 
+          <dd><?php echo $value->maximo_existencia;  ?></dd> 
+          
+       <dt>total existencia</dt> 
+          <dd><?php echo $value->total_existencia;  ?></dd>          
 
        <dt>estatus</dt> 
           <dd><?php echo $value->nombre_estatus;  ?></dd> 

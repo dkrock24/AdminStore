@@ -137,12 +137,12 @@ class proveedor_model extends CI_Model
      public function getSucursalesDinamic($proveedorID)
     {
         //var_dump($proveedorID);
-        $query = $this->db->query('Select s.id_sucursal as id, s.nombre_sucursal as name, p.nombre_pais, ps.id_proveedor_sucursal as validate 
+        $query = $this->db->query("Select s.id_sucursal as id, IF(s.centro_produccion = '1', CONCAT(s.nombre_sucursal,'', '(CProduccion)'), s.nombre_sucursal) as name, p.nombre_pais, ps.id_proveedor_sucursal as validate 
             from sys_sucursal s 
             inner join sys_pais_departamento pd on pd.id_departamento = s.id_departamento
             inner join sys_pais p on p.id_pais = pd.id_pais
             left join sys_proveedores_sucursal ps on ps.id_sucursal = s.id_sucursal 
-            and ps.id_proveedor ='.$proveedorID);
+            and ps.id_proveedor =".$proveedorID);
          return $query->result();
          //return $query->result_array();
     

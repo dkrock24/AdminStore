@@ -115,6 +115,7 @@ class Cproductos extends CI_Controller {
 	{	
 		$data['productoID'] = $productoID;
 		$data['detalle'] = $this->productos_model->getDetalle($productoID);
+		$data['ingredienteC'] = $this->productos_model->getStatusIngrediente($productoID);
 		$data['unidadMedida'] = $this->productos_model->unidadMedida();
 		$this->load->view('backend/productos/datelleProducto.php',$data);
 
@@ -209,7 +210,29 @@ class Cproductos extends CI_Controller {
 		$data['catalogoMateriales'] = $this->productos_model->getCatalogoMateriales($_GET);
 		$this->load->view('backend/productos/autoSearch.php',$data);
 	}
-
-
 	//--------------------------------End mantenimiento de catalogos---------------
+
+	public function completos_ingrediente()
+	{	
+		$VarValida = $this->productos_model->getNumIngrendientes($_POST);
+		//var_dump($VarValida[0]['numData']);
+		if($VarValida[0]['numData']>=1)
+		{
+			$this->productos_model->completos_ingrediente($_POST);	
+			echo "Ingredientes completos!!!";
+		}
+		else
+		{
+			echo "Es necesario que tenga por lo menos un ingrediente";
+		}
+		
+	
+	}
+
+	public function incompletos_ingrediente()
+	{	
+		$this->productos_model->incompletos_ingrediente($_POST);
+	
+	}
+
 }

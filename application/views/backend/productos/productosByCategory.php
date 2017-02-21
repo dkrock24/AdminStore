@@ -75,11 +75,20 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
-              <div class="thumbnail" style="height: 400px;">
+              <div class="thumbnail" style="height: 430px;">
+               <?php if($value->ingredientes_completos != 0)
+                {?>
+                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                <?php }
+                else{?>
+                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                <?php
+                } 
+                ?>
                 <img src="../../../assets/images/productos/<?php echo $value->image ?>" alt="...">
-                <div class="caption" style="word-wrap: break-word;">
+                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                   <h3><?php echo $value->nombre_producto ?></h3>
-                  <p><?php echo $value->description_producto ?></p>
+                  <p style="height:90px; overflow: auto;"><?php echo $value->description_producto ?></p>
                   <p>
                     <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">

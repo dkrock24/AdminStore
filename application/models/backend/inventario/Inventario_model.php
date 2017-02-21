@@ -10,6 +10,7 @@ class inventario_model extends CI_Model
     const proveedores = 'sys_proveedores';
     const materialesSucursal = 'sys_catalogo_inventario_sucursal';
     const listMaterialProveedor = 'sys_list_inventario_proveedor';
+    const materialesAdd = 'sys_materiales_add';
     
     
     public function __construct()
@@ -121,14 +122,11 @@ class inventario_model extends CI_Model
 
     public function getSucursal()
     {
-        $this->db->select('*');
-        $this->db->from(self::sucursal);
-        $query = $this->db->get();
-        
-        if($query->num_rows() > 0 )
-        {
-            return $query->result();
-        }        
+        $query = $this->db->query("Select s.id_sucursal, s.id_departamento, s.nombre_sucursal,s.direccion,s.telefono,s.celular,
+            s.referencia_zona,s.fecha_creacion,s.estado,s.centro_produccion,s.creado_usuario , 
+            IF(s.centro_produccion = '1', CONCAT(s.nombre_sucursal,'', '(CProduccion)'), s.nombre_sucursal) as name
+            from sys_sucursal s ");
+         return $query->result();    
         
     }
 
@@ -269,12 +267,13 @@ class inventario_model extends CI_Model
 
     public function getInventarioView($inventarioID)
     {
-        $query = $this->db->query('Select cm.id_inventario, cm.codigo_material,  cm.nombre_matarial, cm.descripcion_meterial, em.nombre_estatus, um.nombre_unidad_medida, cmp.nombre_categoria_materia, cm.fecha_creacion
+        $query = $this->db->query('Select cm.id_inventario, cm.codigo_material,  cm.nombre_matarial, cm.descripcion_meterial, em.nombre_estatus, um.nombre_unidad_medida, cmp.nombre_categoria_materia, cm.fecha_creacion, cis.minimo_existencia, cis.maximo_existencia, cis.total_existencia
             from sys_catalogo_materiales cm
             inner join sys_unidad_medida um on um.id_unidad_medida = cm.id_unidad_medida
             inner join sys_categoria_materia_prima cmp on cmp.id_categoria_materia = cm.id_categoria_material
             inner join sys_estatus_meteriales em on em.id_estatus = cm.estatus
-            where cm.id_inventario ='.@$inventarioID);
+            inner join sys_catalogo_inventario_sucursal cis on cis.codigo_meterial = cm.codigo_material
+                where cis.id_inventario_sucursal='.@$inventarioID.' group by cm.id_inventario');
          //echo $this->db->queries[0];
         return $query->result();      
     }
@@ -355,7 +354,7 @@ class inventario_model extends CI_Model
     {
         $query = $this->db->query("Select cis.id_inventario_sucursal, cis.codigo_meterial, cis.id_sucursal, cis.minimo_existencia, cis.maximo_existencia,
             cis.total_existencia, cm.id_inventario, cm.nombre_matarial, cm.descripcion_meterial, ps.id_proveedor_sucursal, ps.id_proveedor,     
-            id_list_inventario_proveedor,p.nombre_proveedor, um.nombre_unidad_medida, lip.id_list_inventario_proveedor as listInventarioProvee,
+            id_list_inventario_proveedor,p.nombre_proveedor, um.nombre_unidad_medida, IF(lip.id_list_inventario_proveedor is null, 'Asociar', 'Desasociar') as listInventarioProvee,
             lip.precio_material_inventario_sucursal as listInventarioProveePrecio,lip.id_list_inventario_proveedor, 
             lip.id_catalogo_inventario_sucursal, lip.id_proveedor_sucursal, lip.precio_material_inventario_sucursal
                         from sys_catalogo_inventario_sucursal cis
@@ -406,7 +405,7 @@ class inventario_model extends CI_Model
     
     public function save_config_material($materialConfig)
     {
-        var_dump($materialConfig);
+        //var_dump($materialConfig);
         session_start();
         $materialConfigdata = array(
              'minimo_existencia'   => $materialConfig['miniExistencia'],
@@ -415,6 +414,32 @@ class inventario_model extends CI_Model
 
         $this->db->where('id_inventario_sucursal', $materialConfig['catalogoSucursalID']);    
         $this->db->update(self::materialesSucursal,$materialConfigdata);
+    }
+
+
+    public function save_add_material($materialConfig)
+    {
+        var_dump($materialConfig);
+        session_start();
+        $dateNow = date("Y-m-d H:i:s");
+
+        $nuevaExistencia = $materialConfig['ActualExistencia'] +  $materialConfig['cantidadNueva'];
+        $materialConfigdata = array(
+             'total_existencia'   =>  $nuevaExistencia
+             );
+
+        $this->db->where('id_inventario_sucursal', $materialConfig['catalogoSucursalID']);    
+        $this->db->update(self::materialesSucursal,$materialConfigdata);
+
+
+        $materialesAdd = array(
+             'id_catalogo_inventario_sucursal'    => $materialConfig['catalogoSucursalID'],
+             'cantidad_agregada'    => $materialConfig['cantidadNueva'],
+             'user_id'    => $materialConfig['userID'],
+             'fecha_registro'    => $dateNow
+             );
+        
+        $this->db->insert(self::materialesAdd,$materialesAdd);
     }
 
 }

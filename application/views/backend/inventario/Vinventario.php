@@ -21,13 +21,13 @@
   //----------------- Open modal view data-------------------
   $(".viewDataM").click(function()
   {
-     alert("tesr");
+     //alert("tesr");
      $(".ViewdataModal").modal({
            backdrop: 'static', 
            keyboard: false 
         });
     var inventarioID = $(this).find('.viewDataIDM').val();
-    alert(inventarioID);
+    //alert(inventarioID);
     $(".ViewCOntent").load("../inventario/Cinventario/viewInventario/"+inventarioID);
   });
 
@@ -240,14 +240,14 @@
   
 .cont-sucursales
 {
-  width: 200px;
+  width: 250px;
   border: 1px solid #445a18;
   text-align: center;
   float: left;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin: 7px;
+  margin: 15px;
 }
 
 .cont-sucursales:hover
@@ -318,9 +318,10 @@
                             <button type="button" class="btn btn-primary  btn-sm deleteBTN">
                             <input type="hidden" name="deleteValID" class="deleteValID" value="<?php echo $value->id_inventario ?>">Eliminar
                             </button>
-                            <button type="button" class="btn btn-primary  btn-sm viewDataM">
+                            <!--<button type="button" class="btn btn-primary  btn-sm viewDataM">
                             <input type="hidden" name="viewDataIDM" class="viewDataIDM" value="<?php echo $value->id_inventario ?>">Ver
-                            </button>
+                           <!-- </button> -->
+
                         </td>
                     </tr>        
                  <!--  Vista dinamica de prodcutos -->
@@ -355,7 +356,7 @@
             <div class="cont-sucursales">
                  <input type="hidden" name="idSucursal" class="idSucursal" value="<?php echo $value->id_sucursal ?>"></a>
                 <i class='fa fa-home' style="font-size: 150px;color:#88b32f;"></i>
-                <div class="name-sucursal"><?php echo $value->nombre_sucursal ?></div>
+                <div class="name-sucursal"><?php echo $value->name ?></div>
             </div>
           <!--  Vista dinamica de prodcutos -->
           <?php
