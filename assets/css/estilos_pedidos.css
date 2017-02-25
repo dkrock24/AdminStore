@@ -68,7 +68,7 @@
 	border: 2px solid grey;
 	width: 100%;
 	height: 100%;
-	padding: 1%;
+	padding: 1%;	
 	top:10%;
 	text-decoration: none;
 	background: #C52723;
@@ -81,4 +81,11 @@
 
 a{
 	text-decoration: none;
+}
+
+.titulo_resumen{
+	text-align: center;
+}
+#cerrarResumen{
+	text-align: right;
 }

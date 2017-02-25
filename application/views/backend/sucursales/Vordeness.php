@@ -137,9 +137,11 @@
 	  						<td><?php echo $sucursales[0]->nombre_sucursal; ?></td>  						
 	  						<td>
 	  							[ <input type="checkbox" id="modo_tactil" value="1" /> <label style="font-size:10pt" for="modo_tactil">táctil</label> ]&nbsp; 
+	  							
             					<button class="key" key="66" id="borrar_orden"><b>B</b>orrar</button>&nbsp;
             					<button class="key" key="82" id="ver_resumen"><b>R</b>esumen</button>
             					<button class="key" key="69" id="enviar_orden_a_cocina"><b>E</b>nviar</button>
+            					
 	  						</td>
 	  					</tr>
 	  					<tr>
@@ -169,9 +171,18 @@
   		</div>
 
   		<div class="row">
+  			<div class="col-sm-2 col-md-2"></div>
+  			<div class="col-sm-6 col-md-6">
+  				<div id="resumen"></div>
+  			</div>
+  			<div class="col-sm-1 col-md-1"></div>
+  		</div>
+
+
+  		<div class="row">
   			<div class="col-sm-11 col-md-12"> 
 
-            	<div class="items-collection">
+            	<div class="items-collection" id="scroller">
 				<?php
 					$contador=0;
 					if($productos !="")
@@ -235,3 +246,39 @@ $(function () {
 });
 </script>
 </html>
+
+
+<!-- BEGIN MODALS -->
+          <div class="modal fade" id="colored-header4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-primary">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icons-office-52"></i></button>
+                  <h4 class="modal-title"><strong>Editar</strong>  Cargos</h4>
+                </div>
+                <div class="modal-body">
+                	<div class="row tab">
+                		<div class="col-md-4 titulos">
+                			
+                		</div>
+                		<div class="col-md-8">
+                			Desea Actualizar el nombre del Cargo ...
+                		</div>
+                		<br>
+                		<br>
+                		<div class="col-md-4 titulos">
+                			<span>Nombre</span>	                			
+                		</div>
+                		<div class="col-md-8">
+                			<input type="text" id="cargo" name="cargo">
+                		</div>
+                	</div>                	
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary btn-embossed" id='updateCargo' data-dismiss="modal">Cambiar Nombre</button>
+                </div>
+              </div>
+            </div>
+          </div>
+<!-- END MODALS -->
