@@ -63,6 +63,7 @@ class Cindex extends CI_Controller {
 
 		$data['sucursales'] 	= $this->sucursales_model->getSucursalesById($_SESSION['id']);	
 		$data['productos']		= $this->sucursales_model->getProductosBySucursales($id);	
+		$data['categorias']		= $this->sucursales_model->getCategorias();	
 		$autenticar['login'] 	= $this->login_model->login($_SESSION['uno'],$_SESSION['dos']);
 
 

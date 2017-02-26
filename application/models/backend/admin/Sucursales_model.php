@@ -60,11 +60,21 @@ class sucursales_model extends CI_Model
             'telefono'          => $sucursal['telefono'],
             'celular'           => $sucursal['celular'],
             'referencia_zona'   => $sucursal['zona'],
+            'numero_mesas'      => $sucursal['mesas'],
             'estado'            => $sucursal['estado'],
             'centro_produccion' => $sucursal['CProduccion'],
             'creado_usuario'    => $_SESSION['idUser']
         );
         $this->db->insert(self::sys_sucursal,$data);
+
+        //Crear Cada Nodo Para la sucursal que se crea
+        $id_last_sucursal = $this->db->insert_id();
+
+        //Obtener Todos Los Nodos
+        $nodos = $this->getNodos();
+        foreach ($nodos as $nodo) {
+            $this->crearSucursalNodo($id_last_sucursal,$nodo->id_nodo,0);
+        }
     }
 
     // Actualizar Sucursal
@@ -77,6 +87,7 @@ class sucursales_model extends CI_Model
             'telefono'          => $sucursal['telefono'],
             'celular'           => $sucursal['celular'],
             'referencia_zona'   => $sucursal['zona'],
+            'numero_mesas'      => $sucursal['mesas'],
             'estado'            => $sucursal['estado']
         );
         $this->db->where('id_sucursal', $id_sucursal);        
@@ -107,9 +118,11 @@ class sucursales_model extends CI_Model
     // Delete Sucursal
     public function delete($id_sucursal)
     {
+
         $data = array(
-            'id_sucursal' => $id_sucursal
+            'id_sucursal' => $id_sucursal        
         );
+        $this->db->delete(self::sys_sucursal_int_usuarios, $data);   
         $this->db->delete(self::sys_sucursal, $data);         
     }
 

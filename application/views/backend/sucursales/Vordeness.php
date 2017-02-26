@@ -1,6 +1,4 @@
-<?php
-	
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +6,10 @@
 	
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="../../../../../assets/js/jquery.qtip.js"></script>
+	<script src="../../../../../assets/js/pedidos.js"></script>
+	<link rel="stylesheet" href="../../../../../assets/css/jquery.qtip.css" />
+	<link rel="stylesheet" href="../../../../../assets/css/estilos_pedidos.css" />
 	<style type="text/css">
 
 		#cabecera {
@@ -79,12 +81,14 @@
 			background: #007ba7;
 		}
 		.items{
-			width: 45%;
+			width: 25%;
+			height: 50px;
 			margin-left: 15px;
 			display: inline-block;
 			background: #007ba7;
 			color: white;
 			padding: 5px;
+			margin-bottom: 5px;
 			border-radius: 5px;
 		}
 		.items:hover{
@@ -109,6 +113,15 @@
 		.searchicon{
 			display: inline-block;
 		}
+		.itemcontent{
+			position: relative;
+		}
+		.producto{
+			overflow: hidden;
+		}
+		.key{
+			color: black;
+		}
 	</style>
 </head>
 <body>
@@ -121,7 +134,15 @@
 	  				<table>
 	  					<tr>
 	  						<td><strong>SUCURSAL :</strong></td>
-	  						<td><?php echo $sucursales[0]->nombre_sucursal; ?></td>
+	  						<td><?php echo $sucursales[0]->nombre_sucursal; ?></td>  						
+	  						<td>
+	  							[ <input type="checkbox" id="modo_tactil" value="1" /> <label style="font-size:10pt" for="modo_tactil">táctil</label> ]&nbsp; 
+	  							
+            					<button class="key" key="66" id="borrar_orden"><b>B</b>orrar</button>&nbsp;
+            					<button class="key" key="82" id="ver_resumen"><b>R</b>esumen</button>
+            					<button class="key" key="69" id="enviar_orden_a_cocina"><b>E</b>nviar</button>
+            					
+	  						</td>
 	  					</tr>
 	  					<tr>
 	  						<td>CAJERO : </td>
@@ -133,37 +154,52 @@
   		</div>
 
   		<div class="row" id="contenido">
-  			<div class="col-sm-7 col-md-7 col-lg-7"> 
+  			<div class="col-sm-6 col-md-6"> 
   				<div class="search">
   					<div class="input-group">
 					  	<span class="input-group-addon"><i class="fa fa-search fa-2x pull-left searchicon"></i></span>
-					  	<input type="search" class="form-control" id="search" placeholder="Buscar ....">
+					  	<input type="search" class="form-control key enfocar" id="search" key="88" placeholder="Buscar ....">
 					</div>
 				
 				</div>		
   			</div>
-  			<div class="col-sm-5 col-md-5 col-lg-5"> 
+  			<div class="col-sm-4 col-md-5"> 
   				<div class="orden">
-					<h3>ORDENES EN PROCESO</h3>
+					<h3>CREANDO ORDEN</h3>
 				</div>		
   			</div>	
   		</div>
 
   		<div class="row">
-  			<div class="col-sm-7 col-md-7 col-lg-7"> 
+  			<div class="col-sm-2 col-md-2"></div>
+  			<div class="col-sm-6 col-md-6">
+  				<div id="resumen"></div>
+  			</div>
+  			<div class="col-sm-1 col-md-1"></div>
+  		</div>
 
-            	<div class="items-collection">
+
+  		<div class="row">
+  			<div class="col-sm-11 col-md-12"> 
+
+            	<div class="items-collection" id="scroller">
 				<?php
 					$contador=0;
+					if($productos !="")
+					{
 		            foreach ($productos as $value) {
 		                ?>
-		                <div class="items">
+		                <div class="items agregar_producto" 
+		                	tabindex="<?php echo $contador; ?>"
+		                	producto="<?php echo $value->id_producto; ?>" 
+		                	nombre="<?php 	echo $value->nombre_producto; ?>"
+		                	precio="<?php 	echo $value->precio; ?>">
 		                    <div class="itemcontent">		                                    
 		                    	<div class="row elemento">
-		                    		<div class="col-md-6">
-		                    			<h4><?php   echo $value->nombre_producto; ?></h4>
-		                    		</div>
-		                    		<div class="col-md-6">
+		                    		<div class="col-md-12">
+		                    			<span class="producto">
+		                    				<?php   echo $value->nombre_producto; ?>
+		                    			</span>
 		                    			<span class="monto">
 		                    				<h4><b><?php echo $value->moneda; ?> <?php echo $value->precio; ?></b></h4>	
 		                    			</span>		                    			
@@ -175,14 +211,25 @@
 		                <?php
 		                $contador++;
 		            }
+		        	}
 				?>
 				</div>
   			</div>
-  			<div class="col-sm-5 col-md-5 col-lg-5"> 
-  				<div class="enproceso">
-  					Demo
+  			<div class="col-md-2"> 
+  				<div id="info_principal">
+  					
   				</div>
   			</div>	
+  		</div>
+
+  		<div class="row" id="menu_productos">		
+			    <?php
+			    foreach ($categorias as $categoria) {
+			    	?>
+			    	<a class="mp" href="#"><?php echo $categoria->nombre_categoria_producto; ?></a>
+			    	<?php
+			    }
+			    ?>
   		</div>
 
 	</div>
@@ -197,49 +244,41 @@ $(function () {
         }).show();
     });
 });
-
-$(window).load(function(){
-    $("#search").focus();
-});
-
-$(function(){  
-    rsv_solicitar('producto_ingredientes_y_adicionales',{}, function(datos){
-        for (x in datos.aux.adicionables)
-        {
-            _adicionales[datos.aux.adicionables[x].ID_adicional] = datos.aux.adicionables[x];
-        }
-    }, true);
-
-
-    $('#buscar_producto').qtip({
-        content: {
-            text: 'Presione [ENTER] o flecha [ABAJO] para pasar a los resultados.'
-        }
-    });
-
-    $(document).on('focus mouseover', '.agregar_producto', function(event) {
-        $(this).qtip({
-            overwrite: true,
-            content: '[ENTER] para agregar el producto.<br />[ESPACIO] para personalizar<br />[1] a [9] para agregar x cantidad de veces',
-            show: {
-                solo: true,
-                event: event.type,
-                ready: true 
-            }
-        }, event);
-    });
-    
-    $(document).on('mouseover', '#busqueda_adicionales', function(event) {
-        $(this).qtip({
-            overwrite: true,
-            content: 'Presione [ENTER] o flecha [ABAJO] para pasar a los resultados.',
-            show: {
-                solo: true,
-                event: event.type,
-                ready: true 
-            }
-        }, event);
-    });
-});
 </script>
 </html>
+
+
+<!-- BEGIN MODALS -->
+          <div class="modal fade" id="colored-header4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-primary">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icons-office-52"></i></button>
+                  <h4 class="modal-title"><strong>Editar</strong>  Cargos</h4>
+                </div>
+                <div class="modal-body">
+                	<div class="row tab">
+                		<div class="col-md-4 titulos">
+                			
+                		</div>
+                		<div class="col-md-8">
+                			Desea Actualizar el nombre del Cargo ...
+                		</div>
+                		<br>
+                		<br>
+                		<div class="col-md-4 titulos">
+                			<span>Nombre</span>	                			
+                		</div>
+                		<div class="col-md-8">
+                			<input type="text" id="cargo" name="cargo">
+                		</div>
+                	</div>                	
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary btn-embossed" id='updateCargo' data-dismiss="modal">Cambiar Nombre</button>
+                </div>
+              </div>
+            </div>
+          </div>
+<!-- END MODALS -->
