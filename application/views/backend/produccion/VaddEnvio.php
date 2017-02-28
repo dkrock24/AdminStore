@@ -7,11 +7,10 @@
 //-----------------save proveedor--------------
 $("#saveEnvio").click(function()
 {
-  //alert($("#envioForm").serialize());
+  /*
   var maximo = $('.maximo').val();
   var cantidaEnvio = $("#cantidaEnvio").val();
-  //alert(maximo+":"+cantidaEnvio);
-  if(maximo < cantidaEnvio)
+ if(maximo < cantidaEnvio)
   {
     alert("Cantidad sobrepasa total en existencia");
   }
@@ -32,7 +31,23 @@ $("#saveEnvio").click(function()
           alert("failure");
         }
       });
-  }   
+  }*/
+
+      var unidadAConvert = "6";
+      var maximoExistencia = "100";
+      var unidadDeConvert = "2";
+      var cantidadAConvert = "2000";
+      var IdCatoloInvetario = "9";
+        $.ajax
+           ({
+            url: "../convert/Cconvert/ConvertUnidades",
+            type:"post",
+            data: {unidadAConvert:unidadAConvert,maximoExistencia:maximoExistencia,unidadDeConvert:unidadDeConvert,cantidadAConvert:cantidadAConvert,IdCatoloInvetario:IdCatoloInvetario},
+            success: function()
+            {
+              $(".pages").load("../produccion/Cproduccion/index"); 
+            }
+          });   
 
 });
 //-------------------------Fin -----------------------------------

@@ -371,12 +371,24 @@ $(document).ready(function()
   font-size: 22px;
   float: right;
   color: #3e9b48;
+  margin: 4px;
 }
 .icoAlertError
 {
   font-size: 22px;
   float: right;
   color: red;
+}
+
+.vdetalle
+{
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    border-radius: 64px;
+    width: 23px;
+    float: left;
 }
 
 </style>

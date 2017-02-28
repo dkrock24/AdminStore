@@ -297,23 +297,18 @@ class productos_model extends CI_Model
          $query = $this->db->query('select p.ingredientes_completos from sys_productos p
             where p.id_producto='.$producID);
          //echo $this->db->queries[0];
-        return $query->result_array();
-
-       
+        return $query->result_array();   
     }
     
 
     public function unidadMedida()
     {
-        $this->db->select('*');
-        $this->db->from(self::unidadMedida);
-        $query = $this->db->get();
         
-        if($query->num_rows() > 0 )
-        {
-            return $query->result();
-        }        
-        
+         $query = $this->db->query('Select * from sys_unidad_medida um
+        inner join sys_tipo_unidad_medida tum 
+        ON tum.id_tipo_unidad_medida =  um.id_tipo_unidad_medida order by tum.id_tipo_unidad_medida');
+         //echo $this->db->queries[0];
+        return $query->result();
     }
 
     public function tipoUnidad()
@@ -469,6 +464,36 @@ class productos_model extends CI_Model
         $this->db->update(self::producto,$data);
     }
 
+    public function getArrayInventario($sucursalID)
+    {
+         $query = $this->db->query('Select cis.codigo_meterial
+        from sys_catalogo_inventario_sucursal cis 
+        where cis.id_sucursal = '.$sucursalID['IDSucursal']);
+         //echo $this->db->queries[0];
+        return $query->result_array();
+
+       
+    }
+
+    public function getArrayIngredientes($prodcutoID)
+    {
+         $query = $this->db->query('select dp.name_detalle
+        from sys_detalle_producto  dp 
+        where dp.id_producto = '.$prodcutoID['IdProductoValidar']);
+         //echo $this->db->queries[0];
+        return $query->result_array();
+
+       
+    }
+
+    public function updateVerificaionIngrediente($IdProductoSucursal, $datoValida)
+    {
+        $data = array( 
+            'verifiDetalle'   => $datoValida 
+        );
+        $this->db->where('id_producto', $IdProductoSucursal['IdProductoSucursal']);    
+        $this->db->update(self::psucursales,$data);
+    }
 
 }
 /*

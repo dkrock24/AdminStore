@@ -36,11 +36,12 @@
     $(".realizarEnvio").click(function()
     {
       var idSucursalMaterial = $(this).find('.IdSucursalInventario').val();
-      //var codigoMaterial = $(this).find('.codigoMaterial').val();
+      var tipoUnidad = $(this).find('.tipoUnidad').val();
       //var cpID = $(this).find('.cpID').val();
       $(".tableInventario").hide();
       $(".loadEnvio").show();
-      $(".loadEnvio").load("../produccion/Cproduccion/envioMateriales/"+idSucursalMaterial); 
+      $(".loadEnvio").load("../produccion/Cproduccion/envioMateriales/"+idSucursalMaterial+"/"+tipoUnidad);
+
     });
     //-------------------------Fin ------------------
 
@@ -52,6 +53,7 @@
            keyboard: false 
         });
     var empleadoID = $(this).find('.idEmpleadoV').val();
+    ///alert(empleadoID);
     $(".modalViewCOntentEmpleado").load("../produccion/Cproduccion/viewEmpleado/"+empleadoID);
   });
 
@@ -109,7 +111,8 @@
 <ul class="nav nav-tabs">
  <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-users'></i>Ver Empleados</a></li>
   <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-list-ol'></i>Inventario</a></li> </li> 
-  <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-paper-plane-o'></i>Lista de Envios</a></li> </li>    
+  <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-paper-plane-o'></i>Lista de Envios</a></li> </li>
+  <li id="menu_li" class="D "><a href="#tab1_4" data-toggle="tab"><i class='fa fa-area-chart'></i>Reporte de envios</a></li> </li>    
 <div id="actions-bar">
 <span  style="float:right;background-color: #c75757;" class="btn btn-success back">Regresar</span>
 </div>
@@ -199,8 +202,9 @@
                         </p>
                         <td>
                         
-                        <button type="button" class="btn btn-primary  btn-sm realizarEnvio">
+                    <button type="button" class="btn btn-primary  btn-sm realizarEnvio">
                     <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_inventario_sucursal ?>">
+                    <input type="hidden" name="tipoUnidad" class="tipoUnidad" value="<?php echo $value->id_tipo_unidad_medida ?>">
                   
                     Realizar Envio
                             </button>         
@@ -229,7 +233,7 @@
                         <th>Nombre</th>
                         <th>Cantidad</th>
                         <th>Fecha registro</th> 
-                        <th>Estado de envio</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -254,12 +258,12 @@
                     <input type="hidden" name="idEnvioMaterial" class="idEnvioMaterial" value="<?php echo $value->id_envio_materiales ?>">Ver info de Envio
                             </button>
 
-                            <button type="button" class="btn btn-primary  btn-sm datoEnvio">
-                    <input type="hidden" name="idEnvioMaterial" class="idEnvioMaterial" value="<?php echo $value->id_envio_materiales ?>">
+                           <!-- <button type="button" class="btn btn-primary  btn-sm datoEnvio">
+                    <input type="hidden" name="idEnvioMaterial" class="idEnvioMaterial" value="<?php echo $value->id_envio_materiales ?>">-->
                    
-                       <?php echo $tagStatusLabel; ?>
-                       <?php echo $tagStatus; ?>
-                            </button>         
+                       <?php //echo $tagStatusLabel; ?>
+                       <?php //echo $tagStatus; ?>
+                            <!--</button>-->         
 
                         </td>
                     </tr>        
@@ -272,14 +276,20 @@
                    
     </tbody>   
   </table>
-    </div>               
+    </div>
+
+<div class="tab-pane includ fade" id="tab1_4">
+Test tab 4
+</div>
+
+
   
 </div>
 
 
 
 <!-- Codigo para ver informacion del empleado -->
-<div class="modal fade ModaViewdataEnvio" role="dialog" tabindex="-1">
+<div class="modal fade ModaViewdataEmpleado" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
@@ -288,7 +298,7 @@
            Informacion de envio
           </h4>
           <hr>
-        <div class="modal-body modalViewCOntentEnvio">
+        <div class="modal-body modalViewCOntentEmpleado">
 
         </div>
         <div class="modal-footer">
@@ -302,8 +312,9 @@
   </div>
 <!-- Fin del Codigo -->  
 
+
 <!-- Codigo para ver informacion del empleado -->
-<div class="modal fade ModaViewdataEmpleado" role="dialog" tabindex="-1">
+<div class="modal fade ModaViewdataEnvio" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->

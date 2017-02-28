@@ -166,7 +166,7 @@ $(document).ready(function()
                         <th>Nombre Unidad</th>
                         <th>Simbolo</th>
                         <th>valor Unidad</th>                        
-                        <th>Fecha Creacion</th>                                                
+                        <th>Tipo Unidad</th>                                                
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -174,6 +174,7 @@ $(document).ready(function()
                 <?php
                     if (!empty($unidadMedida)) 
                     {
+                      //var_dump($unidadMedida);
                       foreach ($unidadMedida as $value) 
                       {
                       ?>
@@ -181,7 +182,7 @@ $(document).ready(function()
                         <td><?php echo $value->nombre_unidad_medida;  ?></td>
                         <td><?php echo $value->simbolo_unidad_medida;  ?></td>
                         <td><?php echo $value->valor_unidad_medida;  ?></td>
-                        <td><?php echo $value->fecha_creacion;  ?></td>                         
+                        <td><?php echo $value->name_tipo_unidad_medida;  ?></td>                         
                         <td>
                            <button type="button" class="btn btn-primary btn-sm EditData">
                             <input type="hidden" name="dataModifiID" class="dataModifiID" value="<?php echo $value->id_unidad_medida ?>">Modificar
