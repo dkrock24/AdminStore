@@ -182,6 +182,7 @@
   		<div class="row">
   			<div class="col-sm-11 col-md-12"> 
   			<input type="hidden" id="mesasas" value="<?php echo $productos[0]->numero_mesas; ?>">
+  			<input type="hidden" id="Id_Sucursal" value="<?php echo $productos[0]->id_sucursal; ?>">
             	<div class="items-collection" id="scroller">            	
 				<?php
 					$contador=0;

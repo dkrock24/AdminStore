@@ -95,8 +95,10 @@ class Cindex extends CI_Controller {
 	public function getProductoItems($sucursal,$id_producto){
 		$info = $this->sucursales_model->getProductoItems($sucursal,$id_producto);	
 		$data="";
-		foreach ($info as $usuario) {
-			echo "[ ".$usuario->id_usuario." ]  ". $usuario->nickname."\n";
+		foreach ($info as $producto) {
+			echo 	"[ ".$producto->nombre_producto." ] ".
+					"[ ".$producto->cantidad." ] ".
+					"[ ".$producto->nombre_unidad_medida." ] "."\n";
 		}	
 	}
 }

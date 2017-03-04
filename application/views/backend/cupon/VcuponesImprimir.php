@@ -55,7 +55,7 @@
   height: 188.9px;
   border:dashed;
   display: inline-block;  
-  background: url("../../../../../assets/images/imagen_cupon.JPG") no-repeat; 
+  background: url("../../../../../assets/images/imagen_cupon.jpg") no-repeat; 
   background-size: 340.15px 188.9px;
 }
 .banda{

@@ -17,6 +17,7 @@ class sucursales_model extends CI_Model
     const categorias = 'sys_categoria_producto';
     const sucursal_suarios = 'sys_sucursal_int_usuarios';
     const producto_detalle = 'sys_detalle_producto';
+    const unidad_medida = 'sys_unidad_medida';
     
     
 
@@ -185,16 +186,18 @@ class sucursales_model extends CI_Model
     // Validacion de Materias en exsitencia por producto
     public function getProductoItems($sucursal,$id_producto){
         $this->db->select('*');
-        $this->db->from(self::sys_sucursal.' AS S');        
-        $this->db->join(self::sucursal_suarios.' AS SU ',' on SU.id_sucursal = S.id_sucursal');
-        $this->db->join(self::usuarios.' AS U',' on U.id_usuario = '.'SU.id_usuario');
-        $this->db->where('S.id_sucursal',$id_sucursal);
-         $this->db->where('U.id_usuario',$id_mesero);
+        $this->db->from(self::sys_productos.' AS P');
+        $this->db->join(self::sys_productos_sucursal.' AS PS',' on P.id_producto = '.'PS.id_producto');
+        $this->db->join(self::sys_sucursal.' AS S',' on S.id_sucursal = '.'PS.id_sucursal');
+        $this->db->join(self::producto_detalle.' AS PD',' on PD.id_producto = '.'P.id_producto');
+        $this->db->join(self::unidad_medida.' AS UD',' on UD.id_unidad_medida = '.'PD.unidad_medida_id');
+        $this->db->where('S.id_sucursal',$sucursal);
+        $this->db->where('P.id_producto',$id_producto);
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
         {
-            return 1;
+            return $query->result();
         } 
     }
 
