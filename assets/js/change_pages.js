@@ -16,7 +16,8 @@ $( document ).ready(function()
 		    
 		    success: function()
 		    {
-		       	$(".pages").load("http://localhost/lapizzeria/index.php/"+data);	
+		       	$(".pages").load("http://45.33.3.227/lapizzeria/index.php/"+data);	
+		       	//$(".pages").load("http://localhost/lapizzeria/index.php/"+data);
 		       	$(".sk-three-bounce").show();
 			    setTimeout(function() {
 			     	$(".sk-three-bounce").css('display','none');
