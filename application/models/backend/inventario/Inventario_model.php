@@ -182,6 +182,7 @@ class inventario_model extends CI_Model
              'codigo_material'    =>  strtoupper($code),
              'estatus'    => $material['estatusMateria'],
              'id_unidad_medida'    => $material['unidadMedida'],
+             'contenidoNeto'    => $material['cantdaNeto'],
              'id_categoria_material'    => $material['categoriaMaterial'],
              'fecha_creacion'    => $dateNow
              );

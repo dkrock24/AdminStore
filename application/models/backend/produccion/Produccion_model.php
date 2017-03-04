@@ -48,7 +48,9 @@ class produccion_model extends CI_Model
         $query = $this->db->query('Select * from sys_catalogo_inventario_sucursal cis
         Inner join sys_catalogo_materiales cm ON cis.codigo_meterial = cm.codigo_material
         inner join sys_categoria_materia_prima cmp ON cmp.id_categoria_materia = cm.id_categoria_material
-          Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
+        inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
+        inner join sys_unidad_medida u ON u.id_unidad_medida = cm.id_unidad_medida
+        inner join sys_tipo_unidad_medida tum ON tum.id_tipo_unidad_medida = u.id_tipo_unidad_medida
         where cis.id_sucursal ='.@$cpID.' group by cis.id_inventario_sucursal');
          //echo $this->db->queries[0];
         return $query->result();
@@ -73,9 +75,11 @@ class produccion_model extends CI_Model
         return $query->result();       
         
     }
-    public function getUnidadMedida()
+    public function getUnidadMedida($tipoUnidad)
     {
-         $query = $this->db->query('Select u.id_unidad_medida, u.nombre_unidad_medida from sys_unidad_medida u');
+         $query = $this->db->query('Select u.id_unidad_medida, u.nombre_unidad_medida 
+          from sys_unidad_medida u
+          where  u.id_tipo_unidad_medida ='.@$tipoUnidad);
          //echo $this->db->queries[0];
         return $query->result();       
         
@@ -96,7 +100,7 @@ class produccion_model extends CI_Model
 
     public function saveEnvio($envio)
     {
-        $dateNow = date("Y-m-d");
+        $dateNow = date("Y-m-d h:i:s");
        
         $envios = array(
             'codigo_material'    => $envio['codigoMaterial'],

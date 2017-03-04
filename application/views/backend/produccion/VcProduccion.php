@@ -35,6 +35,83 @@
     //-------------------------Fin ------------------ 
 </script>
 
+<style type="text/css">
+   #div_content-bra
+  {
+    width: 30%;
+    float: left;
+    margin: 10px;
+    border: 1px solid #8B002B;
+    background-color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+
+  #div_content-bra:hover
+  {
+    opacity: 0.8;
+  }
+  
+  .ico_branch
+  {
+    font-size: 114px;
+    color: #3E9B48;
+  }
+  .activePS
+  {
+    font-size: 20px;
+  }
+  
+.modal-dialog {
+    margin-top: 5%;
+
+}
+
+.cont-sucursales
+{
+  width: 200px;
+  border: 1px solid #445a18;
+  text-align: center;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin: 7px;
+}
+
+.cont-sucursales:hover
+{
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.name-sucursal
+{
+    background-color: #2b2e33;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 4px;
+    color: #FFF;
+}
+.modal-open 
+{
+  overflow: auto;
+}
+#actions-bar
+{
+  width: 100%;
+  height: 60px;
+  
+}
+.btn.btn-sm 
+{
+    margin-left: 1px  !important;
+}
+</style>
 
 
 <ul class="nav nav-tabs">

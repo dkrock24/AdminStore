@@ -235,4 +235,32 @@ class Cproductos extends CI_Controller {
 	
 	}
 
+	public function validar_materiales()
+	{	
+		$materialInventario = $this->productos_model->getArrayInventario($_POST);
+		$ingredienteProucto = $this->productos_model->getArrayIngredientes($_POST);
+		$material = array();
+		foreach ($materialInventario as $value) 
+		{
+			array_push($material, $value['codigo_meterial']);
+		}
+	
+		$ingredieFaltante=0;
+		$ingredieExiste=0;
+		foreach ($ingredienteProucto as  $ingrediente) 
+		{
+			if (in_array($ingrediente['name_detalle'], $material)) 
+			{
+			    $ingredieExiste++;
+			}
+			else
+			{
+				$ingredieFaltante++;
+			}
+		}
+		$datoValida = ($ingredieFaltante<=0) ? 1 : 0 ;
+		$this->productos_model->updateVerificaionIngrediente($_POST,$datoValida);
+
+	}
+
 }

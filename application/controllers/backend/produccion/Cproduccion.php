@@ -32,10 +32,10 @@ class Cproduccion extends CI_Controller {
 		$data['empleados'] = $this->produccion_model->listEmpleadosCP();
 		$this->load->view('backend/produccion/listEmpleadoCP.php', $data);
 	}
-	public function envioMateriales($idSucursalMaterial)
+	public function envioMateriales($idSucursalMaterial,$tipoUnidad)
 	{		
 		$data['dataMaterial'] = $this->produccion_model->getDataMaterial($idSucursalMaterial);
-		$data['unidadMedida'] = $this->produccion_model->getUnidadMedida($idSucursalMaterial);
+		$data['unidadMedida'] = $this->produccion_model->getUnidadMedida($tipoUnidad);
 		$data['sucursales'] = $this->produccion_model->getSucursales();
 		$this->load->view('backend/produccion/VaddEnvio.php', $data);
 	}	

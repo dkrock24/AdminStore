@@ -79,9 +79,24 @@
                       </label>
                   </span>
                 </div>  
+  </div>             
+
+   <div class="col-md-12">
+               <div class="col-md-6">
+                  <span class="input input--hoshi">
+                      <input class="input__field input__field--hoshi" type="text" id="cantdaNeto" required="true"  name="cantdaNeto" value="Null" />
+                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                      <span class="input__label-content">Cantidad Neto</span>
+                      </label>
+                  </span>
+                </div>  
+                
   </div>              
+
+
     <div class="col-md-12" style="margin-left: 20px;font-weight: bold;">
-        <div class="col-md-6">   
+      
+      <div class="col-md-6">   
           <span>Categoria:   </span><br>
           <span><select style="width: 40%;margin-bottom: 12px;" class="form-control form-grey categoriaMaterial" name="categoriaMaterial"  data-style="white" data-placeholder="Seleccione una categoria...">
             <?php
@@ -94,7 +109,7 @@
             ?>                      
           </select> 
           <span>           
-          </div>  
+          </div>
 
 
           <div class="col-md-6">   

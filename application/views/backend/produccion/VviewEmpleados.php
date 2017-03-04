@@ -28,6 +28,7 @@
 </style>
 <div class="addIngredientes">
  <?php
+    //var_dump($empleado);
     foreach ($empleado as $value) 
       {
   ?>

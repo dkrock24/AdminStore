@@ -33,7 +33,7 @@
 
   });
 
-   //-----------------Jquery insercion de  precio----------------
+//-----------------Jquery insercion de  precio----------------
   $("#savePrecio").click(function()
   {
       var sucursalProdcutoIdSend = $(".sucursalProdcutoID").val();
@@ -54,7 +54,30 @@
        
       });
   });
-      //-------------------------Fin -----------------------------------
+  //-------------------------Fin -----------------------------------
+//-----------------Validar Materiales----------------
+  $(".validarIngre").click(function()
+  {
+      var IdProductoValidar = $(this).find(".IdValidar").val();
+      var IDSucursal = $(this).find(".IdSucursal").val();
+      var IdProductoSucursal = $(this).find(".IdSucursal").val();
+      alert(IdProductoValidar+":"+IDSucursal);
+      $.ajax
+      ({
+        url: "../productos/Cproductos/validar_materiales",
+        type: "post",
+        data: {IdProductoValidar:IdProductoValidar,IDSucursal:IDSucursal,IdProductoSucursal:IdProductoSucursal},                           
+      
+        success: function(data)
+        {                  
+            $(".conten-sucursales").hide();
+            $(".load-productoBySucursal").show();                                
+            $(".load-productoBySucursal").load("../productos/Cproductos/productosBySucursal/"+IDSucursal);
+        },
+       
+      });
+  });
+  //-------------------------Fin -----------------------------------
 
 </script>
 <div class="bar-other-actions">
@@ -76,9 +99,19 @@
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
                <div class="thumbnail" style="height: 400px;">
+              
+              <?php if($value->verifiDetalle != 0)
+                {?>
+                    <p class="fa fa-list-ol icoAlert" aria-hidden="true"></p>
+                <?php }
+                else{?>
+                       <p class="vdetalle">VD</p>
+                <?php
+                } 
+                ?>
               <?php if($value->precio != 0)
                 {?>
-                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                    <p class="fa fa fa-money icoAlert" aria-hidden="true"></p>
                 <?php }
                 else{?>
                        <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
@@ -100,14 +133,21 @@
                    <span class="precioData">Precio: <?php echo $precio = ($value->precio == null) ? "Null" : $value->precio; ?></span>
                   <p>
                     <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
-                    Asignar Precio 
+                    Precio 
                     <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
 
                     </a> 
                     <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
-                    Asignar Nodo 
+                    Nodo 
                     <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
 
+                    </a> 
+
+                    <a class="btn btn-primary  btn-sm validarIngre"  role="button">
+                    Validar Ingredientes 
+                    <input type="hidden" name="IdValidar" class="IdValidar" value="<?php echo $value->id_producto ?>">
+                    <input type="hidden" name="IdProductoSucursal" class="IdProductoSucursal" value="<?php echo $value->id ?>">
+                     <input type="hidden" name="IdSucursal" class="IdSucursal" value="<?php echo $value->id_sucursal ?>">
                     </a> 
                   </p>
                 </div>
