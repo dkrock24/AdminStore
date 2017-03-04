@@ -181,12 +181,13 @@
 
   		<div class="row">
   			<div class="col-sm-11 col-md-12"> 
-
-            	<div class="items-collection" id="scroller">
+  			<input type="hidden" id="mesasas" value="<?php echo $productos[0]->numero_mesas; ?>">
+            	<div class="items-collection" id="scroller">            	
 				<?php
 					$contador=0;
 					if($productos !="")
 					{
+						
 		            foreach ($productos as $value) {
 		                ?>
 		                <div class="items agregar_producto" 
@@ -215,7 +216,7 @@
 				?>
 				</div>
   			</div>
-  			<div class="col-md-2"> 
+  			<div class="col-md-2">   				
   				<div id="info_principal">
   					
   				</div>
@@ -248,37 +249,3 @@ $(function () {
 </html>
 
 
-<!-- BEGIN MODALS -->
-          <div class="modal fade" id="colored-header4" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header bg-primary">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icons-office-52"></i></button>
-                  <h4 class="modal-title"><strong>Editar</strong>  Cargos</h4>
-                </div>
-                <div class="modal-body">
-                	<div class="row tab">
-                		<div class="col-md-4 titulos">
-                			
-                		</div>
-                		<div class="col-md-8">
-                			Desea Actualizar el nombre del Cargo ...
-                		</div>
-                		<br>
-                		<br>
-                		<div class="col-md-4 titulos">
-                			<span>Nombre</span>	                			
-                		</div>
-                		<div class="col-md-8">
-                			<input type="text" id="cargo" name="cargo">
-                		</div>
-                	</div>                	
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-primary btn-embossed" id='updateCargo' data-dismiss="modal">Cambiar Nombre</button>
-                </div>
-              </div>
-            </div>
-          </div>
-<!-- END MODALS -->

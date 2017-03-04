@@ -42,8 +42,24 @@ class Cindex extends CI_Controller {
 		$data['sucursales'] = $this->sucursales_model->getSucursalesById($id_sucursal);	
 		$this->load->view('backend/sucursales/Vlogin.php',$data);
 	}
-	public function ordenes($id){
 
+	//Esta enviando los usuarios asignados por sucursal al pos
+	public function UsuariosSucursal($id_sucursal){
+		$info = $this->sucursales_model->getUsuariosSucursal($id_sucursal);	
+
+			$data="";
+			foreach ($info as $usuario) {
+				echo "[ ".$usuario->id_usuario." ]  ". $usuario->nickname."\n";
+			}	
+	
+	}
+
+	public function validarMesero($id_sucursal,$id_mesero){
+		$info = $this->sucursales_model->getValidarUsuariosSucursal($id_sucursal,$id_mesero);
+		echo $info;
+	}
+
+	public function ordenes($id){
 		session_start();
 		//var_dump($_SESSION);
 		if(isset($_POST))
@@ -64,6 +80,7 @@ class Cindex extends CI_Controller {
 		$data['sucursales'] 	= $this->sucursales_model->getSucursalesById($_SESSION['id']);	
 		$data['productos']		= $this->sucursales_model->getProductosBySucursales($id);	
 		$data['categorias']		= $this->sucursales_model->getCategorias();	
+			
 		$autenticar['login'] 	= $this->login_model->login($_SESSION['uno'],$_SESSION['dos']);
 
 
@@ -72,6 +89,14 @@ class Cindex extends CI_Controller {
 		}else{	
 			$this->load->view('backend/sucursales/Vordeness.php',$data);		
 		}
-		
+	}
+
+	//Verifica existencia de materiales en el inventario
+	public function getProductoItems($sucursal,$id_producto){
+		$info = $this->sucursales_model->getProductoItems($sucursal,$id_producto);	
+		$data="";
+		foreach ($info as $usuario) {
+			echo "[ ".$usuario->id_usuario." ]  ". $usuario->nickname."\n";
+		}	
 	}
 }

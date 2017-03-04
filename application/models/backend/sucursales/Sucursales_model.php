@@ -15,6 +15,8 @@ class sucursales_model extends CI_Model
     const sys_productos = 'sys_productos';
     const sys_productos_sucursal = 'sys_productos_sucursal';
     const categorias = 'sys_categoria_producto';
+    const sucursal_suarios = 'sys_sucursal_int_usuarios';
+    const producto_detalle = 'sys_detalle_producto';
     
     
 
@@ -150,6 +152,53 @@ class sucursales_model extends CI_Model
             return $query->result();
         } 
     }
+
+    public function getUsuariosSucursal($id_sucursal){
+        $this->db->select('*');
+        $this->db->from(self::sys_sucursal.' AS S');        
+        $this->db->join(self::sucursal_suarios.' AS SU ',' on SU.id_sucursal = S.id_sucursal');
+        $this->db->join(self::usuarios.' AS U',' on U.id_usuario = '.'SU.id_usuario');
+        $this->db->where('S.id_sucursal',$id_sucursal);
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
+    public function getValidarUsuariosSucursal($id_sucursal,$id_mesero){
+        $this->db->select('*');
+        $this->db->from(self::sys_sucursal.' AS S');        
+        $this->db->join(self::sucursal_suarios.' AS SU ',' on SU.id_sucursal = S.id_sucursal');
+        $this->db->join(self::usuarios.' AS U',' on U.id_usuario = '.'SU.id_usuario');
+        $this->db->where('S.id_sucursal',$id_sucursal);
+         $this->db->where('U.id_usuario',$id_mesero);
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return 1;
+        } 
+    }
+
+    // Validacion de Materias en exsitencia por producto
+    public function getProductoItems($sucursal,$id_producto){
+        $this->db->select('*');
+        $this->db->from(self::sys_sucursal.' AS S');        
+        $this->db->join(self::sucursal_suarios.' AS SU ',' on SU.id_sucursal = S.id_sucursal');
+        $this->db->join(self::usuarios.' AS U',' on U.id_usuario = '.'SU.id_usuario');
+        $this->db->where('S.id_sucursal',$id_sucursal);
+         $this->db->where('U.id_usuario',$id_mesero);
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return 1;
+        } 
+    }
+
+    
 }
 /*
  * end of application/models/consultas_model.php
