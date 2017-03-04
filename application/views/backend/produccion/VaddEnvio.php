@@ -7,10 +7,9 @@
 //-----------------save proveedor--------------
 $("#saveEnvio").click(function()
 {
-  /*
   var maximo = $('.maximo').val();
   var cantidaEnvio = $("#cantidaEnvio").val();
- if(maximo < cantidaEnvio)
+  if(maximo < cantidaEnvio)
   {
     alert("Cantidad sobrepasa total en existencia");
   }
@@ -31,23 +30,7 @@ $("#saveEnvio").click(function()
           alert("failure");
         }
       });
-  }*/
-
-      var unidadAConvert = "6";
-      var maximoExistencia = "100";
-      var unidadDeConvert = "2";
-      var cantidadAConvert = "2000";
-      var IdCatoloInvetario = "9";
-        $.ajax
-           ({
-            url: "../convert/Cconvert/ConvertUnidades",
-            type:"post",
-            data: {unidadAConvert:unidadAConvert,maximoExistencia:maximoExistencia,unidadDeConvert:unidadDeConvert,cantidadAConvert:cantidadAConvert,IdCatoloInvetario:IdCatoloInvetario},
-            success: function()
-            {
-              $(".pages").load("../produccion/Cproduccion/index"); 
-            }
-          });   
+  }
 
 });
 //-------------------------Fin -----------------------------------
@@ -75,6 +58,7 @@ $("#saveEnvio").click(function()
 <form id="envioForm" action="post">
   <input type="hidden" name="idCproduccion" class="idCproduccion" value="<?php echo $dataMaterial[0]['id_sucursal']; ?>">
   <input type="hidden" name="userID" class="userID" id="userID" value="<?php echo $_SESSION['idUser'] ?>">
+  <input type="hidden" name="unidadAConvert" class="unidadAConvert" id="unidadAConvert" value="<?php echo $dataMaterial[0]['id_unidad_medida']; ?>">
   <input type="hidden" name="maximo" class="maximo" id="maximo" value="<?php echo $dataMaterial[0]['total_existencia']; ?>"> 
 
    <input type="hidden" name="idInventarioMaterial" class="idInventarioMaterial" id="idInventarioMaterial" value="<?php echo $dataMaterial[0]['id_inventario_sucursal']; ?>"> 

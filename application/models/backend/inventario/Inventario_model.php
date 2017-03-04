@@ -443,6 +443,16 @@ class inventario_model extends CI_Model
         $this->db->insert(self::materialesAdd,$materialesAdd);
     }
 
+    public function UpdateExistencia($IdCatoloInvetario, $resultRestExistencia)
+    {
+        $data = array(
+            'total_existencia'   => $resultRestExistencia,         
+        
+        );
+        $this->db->where('id_inventario_sucursal', $IdCatoloInvetario);    
+        $this->db->update(self::catalogoMateriales,$data);
+    }
+
 }
 /*
  * end of application/models/consultas_model.php

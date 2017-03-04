@@ -42,8 +42,22 @@ class Cproduccion extends CI_Controller {
 
 	public function saveEnvio()
 	{
-		 $this->produccion_model->saveEnvio($_POST);
-		 $this->produccion_model->UpdateExistencia($_POST);
+		$unidadAConvert = $_POST['unidadAConvert'];
+		$maximoExistencia = $_POST['maximo'];
+		$unidadDeConvert = $_POST['unidadMedida'];
+		$cantidadAConvert = $_POST['catindadEnvio'];
+		$IdCatoloInvetario = $_POST['idInventarioMaterial'];
+
+		require_once(APPPATH.'controllers/backend/convert/Cconvert.php'); //include controller
+        $aObj = new Cconvert();  //create object 
+        
+        $resultConvert = $aObj->ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert); //call function
+        
+		$envioResult = $this->produccion_model->saveEnvio($_POST);
+		if ($envioResult) 
+		{
+		 	$resultConvert = $aObj->restToExistencia($totalExistencia, $CantidadRestar, $IdCatoloInvetario);
+		} 
 	}
 
 	public function viewEmpleado($empleadoID)

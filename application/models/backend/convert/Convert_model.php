@@ -10,7 +10,6 @@ class convert_model extends CI_Model
         
     }
 
-
     public function getValorUnidadTo($IdUniAConvert)
     {
         $query = $this->db->query('Select um.valor_unidad_medida from sys_unidad_medida um
@@ -27,12 +26,21 @@ class convert_model extends CI_Model
     
     }
 
-    public function getDatosEquivalentes($IdUnifromConvert)
+    public function getDatosEquivalentes($unidadAConvert,$unidadDeConvert)
     {
         $query = $this->db->query('Select * from sys_unidades_equivalentes ue
-            where ue.id_unidad_medida = '.$IdUnifromConvert['unidadAConvert'].' 
-            and ue.id_unidad_equivalente = '.$IdUnifromConvert['unidadDeConvert']);
+            where ue.id_unidad_medida = '.$unidadAConvert.' 
+            and ue.id_unidad_equivalente = '.$unidadDeConvert);
         return $query->result_array();
+    
+    }
+
+    public function getTotalExistencia($codigoMaterial, $IdSucursal)
+    {
+        $query = $this->db->query('Select cis.total_existencia
+            from  sys_catalogo_inventario_sucursal cis 
+            where cis.codigo_meterial ="'.$codigoMaterial.'" and cis.id_sucursal ='.$IdSucursal);
+        return $query->row_array();
     
     }
    

@@ -87,8 +87,8 @@ class produccion_model extends CI_Model
 
     public function getDataMaterial($idSucursalMaterial)
     {
-         $query = $this->db->query('Select cis.id_inventario_sucursal, cis.id_sucursal, cis.codigo_meterial, s.nombre_sucursal, cis.total_existencia, um.nombre_unidad_medida
-                        from sys_catalogo_inventario_sucursal cis
+         $query = $this->db->query('Select cis.id_inventario_sucursal, cis.id_sucursal, cis.codigo_meterial, s.nombre_sucursal, cis.total_existencia, um.nombre_unidad_medida, um.id_unidad_medida
+          from sys_catalogo_inventario_sucursal cis
             inner join sys_catalogo_materiales cm on cm.codigo_material = cis.codigo_meterial
             inner join sys_unidad_medida um ON um.id_unidad_medida = cm.id_unidad_medida
                 inner join sys_sucursal s ON s.id_sucursal =cis.id_sucursal
@@ -114,6 +114,13 @@ class produccion_model extends CI_Model
              );
         
         $this->db->insert(self::enviosTable,$envios);
+        if($this->db->insert(self::enviosTable,$envios))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function UpdateExistencia($envio)

@@ -192,13 +192,13 @@
                         <td><?php echo $value->codigo_material;  ?></td>
                         <td><?php echo $value->nombre_matarial;  ?></td>
                         <td><?php echo $value->nombre_categoria_materia; ?></td>
-                        <td><?php echo $value->minimo_existencia; ?></td>
+                        <td><?php echo $value->total_existencia; ?></td>
                         <td>
                         <p class="inpuExist" style="display: none;"> 
                           <input type="text" name="firstname">
                         </p>
                         <p class="valCelda">
-                          <?php echo $value->total_existencia; ?></td>                         
+                          <?php echo $value->minimo_existencia; ?></td>                         
                         </p>
                         <td>
                         

@@ -9,21 +9,30 @@ class Cconvert extends CI_Controller {
 		$this->load->helper('url');		
 		$this->load->database('default');	
 		$this->load->model('backend/convert/convert_model');			
+		$this->load->model('backend/inventario/inventario_model');	
 	}
 
-	public function ConvertUnidades()
-	{		
-		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($_POST);
-		$resultConvert = $_POST['cantidadAConvert'] * $datosEquivalentes[0]['cantidad_equivalencia'];
-		
-		echo $resultConvert;
+	public function ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert)
+	{	
+		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($unidadAConvert,$unidadDeConvert);
+		var_dump($datosEquivalentes);
+		$resultConvert = $cantidadAConvert * $datosEquivalentes[0]['cantidad_equivalencia'];
+		return $resultConvert;
 	}
 
 
-	public function restToExistencia($totalExistencia, $CantidadRestar)
+	public function restToExistencia($totalExistencia, $CantidadRestar, $IdCatoloInvetario)
 	{
-		$result = $totalExistencia - $CantidadRestar;
-		return $result;
+		$resultRestExistencia = $totalExistencia - $CantidadRestar;
+		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $resultRestExistencia);
+		//return $result;
+	}
+
+	public function sumToExistencia($totalExistencia, $CantidadSumar, $IdCatoloInvetario)
+	{
+		$resultSumaExistencia = $totalExistencia + $CantidadSumar;
+		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $resultSumaExistencia);
+		//return $result;
 	}
 
 	public function getTotalExistencia($codigoMaterial, $IdSucursal)
