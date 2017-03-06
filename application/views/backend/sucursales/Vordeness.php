@@ -183,6 +183,8 @@
   			<div class="col-sm-11 col-md-12"> 
   			<input type="hidden" id="mesasas" value="<?php echo $productos[0]->numero_mesas; ?>">
   			<input type="hidden" id="Id_Sucursal" value="<?php echo $productos[0]->id_sucursal; ?>">
+			<input type="hidden" id="Moneda" value="<?php echo $productos[0]->moneda; ?>">
+  			
             	<div class="items-collection" id="scroller">            	
 				<?php
 					$contador=0;
@@ -248,5 +250,6 @@ $(function () {
 });
 </script>
 </html>
+
 
 

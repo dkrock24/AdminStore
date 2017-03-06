@@ -266,7 +266,7 @@ class sucursales_model extends CI_Model
     
     // INSERTAR PEDIDO DETALLE MATERIA 
     public function setPedidoDetalleMateria($id_pedido_detalle,$unidad_medida_id,$nombre_producto,$name_detalle,$cantidad){
-        session_start();
+        
         $date = date("Y-m-d H:m:s");
         $data = array(
             'id_detalle'        => $id_pedido_detalle,           
@@ -279,6 +279,16 @@ class sucursales_model extends CI_Model
         $this->db->insert(self::sys_pedido_detalle_materia,$data);
         return $this->db->insert_id();
     }    
+
+    // Reduccion Total Existencias en Inventio
+    public function setReduccionInventario($Id_Sucursal,$Id_Producto,$reduccion){
+        $data = array(
+            'total_existencia'   => $reduccion
+        );
+        $this->db->where('codigo_meterial', $Id_Producto);        
+        $this->db->where('id_sucursal', $Id_Sucursal);  
+        $this->db->update(self::inventario_sucursal,$data);
+    }
 }
 /*
  * end of application/models/consultas_model.php
