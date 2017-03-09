@@ -60,17 +60,22 @@ class produccion_model extends CI_Model
 
     public function getListaEviosByCP($cpID)
     {
-         $query = $this->db->query('select em.id_envio_materiales, em.codigo_material, em.sucursal_enviado_id, em.cproduccion_id, em.cantidad, em.unidad_medida, em.usuario_registro_envio, em.comentario_envio, em.estatus, em.fecha_registro, cm.nombre_matarial  from sys_envios_materiales em
-          inner join sys_catalogo_materiales cm ON cm.codigo_material = em.codigo_material 
+         $query = $this->db->query('select em.id_envio_materiales, em.codigo_material, em.sucursal_enviado_id, em.cproduccion_id, em.cantidad, em.unidad_medida, em.usuario_registro_envio, em.comentario_envio, em.estatus, em.fecha_registro, cm.nombre_matarial, um.nombre_unidad_medida  from sys_envios_materiales em
+          inner join sys_catalogo_materiales cm ON cm.codigo_material = em.codigo_material
+          inner join sys_unidad_medida um ON um.id_unidad_medida = em.unidad_medida 
         where em.cproduccion_id ='.@$cpID);
          //echo $this->db->queries[0];
         return $query->result();       
         
     }
 
-    public function getSucursales()
+    public function getSucursales($codigoMaterial)
     {
-         $query = $this->db->query('Select s.id_sucursal, s.nombre_sucursal from sys_sucursal s where s.centro_produccion =0');
+         $query = $this->db->query('Select s.id_sucursal, s.nombre_sucursal 
+          from sys_sucursal s 
+          inner join sys_catalogo_inventario_sucursal cis ON cis.id_sucursal = s.id_sucursal
+          where s.centro_produccion = 0 and cis.codigo_meterial = "'.$codigoMaterial.'"
+          group by s.id_sucursal');
          //echo $this->db->queries[0];
         return $query->result();       
         
@@ -113,12 +118,13 @@ class produccion_model extends CI_Model
             'fecha_registro'    => $dateNow
              );
         
-        $this->db->insert(self::enviosTable,$envios);
-        if($this->db->insert(self::enviosTable,$envios))
+        $dataInsert = $this->db->insert(self::enviosTable,$envios);
+        if($dataInsert)
         {
             return true;
         }
-        else{
+        else
+        {
             return false;
         }
     }

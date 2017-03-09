@@ -32,11 +32,11 @@ class Cproduccion extends CI_Controller {
 		$data['empleados'] = $this->produccion_model->listEmpleadosCP();
 		$this->load->view('backend/produccion/listEmpleadoCP.php', $data);
 	}
-	public function envioMateriales($idSucursalMaterial,$tipoUnidad)
+	public function envioMateriales($idSucursalMaterial,$tipoUnidad,$codigoMaterial)
 	{		
 		$data['dataMaterial'] = $this->produccion_model->getDataMaterial($idSucursalMaterial);
 		$data['unidadMedida'] = $this->produccion_model->getUnidadMedida($tipoUnidad);
-		$data['sucursales'] = $this->produccion_model->getSucursales();
+		$data['sucursales'] = $this->produccion_model->getSucursales($codigoMaterial);
 		$this->load->view('backend/produccion/VaddEnvio.php', $data);
 	}	
 
@@ -50,14 +50,21 @@ class Cproduccion extends CI_Controller {
 
 		require_once(APPPATH.'controllers/backend/convert/Cconvert.php'); //include controller
         $aObj = new Cconvert();  //create object 
-        
-        $resultConvert = $aObj->ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert); //call function
-        
-		$envioResult = $this->produccion_model->saveEnvio($_POST);
+
+        $resultConvert = $aObj->ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert); 
+        if($maximoExistencia < $resultConvert) 
+        {
+        	echo "La cantidad enviada sobrepasa la existencia";
+        	exit();
+        }
+         echo $resultConvert;
+        $envioResult = $this->produccion_model->saveEnvio($_POST);
 		if ($envioResult) 
 		{
-		 	$resultConvert = $aObj->restToExistencia($totalExistencia, $CantidadRestar, $IdCatoloInvetario);
+		 	$resultConvert = $aObj->restToExistencia($maximoExistencia, $resultConvert, $IdCatoloInvetario);
+
 		} 
+		return "Envio realizado correctamente";
 	}
 
 	public function viewEmpleado($empleadoID)

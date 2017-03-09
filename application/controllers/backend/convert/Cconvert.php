@@ -15,9 +15,14 @@ class Cconvert extends CI_Controller {
 	public function ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert)
 	{	
 		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($unidadAConvert,$unidadDeConvert);
-		var_dump($datosEquivalentes);
+		if (empty($datosEquivalentes)) 
+		{
+			echo "La undiad a convertir no esta configurada";
+			die();
+		}
+		
 		$resultConvert = $cantidadAConvert * $datosEquivalentes[0]['cantidad_equivalencia'];
-		return $resultConvert;
+		return round($resultConvert,2);
 	}
 
 

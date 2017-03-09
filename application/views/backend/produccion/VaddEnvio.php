@@ -9,20 +9,15 @@ $("#saveEnvio").click(function()
 {
   var maximo = $('.maximo').val();
   var cantidaEnvio = $("#cantidaEnvio").val();
-  if(maximo < cantidaEnvio)
-  {
-    alert("Cantidad sobrepasa total en existencia");
-  }
-  else
-  {
+    
     $.ajax
       ({
         url: "../produccion/Cproduccion/saveEnvio",
         type:"post",
         data: $("#envioForm").serialize(),
-        success: function()
+        success: function(data)
         {
-          alert("Envios realizado correctamente");
+          alert(data);
           $(".pages").load("../produccion/Cproduccion/Index"); 
         },
         error:function()
@@ -30,8 +25,6 @@ $("#saveEnvio").click(function()
           alert("failure");
         }
       });
-  }
-
 });
 //-------------------------Fin -----------------------------------
 </script>

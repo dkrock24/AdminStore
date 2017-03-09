@@ -164,6 +164,32 @@
   {
     font-weight: bold;
   }
+  .messageConfig
+  {
+    font-size: 18px;
+    padding: 10px;
+    font-family: inherit;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+    background: rgba(216, 153, 153, 0.46);
+  }
+  .linkProveedores
+  {
+    text-align: center;
+    font-size: 22px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width: 23%;
+    padding: 6px;
+    margin-left: 40%;
+    margin-top:12px;
+    background: #88b32f;
+    text-decoration: inherit;
+    cursor: pointer;
+  }
 
 </style>
 
@@ -176,11 +202,18 @@
   <div class="col-md-12">
     <h1>
     <?php
-     //var_dump($materialSucursal);
+      //var_dump($materialSucursal);
+      if (empty($materialSucursal)) 
+      {
+        echo "<div class='messageConfig'>Para poder configurar este material en inventario es necesario que tenga asociado por lo menor un proveedor puede hacerlo en el siguiente enalce:
+        <p class='linkProveedores'><a href='lapizzeria/backend/proveedor/Cproveedor/index' TARGET='_new'>Ir a proveedores</a></p></div>";
+        die();
+      }
+      else{
      ?> 
-      <?php echo $materialSucursal[0]['nombre_matarial']."<br>";?>  
+      <?php echo $materialSucursal[0]['nombre_matarial']."<br>"; ?>  
        <?php echo "Unidad medida: ".$materialSucursal[0]['nombre_unidad_medida']."<br>";?>  
-      <?php echo $materialSucursal[0]['codigo_meterial']."<br>";?>
+      <?php echo $materialSucursal[0]['codigo_meterial']."<br>"; }?>
     </h1>
   </div>
   <div class="col-md-12">
