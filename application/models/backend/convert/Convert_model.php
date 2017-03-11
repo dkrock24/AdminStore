@@ -31,6 +31,7 @@ class convert_model extends CI_Model
         $query = $this->db->query('Select * from sys_unidades_equivalentes ue
             where ue.id_unidad_medida = '.$unidadAConvert.' 
             and ue.id_unidad_equivalente = '.$unidadDeConvert);
+
         return $query->result_array();
     
     }
