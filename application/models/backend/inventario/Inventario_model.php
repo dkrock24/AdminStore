@@ -11,6 +11,7 @@ class inventario_model extends CI_Model
     const materialesSucursal = 'sys_catalogo_inventario_sucursal';
     const listMaterialProveedor = 'sys_list_inventario_proveedor';
     const materialesAdd = 'sys_materiales_add';
+    const adicional = 'sys_materiales_adicionales';
     
     
     public function __construct()
@@ -158,6 +159,21 @@ class inventario_model extends CI_Model
         $this->db->insert(self::estatus,$estatus);
     }
 
+    public function save_adicional($adicional)
+    {
+        $dateNow = date("Y-m-d");
+       
+        $adicional = array(
+             'id_material_sucursal' => $adicional['id_material_sucursal'],
+             'cantidad_adicional'  => $adicional['cantidaAdicional'],
+             'unida_medida_adicional'  => $adicional['unidadMedidaAdicional'],
+             'precio_adicional'    => $adicional['precioAdicional'],
+             'estatu_adicional'    => 1
+             );
+        
+        $this->db->insert(self::adicional,$adicional);
+    }
+
     public function save_categoria_material($categoriaM)
     {
         $dateNow = date("Y-m-d");
@@ -285,7 +301,7 @@ class inventario_model extends CI_Model
         Inner join sys_catalogo_materiales cm ON cis.codigo_meterial = cm.codigo_material
         inner join sys_categoria_materia_prima cmp ON cmp.id_categoria_materia = cm.id_categoria_material
           Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
-        where cis.id_sucursal ='.@$sucursalID['sucursalID'].' group by cis.id_inventario_sucursal');
+        where cis.id_sucursal ='.$sucursalID['sucursalID'].' group by cis.id_inventario_sucursal');
          //echo $this->db->queries[0];
         return $query->result();
 
@@ -353,6 +369,7 @@ class inventario_model extends CI_Model
 
     public function dataCatalogoInventarioSucursal($inventarioSucursal)
     {
+        //echo  $inventarioSucursal;
         $query = $this->db->query("Select cis.id_inventario_sucursal, cis.codigo_meterial, cis.id_sucursal, cis.minimo_existencia, cis.maximo_existencia,
             cis.total_existencia, cm.id_inventario, cm.nombre_matarial, cm.descripcion_meterial, ps.id_proveedor_sucursal, ps.id_proveedor,     
             id_list_inventario_proveedor,p.nombre_proveedor, um.nombre_unidad_medida, IF(lip.id_list_inventario_proveedor is null, 'Asociar', 'Desasociar') as listInventarioProvee,
@@ -420,7 +437,7 @@ class inventario_model extends CI_Model
 
     public function save_add_material($materialConfig)
     {
-        var_dump($materialConfig);
+        //var_dump($materialConfig);
         session_start();
         $dateNow = date("Y-m-d H:i:s");
 
@@ -450,7 +467,19 @@ class inventario_model extends CI_Model
         
         );
         $this->db->where('id_inventario_sucursal', $IdCatoloInvetario);    
-        $this->db->update(self::catalogoMateriales,$data);
+        $this->db->update(self::materialesSucursal,$data);
+    }
+
+    public function dataMaterial($inventarioID)
+    {
+        $query = $this->db->query("Select * 
+        from sys_catalogo_materiales cm 
+        inner join sys_catalogo_inventario_sucursal cis ON cis.codigo_meterial = cm.codigo_material
+        inner join sys_sucursal s ON s.id_sucursal = cis.id_sucursal
+        where cis.id_inventario_sucursal = ".$inventarioID);
+         //echo $this->db->queries[0];
+        return $query->result_array();        
+        
     }
 
 }

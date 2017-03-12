@@ -37,10 +37,11 @@
     {
       var idSucursalMaterial = $(this).find('.IdSucursalInventario').val();
       var tipoUnidad = $(this).find('.tipoUnidad').val();
+      var codigoMaterial = $(this).find('.codigoMaterial').val();
       //var cpID = $(this).find('.cpID').val();
       $(".tableInventario").hide();
       $(".loadEnvio").show();
-      $(".loadEnvio").load("../produccion/Cproduccion/envioMateriales/"+idSucursalMaterial+"/"+tipoUnidad);
+      $(".loadEnvio").load("../produccion/Cproduccion/envioMateriales/"+idSucursalMaterial+"/"+tipoUnidad+"/"+codigoMaterial);
 
     });
     //-------------------------Fin ------------------
@@ -205,6 +206,7 @@
                     <button type="button" class="btn btn-primary  btn-sm realizarEnvio">
                     <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_inventario_sucursal ?>">
                     <input type="hidden" name="tipoUnidad" class="tipoUnidad" value="<?php echo $value->id_tipo_unidad_medida ?>">
+                    <input type="hidden" name="codigoMaterial" class="codigoMaterial" value="<?php echo $value->codigo_material ?>">
                   
                     Realizar Envio
                             </button>         
@@ -232,6 +234,7 @@
                         <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Cantidad</th>
+                        <th>Unidad Medida</th>
                         <th>Fecha registro</th> 
                         <th></th>
                     </tr>
@@ -251,6 +254,7 @@
                         <td><?php echo $value->codigo_material;  ?></td>
                         <td><?php echo $value->nombre_matarial; ?></td>
                         <td><?php echo $value->cantidad;  ?></td>
+                        <td><?php echo $value->nombre_unidad_medida;  ?></td>
                         <td><?php echo $value->fecha_registro; ?></td>
                         <td>
                         

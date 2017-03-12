@@ -65,6 +65,11 @@ class Cinventario extends CI_Controller {
 		$this->inventario_model->save_estatus($_POST);
 	}
 
+	public function save_adicional()
+	{	
+		$this->inventario_model->save_adicional($_POST);
+	}
+
 	public function save_material()
 	{
 		function generarCode()
@@ -212,6 +217,14 @@ class Cinventario extends CI_Controller {
 		//var_dump($_POST);
 		$this->inventario_model->save_add_material($_POST);
 		
+	}
+
+	public function add_adicionales($inventarioID)
+	{	
+		$data['material'] = $this->inventario_model->dataMaterial($inventarioID);
+		$data['unidaMedida'] = $this->inventario_model->getUnidadMedida();
+		$this->load->view('backend/inventario/Vadicionales.php',$data);
+
 	}
 
 }

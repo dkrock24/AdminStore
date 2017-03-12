@@ -141,7 +141,6 @@ $(document).ready(function()
   $(".configMateriales").click(function()
   {
       var inventarioSucursal = $(this).find(".IdCatalogoInventario").val();
-      //var sucursalID = $(this).find(".IdSucursalInventario").val();
       //alert(inventarioSucursal);
     
       $(".data-materiales").hide();
@@ -185,7 +184,14 @@ $(document).ready(function()
     $(".inpuExist").show();   
     var inventarioID = $(this).find('.inventarioID').val();
     $(".ViewCOntent").load("../inventario/Cinventario/modificar_existencia/"+inventarioID);
-  }); 
+  });
+
+ //----------------- Open modal view data-------------------
+  $(".addAdicionales").click(function()
+  {
+    var inventarioID = $(this).find('.IdCatalogoInventario').val();
+    $(".pages").load("../inventario/Cinventario/add_adicionales/"+inventarioID);
+  });   
 
 });      
 </script>
@@ -214,7 +220,10 @@ $(document).ready(function()
  <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $nameSucursal[0]['id_sucursal'] ?>">
  Agregar material
  </span>  
-
+<span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarMateria">
+ <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $nameSucursal[0]['id_sucursal'] ?>">
+ Materiales Adicionales
+ </span>  
 <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success backto">
    Regresar
 </span>  
@@ -226,7 +235,7 @@ $(document).ready(function()
                         <th>Codigo material</th>
                         <th>Material</th>
                         <th>Categoria</th>
-                        <th>Total Existencia</th>                                                                      
+                        <th>Existencia</th>                                                                      
                         <td></td>
                     </tr>
                 </thead>
@@ -271,7 +280,7 @@ $(document).ready(function()
                         ?>
                          <button type="button" class="btn btn-primary  btn-sm configMateriales">
                         <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
-                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config Material
+                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config
                         <li class='fa fa-check-circle-o' style="font-size: 20px;"></li>
                         </button>
 
@@ -282,7 +291,7 @@ $(document).ready(function()
 
                          <button type="button" class="btn btn-primary  btn-sm configMateriales">
                         <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
-                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config Material
+                        <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config
                         </button>                     
                         <?php } ?>  
                        
@@ -299,8 +308,14 @@ $(document).ready(function()
 
 
                             <button type="button" class="btn btn-primary  btn-sm addPeidos">
-                            <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">Agregar  Pedido
+                            <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">Agregar
                             <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">
+                            </button>
+
+
+                            <button type="button" class="btn btn-primary  btn-sm addAdicionales">
+                            <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
+                            Adicional
                             </button>
 
                                                   
