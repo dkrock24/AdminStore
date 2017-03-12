@@ -24,6 +24,7 @@ class sucursales_model extends CI_Model
     const sys_pedido = 'sys_pedido'; 
     const sys_pedido_detalle = 'sys_pedido_detalle'; 
     const sys_pedido_detalle_materia = 'sys_pedido_detalle_materia'; 
+    const materiales_adicionales = 'sys_materiales_adicionales';
 
     
 
@@ -194,7 +195,7 @@ class sucursales_model extends CI_Model
     // Validacion de Materias en exsitencia por producto
     public function getProductoItems($sucursal,$id_producto){
         $this->db->select('P.nombre_producto,PS.id_producto,S.nombre_sucursal,PD.name_detalle,PD.cantidad,PD.unidad_medida_id,
-            UM.nombre_unidad_medida,UM.simbolo_unidad_medida,IS.total_existencia,CM.id_unidad_medida,SUM.nombre_unidad_medida AS NombreUnidad2,SUM.simbolo_unidad_medida AS Simbolo2,SUM.id_unidad_medida AS Unidad2');
+            UM.nombre_unidad_medida,UM.simbolo_unidad_medida,IS.total_existencia,CM.id_unidad_medida,SUM.nombre_unidad_medida AS NombreUnidad2,SUM.simbolo_unidad_medida AS Simbolo2,SUM.id_unidad_medida AS Unidad2,CM.nombre_matarial AS Ingredientes');
         $this->db->from(self::sys_productos.' AS P');
         $this->db->join(self::sys_productos_sucursal.' AS PS',' on P.id_producto = '.'PS.id_producto');
         $this->db->join(self::sys_sucursal.' AS S',' on S.id_sucursal = '.'PS.id_sucursal');
@@ -289,6 +290,36 @@ class sucursales_model extends CI_Model
         $this->db->where('id_sucursal', $Id_Sucursal);  
         $this->db->update(self::inventario_sucursal,$data);
     }
+
+    public function getAdicionalesBySucursal($sucursal){
+        $this->db->select('*');
+        $this->db->from(self::inventario_sucursal.' AS InvS');
+        $this->db->join(self::materiales_adicionales.' AS MA',' on InvS.id_inventario_sucursal = '.'MA.id_material_sucursal');              
+        $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
+        $this->db->where('InvS.id_sucursal',$sucursal);        
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    public function getAdicionalesByCodigo($codigo){
+        $this->db->select('*');
+        $this->db->from(self::inventario_sucursal.' AS InvS');
+        $this->db->join(self::materiales_adicionales.' AS MA',' on InvS.id_inventario_sucursal = '.'MA.id_material_sucursal');              
+        $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
+        $this->db->where('CM.codigo_material',$codigo);        
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    
 }
 /*
  * end of application/models/consultas_model.php

@@ -3,13 +3,56 @@
 <html>
 <head>
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script src="../../../../../js/jquery.js"></script>
+	<script src="../../../../../js/jquery.simplemodal.js"></script>	
+	<script src="../../../../../js/bootstrap.min.js"></script>	
+	<link href="../../../../../css/bootstrap.min.css" rel="stylesheet">
+	<script src="../../../../../js/jquery.modal.js"></script>
+	<link href="../../../../../css/jquery.modal.css" rel="stylesheet">
 	
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="../../../../../assets/js/jquery.qtip.js"></script>
 	<script src="../../../../../assets/js/pedidos.js"></script>
 	<link rel="stylesheet" href="../../../../../assets/css/jquery.qtip.css" />
 	<link rel="stylesheet" href="../../../../../assets/css/estilos_pedidos.css" />
+
+<script>
+$(function () {
+
+    var allPanels = $('.accordion > dd').hide();
+    
+	$('.accordion > dt > a').click(function() {
+	    allPanels.slideUp();
+	    $(this).parent().next().slideDown();
+	    return false;
+	});
+
+
+});
+
+
+
+</script>
+	  <style type="text/css" media="screen">
+
+    
+
+    body > .modal {
+      display: none;      
+    }
+     #ex1{
+      	max-width:100%;
+      	height: 100%;    	
+    }
+
+
+    .part {
+      display: none;
+    }
+
+  </style>
+
+
 	<style type="text/css">
 
 		#cabecera {
@@ -104,6 +147,10 @@
 			height: 50px;
 			font-size: 20px;
 		}
+		.form-control, .input-group{
+			
+			z-index: 1;
+		}
 		.orden{
 			text-align: center;
 		}
@@ -122,6 +169,25 @@
 		.key{
 			color: black;
 		}
+		.cabecera_table{
+			background: #DCDCDC;
+			color: black;
+		}
+		.cabecera_table2{
+			background: #DCDCDC;
+			color: black;
+		}
+		.titulo2{
+			background: orange;
+		}
+		.accordion{
+			padding: 20px;		
+		}
+		.table{
+			border-top: 3px solid grey;
+			border-bottom: 3px solid grey;
+		}
+
 	</style>
 </head>
 <body>
@@ -171,9 +237,14 @@
   		</div>
 
   		<div class="row">
-  			<div class="col-sm-2 col-md-2"></div>
-  			<div class="col-sm-6 col-md-6">
-  				<div id="resumen"></div>
+  			<div class="col-sm-2 col-md-1"></div>
+  			<div class="col-sm-6 col-md-8">
+  				<div id="resumen">
+  					<p>Demo: <a href="#ex1" rel="modal:open">Open Modal</a></p>
+
+						
+
+  				</div>
   			</div>
   			<div class="col-sm-1 col-md-1"></div>
   		</div>
@@ -247,9 +318,20 @@ $(function () {
             return $(this).text().match(new RegExp(pattern, 'i'));
         }).show();
     });
+
 });
+
+
+
 </script>
 </html>
+
+<!-- Modal HTML embedded directly into document -->
+<div class="modal data" id="ex1" style="display:none;">
+  <p>Thanks for clicking.  That felt good.  <br />Click <a href="#" rel="modal:close">close</a>, click the overlay, or press ESC</p>
+</div>
+
+
 
 
 

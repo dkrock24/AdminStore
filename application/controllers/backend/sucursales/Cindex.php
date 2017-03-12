@@ -211,5 +211,28 @@ class Cindex extends CI_Controller {
 		echo "<br>";
 		$this->sucursales_model->setReduccionInventario($Id_Sucursal,$Id_Producto,$reduccion);		
 	}
+
+
+	// para los ingredientes en laorden
+	function getProductoIngredientes($sucursal,$id_producto){
+		$info = $this->sucursales_model->getProductoItems($sucursal,$id_producto);	
+		//foreach ($info as $value) {
+		//	echo $value->name_detalle;
+		//}
+		echo json_encode($info);
+	}
+
+	// para los ingredientes en laorden
+	function getAdicionalesBySucursal($sucursal){
+		$info = $this->sucursales_model->getAdicionalesBySucursal($sucursal);	
+		echo json_encode($info);
+	}
+	function getAdicionalesByCodigo($codigo){
+		$info = $this->sucursales_model->getAdicionalesByCodigo($codigo);	
+		echo json_encode($info);
+	}
+
+	
+	
 	
 }
