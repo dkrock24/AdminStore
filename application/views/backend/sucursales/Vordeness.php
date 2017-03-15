@@ -187,6 +187,13 @@ $(function () {
 			border-top: 3px solid grey;
 			border-bottom: 3px solid grey;
 		}
+		#ingredientes,#adicionales{
+			display: inline-block;
+			top: 0 auto;
+			bottom: 0 auto;
+			position: relative;
+
+		}
 
 	</style>
 </head>
@@ -239,11 +246,7 @@ $(function () {
   		<div class="row">
   			<div class="col-sm-2 col-md-1"></div>
   			<div class="col-sm-6 col-md-8">
-  				<div id="resumen">
-  					<p>Demo: <a href="#ex1" rel="modal:open">Open Modal</a></p>
-
-						
-
+  				<div id="resumen">					
   				</div>
   			</div>
   			<div class="col-sm-1 col-md-1"></div>

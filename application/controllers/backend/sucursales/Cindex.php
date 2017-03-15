@@ -227,7 +227,20 @@ class Cindex extends CI_Controller {
 		$info = $this->sucursales_model->getAdicionalesBySucursal($sucursal);	
 		echo json_encode($info);
 	}
+	// Quitar ingrediente en el producto
+	function getIngredienteByCodigo($codigo){
+		$info = $this->sucursales_model->getIngredienteByCodigo($codigo);	
+		echo json_encode($info);
+	}
+	
+
 	function getAdicionalesByCodigo($codigo){
+		$info = $this->sucursales_model->getAdicionalesByCodigo($codigo);	
+		echo json_encode($info);
+	}
+
+	// Buscar precio de Adicional
+	function getPrecioAdicionalByCodigo($codigo){
 		$info = $this->sucursales_model->getAdicionalesByCodigo($codigo);	
 		echo json_encode($info);
 	}

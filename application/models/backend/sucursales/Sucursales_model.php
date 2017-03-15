@@ -305,6 +305,21 @@ class sucursales_model extends CI_Model
         }
     }
 
+    // Obtener el nombre de un Ingrediente Por Su Codigo
+    public function getIngredienteByCodigo($codigo){
+        $this->db->select('CM.nombre_matarial');
+        $this->db->from(self::inventario_sucursal.' AS InvS');        
+        $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
+        $this->db->where('CM.codigo_material',$codigo);        
+        $query = $this->db->get();
+        //echo $this->db->queries[0];
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    // Obtener Los Adicionales Por El Codigo
     public function getAdicionalesByCodigo($codigo){
         $this->db->select('*');
         $this->db->from(self::inventario_sucursal.' AS InvS');
@@ -318,6 +333,7 @@ class sucursales_model extends CI_Model
             return $query->result();
         }
     }
+
 
     
 }
