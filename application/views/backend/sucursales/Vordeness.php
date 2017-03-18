@@ -180,19 +180,24 @@ $(function () {
 		.titulo2{
 			background: orange;
 		}
-		.accordion{
-			padding: 20px;		
-		}
 		.table{
+			width: 100%;			
 			border-top: 3px solid grey;
 			border-bottom: 3px solid grey;
+			border-left: 3px solid grey;
+			border-right:  3px solid grey;
 		}
-		#ingredientes,#adicionales{
+		#bloque{  /*padre*/
+			width: 100%;
+			background: none;
 			display: inline-block;
-			top: 0 auto;
-			bottom: 0 auto;
+		}
+		#ingredientes, #adicionales{  /*hijos*/			
+			width: 100%;
+			display: table-cell;
+			padding: 25px 0;
+			margin: 0;
 			position: relative;
-
 		}
 
 	</style>
@@ -310,10 +315,13 @@ $(function () {
 			    ?>
   		</div>
 
+
 	</div>
 </body>
 <script>
 $(function () {
+	
+
     $('#search').on('keyup', function () {
         var pattern = $(this).val();
         $('.items-collection .items').hide();
@@ -321,6 +329,8 @@ $(function () {
             return $(this).text().match(new RegExp(pattern, 'i'));
         }).show();
     });
+
+    
 
 });
 
