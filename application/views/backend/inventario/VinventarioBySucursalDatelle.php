@@ -89,7 +89,7 @@ $(document).ready(function()
   });
   //-------------------------Fin -----------------------------------    
 
- 
+//-----Cargar modale para agregar materiales----------------------
   $(".agregarMateria").click(function()
   {
      $(".modelAddMaterial").modal({
@@ -102,13 +102,29 @@ $(document).ready(function()
     $(".laod-material-view").show(); 
     $(".laod-material-view").load("../inventario/Cinventario/viewAddMetarialSucursal/"+sucursalID);
   });
+//------------------Fin codigo para agregar materiales------------------- 
+//-----Cargar modale para ver adicionales---------------------------------
+  $(".agregarAdicionales").click(function()
+  {
+     $(".modelAdicionales").modal({
+           backdrop: 'static', 
+           keyboard: false 
+        });
 
+    var sucursalID = $(this).find('.sucursalID').val();
+
+    $(".load-adcionales-view").show(); 
+    $(".load-adcionales-view").load("../inventario/Cinventario/viewListAdicionales/"+sucursalID);
+  });
+//------------------Fin codigo-------------------------------------- 
+
+//-------------Funcionalida pare regresar pantalla previa-----------------
   $(".backto").click(function()
   {
       $(".conten-sucursales").show();
       $(".load-inventario").hide();
   });
-
+//------------Fin--------------------------------------------------------
  //-------- Quitar Material de la lista de la sucursal -------------------
 
   $(".quitarMaterial").click(function()
@@ -185,13 +201,23 @@ $(document).ready(function()
     var inventarioID = $(this).find('.inventarioID').val();
     $(".ViewCOntent").load("../inventario/Cinventario/modificar_existencia/"+inventarioID);
   });
+//------ FIn codigo-----------------------------------------
 
- //----------------- Open modal view data-------------------
+//----------------- vista para agregar adicionales-------------------
   $(".addAdicionales").click(function()
   {
     var inventarioID = $(this).find('.IdCatalogoInventario').val();
     $(".pages").load("../inventario/Cinventario/add_adicionales/"+inventarioID);
   });   
+//-------Fin codigo------------------------------------------
+
+//-----Vista para actualizar info adicionales---------------
+  $(".updateAdicional").click(function()
+  {
+    var adicionalID = $(this).find('.IdCatalogoInventario').val();
+    $(".pages").load("../inventario/Cinventario/Vupdate_adicionales/"+adicionalID);
+  });   
+//-------Fin codigo------------------------------------------
 
 });      
 </script>
@@ -214,15 +240,15 @@ $(document).ready(function()
 </style>
 
 <div class="cont-table-detalle">
-  <h1>Inventario sucursal  <?php echo $nameSucursal[0]['nombre_sucursal'];?></h1>
+  <h1><b>Inventario sucursal  <?php echo $nameSucursal[0]['nombre_sucursal'];?></b></h1>
        <div id="actions-bar">
  <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarMateria">
  <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $nameSucursal[0]['id_sucursal'] ?>">
  Agregar material
  </span>  
-<span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarMateria">
+<span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarAdicionales">
  <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $nameSucursal[0]['id_sucursal'] ?>">
- Materiales Adicionales
+ Ver Adicionales
  </span>  
 <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success backto">
    Regresar
@@ -312,14 +338,26 @@ $(document).ready(function()
                             <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">
                             </button>
 
-
-                            <button type="button" class="btn btn-primary  btn-sm addAdicionales">
+                          <?php if(is_null($value->id_materiales_adicionales))
+                        {
+                        ?>
+                        <button type="button" class="btn btn-primary  btn-sm addAdicionales">
                             <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
                             Adicional
                             </button>
 
-                                                  
+                        <?php
+                        }
+                        else{
+                        ?>
 
+                        <button type="button" class="btn btn-primary  btn-sm updateAdicional">
+                            <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_materiales_adicionales ?>">
+                            Adicional
+                            <li class='fa fa-check-circle-o' style="font-size: 20px;"></li>
+                            </button>                  
+                        <?php } ?>  
+                            
                         </td>
                     </tr>        
                  <!--  Vista dinamica de prodcutos -->
@@ -360,6 +398,30 @@ $(document).ready(function()
     </div>
   </div>
 <!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
+
+<!-- Codigo de funcionalidad de Modal para ver lista adicionales-->
+<div class="modal fade modelAdicionales" role="dialog" tabindex="1">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content deleModal">
+       <span type="button" style="font-size: 50px;pacity: 1; color: #fff;" class="close" data-dismiss="modal">&times;</span>
+          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+          Ver Adicionales
+          </h4>
+          <hr>
+            <div class="load-adcionales-view" style="display:none;padding: 12px;"></div>
+        <div class="modal-footer">
+        <div id="msg" class="msgShow">
+        </div> 
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Fin del Codigo de funcionalidad de Modals -->  
+
+
 
 <!-- Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->
 <div class="modal fade ViewdataModalS" role="dialog" tabindex="-1">

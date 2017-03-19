@@ -54,6 +54,14 @@ class Cinventario extends CI_Controller {
 	
 	}
 
+	public function viewListAdicionales($sucursalID)
+	{
+		$data['sucursalID'] = $sucursalID;
+		$data['adicionales'] = $this->inventario_model->getDataAdicionales($sucursalID);
+		$this->load->view('backend/inventario/VlistAdicionales.php', $data);
+	
+	}
+
 	public function vieMaterialByCategoria($categoriaMaterialId)
 	{
 		$data['materiales'] = $this->inventario_model->getMaterialesNotInsert($categoriaMaterialId);
@@ -218,6 +226,12 @@ class Cinventario extends CI_Controller {
 		$this->inventario_model->save_add_material($_POST);
 		
 	}
+	public function update_adicionales()
+	{
+		//var_dump($_POST);
+		$this->inventario_model->update_adicionales($_POST);
+		
+	}
 
 	public function add_adicionales($inventarioID)
 	{	
@@ -225,6 +239,20 @@ class Cinventario extends CI_Controller {
 		$data['unidaMedida'] = $this->inventario_model->getUnidadMedida();
 		$this->load->view('backend/inventario/Vadicionales.php',$data);
 
+	}
+
+	public function Vupdate_adicionales($adicionalID)
+	{	
+		$data['adicional'] = $this->inventario_model->dataAdicional($adicionalID);
+		$data['unidaMedida'] = $this->inventario_model->getUnidadMedida();
+		$this->load->view('backend/inventario/VupdateAdicionales.php',$data);
+
+	}
+
+	public function delete_adicional()
+	{	
+		$this->inventario_model->delete_adicional($_POST);
+	
 	}
 
 }

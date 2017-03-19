@@ -42,29 +42,49 @@ class Cproduccion extends CI_Controller {
 
 	public function saveEnvio()
 	{
+		//------Variables para hacer la convercion de la cantida que se envia
 		$unidadAConvert = $_POST['unidadAConvert'];
 		$maximoExistencia = $_POST['maximo'];
 		$unidadDeConvert = $_POST['unidadMedida'];
 		$cantidadAConvert = $_POST['catindadEnvio'];
 		$IdCatoloInvetario = $_POST['idInventarioMaterial'];
+		$idCentroP = $_POST['idCproduccion'];
+		//-------- fin codigo--------
 
+		//------Variables para obtener datos de sucursal a la que se envia el materiales
+		$sucursalEnvio = $_POST['sucursalId'];
+		$codigoMaterial = $_POST['codigoMaterial'];
+		//--- Fin codigo
+
+		//-------Hacemos referenci al controlador de convercion
 		require_once(APPPATH.'controllers/backend/convert/Cconvert.php'); //include controller
         $aObj = new Cconvert();  //create object 
+        //----fin codigo
 
-        $resultConvert = $aObj->ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert); 
+        //-- metodos para extraer informacion de material y existencias
+        $getDataMaterialSend = $aObj->getDataMaterialInventario($codigoMaterial,$sucursalEnvio);// get data material to send from CP
+        $actualExistencia = $aObj->getTotalExistencia($codigoMaterial,$sucursalEnvio);// get total Existencia sucursal
+        $actualExistenciaCP = $aObj->getTotalExistencia($codigoMaterial,$idCentroP);// get total Existencia CP
+		//----fin codigo
+
+        $resultConvert = $aObj->ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert);
         if($maximoExistencia < $resultConvert) 
         {
         	echo "La cantidad enviada sobrepasa la existencia";
         	exit();
         }
-         echo $resultConvert;
+
         $envioResult = $this->produccion_model->saveEnvio($_POST);
 		if ($envioResult) 
 		{
-		 	$resultConvert = $aObj->restToExistencia($maximoExistencia, $resultConvert, $IdCatoloInvetario);
+
+		 	$resMaterial = $aObj->restToExistencia($actualExistenciaCP['total_existencia'], $resultConvert, $IdCatoloInvetario);
+
+		 	$sumMaterial = $aObj->sumToExistencia($actualExistencia['total_existencia'], $resultConvert, $getDataMaterialSend['id_inventario_sucursal']);
+		 	//var_dump($sumMaterial);
 
 		} 
-		return "Envio realizado correctamente";
+		echo "Envio realizado correctamente";
 	}
 
 	public function viewEmpleado($empleadoID)

@@ -205,7 +205,7 @@
       //var_dump($materialSucursal);
       if (empty($materialSucursal)) 
       {
-        echo "<div class='messageConfig'>Para poder configurar este material en inventario es necesario que tenga asociado por lo menor un proveedor puede hacerlo en el siguiente enalce:
+        echo "<div class='messageConfig'>Para poder configurar este material en inventario es necesario que tenga asociado por lo menos un proveedor puede hacerlo en el siguiente enalce:
         <p class='linkProveedores'><a href='lapizzeria/backend/proveedor/Cproveedor/index' TARGET='_new'>Ir a proveedores</a></p></div>";
         die();
       }

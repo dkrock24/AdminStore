@@ -13,15 +13,15 @@
   });
 
     //-----------------save proveedor--------------
-      $("#saveAdicional").click(function()
+      $("#updateAdicional").click(function()
       {
         var sucursalID = $(".backto").find(".sucursalID").val();
         //alert(sucursalID);
         $.ajax
            ({
-            url: "../inventario/Cinventario/save_adicional",
+            url: "../inventario/Cinventario/update_adicionales",
             type:"post",
-            data: $("#AddAdicioal").serialize(),
+            data: $("#UpdatedAdicioal").serialize(),
             success: function()
             {
               $(".pages").load("../inventario/Cinventario/inventarioBySucursal/"+sucursalID);
@@ -53,25 +53,27 @@
 
 </style>
 <div class="addAdicional">
+<?php
+    //var_dump($adicional);
+    foreach ($adicional as $value) 
+      {
+  ?>
+
 <div id="actions-bar">
   <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success backto">
-  <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $material[0]['id_sucursal'];?>">
+  <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $value->id_sucursal;?>">
      Regresar
   </span>  
 </div>
-<h2>Sucursal: <b><?php echo $material[0]['nombre_sucursal'];  ?></b></h2>
-<h2>Material: <b><?php echo $material[0]['nombre_matarial'];  ?></b></h2>
-<h2>Moneda: <b><?php echo $material[0]['moneda'];  ?></b></h2>
+<h1>Actualizar informacion de adicional</h1>
+<h2><b><?php echo $value->nombre_matarial;?></b></h2>
 
-<form id="AddAdicioal" action="post">
-<?php
-//var_dump($material);
-?>
+<form id="UpdatedAdicioal" action="post">
   <div class="col-md-12">
                <div class="col-md-6">
                  <form enctype="multipart/form-data" id="productos" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="cantidaAdicional" required name="cantidaAdicional" />
+                      <input class="input__field input__field--hoshi" type="text" id="cantidaAdicional" required name="cantidaAdicional" value="<?php echo $value->cantidad_adicional;  ?>" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Cantidad</span>
                       </label>
@@ -82,11 +84,20 @@
           <span>Unidad de medida:   </span><br>
           <span><select style="width: 80%;    margin-top: 35px;" class="form-control form-grey unidadMedidaAdicional" name="unidadMedidaAdicional"  data-style="white" data-placeholder="Seleccione un estado...">
           <?php
-            foreach ($unidaMedida as $value) {
-          ?>
-          <option value="<?php echo $value->id_unidad_medida ?>"><?php echo $value->nombre_unidad_medida?>
-          </option>
+            foreach ($unidaMedida as $unidad) 
+            {
+              if ($unidad->id_unidad_medida == $value->unida_medida_adicional) 
+              {
+          ?>    
+          <option selected="true" value="<?php echo $unidad->id_unidad_medida ?>"><?php echo $unidad->nombre_unidad_medida?> </option>
           <?php
+              }
+              else
+              {
+          ?>      
+        <option value="<?php echo $unidad->id_unidad_medida ?>"><?php echo $unidad->nombre_unidad_medida?> </option>
+          <?php
+              }
             }
           ?>                      
           </select> 
@@ -98,7 +109,7 @@
     <div class="col-md-12" style="margin-left: 15px;">
      
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="precioAdicional" name="precioAdicional" required />
+                      <input class="input__field input__field--hoshi" type="text" id="precioAdicional" name="precioAdicional" value="<?php echo $value->precio_adicional;  ?>" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Precio</span>
                       </label>
@@ -108,10 +119,14 @@
 
       <div class="col-md-6"> 
         <span class="input input--hoshi">
-        <input type="hidden" name="id_material_sucursal" class="id_material_sucursal" value="<?php echo $material[0]['id_inventario_sucursal']; ?>">
-          <button type="button" id="saveAdicional" class="btn btn-primary">Guardar Adicional<i class="fa fa-paper-plane-o" style="font-size: 16px; margin: 2px;"></i></button>
+        <input type="hidden" name="adicionalID" class="adicionalID" 
+        value="<?php echo $value->id_materiales_adicionales; ?>">
+          <button type="button" id="updateAdicional" class="btn btn-primary">Actualizar Adicional <i class="fa fa-paper-plane-o" style="font-size: 16px; margin: 2px;"></i></button>
         </span>
       </div>
   </div> 
+   <?php
+      }          
+    ?> 
   </form>
 </div>

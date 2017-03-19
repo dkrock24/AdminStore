@@ -434,10 +434,10 @@ $(document).ready(function()
                   <div class="thumbnail" style="height: 450px;padding: 0px;">
                   <?php if($value->ingredientes_completos != 0)
                 {?>
-                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                    <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
                 <?php }
                 else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
                 <?php
                 } 
                 ?>  
@@ -626,12 +626,11 @@ $(document).ready(function()
 
    <div class="tab-pane fade" id="tab1_4">
          
-         <table class="table table-hover table-dynamic">
+         <table class="table table-hover table-dynamic filter-head">
                 <thead class='titulos'>
                     <tr>
-                        <th width="20%">Nombre</th>
-                        <th width="25%">Descripcion</th>
-                        <th width="20%">Fecha de creacion</th>                                                         
+                        <th>Nombre</th>
+                        <th>Descripcion</th>                                                    
                         <th>Acciones</th>
                           </tr>
                       </thead>
@@ -645,7 +644,6 @@ $(document).ready(function()
                           <tr>
                               <td><?php echo $value->nombre_categoria_producto;  ?></td>
                               <td><?php echo $value->descripcion;  ?></td>
-                              <td><?php echo $value->fecha_creacion;  ?></td>                     
                               <td>
                                 <button type="button" class="btn btn-primary  btn-sm EditData">
                                   <input type="hidden" name="editValID" class="editValID" value="<?php echo $value->id_categoria_producto ?>">Modificar

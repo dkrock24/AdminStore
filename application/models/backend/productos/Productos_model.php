@@ -74,6 +74,14 @@ class productos_model extends CI_Model
     }
 
 
+    public function getNodos()
+        {
+            $query = $this->db->query('Select * from sys_nodo n where n.estado_nodo = 1');
+            return $query->result();
+        
+        }
+
+
     public function save_producto($produc)
     {
         $dateNow = date("YmdHis");
@@ -273,6 +281,16 @@ class productos_model extends CI_Model
         
         $data = array(
             'precio'   => $sucursalProductoID['precio']
+        );
+        $this->db->where('id', $sucursalProductoID['sucursalProdcutoIdSend']);        
+        $this->db->update(self::psucursales,$data);
+    }    
+
+     public function save_nodo($sucursalProductoID)
+    {
+        
+        $data = array(
+            'nodoID'   => $sucursalProductoID['nodoID']
         );
         $this->db->where('id', $sucursalProductoID['sucursalProdcutoIdSend']);        
         $this->db->update(self::psucursales,$data);

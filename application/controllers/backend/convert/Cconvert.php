@@ -28,21 +28,28 @@ class Cconvert extends CI_Controller {
 
 	public function restToExistencia($totalExistencia, $CantidadRestar, $IdCatoloInvetario)
 	{
-		$resultRestExistencia = $totalExistencia - $CantidadRestar;
-		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $resultRestExistencia);
+		$existencia = $totalExistencia - $CantidadRestar;
+		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $existencia);
 		//return $result;
 	}
 
 	public function sumToExistencia($totalExistencia, $CantidadSumar, $IdCatoloInvetario)
 	{
-		$resultSumaExistencia = $totalExistencia + $CantidadSumar;
-		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $resultSumaExistencia);
+		//echo "exis".$totalExistencia."Canti".$CantidadSumar."ID".$IdCatoloInvetario;
+		$existencia = $totalExistencia + $CantidadSumar;
+		$this->inventario_model->UpdateExistencia($IdCatoloInvetario, $existencia);
 		//return $result;
 	}
 
 	public function getTotalExistencia($codigoMaterial, $IdSucursal)
 	{
 		$datoExistencia = $this->convert_model->getTotalExistencia($codigoMaterial,$IdSucursal);
+		return $datoExistencia;
+	}
+
+	public function getDataMaterialInventario($codigoMaterial, $IdSucursal)
+	{
+		$datoExistencia = $this->convert_model->getDataMaterialInventario($codigoMaterial,$IdSucursal);
 		return $datoExistencia;
 	}
 	

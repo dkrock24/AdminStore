@@ -233,6 +233,14 @@ class inventario_model extends CI_Model
         $this->db->delete(self::materiales, $data); 
     }
 
+    public function delete_adicional($datos)
+    {
+         $data = array(
+            'id_materiales_adicionales' => $datos['adicionalID']
+        );
+        $this->db->delete(self::adicional, $data); 
+    }
+
     public function delete_categoria_material($datos)
     {
          $data = array(
@@ -300,7 +308,8 @@ class inventario_model extends CI_Model
         $query = $this->db->query('Select * from sys_catalogo_inventario_sucursal cis
         Inner join sys_catalogo_materiales cm ON cis.codigo_meterial = cm.codigo_material
         inner join sys_categoria_materia_prima cmp ON cmp.id_categoria_materia = cm.id_categoria_material
-          Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
+        Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
+        left join sys_materiales_adicionales ma ON ma.id_material_sucursal = cis.id_inventario_sucursal
         where cis.id_sucursal ='.$sucursalID['sucursalID'].' group by cis.id_inventario_sucursal');
          //echo $this->db->queries[0];
         return $query->result();
@@ -356,6 +365,21 @@ class inventario_model extends CI_Model
             $this->db->insert(self::materialesSucursal,$listMateriales);
         }
         
+    }
+
+
+    public function update_adicionales($adicionales)
+    {
+       
+            $listAdicional = array(
+                 'cantidad_adicional' => $adicionales['cantidaAdicional'],
+                 'unida_medida_adicional'     => $adicionales['unidadMedidaAdicional'],
+                 'precio_adicional'     => $adicionales['precioAdicional']
+                 );
+            
+        $this->db->where('id_materiales_adicionales', $adicionales['adicionalID']);    
+        $this->db->update(self::adicional,$listAdicional);
+
     }
     
 
@@ -460,10 +484,10 @@ class inventario_model extends CI_Model
         $this->db->insert(self::materialesAdd,$materialesAdd);
     }
 
-    public function UpdateExistencia($IdCatoloInvetario, $resultRestExistencia)
+    public function UpdateExistencia($IdCatoloInvetario, $existencia)
     {
         $data = array(
-            'total_existencia'   => $resultRestExistencia,         
+            'total_existencia'   => $existencia,         
         
         );
         $this->db->where('id_inventario_sucursal', $IdCatoloInvetario);    
@@ -476,9 +500,38 @@ class inventario_model extends CI_Model
         from sys_catalogo_materiales cm 
         inner join sys_catalogo_inventario_sucursal cis ON cis.codigo_meterial = cm.codigo_material
         inner join sys_sucursal s ON s.id_sucursal = cis.id_sucursal
+        inner join sys_pais_departamento pd ON pd.id_departamento = s.id_departamento
+        inner join sys_pais p ON p.id_pais = pd.id_pais
         where cis.id_inventario_sucursal = ".$inventarioID);
          //echo $this->db->queries[0];
         return $query->result_array();        
+        
+    }
+
+    public function getDataAdicionales($sucursalID)
+    {
+        $query = $this->db->query("Select * 
+        from sys_materiales_adicionales ma
+        inner join sys_catalogo_inventario_sucursal cis ON cis.id_inventario_sucursal = ma.id_material_sucursal
+        inner join sys_catalogo_materiales cm ON cm.codigo_material =  cis.codigo_meterial
+        inner join sys_unidad_medida um ON um.id_unidad_medida = ma.unida_medida_adicional
+        inner join sys_sucursal s ON s.id_sucursal = cis.id_sucursal
+        inner join sys_pais_departamento pd ON pd.id_departamento = s.id_departamento
+        inner join sys_pais p ON p.id_pais =pd.id_pais
+        where cis.id_sucursal =".$sucursalID);
+         //echo $this->db->queries[0];
+         return $query->result();          
+        
+    }
+
+    public function dataAdicional($adicionalID)
+    {
+        $query = $this->db->query("Select  * from sys_materiales_adicionales ma
+        inner join sys_catalogo_inventario_sucursal cis ON cis.id_inventario_sucursal = ma.id_material_sucursal 
+        inner join sys_catalogo_materiales cm ON cm.codigo_material = cis.codigo_meterial
+        where ma.id_materiales_adicionales =".$adicionalID);
+
+         return $query->result();          
         
     }
 

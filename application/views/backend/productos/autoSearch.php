@@ -7,6 +7,6 @@ foreach ($catalogoMateriales as $row)
         $row_set[] = $new_row; //build an array
 }
      
-		echo json_encode($row_set);
+		echo json_encode(@$row_set);
 
 ?>

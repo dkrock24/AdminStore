@@ -53,6 +53,11 @@ class Cproductos extends CI_Controller {
 	{
 		 $this->productos_model->save_precio($_POST);
 	}
+
+	public function save_nodo()
+	{
+		 $this->productos_model->save_nodo($_POST);
+	}
 	
 	public function save_unidadMedida()
 	{
@@ -105,6 +110,7 @@ class Cproductos extends CI_Controller {
 
 	public function productosBySucursal($sucursalID)
 	{
+		$data['nodos'] = $this->productos_model->getNodos();
 		$data['productoByS'] = $this->productos_model->getProductosBySucursal($sucursalID);
 		$this->load->view('backend/productos/productosBySucursal.php',$data);
 

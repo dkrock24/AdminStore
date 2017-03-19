@@ -231,7 +231,7 @@
    <table class="table table-hover table-dynamic">
                 <thead class='titulos'>
                     <tr>
-                        <th>Codigo</th>
+                        <th>Sucursal</th>
                         <th>Nombre</th>
                         <th>Cantidad</th>
                         <th>Unidad Medida</th>
@@ -251,7 +251,7 @@
                         $tagStatusLabel = ($value->estatus ==3) ? "Recibido" : "Completado" ;
                       ?>
                     <tr>
-                        <td><?php echo $value->codigo_material;  ?></td>
+                        <td><?php echo $value->nombre_sucursal;  ?></td>
                         <td><?php echo $value->nombre_matarial; ?></td>
                         <td><?php echo $value->cantidad;  ?></td>
                         <td><?php echo $value->nombre_unidad_medida;  ?></td>
