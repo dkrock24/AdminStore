@@ -159,28 +159,124 @@ class Cindex extends CI_Controller {
 	// Guarda  el en Encabezado de la Orden
 	public function GuardarOrden($Mesa,$Id_Mesero,$Id_Sucursal){
 		$id_pedido = $this->sucursales_model->InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal);
-		echo $id_pedido;
+		$data = $_POST['info'];
+
+		/* Si el $id_pedido de Encabezado del pedido existe realiza
+		 los siguientes guardados de informacion*/
+
+		if(isset($id_pedido)){
+
+			foreach ($data as $pedido)
+			{		
+				if(isset($pedido['llevar']['abc'])){					
+					$llevar = $pedido['llevar']['abc'];
+				}else{
+					$llevar=0;
+				}
+				if(isset($pedido['ingredientes'])){					
+					$ingredientes = $pedido['ingredientes'];
+				}else{
+					$ingredientes=0;
+				}
+				if(isset($pedido['adicionales'])){					
+					$adicionales = $pedido['adicionales'];
+				}else{
+					$adicionales=0;
+				}
+				$this->GuardarOrdenDetalle($Mesa,$Id_Mesero,$pedido['ID'],$pedido['precio'],$Id_Sucursal,$id_pedido,$llevar,$ingredientes,$adicionales);
+			}
+		}
 	}
 	// Inserta El Detalle de La Orden
-	public function GuardarOrdenDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido){
-		$id_pedido_detalle = $this->sucursales_model->InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido);
-		$id_pedido_detalle;
-		$this->GuardarOrdenDetalleMaterial($Id_Sucursal,$Id_Producto,$id_pedido_detalle);
+	public function GuardarOrdenDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar,$Ingredientes,$Adicionales){
+		$id_pedido_detalle 	= $this->sucursales_model->InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar);
+		$data = $_POST['info'];
+
+		//$this->GuardarOrdenDetalleMaterial($Id_Sucursal,$Id_Producto,$id_pedido_detalle);
+
+		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
+
+// Eliminar Ingredientes
+		if($Ingredientes!=0){
+			foreach ($Ingredientes as $ingrediente) { // Recorrer Items a Quitar
+				foreach ($info as $itemsProducto) { // Items de productos
+					if($itemsProducto->name_detalle==$ingrediente['codigo_m'])
+					{
+						$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,0,0,1,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+					}
+					else
+					{
+						$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,1,0,0,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+					}
+				}
+			}
+		}
+		else
+		{
+			foreach ($info as $itemsProducto) {
+				$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,1,0,0,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+			}
+		}
+
+
+// Agregar Ingredientes
+		if($Adicionales!=0){		// Insertar Adicionales a la Orden Por Producto
+			foreach ($Adicionales as $adicional) {
+				$items = $this->getItemsByCodigo2($Id_Sucursal,$adicional['codigo']);
+				foreach ($items as $value) 
+				{
+					$this->insertItems(	$id_pedido_detalle,$value->unida_medida_adicional,0,1,0,$value->codigo_meterial,$value->cantidad_adicional,$adicional['precio']);
+				}						
+			}					
+		}
+
 	}
 	// Insertar Items de Cada Producto como Detalle de La Orden
+	//$Id_Sucursal,$Id_Producto,$id_pedido_detallep
 	public function GuardarOrdenDetalleMaterial($Id_Sucursal,$Id_Producto,$id_pedido_detalle){
-		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);	
-		$data="";
+		
+		//$info = $this->sucursales_model->getItemsByCodigo($Id_Sucursal,$Id_Producto);
+		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
+		$data = $_POST['info'];
+
+		
+
+			foreach ($data as  $ordenPedido) { // Elementos de la orden
+				
+				if(isset($ordenPedido['ingredientes'])){// Si la Orden tiene elementos a Quitar
+
+					foreach ($ordenPedido['ingredientes'] as $ingredientes) { // Recorrer Items a Quitar
+						foreach ($info as $itemsProducto) { // Items de productos
+							if($itemsProducto->name_detalle==$ingredientes['codigo_m'])
+							{
+								var_dump($ingredientes['nombre_m']);
+								$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,0,0,1,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+							}
+							else
+							{
+								$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,1,0,0,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+							}
+						}
+					}
+				}
+
+				if(isset($ordenPedido['adicionales'])){		// Insertar Adicionales a la Orden Por Producto
+
+					foreach ($ordenPedido['adicionales'] as $adicionales) {
+						$items = $this->getItemsByCodigo2($Id_Sucursal,$adicionales['codigo']);
+						foreach ($items as $value) {
+							$this->insertItems(	$id_pedido_detalle,$value->unida_medida_adicional,0,1,0,$value->codigo_meterial,$value->cantidad_adicional,$adicionales['precio']);
+						}						
+					}					
+				}
+				
+			}
+
+		
+		
+		/*
 		foreach ($info as $producto) 
 		{
-			$this->sucursales_model->setPedidoDetalleMateria(
-				$id_pedido_detalle,
-				$producto->unidad_medida_id,
-				$producto->nombre_producto,
-				$producto->name_detalle,
-				$producto->cantidad
-			);
-
 			// Despues de Insertar El Detall de Cada Producto, Descontarmeos del Inventario Su Equivalente
 			$valor = $this->ConvertUnidades2(
 				$Id_Sucursal,
@@ -191,7 +287,16 @@ class Cindex extends CI_Controller {
 				$producto->name_detalle,
 				$producto->total_existencia
 			);	
-		}
+		}*/
+	}
+
+	public function insertItems($id_detalle,$id_unidad,$neutro,$adicional,$eliminado,$codigo_producto,$cantidad,$precio_adicional){
+		$this->sucursales_model->setPedidoDetalleMateria($id_detalle,$id_unidad,$neutro,$adicional,$eliminado,$codigo_producto,$cantidad,$precio_adicional);
+	}
+
+	public function getItemsByCodigo2($sucursal,$codigo){
+		$data = $this->sucursales_model->getItemsByCodigo2($sucursal,$codigo);
+		return $data;
 	}
 
 	public function ConvertUnidades2($Id_Sucursal,$Id_Producto,$unidadAConvert,$unidadDeConvert,$cantidadAConvert,$codigo_material,$total_existencia)

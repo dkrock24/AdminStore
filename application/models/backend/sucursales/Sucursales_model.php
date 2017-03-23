@@ -50,7 +50,6 @@ class sucursales_model extends CI_Model
                         self::sys_sucursal_int_usuarios.'.id_usuario');
         $this->db->where(self::usuarios.'.id_usuario',$id_user);
         $query = $this->db->get();
-        //echo $this->db->queries[0];
         
         if($query->num_rows() > 0 )
         {
@@ -70,7 +69,7 @@ class sucursales_model extends CI_Model
                         self::sys_sucursal_nodo.'.id_nodo');
         $this->db->where(self::sys_sucursal.'.id_sucursal',$id_sucursal);
         $query = $this->db->get();
-        //echo $this->db->queries[0];
+
         
         if($query->num_rows() > 0 )
         {
@@ -91,7 +90,7 @@ class sucursales_model extends CI_Model
         $this->db->where(self::sys_sucursal.'.id_sucursal',$id_sucursal);
         $this->db->where(self::sys_sucursal_nodo.'.sucursal_estado_nodo',1);
         $query = $this->db->get();
-        //echo $this->db->queries[0];
+        
         
         if($query->num_rows() > 0 )
         {
@@ -113,7 +112,7 @@ class sucursales_model extends CI_Model
         //$this->db->where(self::sys_sucursal_nodo.'.sucursal_estado_nodo',1);
         $this->db->where(self::sys_sucursal_nodo.'.id_nodo',$id_nodo);
         $query = $this->db->get();
-        //echo $this->db->queries[0];
+        
         
         if($query->num_rows() > 0 )
         {
@@ -127,7 +126,7 @@ class sucursales_model extends CI_Model
         $this->db->where(self::usuarios.'.usuario',$id_sucursal);        
         $this->db->where(self::usuarios.'.password',$id_nodo);
         $query = $this->db->get();
-        //echo $this->db->queries[0];
+        
         
         if($query->num_rows() > 0 )
         {
@@ -206,8 +205,29 @@ class sucursales_model extends CI_Model
         $this->db->join(self::unidad_medida.' AS SUM',' on SUM.id_unidad_medida = '.'CM.id_unidad_medida');
         $this->db->where('S.id_sucursal',$sucursal);
         $this->db->where('P.id_producto',$id_producto);
-        $query = $this->db->get();
-        //echo $this->db->queries[0];
+        $query = $this->db->get();        
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
+    // Validacion de Materias en exsitencia por Codigo
+    public function getItemsByCodigo($sucursal,$codigo){
+        $this->db->select('P.nombre_producto,PS.id_producto,S.nombre_sucursal,PD.name_detalle,PD.cantidad,PD.unidad_medida_id,
+            UM.nombre_unidad_medida,UM.simbolo_unidad_medida,IS.total_existencia,CM.id_unidad_medida,SUM.nombre_unidad_medida AS NombreUnidad2,SUM.simbolo_unidad_medida AS Simbolo2,SUM.id_unidad_medida AS Unidad2,CM.nombre_matarial AS Ingredientes');
+        $this->db->from(self::sys_productos.' AS P');
+        $this->db->join(self::sys_productos_sucursal.' AS PS',' on P.id_producto = '.'PS.id_producto');
+        $this->db->join(self::sys_sucursal.' AS S',' on S.id_sucursal = '.'PS.id_sucursal');
+        $this->db->join(self::producto_detalle.' AS PD',' on PD.id_producto = '.'P.id_producto');
+        $this->db->join(self::unidad_medida.' AS UM',' on UM.id_unidad_medida = '.'PD.unidad_medida_id');        
+        $this->db->join(self::inventario_sucursal.' AS IS',' on IS.codigo_meterial = '.'PD.name_detalle');
+        $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'IS.codigo_meterial');
+        $this->db->join(self::unidad_medida.' AS SUM',' on SUM.id_unidad_medida = '.'CM.id_unidad_medida');
+        $this->db->where('S.id_sucursal',$sucursal);
+        $this->db->where('PD.name_detalle',$codigo);
+        $query = $this->db->get();        
         
         if($query->num_rows() > 0 )
         {
@@ -250,8 +270,8 @@ class sucursales_model extends CI_Model
     }
 
     // INSERTAR PEDIDO - DETALLE
-    public function InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido){
-        session_start();
+    public function InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar){
+        
         $date = date("Y-m-d H:m:s");
         $data = array(
             'id_pedido'         => $Id_Pedido,           
@@ -259,6 +279,7 @@ class sucursales_model extends CI_Model
             'nodo'              => "",            
             'precio_grabado'    => $Precio,
             'precio_original'   => $Precio,
+            'llevar'            => $llevar,
             'estado'            => 0,
         );
         $this->db->insert(self::sys_pedido_detalle,$data);
@@ -266,16 +287,18 @@ class sucursales_model extends CI_Model
     }
     
     // INSERTAR PEDIDO DETALLE MATERIA 
-    public function setPedidoDetalleMateria($id_pedido_detalle,$unidad_medida_id,$nombre_producto,$name_detalle,$cantidad){
+    public function setPedidoDetalleMateria($id_pedido_detalle,$unidad_medida_id,$neutro,$adicional,$eliminado,$name_detalle,$cantidad,$precio_adicional){
         
         $date = date("Y-m-d H:m:s");
         $data = array(
             'id_detalle'        => $id_pedido_detalle,           
             'id_unidad'         => $unidad_medida_id,
-            'nombre_producto'   => $nombre_producto, 
-            'codigo_producto'   => $name_detalle,            
+            'neutro'            => $neutro,            
+            'adicional'         => $adicional,
+            'eliminado'         => $eliminado,
+            'codigo_producto'   => $name_detalle,
             'cantidad'          => $cantidad,
-            'total'             => $cantidad
+            'precio_adicional'  => $precio_adicional
         );
         $this->db->insert(self::sys_pedido_detalle_materia,$data);
         return $this->db->insert_id();
@@ -307,12 +330,25 @@ class sucursales_model extends CI_Model
 
     // Obtener el nombre de un Ingrediente Por Su Codigo
     public function getIngredienteByCodigo($codigo){
-        $this->db->select('CM.nombre_matarial');
+        $this->db->select('CM.nombre_matarial,CM.codigo_material');
         $this->db->from(self::inventario_sucursal.' AS InvS');        
         $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
         $this->db->where('CM.codigo_material',$codigo);        
         $query = $this->db->get();
-        //echo $this->db->queries[0];
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    // Obtener Detalle del item, por su codigo
+    public function getItemsByCodigo2($sucursal,$codigo){
+        $this->db->select('*');
+        $this->db->from(self::inventario_sucursal.' AS InvS');        
+        $this->db->join(self::materiales_adicionales.' AS MA',' on MA.id_material_sucursal = '.'InvS.id_inventario_sucursal');                      
+        $this->db->where('InvS.codigo_meterial',$codigo);        
+        $this->db->where('InvS.id_sucursal',$sucursal);  
+        $query = $this->db->get();
         if($query->num_rows() > 0 )
         {
             return $query->result();
