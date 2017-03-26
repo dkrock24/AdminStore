@@ -193,7 +193,7 @@ class sucursales_model extends CI_Model
 
     // Validacion de Materias en exsitencia por producto
     public function getProductoItems($sucursal,$id_producto){
-        $this->db->select('P.nombre_producto,PS.id_producto,S.nombre_sucursal,PD.name_detalle,PD.cantidad,PD.unidad_medida_id,
+        $this->db->select('P.nombre_producto,PS.id_producto,S.nombre_sucursal,PD.name_detalle,PD.cantidad,PD.unidad_medida_id,PS.nodoID,
             UM.nombre_unidad_medida,UM.simbolo_unidad_medida,IS.total_existencia,CM.id_unidad_medida,SUM.nombre_unidad_medida AS NombreUnidad2,SUM.simbolo_unidad_medida AS Simbolo2,SUM.id_unidad_medida AS Unidad2,CM.nombre_matarial AS Ingredientes');
         $this->db->from(self::sys_productos.' AS P');
         $this->db->join(self::sys_productos_sucursal.' AS PS',' on P.id_producto = '.'PS.id_producto');
@@ -257,7 +257,8 @@ class sucursales_model extends CI_Model
             'id_sucursal'       => $Id_Sucursal,           
             'id_usuario'        => $_SESSION['idUser'],
             'id_mesero'         => $Id_Mesero, 
-            'numero_mesa'       => $Mesa,            
+            'numero_mesa'       => $Mesa,  
+            'elaborado'         => 0,
             'flag_cancelado'    => 0,
             'fechahora_pedido'  => $date,
             'flag_elaborado'    => 0,
@@ -270,13 +271,14 @@ class sucursales_model extends CI_Model
     }
 
     // INSERTAR PEDIDO - DETALLE
-    public function InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar){
+    public function InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$nodo,$Id_Sucursal,$Id_Pedido,$llevar){
         
         $date = date("Y-m-d H:m:s");
         $data = array(
             'id_pedido'         => $Id_Pedido,           
             'id_producto'       => $Id_Producto,
-            'nodo'              => "",            
+            'id_nodo'           => $nodo,           
+            'producto_elaborado'=> 0,
             'precio_grabado'    => $Precio,
             'precio_original'   => $Precio,
             'llevar'            => $llevar,

@@ -188,15 +188,12 @@ class Cindex extends CI_Controller {
 		}
 	}
 	// Inserta El Detalle de La Orden
-	public function GuardarOrdenDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar,$Ingredientes,$Adicionales){
-		$id_pedido_detalle 	= $this->sucursales_model->InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar);
+	public function GuardarOrdenDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar,$Ingredientes,$Adicionales){	
+		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
+		$id_pedido_detalle 	= $this->sucursales_model->InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$info[0]->nodoID,$Id_Sucursal,$Id_Pedido,$llevar);
 		$data = $_POST['info'];
 
-		//$this->GuardarOrdenDetalleMaterial($Id_Sucursal,$Id_Producto,$id_pedido_detalle);
-
-		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
-
-// Eliminar Ingredientes
+		// Eliminar Ingredientes
 		if($Ingredientes!=0){
 			foreach ($Ingredientes as $ingrediente) { // Recorrer Items a Quitar
 				foreach ($info as $itemsProducto) { // Items de productos

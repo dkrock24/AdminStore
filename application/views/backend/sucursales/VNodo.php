@@ -10,8 +10,36 @@
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<script src="http://localhost/lapizzeria/js/longpoll.js"></script>
 	<script>
-		$(document).ready(function(){
+		var requestUrl = "http://localhost/lapizzeria/demo.php";
+		
+		/*	set user to 2 here	*/
+		var data = {"id_sucursal":$("#id_sucursal").val(), "id_nodo": $("#id_nodo").val() };
+
+		var html = "<div class='list-group'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # 220</a><a href='' name='' class='list-group-item nodo'><table class='table table-hover'>";
+
+		var callBack = function(response){
+			response = JSON.parse(response);			
+			if(response.success == 0){
+				
+				for(var i=0 ; i<response.feed.length ; i++)
+				{
+				html+="<tr>";		
+					html+="<td>#</td>";
+					html+="<td>"+response.feed[i]['nombre_producto']+"</td>";					
+					
+				html+="</tr>";
+				}
+				$('.wrapper').append(html);				
+			}
+		}
+
+		longpoll(requestUrl, data, callBack);
+	</script>
+
+	<script>
+		$(document).ready(function(){			
       		// CONVERTIR FECHAS A TEXTO
         	$(".wrapper").click(function(){     
         		if($(this).css("background") == "none")
@@ -61,6 +89,9 @@ body{
 	background: black;
 	color: white;
 }
+#x{
+	color:white;
+}
 .wrapper
 {
    width:350px;
@@ -83,6 +114,8 @@ body{
 }
 </style>
 <body>
+<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo $sucursales[0]->id_sucursal ?>">
+<input type="hidden" name="nodo" id="id_nodo" value="<?php echo $sucursales[0]->id_nodo ?>">
 <div class="tab-content">
 	<div class="row">
 		<div class="col-md-12 title">
@@ -134,7 +167,6 @@ body{
 			</div>
 
 		</div>	
-
 
 </body>
 </html>
