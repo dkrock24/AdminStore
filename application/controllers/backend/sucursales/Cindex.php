@@ -356,7 +356,7 @@ class Cindex extends CI_Controller {
 	}
 
 	public function despacho_view($id_sucursal){
-		$data['datoSucursal'] = $this->sucursales_model->getSucursalesByNodo($id_sucursal);	
+		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);	
 		$this->load->view('backend/sucursales/Vdespacho.php',$data);
 	}
 

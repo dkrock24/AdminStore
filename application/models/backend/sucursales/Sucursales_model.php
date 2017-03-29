@@ -403,6 +403,14 @@ class sucursales_model extends CI_Model
         $this->db->update(self::pedidos,$data);
     }       
 
+    public function getDatosSucursal($id_sucursal)
+    {
+         $query = $this->db->query('Select * from sys_sucursal s where s.id_sucursal ='.$id_sucursal);
+         //echo $this->db->queries[0];
+        return $query->result_array();       
+        
+    }
+
     
 }
 /*
