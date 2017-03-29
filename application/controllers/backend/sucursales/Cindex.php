@@ -347,6 +347,24 @@ class Cindex extends CI_Controller {
 		echo json_encode($info);
 	}
 
+
+	//----------Funciones para pantalla despacho
+
+	public function update_despacho()
+	{
+		$this->sucursales_model->update_despacho($_POST);
+	}
+
+	public function despacho_view($id_sucursal){
+		$data['datoSucursal'] = $this->sucursales_model->getSucursalesByNodo($id_sucursal);	
+		$this->load->view('backend/sucursales/Vdespacho.php',$data);
+	}
+
+	public function despacho_view_master($id_sucursal){
+		$data['pedidos'] = $this->sucursales_model->getPedidosDespachoBySucursal($id_sucursal);
+		$this->load->view('backend/sucursales/master.chef.php',$data);
+	}
+	
 	
 	
 	

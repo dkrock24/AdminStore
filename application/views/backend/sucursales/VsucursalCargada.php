@@ -57,14 +57,14 @@
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
-					<i class='fa fa-file-text'></i>Ordenes
+					<i class='fa fa-money'></i>Despachos
 				</a>
-				<a href="../sucursales/Cindex/login/<?php echo $sucursales[0]->id_sucursal; ?>" target="_black" class="list-group-item go-sucursal" id="">										  	
-				  	<p class="center"><img src="../../../asset_/img/ordenes.png"></p>
-				</a>
+					<a href="../sucursales/Cindex/despacho_view/<?php echo $sucursales[0]->id_sucursal; ?>" target="_black" class="list-group-item go-sucursal" id="">					
+						<p class="center"><img src="../../../asset_/img/domain-transfer.png"></p>
+					</a>
 			</div>
         </div>
-
+        
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">

@@ -25,6 +25,7 @@ class sucursales_model extends CI_Model
     const sys_pedido_detalle = 'sys_pedido_detalle'; 
     const sys_pedido_detalle_materia = 'sys_pedido_detalle_materia'; 
     const materiales_adicionales = 'sys_materiales_adicionales';
+    const pedidos = 'sys_pedido';
 
     
 
@@ -372,6 +373,35 @@ class sucursales_model extends CI_Model
         }
     }
 
+
+    //---------------Modelos para despacho
+    public function getPedidosDespachoBySucursal($id_sucursal)
+    {
+         $query = $this->db->query('Select * from sys_pedido sp
+            where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1
+            and sp.id_sucursal = '.$id_sucursal.' order by sp.flag_elaborado = 0, sp.id_pedido asc');
+         //echo $this->db->queries[0];
+        return $query->result();       
+        
+    }
+
+    public function getPedidosDespachoBySucursalLoad($id_sucursal, $lastdate)
+    {
+         $query = $this->db->query('Select count(*) as numPedidos from sys_pedido sp
+            where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1
+            and sp.id_sucursal = '.$id_sucursal.' and sp.fechahora_pedido > '.$lastdate.' order by sp.flag_elaborado = 0, sp.id_pedido asc');
+         //echo $this->db->queries[0];
+        return $query->result();       
+        
+    }
+
+    public function update_despacho($dataPedido){
+        $data = array(
+            'flag_despachado'   => 1,            
+        );
+        $this->db->where('id_pedido', $dataPedido['pedidoID']);    
+        $this->db->update(self::pedidos,$data);
+    }       
 
     
 }
