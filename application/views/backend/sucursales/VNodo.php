@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo $sucursales[0]->id_sucursal ?>">
+<input type="hidden" name="nodo" id="id_nodo" value="<?php echo $sucursales[0]->id_nodo ?>">
 <head>
 	<meta charset=utf-8 />
 	<title></title>
@@ -15,24 +17,52 @@
 		var requestUrl = "http://localhost/lapizzeria/demo.php";
 		
 		/*	set user to 2 here	*/
-		var data = {"id_sucursal":$("#id_sucursal").val(), "id_nodo": $("#id_nodo").val() };
+		var id_sucursal = $("#id_sucursal").val();
+		var id_nodo = $("#id_nodo").val();
+		var data = {"id_sucursal":id_sucursal, "id_nodo":id_nodo};
 
-		var html = "<div class='list-group'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # 220</a><a href='' name='' class='list-group-item nodo'><table class='table table-hover'>";
+		var html = "";
 
 		var callBack = function(response){
-			response = JSON.parse(response);			
-			if(response.success == 0){
+			response = JSON.parse(response);	
+			//console.log(response);
 				
-				for(var i=0 ; i<response.feed.length ; i++)
+			if(response.success == 0){
+				var contador=1;
+				console.log(response);
+				for(var i=0 ; i<response.pedido.length ; i++)
 				{
-				html+="<tr>";		
-					html+="<td>#</td>";
-					html+="<td>"+response.feed[i]['nombre_producto']+"</td>";					
+					html += "<div class='list-group'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['id_pedido']+"</a>";
+					// pedido
+					html += "<a href='' name='' class='list-group-item nodo'><table class='table table-hover'>";
+					html += "<tr><td>#</td><td>Producto</td></tr>";
 					
-				html+="</tr>";
+					for(var j=0 ; j< response.detalle.length; j++)
+					{
+						// Detalle Productos
+						
+						html += "<tr><td>"+contador+"</td>";
+						html += "<td>"+response.detalle[j]['nombre_producto'];
+							if(response.detalle[i].items[j])
+							{
+								for(var x=0; x < response.detalle[i].items.length; x++){									
+									html += "<ul>";
+										html += "<li>"+response.detalle[i].items[j]['nombre_matarial']+"</li>";
+									html += "</ul>";	
+									//console.log(response.detalle[0].items[0]['nombre_matarial'])	;									
+								}
+							}
+								html +="</td></tr>";
+						contador++;
+					}
+					
 				}
-				$('.wrapper').append(html);				
+				html += "</table></a>";
+				html += "</div>";
+				$('.wrapper').append(html);		
+				html="";
 			}
+			
 		}
 
 		longpoll(requestUrl, data, callBack);
@@ -114,8 +144,7 @@ body{
 }
 </style>
 <body>
-<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo $sucursales[0]->id_sucursal ?>">
-<input type="hidden" name="nodo" id="id_nodo" value="<?php echo $sucursales[0]->id_nodo ?>">
+
 <div class="tab-content">
 	<div class="row">
 		<div class="col-md-12 title">
