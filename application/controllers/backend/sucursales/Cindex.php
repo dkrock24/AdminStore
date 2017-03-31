@@ -123,7 +123,8 @@ class Cindex extends CI_Controller {
 		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($unidadAConvert,$unidadDeConvert);
 		foreach ($datosEquivalentes as $value) {
 			$valor =  $value['cantidad_equivalencia'];
-			$resultConvert = $cantidadAConvert * $valor;
+
+			$resultConvert = $cantidadAConvert * $valor;			
 			//echo $resultConvert;			
 			//echo "(".$cantidadAConvert ."*". $valor.")";
 			//echo "<br>";
@@ -348,6 +349,7 @@ class Cindex extends CI_Controller {
 	}
 
 
+
 	//----------Funciones para pantalla despacho
 
 	public function update_despacho()
@@ -365,6 +367,13 @@ class Cindex extends CI_Controller {
 		$this->load->view('backend/sucursales/master.chef.php',$data);
 	}
 	
+
+	// Despachar pedido
+	function despacharPedido($id_orden,$id_sucursal,$nodo){
+		$this->sucursales_model->despacharPedido($id_orden,$id_sucursal,$nodo);
+	}
+
+
 	
 	
 	

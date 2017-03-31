@@ -373,6 +373,26 @@ class sucursales_model extends CI_Model
         }
     }
 
+    // Flag de Elaborado
+    public function despacharPedido($id_orden,$id_sucursal,$nodo){
+        
+        $data = array(
+            'elaborado'   => 1
+        );
+        $this->db->where('id_pedido', $id_orden);                
+        $this->db->update(self::sys_pedido,$data);
+
+        // Buscar elementos a                   
+        $data1 = array(
+            'producto_elaborado'   => 1
+        );
+        $this->db->where('id_nodo',$nodo);
+        $this->db->where('id_pedido',$id_orden);          
+        $this->db->update(self::sys_pedido_detalle,$data1);
+
+
+    }
+
 
     //---------------Modelos para despacho
     public function getPedidosDespachoBySucursal($id_sucursal)
