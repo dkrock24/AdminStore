@@ -8,8 +8,9 @@
 	$response['success'] = 1;
 	$iter = 0;
 	do{
-		$sql_pedido = "select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido from sys_pedido as pedido				
-				where pedido.id_sucursal=".$_POST['id_sucursal']." and pedido.mostrado=0 limit 1";
+		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa from sys_pedido as pedido	
+						join sys_pedido_detalle as PD on pedido.id_pedido=PD.id_pedido
+						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.mostrado=0 AND PD.id_nodo=".$_POST['id_nodo']." order by PD.id_pedido asc limit 1";
 		$res = mysqli_query($con, $sql_pedido)or die(mysqli_error($con));
 		if(mysqli_num_rows($res) > 0){
 			$response['success'] = 0;
@@ -20,10 +21,10 @@
 				// Pedido Detalle				
 				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar,productos.nombre_producto from sys_pedido_detalle as pedido_d 
 										join sys_productos as productos on productos.id_producto=pedido_d.id_producto
-										where pedido_d.id_pedido=".$row['id_pedido'];
+										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.id_nodo=".$_POST['id_nodo'];
 				$res2 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
 				if(mysqli_num_rows($res2) > 0){
-					for($j=0 ; $row2 = mysqli_fetch_array($res2) ; $j++){
+					for($j=0 ; $row2 = mysqli_fetch_array($res2) ; $j++){						
 
 						$response['detalle'][$j] = $row2;
 						// Pedido Detalle Materiales
@@ -32,19 +33,21 @@
 												join sys_pedido_detalle_materia as pedido_d_m on pedido_d.id_detalle=pedido_d_m.id_detalle
 												join sys_productos as productos on productos.id_producto=pedido_d.id_producto
 												join sys_catalogo_materiales cm on cm.codigo_material=pedido_d_m.codigo_producto
-												where pedido_d_m.id_detalle=".$row2['id_detalle']." AND (pedido_d_m.adicional=1 or pedido_d_m.eliminado=1)";
+												where pedido_d_m.id_detalle=".$row2['id_detalle']." AND (pedido_d_m.adicional=1 || pedido_d_m.eliminado=1)";
 						$res3 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
-						if(mysqli_num_rows($res2) > 0){
+						if(mysqli_num_rows($res3) > 0){
 							for($k=0 ; $row3 = mysqli_fetch_array($res3) ; $k++){
 								$response['detalle'][$j]['items'][$k] = $row3;
 							}
 						}
+						$sentencia = "update sys_pedido_detalle set mostrado=1 where id_detalle=".$row2['id_detalle'];
+						mysqli_query($con, $sentencia)or die(mysqli_error($con));	
 					}
 				}
-			}
-			
-			mysqli_query($con, "update sys_pedido set `mostrado`=1 where `id_pedido`=2")or die(mysqli_error($con));
-			break;
+				//$sentencia = "update sys_pedido set mostrado=1 where id_pedido=".$row['id_pedido'];
+				//mysqli_query($con, $sentencia)or die(mysqli_error($con));		
+				break;		
+			}						
 		}
 		//sleep for 5 secs to check for update
 		sleep(5);

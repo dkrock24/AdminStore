@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="css/master.css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 	
+	<script src="../../../../../../js/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,7 +16,6 @@
 	<script src="http://localhost/lapizzeria/js/longpoll.js"></script>
 	<script>
 		var requestUrl = "http://localhost/lapizzeria/demo.php";
-		
 		/*	set user to 2 here	*/
 		var id_sucursal = $("#id_sucursal").val();
 		var id_nodo = $("#id_nodo").val();
@@ -32,34 +32,41 @@
 				console.log(response);
 				for(var i=0 ; i<response.pedido.length ; i++)
 				{
-					html += "<div class='list-group'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['id_pedido']+"</a>";
+					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['id_pedido']+"</a>";
 					// pedido
-					html += "<a href='' name='' class='list-group-item nodo'><table class='table table-hover'>";
+					var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
+					html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
 					html += "<tr><td>#</td><td>Producto</td></tr>";
 					
 					for(var j=0 ; j< response.detalle.length; j++)
 					{
 						// Detalle Productos
-						
 						html += "<tr><td>"+contador+"</td>";
-						html += "<td>"+response.detalle[j]['nombre_producto'];
-							if(response.detalle[i].items[j])
-							{
-								for(var x=0; x < response.detalle[i].items.length; x++){									
-									html += "<ul>";
-										html += "<li>"+response.detalle[i].items[j]['nombre_matarial']+"</li>";
-									html += "</ul>";	
-									//console.log(response.detalle[0].items[0]['nombre_matarial'])	;									
+						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'];
+							if(response.detalle[i].items){
+								for(var x=0; x < response.detalle[i].items.length; x++){	
+									if(response.detalle[i].items[x])
+									{
+										html += "<ul>";
+										if(response.detalle[j].items[x]['eliminado']==1)								
+										{
+											html += "<li> Quitar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";
+										}
+										if(response.detalle[j].items[x]['adicional']==1)
+										{
+											html += "<li> Agregar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";	
+										}
+										html += "</ul>";																				
+									}
 								}
 							}
 								html +="</td></tr>";
 						contador++;
-					}
-					
+					}					
 				}
 				html += "</table></a>";
-				html += "</div>";
-				$('.wrapper').append(html);		
+				html += "</div></div>";
+				$('.ordenes').append(html);		
 				html="";
 			}
 			
@@ -69,21 +76,31 @@
 	</script>
 
 	<script>
-		$(document).ready(function(){			
-      		// CONVERTIR FECHAS A TEXTO
-        	$(".wrapper").click(function(){     
-        		if($(this).css("background") == "none")
-        		{
-        			$(this).css("background","green");
-        		}
-        		else{
-        			$(this).css("background","none");
-        		}	                   
-        	});
-        	$(".wrapper").dblclick(function(){
-        		$(this).remove();
-        	});
+	$(function(){
+		$(document).on('click', 'div.wrapper', function(){
 
+			$(this).css("background","green");
+
+			var ID_mesa = $(this).attr('id');
+			var ID_pedido = $(this).attr('pedido');
+			if (confirm('Despachar ' + ID_mesa + '?'))
+	        {	            
+	            $.ajax({
+				    url: "../../despacharPedido/"+ID_pedido+"/"+id_sucursal+"/"+id_nodo,
+				    type:"post", 
+
+				    success: function(){     
+				    	
+				    },
+				    error:function(){            
+				        alert("Error Al Despachar Pedido");
+				    }
+				}); 
+				$(this).remove();
+	            return;
+	        }        	
+        	
+        		/*
         	var tiempo = {
         		hora: 0,
         		minuto: 0,
@@ -110,8 +127,9 @@
                 $("#hira").text(tiempo.hora < 10 ? '0' + tiempo.hora : tiempo.hora);
                 $("#minuto").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
                 $("#segundo").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
-            }, 1000);
+            }, 1000);*/
         });
+	});
 	</script>
 </head>
 <style>
@@ -158,44 +176,10 @@ body{
 		</div>
 	</div>
 </div>
-
-
 	
-		<div class="wrapper">
-	    	<div class="list-group">
-				<a href="#" class="list-group-item active">
-					<i class='fa fa-home'></i>ORDEN -  # 220
-				</a>
-				<a href="" name="" class="list-group-item nodo" >
-					<table class="table table-hover">
-						<tr>
-							<td>#</td>
-							<td>Item</td>
-							<td>Cantidad</td>
-							<td>Indicacion</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Licuado de leche</td>
-							<td>2</td>
-							<td>Poca Azucar</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Licuado de leche</td>
-							<td>2</td>
-							<td>Poca Azucar</td>
-						</tr>
-					</table>				
-				</a>
-				<div class="time">
-					<i id="hora"></i> :
-					<i id="minuto"></i> :
-					<i id="segundo"></i>
-				</div>
-			</div>
-
-		</div>	
+	<div class="ordenes">
+		
+	</div>
 
 </body>
 </html>

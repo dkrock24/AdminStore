@@ -123,7 +123,8 @@ class Cindex extends CI_Controller {
 		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($unidadAConvert,$unidadDeConvert);
 		foreach ($datosEquivalentes as $value) {
 			$valor =  $value['cantidad_equivalencia'];
-			$resultConvert = $cantidadAConvert * $valor;
+
+			$resultConvert = $cantidadAConvert * $valor;			
 			//echo $resultConvert;			
 			//echo "(".$cantidadAConvert ."*". $valor.")";
 			//echo "<br>";
@@ -345,6 +346,11 @@ class Cindex extends CI_Controller {
 	function getPrecioAdicionalByCodigo($codigo){
 		$info = $this->sucursales_model->getAdicionalesByCodigo($codigo);	
 		echo json_encode($info);
+	}
+
+	// Despachar pedido
+	function despacharPedido($id_orden,$id_sucursal,$nodo){
+		$this->sucursales_model->despacharPedido($id_orden,$id_sucursal,$nodo);
 	}
 
 	
