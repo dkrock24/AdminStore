@@ -1,6 +1,6 @@
 <?php
-	$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
-	mysqli_select_db($con, "db_global_lapizzeria2")or die(mysqli_error($con));
+	$con = mysqli_connect("localhost", "root", "lapizzeria2016!")or die(mysqli_error($con));
+	mysqli_select_db($con, "db_global_lapizzeria")or die(mysqli_error($con));
 	
 	//create response array
 	$response = array();
