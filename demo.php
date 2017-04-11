@@ -1,6 +1,8 @@
 <?php
-	$con = mysqli_connect("localhost", "root", "lapizzeria2016!")or die(mysqli_error($con));
+	$con = mysqli_connect("45.33.3.227", "root", "")or die(mysqli_error($con));
+	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
 	mysqli_select_db($con, "db_global_lapizzeria")or die(mysqli_error($con));
+	//mysqli_select_db($con, "db_global_lapizzeria2")or die(mysqli_error($con));
 	
 	//create response array
 	$response = array();
@@ -8,7 +10,7 @@
 	$response['success'] = 1;
 	$iter = 0;
 	do{
-		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa from sys_pedido as pedido	
+		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa,pedido.fechahora_pedido,pedido.secuencia_orden from sys_pedido as pedido	
 						join sys_pedido_detalle as PD on pedido.id_pedido=PD.id_pedido
 						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.mostrado=0 AND PD.id_nodo=".$_POST['id_nodo']." order by PD.id_pedido asc limit 1";
 		$res = mysqli_query($con, $sql_pedido)or die(mysqli_error($con));

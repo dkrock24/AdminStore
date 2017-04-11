@@ -443,7 +443,7 @@
 			//buffer1 += '<tbody>';		
 			buffer1 += '<thead class="titulo2"><td colspan="5">INGREDIENTES</td></thead>';	
 			
-			buffer1 += '<tr class="cabecera_table"><td>Codigo</td><td>Ingrediente</td><td>Precio</td><td>Cantidad</td><td>Accion</td></tr>';
+			buffer1 += '<tr class="cabecera_table"><td>Codigo</td><td>Ingrediente</td><td>Precio</td><td>Cantidad Inventario</td><td>Accion</td></tr>';
 			for (index = 0; index < buffer_ingredientes1.length; ++index) 
 			{   							
 					//buffer_ingredientes[index] = data[index]['name_detalle'];
@@ -671,7 +671,8 @@
 
 			    success: function(data){     // Envia Datos a Detalle	              
 			    		
-					//alert("Orden Enviada a Cocina");
+					alert("Orden Enviada a Cocina");
+					reiniciarInterfaz();
 					//enviarDetalle(Mesa,ID_mesero,Id_Sucursal,data);
 					
 			    },

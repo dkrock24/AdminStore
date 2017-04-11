@@ -13,26 +13,32 @@
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script>
+	<script src="http://localhost/lapizzeria/js/longpoll.js"></script>
 	<script>
-		var requestUrl = "http://45.33.3.227/lapizzeria/demo.php";
+		var requestUrl = "http://localhost/lapizzeria/demo.php";
 		/*	set user to 2 here	*/
 		var id_sucursal = $("#id_sucursal").val();
-		var id_nodo = $("#id_nodo").val();
-		var data = {"id_sucursal":id_sucursal, "id_nodo":id_nodo};
+		var id_nodo 	= $("#id_nodo").val();
+		var data 		= {"id_sucursal":id_sucursal, "id_nodo":id_nodo};
+		var html 		= "";
 
-		var html = "";
 
+
+		/*
+		/ =================================================
+		*/
 		var callBack = function(response){
 			response = JSON.parse(response);	
 			//console.log(response);
 				
 			if(response.success == 0){
+
 				var contador=1;
 				console.log(response);
 				for(var i=0 ; i<response.pedido.length ; i++)
 				{
-					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['id_pedido']+"</a>";
+					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+				
 					// pedido
 					var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
 					html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
@@ -65,17 +71,48 @@
 					}					
 				}
 				html += "</table></a>";
-				html += "</div></div>";
+				html += "</div><span class='tiempo'></div>";
 				$('.ordenes').append(html);		
 				html="";
 			}
+
+				var tiempo = {
+	        		hora: 0,
+	        		minuto: 0,
+	        		segundo: 0
+    			};
+
+    		var tiempo_corriendo = null;
+
+			tiempo_corriendo = setInterval(function(){
+		                // Segundos
+		                tiempo.segundo++;
+		                if(tiempo.segundo >= 60)
+		                {
+		                    tiempo.segundo = 0;
+		                    tiempo.minuto++;
+		                }      
+
+		                // Minutos
+		                if(tiempo.minuto >= 60)
+		                {
+		                    tiempo.minuto = 0;
+		                    tiempo.hora++;
+		                }
+
+		                $(this).find(".hora").text(tiempo.hora < 10 ? '0' + tiempo.hora : tiempo.hora);
+		                $(this).find(".minuto").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
+		                $(this).find(".segundo").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
+		            }, 1000);
 			
 		}
 
 		longpoll(requestUrl, data, callBack);
+
 	</script>
 
 	<script>
+
 	$(function(){
 		$(document).on('click', 'div.wrapper', function(){
 
@@ -100,34 +137,8 @@
 	            return;
 	        }        	
         	
-        		/*
-        	var tiempo = {
-        		hora: 0,
-        		minuto: 0,
-        		segundo: 0
-    		};
-
-    		var tiempo_corriendo = null;
-        	tiempo_corriendo = setInterval(function(){
-                // Segundos
-                tiempo.segundo++;
-                if(tiempo.segundo >= 60)
-                {
-                    tiempo.segundo = 0;
-                    tiempo.minuto++;
-                }      
-
-                // Minutos
-                if(tiempo.minuto >= 60)
-                {
-                    tiempo.minuto = 0;
-                    tiempo.hora++;
-                }
-
-                $("#hira").text(tiempo.hora < 10 ? '0' + tiempo.hora : tiempo.hora);
-                $("#minuto").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
-                $("#segundo").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
-            }, 1000);*/
+        		
+        	
         });
 	});
 	</script>
@@ -139,6 +150,9 @@ body{
 }
 #x{
 	color:white;
+}
+.hora,.minuto,.segundo{
+	font-size: 18px;
 }
 .wrapper
 {
@@ -180,6 +194,5 @@ body{
 	<div class="ordenes">
 		
 	</div>
-
 </body>
 </html>

@@ -8,6 +8,7 @@ class sucursales_model extends CI_Model
     const sys_pais_departamento     = 'sys_pais_departamento';
     const sys_pais                  = 'sys_pais';   
     const sys_sucursal_int_usuarios = 'sys_sucursal_int_usuarios';   
+    const sys_secuencia             = 'sys_secuencia';
     
 
     
@@ -70,6 +71,15 @@ class sucursales_model extends CI_Model
         //Crear Cada Nodo Para la sucursal que se crea
         $id_last_sucursal = $this->db->insert_id();
 
+        // Insertar La Secuencia de esta sucursal
+        $date = date("Y-m-d");
+        $data_secuencia = array(
+            'id_sucursal'   => $id_last_sucursal,
+            'fecha_secuencia'   => $date,
+            'valor_secuencia'   => "0000"
+        );
+        $this->db->insert(self::sys_secuencia,$data_secuencia);
+
         //Obtener Todos Los Nodos
         $nodos = $this->getNodos();
         foreach ($nodos as $nodo) {
@@ -122,8 +132,11 @@ class sucursales_model extends CI_Model
         $data = array(
             'id_sucursal' => $id_sucursal        
         );
+        $this->db->delete(self::sys_secuencia, $data);
+        $this->db->delete(self::sys_sucursal_nodo, $data);        
         $this->db->delete(self::sys_sucursal_int_usuarios, $data);   
-        $this->db->delete(self::sys_sucursal, $data);         
+        $this->db->delete(self::sys_sucursal, $data);  
+        
     }
 
     // Sucurales por Departamentos

@@ -26,6 +26,7 @@ class sucursales_model extends CI_Model
     const sys_pedido_detalle_materia = 'sys_pedido_detalle_materia'; 
     const materiales_adicionales = 'sys_materiales_adicionales';
     const pedidos = 'sys_pedido';
+    const sys_secuencia = 'sys_secuencia';
 
     
 
@@ -252,9 +253,39 @@ class sucursales_model extends CI_Model
 
     // INSERTAR PEDIDO - ENCABEZADO
     public function InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal){
+        // obtener la secuencia de la secursal
+        $date = date("Y-m-d");
+        $fecha_secuencia;
+        $valor_secuencia;
+        $this->db->select('*');
+        $this->db->from(self::sys_secuencia.' AS s');
+        $this->db->where('s.id_sucursal',$Id_Sucursal);
+        $query = $this->db->get();
+        if($query->num_rows() > 0 )
+        {
+            $info = $query->result();
+            foreach ($info as $value) {
+                $fecha_secuencia    = strtotime($value->fecha_secuencia,time());
+                $fecha_actual       = strtotime($date,time());
+                $numero             = $value->valor_secuencia;
+                $numero++;
+                if($fecha_secuencia==$fecha_actual){
+                    $valor_secuencia = str_pad($numero,4,"0",STR_PAD_LEFT) ;
+                    $this->UpdateSecuencia($Id_Sucursal,$valor_secuencia);
+                }
+                else
+                {
+                    $valor_secuencia = "0001";
+                    $this->UpdateSecuencia($Id_Sucursal,$valor_secuencia);
+                }
+            }
+        }
+        
+
         session_start();
         $date = date("Y-m-d H:m:s");
         $data = array(
+            'secuencia_orden'   => $valor_secuencia,
             'id_sucursal'       => $Id_Sucursal,           
             'id_usuario'        => $_SESSION['idUser'],
             'id_mesero'         => $Id_Mesero, 
@@ -269,6 +300,17 @@ class sucursales_model extends CI_Model
         );
         $this->db->insert(self::sys_pedido,$data);
         return $this->db->insert_id();
+    }
+
+    public function UpdateSecuencia($Id_Sucursal,$valor_secuencia)
+    {
+        $date = date("Y-m-d H:m:s");
+        $data = array(
+            'fecha_secuencia'   => $date,
+            'valor_secuencia'   => $valor_secuencia
+        );
+        $this->db->where('id_sucursal', $Id_Sucursal);                
+        $this->db->update(self::sys_secuencia,$data);
     }
 
     // INSERTAR PEDIDO - DETALLE

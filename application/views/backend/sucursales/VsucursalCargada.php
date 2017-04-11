@@ -103,11 +103,11 @@
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
-					<i class='fa fa-money'></i>Cortes
+					<i class='fa fa-file-text'></i>Cortes
 				</a>
-					<a  class="list-group-item go-sucursal" id="">										  	
-					  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
-					</a>
+				<a href="#" class="list-group-item go-sucursal" id="../sucursales/Ccortes/index/">										  	
+				  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
+				</a>
 			</div>
         </div>
         <div class="col-md-4">
