@@ -10,7 +10,10 @@ class Cindex extends CI_Controller {
 		$this->load->database('default');	
 		$this->load->model('backend/sucursales/sucursales_model');	
 		$this->load->model('backend/convert/convert_model');
-		$this->load->model('backend/login/login_model');		
+		$this->load->model('backend/login/login_model');	
+		$this->load->model('backend/logs/logs_model');	
+		$this->load->model('backend/alertas/alertas_model');
+		
 	}
 
 	public function index()
@@ -22,7 +25,16 @@ class Cindex extends CI_Controller {
 		$this->load->view('backend/sucursales/Vindex.php',$data);
 	}
 	public function cargar_sucursal($id_sucursal){
-		$data['sucursales'] = $this->sucursales_model->getSucursalesById($id_sucursal);		
+		session_start();
+		$var_id_usuario = $_SESSION['idUser'];
+		$data['sucursales'] = $this->sucursales_model->getSucursalesById($id_sucursal);	
+
+		$this->logs_model->setLog(2,$id_sucursal,$var_id_usuario);	
+
+		/* NOTIFICACION DE CORTE*/	
+		$this->alertas_model->setAlerta($id_sucursal,$var_id_usuario,16,1);	
+		/* NOTIFICACION DE CORTE*/
+
 		$this->load->view('backend/sucursales/VsucursalCargada.php',$data);
 	}
 	public function cargar_nodos($id_sucursal){
@@ -190,9 +202,9 @@ class Cindex extends CI_Controller {
 	}
 	// Inserta El Detalle de La Orden
 	public function GuardarOrdenDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$Id_Sucursal,$Id_Pedido,$llevar,$Ingredientes,$Adicionales){	
-		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
+		$info 				= $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
 		$id_pedido_detalle 	= $this->sucursales_model->InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$info[0]->nodoID,$Id_Sucursal,$Id_Pedido,$llevar);
-		$data = $_POST['info'];
+		$data 				= $_POST['info'];
 
 		// Eliminar Ingredientes
 		if($Ingredientes!=0){
@@ -216,8 +228,7 @@ class Cindex extends CI_Controller {
 			}
 		}
 
-
-// Agregar Ingredientes
+		// Agregar Ingredientes
 		if($Adicionales!=0){		// Insertar Adicionales a la Orden Por Producto
 			foreach ($Adicionales as $adicional) {
 				$items = $this->getItemsByCodigo2($Id_Sucursal,$adicional['codigo']);
@@ -227,17 +238,28 @@ class Cindex extends CI_Controller {
 				}						
 			}					
 		}
+		//$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
+		foreach ($info as $producto) 
+		{
+			// Despues de Insertar El Detall de Cada Producto, Descontarmeos del Inventario Su Equivalente
+			$valor = $this->ConvertUnidades2(
+				$Id_Sucursal,
+				$producto->name_detalle,
+				$producto->Unidad2,
+				$producto->unidad_medida_id,
+				$producto->cantidad,
+				$producto->name_detalle,
+				$producto->total_existencia
+			);	
+		}
 
 	}
+
 	// Insertar Items de Cada Producto como Detalle de La Orden
-	//$Id_Sucursal,$Id_Producto,$id_pedido_detallep
 	public function GuardarOrdenDetalleMaterial($Id_Sucursal,$Id_Producto,$id_pedido_detalle){
-		
 		//$info = $this->sucursales_model->getItemsByCodigo($Id_Sucursal,$Id_Producto);
 		$info = $this->sucursales_model->getProductoItems($Id_Sucursal,$Id_Producto);
 		$data = $_POST['info'];
-
-		
 
 			foreach ($data as  $ordenPedido) { // Elementos de la orden
 				
@@ -247,12 +269,14 @@ class Cindex extends CI_Controller {
 						foreach ($info as $itemsProducto) { // Items de productos
 							if($itemsProducto->name_detalle==$ingredientes['codigo_m'])
 							{
-								var_dump($ingredientes['nombre_m']);
+								//var_dump($ingredientes['nombre_m']);
 								$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,0,0,1,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+								
 							}
 							else
 							{
 								$this->insertItems($id_pedido_detalle,$itemsProducto->unidad_medida_id,1,0,0,$itemsProducto->name_detalle,	$itemsProducto->cantidad,0);
+															
 							}
 						}
 					}
@@ -290,6 +314,7 @@ class Cindex extends CI_Controller {
 
 	public function insertItems($id_detalle,$id_unidad,$neutro,$adicional,$eliminado,$codigo_producto,$cantidad,$precio_adicional){
 		$this->sucursales_model->setPedidoDetalleMateria($id_detalle,$id_unidad,$neutro,$adicional,$eliminado,$codigo_producto,$cantidad,$precio_adicional);
+
 	}
 
 	public function getItemsByCodigo2($sucursal,$codigo){
@@ -299,6 +324,7 @@ class Cindex extends CI_Controller {
 
 	public function ConvertUnidades2($Id_Sucursal,$Id_Producto,$unidadAConvert,$unidadDeConvert,$cantidadAConvert,$codigo_material,$total_existencia)
 	{
+
 		$datosEquivalentes = $this->convert_model->getDatosEquivalentes($unidadAConvert,$unidadDeConvert);
 		foreach ($datosEquivalentes as $value) {
 			$valor =  $value['cantidad_equivalencia'];

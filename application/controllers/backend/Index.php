@@ -10,6 +10,7 @@ class Index extends CI_Controller {
 		$this->load->helper('url');		
 		$this->load->database('default');		
 		$this->load->model('backend/login/login_model');
+		$this->load->model('backend/logs/logs_model');	
 		
 	}
 
@@ -32,11 +33,9 @@ class Index extends CI_Controller {
 		if(isset($_SESSION['usuario']) and isset($_SESSION['password']))
 		{
 			$autenticar['login'] =  $this->login_model->login($_SESSION['usuario'],$_SESSION['password']);
-		}else{
-					
+		}else{							
 			$autenticar['login'] =  $this->login_model->login($_POST['usuario'],$_POST['password']);
-		}
-		
+		}		
 
 		if($autenticar['login']==0){
 		
@@ -44,6 +43,7 @@ class Index extends CI_Controller {
 		}else{	
 		
 			foreach ($autenticar['login'] as $value) {
+				
 				$this->home($value->rol,$value->id_usuario);
 			}			
 		}
@@ -52,9 +52,13 @@ class Index extends CI_Controller {
 	public function home($rol,$idUsuario){	
 		//session_start();
 		
+		
+
+
 		$_SESSION['idUser']		=$idUsuario;
 		if($_POST)
 		{
+			$this->logs_model->setLog(1,null,$idUsuario);	
 			$_SESSION['usuario'] 	= $_POST['usuario'];
 			$_SESSION['password'] 	= $_POST['password'];
 		}	
@@ -64,16 +68,15 @@ class Index extends CI_Controller {
 		$configuracion['submenu']	= $this->login_model->submenu($rol);
 		$configuracion['empresa'] 	= $this->login_model->empresa();	
 		$configuracion['usuario'] 	= $this->login_model->getUserByID($idUsuario);	
+		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);	
 
 		$this->load->view('backend/home/home',$configuracion);	
-
-
 	}
 
 	public function salir(){
-		
+		session_start();
 		$this->index();
 			
-		//session_destroy($_SESSION);
+		session_destroy();
 	}
 }

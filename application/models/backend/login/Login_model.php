@@ -8,6 +8,7 @@ class login_model extends CI_Model
     const sr_submenu        = 'sr_submenu';
     const empresa           = 'sr_empresa';
     const usuarios          = 'sr_usuarios';
+    const logs          = 'sr_log_acceso';
 
     
     public function __construct()
@@ -125,6 +126,13 @@ class login_model extends CI_Model
     }
     function encrypt($password){
         return sha1($password);
+    }
+
+    public function getSucursal($id_usuario){
+        $query = $this->db->query('select * from sys_sucursal as S
+                                    join sys_sucursal_int_usuarios as SU on SU.id_sucursal=S.id_sucursal
+                                    where SU.id_usuario='.$id_usuario.' and SU.estado=1');    
+        return $query->result(); 
     }
 }
 /*

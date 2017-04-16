@@ -12,6 +12,7 @@ class Ccortes extends CI_Controller {
 		$this->load->model('backend/convert/convert_model');
 		$this->load->model('backend/login/login_model');
 		$this->load->model('backend/cortes/cortes_model');
+		$this->load->model('backend/alertas/alertas_model');
 	}
 
 	public function index($id_sucursal)
@@ -51,7 +52,11 @@ class Ccortes extends CI_Controller {
 		//InsetCorte
 		$this->cortes_model->SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones);
 
-		//$Fecha_Corte 	=	date("Y-m-d H:m:s");
+		/* NOTIFICACION DE CORTE*/
+		session_start();
+		$var_id_usuario = $_SESSION['idUser'];
+		$this->alertas_model->setAlerta($id_sucursal,$var_id_usuario,16,2);	
+		/* NOTIFICACION DE CORTE*/
 
 	}
 
@@ -72,7 +77,7 @@ class Ccortes extends CI_Controller {
 		foreach ($data as $value) {
 			$html .= "<tr>";
 				$html .= "<td>";
-					$html .= $value->id_usuario;
+					$html .= $value->nickname;
 				$html .= "</td>";
 
 				$html .= "<td>";
@@ -80,11 +85,11 @@ class Ccortes extends CI_Controller {
 				$html .= "</td>";
 
 				$html .= "<td>";
-					$html .= $value->monto_corte;
+					$html .= $value->moneda." ". number_format($value->monto_corte,2);
 				$html .= "</td>";
 
-				$html .= "<td>";
-					$html .= $value->monto_adicionales;
+				$html .= "<td>$ ";
+					$html .= number_format($value->monto_adicionales,2);
 				$html .= "</td>";
 
 				$html .= "<td>";

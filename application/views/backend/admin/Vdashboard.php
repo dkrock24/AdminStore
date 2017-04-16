@@ -155,6 +155,21 @@
             });
         });
 
+        $(".editar_consulta").click(function(){
+            var id = $(this).attr("name");
+            $.ajax({
+                //url: "../admin/Cdashboard/eliminar_consulta/"+id,
+                type: "post",            
+                
+                success: function(data){                 
+                    $(".pages").load("../admin/Cdashboard/editarQuery/"+id);    
+                },
+                error:function(){
+                    alert("failure");
+                }
+            });
+        });
+
     });
     </script>
 
@@ -343,7 +358,7 @@
                     <th>Titulo</th>
                     <th>Descripcion</th>
                     <th>Grafico</th>
-                    <th> Accion</th>
+                    <th>Accion</th>
                 </thead>
                 <tbody>
                     <?php
@@ -354,8 +369,9 @@
                             <td><?php echo $value->title ?></td>
                             <td><?php echo $value->description ?></td>
                             <td><?php echo $value->chart_type ?></td>
-                            <td>                                
-                                <a href="#" class="btn btn-danger borrar_consulta" name="<?php echo $value->id_global_report ?>">Eliminar</a>
+                            <td>      
+                                <a href="#" class="btn btn-primary editar_consulta" name="<?php echo $value->id_global_report ?>">Editar</a>                          
+                                <a href="#" class="btn btn-success borrar_consulta" name="<?php echo $value->id_global_report ?>">Eliminar</a>
                             </td>
                         </tr>
                     <?php

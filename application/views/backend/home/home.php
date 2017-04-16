@@ -10,9 +10,15 @@ if(!isset($_SESSION['usuario'])){
 
 ?>
 
+
+
 <script>
 $( document ).ready(function() {
-    $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/index");    
+    $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/index");  
+
+    $(".remover").click(function(){
+        $(this).hide();
+    });
     
 
 });
@@ -30,7 +36,7 @@ $( document ).ready(function() {
     <meta name="author" content="themes-lab">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
     <title>Sistema Integrado</title>
-    <script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../js/jquery.js"></script>
     <?php
       foreach ($lib_login as $value) {
       ?>
@@ -48,6 +54,21 @@ $( document ).ready(function() {
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <style>
+    .fa-bell{
+        color: black;
+    }
+    .numero-alerta{
+        color: black;
+        font-family: 18px;
+        padding: 5px;
+    }
+    .ocultar{
+        text-align: center;
+        background-color: #88B32F;
+    }
+    .ocultar:hover{
+        background-color: #88B32F;
+    }
           .nav-sidebar, .sidebar-inner{
             font-family: Arial;
           }
@@ -159,9 +180,7 @@ $( document ).ready(function() {
                   <span class="fa arrow"></span>
                 </a>
                 <ul class="children collapse"> 
-                <?php
-
-                    
+                <?php                    
 
                     foreach($submenu as $sub_menu)
                     {
@@ -193,9 +212,9 @@ $( document ).ready(function() {
             <i class="icon-settings"></i></a>
             <a class="pull-left toggle_fullscreen" href="#" data-rel="tooltip" data-placement="top" data-original-title="Fullscreen">
             <i class="icon-size-fullscreen"></i></a>
-            <a class="pull-left" href="user-lockscreen.php" data-rel="tooltip" data-placement="top" data-original-title="Lockscreen">
+            <a class="pull-left" href="#" data-rel="tooltip" data-placement="top" data-original-title="Lockscreen">
             <i class="icon-lock"></i></a>
-            <a class="pull-left btn-effect" href="logaut.php" data-modal="modal-1" data-rel="tooltip" data-placement="top" data-original-title="Logout1">
+            <a class="pull-left btn-effect" href="salir" data-modal="modal-1" data-rel="tooltip" data-placement="top" data-original-title="Salir">
             <i class="icon-power"></i></a>
           </div>
         </div>
@@ -228,7 +247,25 @@ $( document ).ready(function() {
               <!-- BEGIN MESSAGES DROPDOWN -->
               <!-- END MESSAGES DROPDOWN -->
 
-              <!-- BEGIN USER DROPDOWN -->
+              <!-- BEGIN USER DROPDOWN -->              
+            <li class="dropdown alertas">
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="numero-alerta">0</span><i class="fa fa-bell"></i><b class="caret"></b></a>
+                      <ul class="dropdown-menu alert-dropdown">
+                         <li class="ocultar">
+                              <a href="#" class="ocultar">Cancelar</a>
+                          </li>
+                           <li class="divider"></li>
+                          <li class="mensajes">                              
+                              
+                          </li>
+                         
+
+                      </ul>
+                    </li>
+                </ul>
+            </li>
               <li class="dropdown" id="user-header">
                 <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                 
@@ -238,13 +275,14 @@ $( document ).ready(function() {
                 
                 <span class="username"><?php echo $usuario[0]->nickname; ?></span>
                 </a>
+                
                 <ul class="dropdown-menu">
-                  <li>
-                    <a id="submenu" href="#backend/menu/Cmenu/miPerfil"><i class="icon-user"></i><span>Mi Perfil</span></a>
-                  </li>                 
-                  <li>
-                    <a href="salir"><i class="icon-logout"></i><span>SALIR</span></a>
-                  </li>
+                    <li>
+                        <a id="submenu" href="#backend/menu/Cmenu/miPerfil"><i class="icon-user"></i><span>Mi Perfil</span></a>
+                    </li>                 
+                    <li>
+                        <a href="salir"><i class="icon-logout"></i><span>SALIR</span></a>
+                    </li>
                 </ul>
               </li>
               <!-- END USER DROPDOWN -->
@@ -314,7 +352,7 @@ $( document ).ready(function() {
     <script src="../../../assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
     <script src="../../../assets/plugins/gsap/main-gsap.min.js"></script>
     -->
-    <script src="../../../assets/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>
+    
     
     <script src="../../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../../assets/plugins/jquery-cookies/jquery.cookies.min.js"></script> <!-- Jquery Cookies, for theme -->
@@ -334,4 +372,44 @@ $( document ).ready(function() {
 
   </body>
 </html>
+
+<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo $sucursal[0]->id_sucursal ?>">
+<script src="../../../js/longpoll.js"></script>
+
+<script>
+$( document ).ready(function() {    
+
+    $(".ocultar").click(function(){
+        $(".mensajes").empty();
+        $(".numero-alerta").text(0);
+    });    
+
+});
+
+        var requestUrl = "../alertas/Calertas/getAlertas";  
+        var sucursal_id = $("#id_sucursal").val();
+        var data        = {"id_sucursal":sucursal_id};        
+
+        var callBack = function(response){
+            response = JSON.parse(response);
+            var valor = $(".numero-alerta").text();
+            var numero = parseInt(valor);
+            for(var i=0 ; i<response.alertas.length ; i++)
+            {
+                console.log(response.alertas[i].mensaje);
+                var msj = response.alertas[i].mensaje;
+                var sucursal = response.alertas[i].nombre_sucursal;
+                var nickname = response.alertas[i].nickname;
+                var date = response.alertas[i].fecha_creado;
+                var clase = response.alertas[i].clase;
+                $(".numero-alerta").text(++numero);
+                var html="<a href='#' class='remover'>"+msj+" - "+sucursal +" - "+ nickname +"<br><span class='label label-"+clase+"'>"+ date +"</span></a>";
+                
+                $(".mensajes").append(html);
+            }
+        }
+
+
+        longpoll(requestUrl, data, callBack);
+</script>
 

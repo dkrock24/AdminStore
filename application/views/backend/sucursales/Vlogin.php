@@ -144,8 +144,7 @@ body {
 		    <form role="form"  method="post" action="../ordenes/<?php echo $sucursales[0]->id_sucursal ?>" id="login_orden">
 		      	<input type="text" name="usuario" placeholder="Usuario"/>
 		      	<input type="password" name="password" placeholder="Password"/>
-		      	<input type="submit" name="Entrar">
-		      	<a id="<?php echo $sucursales[0]->id_sucursal ?>" class="entrar">Entrar</button>      
+		      	<input type="submit" name="Entrar">		      	  
 		    </form>
   		</div>
 	</div>

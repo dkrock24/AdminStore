@@ -19,7 +19,7 @@
     		var id_sucursal = $("#id_sucursal").val();
     		var url1 = $(this).attr("id");
 	        $.ajax({
-	            url: url1+id_sucursal,
+	            //url: url1+id_sucursal,
 	            type:"post",
 	            success: function(){     
 	              $(".pages").load(url1+id_sucursal);      

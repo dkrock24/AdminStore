@@ -24,6 +24,18 @@ class Dashboard_model extends CI_Model
             return $query->result();
         }        
     }
+    public function getOneQuery($id)
+    {
+        $this->db->select('*');
+        $this->db->from(self::querys); 
+        $this->db->where('id_global_report',$id);  
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }        
+    }
     public function getConsultas()
     {
         $this->db->select('*');
@@ -94,6 +106,60 @@ class Dashboard_model extends CI_Model
                     'input_type'        => $input_type,
                     'title'             => $input_title, 
                     'id_global_report'  => $id_query,            
+                    'input_state'       => 1
+                );
+                $this->db->insert(self::parametros,$parametros);
+
+                $_flat+=1;
+                $longitud++;                   
+            }
+        }            
+
+    }
+
+    public function editar_consulta($data){
+        //$date = date("Y-m-d H:m:s");
+        $data1 = array(
+            'menu_name'     => $data['nombre'],           
+            'title'         => $data['titulo'],
+            'description'   => $data['descripcion'], 
+            'icon'          => $data['icono'],            
+            'query'         => $data['query'],
+            'chart_type_id' => $data['tipo_grafica'],
+            'status'        => $data['estado']
+        );        
+        $this->db->where('id_global_report', $data['id_query']);        
+        $this->db->update(self::querys,$data1);
+
+        $contador = $_POST['numero'];
+        if($contador >0 )
+        {
+            $data2 = array(
+                'id_global_report' =>  $data['id_query']
+            );             
+            $this->db->delete(self::parametros, $data2); 
+            
+            $input_name ='';
+            $input_type ='';
+            $input_title='';
+              
+            $longitud = 0;
+            $numeroCampos=$contador*1;
+            $bloque=0;
+            $_flat=1;
+
+            $id_query =  $this->db->insert_id();
+            while ($longitud < $numeroCampos)
+            {                    
+                $input_title    = $data['A'.$_flat];
+                $input_name     = $data['B'.$_flat];
+                $input_type     = $data['C'.$_flat];
+                
+                $parametros = array(
+                    'input_name'        => $input_name,           
+                    'input_type'        => $input_type,
+                    'title'             => $input_title, 
+                    'id_global_report'  => $data['id_query'],            
                     'input_state'       => 1
                 );
                 $this->db->insert(self::parametros,$parametros);

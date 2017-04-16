@@ -1,4 +1,4 @@
-<script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+
 <?php
 session_start();
  //include_once("../class_db/class_menus.php");

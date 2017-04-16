@@ -144,7 +144,11 @@ class cortes_model extends CI_Model
     }
 
     public function getCortesByFilter($id_sucursal,$data_filter){
-        $query = $this->db->query('select id_usuario,fecha_corte,monto_corte,monto_adicionales,total_ordenes,serie_fin,cupones from sys_pedido_cortes as pedido_corte
+        $query = $this->db->query('select u.nickname,fecha_corte,monto_corte,monto_adicionales,total_ordenes,serie_fin,cupones,P.moneda from sys_pedido_cortes as pedido_corte
+            join sr_usuarios as u on u.id_usuario=pedido_corte.id_usuario
+            join sys_sucursal as S on S.id_sucursal=pedido_corte.id_sucursal
+            join sys_pais_departamento as D on D.id_departamento=S.id_departamento
+            join sys_pais as P on P.id_pais=D.id_pais
                 where pedido_corte.id_sucursal='.$id_sucursal.' and 
                 CAST(pedido_corte.fecha_corte AS DATE) between "'.$data_filter['fecha_inicio'].'" and "'.$data_filter['fecha_fin'].'"');
                 return $query->result();

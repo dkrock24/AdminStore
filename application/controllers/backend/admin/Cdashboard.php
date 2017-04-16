@@ -21,8 +21,21 @@ class Cdashboard extends CI_Controller {
 		$this->load->view('backend/admin/Vdashboard.php',$data);
 	}
 
+	public function editarQuery($id_query){
+		$data['graficos'] = $this->dashboard_model->getTiposGraficas();
+		$data['query'] =  $this->dashboard_model->getOneQuery($id_query);
+		$data['parametros'] =  $this->dashboard_model->getParametros($id_query);
+		$data['graficos'] = $this->dashboard_model->getTiposGraficas();
+		$this->load->view('backend/admin/VdashboardEditar.php',$data);		
+	}
+
 	public function guardar_consulta(){
 		$this->dashboard_model->guardar_consulta($_POST);	
+		$this->index();	
+	}
+
+	public function editar_consulta(){
+		$this->dashboard_model->editar_consulta($_POST);	
 		$this->index();	
 	}
 

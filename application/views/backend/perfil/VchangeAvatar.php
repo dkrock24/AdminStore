@@ -7,7 +7,7 @@
 
  <!-- END PRELOADER -->
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-    <script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+    
     <script src="../../../assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
     <script src="../../../assets/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>
     <script src="../../../assets/plugins/gsap/main-gsap.min.js"></script>

@@ -4,9 +4,9 @@
   		$(".go-sucursal").click(function(){
     		var id_sucursal = $(this).attr("id");
 	        $.ajax({
-	            url: "../sucursales/Cindex/cargar_sucursal/"+id_sucursal,
+	            //url: "../sucursales/Cindex/cargar_sucursal/"+id_sucursal,
 	            type:"post",
-	            success: function(){     
+	            success: function(){    
 	              $(".pages").load("../sucursales/Cindex/cargar_sucursal/"+id_sucursal);      
 	            },
 	            error:function(){
