@@ -132,12 +132,12 @@
 					</select>
 				</div>
 				<div class="col-md-3">
-					<span>FechaInicio</span>
-					<input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
+					<span>Fecha Inicio</span>
+					<input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" value="<?php echo date("Y-m-d") ?>">
 				</div>
 				<div class="col-md-3">			
 					<span>Fecha Fin</span>
-					<input type="date" class="form-control" name="fecha_fin" id="fecha_fin">					
+					<input type="date" class="form-control" name="fecha_fin" id="fecha_fin" value="<?php echo date("Y-m-d") ?>">					
 				</div>
 				<div class="col-md-3">	
 					<span>Filtrar</span>		

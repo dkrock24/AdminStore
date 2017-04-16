@@ -2,11 +2,13 @@
     $(document).ready(function(){
         $(".footer").click(function(){
             var id = $(this).attr("id");
-            $.ajax({             
-                url: "../alertas/Calertas/getAlertasNoVistas/"+id,       
-                type:"post", 
+            $.ajax({        
+                url: "../alertas/Calertas/getAlertasNoVistas/"+id, 
+                type:"post",                         
+                data: $('#filtros').serialize(),               
+                
 
-                success: function(data){    
+                success: function(data){   
                     
                     $(".detalle_alertas").html(data);
                 },
@@ -36,7 +38,11 @@
 	.huge{
 		font-size: 30px;
 	}
+    .filtro{
+        text-align: center;
+    }
 </style>
+
 <div id="page-wrapper">
     <div class="container-fluid">
     	<div class="row">
@@ -129,6 +135,49 @@
                         </div>
                     </div>
         </div>
+        <form id="filtros">
+        <div class="row">
+            <br>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">Fecha Inicio</div>
+            <div class="col-md-3">Fecha Fin</div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-md-3">
+                <select name="mensaje" class="form-control">
+                    <option value="todos">Todos</option>
+                    <?php
+                    foreach ($mensajes as $msj) {
+                        ?>
+                        <option value="<?php echo $msj->id_mensaje; ?>"><?php echo $msj->mensaje; ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="date" class="form-control" name="inicio" value="<?php echo date("Y-m-d") ?>">
+            </div>
+
+            <div class="col-md-3">
+                <input type="date" class="form-control" name="fin" value="<?php echo date("Y-m-d") ?>">
+            </div>
+            <div class="col-md-3">
+                <select name="sucursal" class="form-control">
+                    <option value="todas">Todos</option>
+                    <?php
+                    foreach ($sucursales as $sucursal) {
+                        ?>
+                        <option value="<?php echo $sucursal->id_sucursal; ?>"><?php echo $sucursal->nombre_sucursal; ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        </form>
 
         <div class="row">
             <br>
