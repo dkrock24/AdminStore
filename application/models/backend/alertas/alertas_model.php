@@ -18,6 +18,16 @@ class alertas_model extends CI_Model
         return $query->result(); 
     }
 
+    public function getMensajes(){
+        $query = $this->db->query('select * from sys_notificaciones_mensajes');    
+        return $query->result();
+    }
+
+    public function getSucursales(){
+        $query = $this->db->query('select * from sys_sucursal');    
+        return $query->result();
+    }
+
     public function setAlertasAdmin($id){
     	$data = array(
             'mostrado'   => 1,
@@ -49,12 +59,23 @@ class alertas_model extends CI_Model
         return $query->result(); 
     }
     // Obtener Alertas Por Tipo de Mensaje
-    public function getAlertasLoginNoVistas($id_mensaje){
+    public function getAlertasLoginNoVistas($id_mensaje,$data){
+
+        $filtro="";
+        if($data['sucursal']!="todas")
+        {
+            $filtro .= " N.id_sucursal=".$data['sucursal']." and ";
+        } 
+        if($data['mensaje']!="todos")
+        {
+            $filtro .= " N.id_mensaje=".$data['mensaje']." and ";
+        }
+
     	$query = $this->db->query('select *,S.nombre_sucursal,U.nickname,NM.mensaje from sys_notificaciones as N 
     								join sys_notificaciones_mensajes as NM on N.id_mensaje=NM.id_mensaje 
     								join sys_sucursal as S on S.id_sucursal=N.id_sucursal
     								join sr_usuarios as U on U.id_usuario=N.id_usuario
-    								and N.visto=0 and N.id_mensaje='.$id_mensaje);    
+    								where '.$filtro.'  N.visto=0 and N.id_mensaje='.$id_mensaje .' and CAST(N.fecha_creado AS DATE) between "'.$data['inicio'].'" and "'.$data['fin'].'"');    
         return $query->result(); 
     }
 

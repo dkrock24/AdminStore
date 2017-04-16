@@ -10,15 +10,19 @@ class Calertas extends CI_Controller {
 		$this->load->database('default');	
 		$this->load->model('backend/alertas/alertas_model');	
 
+
 	}
 
 	public function index()
 	{			
 		$data['vistas'] = $this->alertas_model->getAlertasVistas();
+		$data['mensajes'] = $this->alertas_model->getMensajes();
+		$data['sucursales'] = $this->alertas_model->getSucursales();
 		$this->load->view('backend/alertas/Vindex.php',$data);
 	}
 	public function getAlertasNoVistas($id){
-		$data = $this->alertas_model->getAlertasLoginNoVistas($id);
+
+		$data = $this->alertas_model->getAlertasLoginNoVistas($id,$_POST);
 		$html="";
 		$contador=1;
 		$html="<table class='table table-bordered table-hover table-striped'>
