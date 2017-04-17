@@ -396,16 +396,16 @@ $( document ).ready(function() {
             var numero = parseInt(valor);
             for(var i=0 ; i<response.alertas.length ; i++)
             {
-                console.log(response.alertas[i].mensaje);
+                //console.log(response.alertas[i].mensaje);
                 var msj = response.alertas[i].mensaje;
                 var sucursal = response.alertas[i].nombre_sucursal;
                 var nickname = response.alertas[i].nickname;
                 var date = response.alertas[i].fecha_creado;
                 var clase = response.alertas[i].clase;
                 $(".numero-alerta").text(++numero);
-                var html="<a href='#' class='remover'>"+msj+" - "+sucursal +" - "+ nickname +"<br><span class='label label-"+clase+"'>"+ date +"</span></a>";
+                var html="<a href='#' class='remover label-"+clase+"'>"+msj+" - "+sucursal +" - "+ nickname +"<br><span class='label label-"+clase+"'>"+ date +"</span></a>";
                 
-                $(".mensajes").append(html);
+                $(".mensajes").prepend(html);
             }
         }
 

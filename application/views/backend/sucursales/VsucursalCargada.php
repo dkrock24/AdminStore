@@ -39,22 +39,6 @@
 		</div>
 		<div class="col-md-10 izquierda">
 			<h3>SUCURSAL : <?php echo $sucursales[0]->nombre_sucursal; ?>
-				<li class="dropdown alertas">
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="numero-alerta">5</span><i class="fa fa-bell"></i><b class="caret"></b></a>
-                      <ul class="dropdown-menu alert-dropdown">
-                          <li>
-                              <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                          </li>
-                          <li class="divider"></li>
-                          <li>
-                              <a href="#">Todas</a>
-                          </li>
-                      </ul>
-                    </li>
-                </ul>
-            </li>
 			</h3>
 		</div>
 	</div>
