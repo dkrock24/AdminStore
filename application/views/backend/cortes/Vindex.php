@@ -22,7 +22,7 @@
 	            //url: url1+id_sucursal,
 	            type:"post",
 	            success: function(){     
-	              $(".pages").load(url1+id_sucursal);      
+	              $(".pages").load(url1);      
 	            },
 	            error:function(){
 	                //alert("Error.. No se subio la imagen");
@@ -105,6 +105,7 @@ td {
 <h3 id="../sucursales/Cindex/cargar_sucursal/<?php echo $sucursales[0]->id_sucursal; ?>" class="go-sucursal">
     		<i class="fa fa-arrow-left"></i>REGRESAR
     	</h3>
+<input type="hidden" value="<?php echo $sucursales[0]->id_sucursal; ?>" name="id_sucursal" id="id_sucursal">
 <ul class="nav nav-tabs">
   <li id="menu_li" class="active"><a href="#tab1_1" data-toggle="tab">Corte</a></li>
   <li id="menu_li" class=""><a href="#tab1_2" data-toggle="tab">Detalle Corte</a></li>
