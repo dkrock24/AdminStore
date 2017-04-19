@@ -76,17 +76,6 @@
 				</a>
 			</div>
         </div>
-        
-        <div class="col-md-4">
-        	<div class="list-group">
-				<a href="#" class="list-group-item active">
-					<i class='fa fa-file-text'></i>Productos
-				</a>
-					<a  class="list-group-item go-sucursal" id="">										  	
-					  	<p class="center"><img src="../../../asset_/img/catalogo.png"></p>
-					</a>
-			</div>
-        </div>
 
     </div>
 
@@ -122,6 +111,31 @@
 					</a>
 			</div>
         </div>
+    </div>
+
+     <div class="row">       
+          <div class="col-md-4">
+        	<div class="list-group">
+				<a href="#" class="list-group-item active">
+					<i class='fa fa-file-text'></i>Productos
+				</a>
+					<a  class="list-group-item go-sucursal" id="">										  	
+					  	<p class="center"><img src="../../../asset_/img/catalogo.png"></p>
+					</a>
+			</div>
+        </div>
+
+        <div class="col-md-4">
+        	<div class="list-group">
+				<a href="#" class="list-group-item active">
+					<i class='fa fa-money'></i>Caja
+				</a>
+					<a href="../sucursales/Cindex/caja_view/<?php echo $sucursales[0]->id_sucursal; ?>"	target="_black" class="list-group-item go-sucursal" id="">								  	
+					  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
+					</a>
+			</div>
+        </div>
+        
     </div>
 </div>
 
