@@ -1,40 +1,160 @@
-html, body
+.iten-cuenta
 {
-    font-family: Verdana, sans-serif; 
+    width: 60%; 
+    color: #000; 
+    float: left;
+}
+.list-logs
+{
+    width: 39%;
+    float: right;
+    color: #000;
+    background: rgba(158, 158, 158, 0.78);
+    padding: 6px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    height: 150px;
+    overflow: auto;
+}
+.panel-body {
+    padding: 10px !important;
+}
+.list-group-item {
+    padding: 4px 4px !important;
+ }
+.formula
+{
+    font-size: 17px;
+    margin-left: 20%;
+}
+.mesa
+{
+    font-size: 30px  !important;
+    color: #fff !important;
+    background: #88b32f !important;
+}
+.total
+{
+    font-size: 25px;
+    font-weight: bold;
+    color: red;
+    float: right;
+}
+nav{
+   
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#88B32F), to(#88B32F));/*Para chrome y Safari*/
+    /*Degradados*/
+    background-image: -moz-linear-gradient(top center, #88B32F, #88B32F);/*Para Firefox*/
+    background-image: -o-linear-gradient(top, #88B32F, #88B32F);/*Para Opera*/
+    background-image: linear-gradient(top, #88B32F, #88B32F);/*El estandar por defecto*/
+    overflow:hidden;
+    padding:10px;
+    width:950px;
+}
+nav ul{
+    list-style:none;
+    margin:0 10px 0 10px;
+    padding:0;
+}
+nav ul li
+{
+    -webkit-border-radius:5px;/*Chrome y Safari*/
+    -moz-border-radius:5px;/*Firefox*/
+    -o-border-radius:5px;/*Opera*/
+    border-radius:5px;/*Estandar por defecto*/
+    float:left;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-right:10px;
+    text-align:center;
+}
+nav ul li:hover{
+    /*Degradado de fondo*/
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFF), to( #E3E3E3));/*Chrome y Safari*/
+    background-image: -moz-linear-gradient(top center, #FFF, #E3E3E3);/*Firefox*/
+    background-image: -o-linear-gradient(top, #FFF, #E3E3E3);/*Opera*/
+    background-image: linear-gradient(top, #FFF, #E3E3E3);/*Estandar por defecto*/
+    /*Sombras*/
+    -webkit-box-shadow:  1px -1px 0px #999;/*Chrome y Safari*/
+    -moz-box-shadow:  1px -1px 0px #999;/*Firefox*/
+    -o-box-shadow:  1px -1px 0px #999;/*Opera*/
+    box-shadow:  1px -1px 0px #999;/*Estandar por defecto*/
+    
+}
+
+nav ul li a{
+    color:#fff;
+    display:block;
+    padding:10px;
+    text-decoration:none;
+    /*Transiciones*/
+    -webkit-transition: 0.4s linear all;
+    -moz-transition: 0.4s linear all;
+    -o-transition: 0.4s linear all;
+    transition: 0.4s linear all;
+}
+nav ul li a:hover {
+    color:#000;
+    text-decoration: none;
+}
+
+a:link   
+{   
+ text-decoration:none;   
+}
+.secction-right
+{
+    float: right;
+    background: #000;
+    width: 30%;
+    height: 100%;
+    padding: 10px;
+    color: #fff;
+    overflow: auto;
+    text-align: center;
+}
+
+.main-contenido
+{
+    width: 70%;
+    float: left;
+    height: 100%;
+    max-height: 700px;
+    overflow: auto;
+    padding: 6px;
+    background: black;
+
+}
+
+body {
+    font-family: Verdana, sans-serif;
     font-size: 1.0em;
     height: 100%;
-    width:100%;
-    margin:0;
+    width: 100%;
+    margin: 0;
     padding: 0;
-    background-color: #000;
+    color: #fff !important;
+    background-color: #000 !important;
     color: whitesmoke;
 }
 
-h1
+.date-caja
 {
-    font-size: 1em;
-    text-align: center;
-    margin: 2px;
-    color: whitesmoke;
+     margin-left: 40px;
+    margin-top: 2px;
+    color: #3F51B5;
+    font-weight: bold;
+    background: #fff;
+    padding: 6px;
+}
+.busqueda-mesa
+{
+   margin: 10px;
 }
 
-h2
-{
-    font-size: 0.8em;
-    text-align: left;
-    margin: 0px;
-}
 
-a {
-    font-style: normal;
-    text-decoration: none;
-    display: block;
-    background-color: black;
-    padding:8px 3px;
-    border-radius: 5px;
-    margin:3px;
-    color:white;
-}
 
 table.ancha {
     width: 100%;
@@ -106,9 +226,6 @@ input[type=checkbox]
 
 }
 
-div#pedidos {
-    padding-bottom: 30px;
-}
 
 .detalle_hora {
     color: #B7B5B5;
@@ -388,3 +505,5 @@ div.pedido {
     padding: 5px;
     border-radius: 5px;
 }
+
+
