@@ -203,7 +203,10 @@
 {
   overflow: auto;
 }
-
+.btn.btn-sm {
+    font-size: 9px !important;
+    padding: 5px 12px !important;
+}
 </style>
 
 
@@ -228,6 +231,7 @@
                 </thead>
                 <tbody>
                 <?php
+                //var_dump($proveedor);
                     if (!empty($proveedor)) 
                     {
                       foreach ($proveedor as $value) 

@@ -269,6 +269,10 @@
 {
   overflow: auto;
 }
+.btn.btn-sm {
+    font-size: 9px !important;
+    padding: 5px 12px !important;
+}
 
 </style>
 <ul class="nav nav-tabs">

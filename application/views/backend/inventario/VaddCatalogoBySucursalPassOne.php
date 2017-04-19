@@ -35,7 +35,7 @@
 
 </script>
 <form id="listMateriales" method="POST">
-<table class="table table-hover">
+<table class="table table-hover table-dynamic">
   <thead class='titulos'>
     <tr>
       <th>Nombre material</th>

@@ -1,3 +1,15 @@
+<?php
+   session_start()
+?>
+ <!-- END PRELOADER -->
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
+    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+   
 <script>
   
   $(".agregarIngrediente").click(function()
@@ -116,6 +128,19 @@
  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
 </head>
 <style>
+.table-dynamic{width: 100%;}
+  .form-inline .form-control {
+    width:85%;
+    font-weight: 10px;
+    padding: 4px;
+  }
+
+  .input__label-content{
+    margin-top: -20px;
+  }
+  .line{
+    
+  }
   .ui-autocomplete { 
     z-index:2147483647;
   
@@ -142,7 +167,7 @@
         }
 </style>
 <div class="cont-table-detalle">
-  <table class="table table-hover table-dynamic filter-head">
+  <table class="table table-hover table-dynamic">
                 <thead class='titulos'>
                     <tr>
                         <th>Igrediente</th>

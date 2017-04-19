@@ -147,7 +147,7 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
-               <div class="thumbnail" style="height: 400px;">
+               <div class="thumbnail" style="height: 250px;">
               
               <?php if($value->verifiDetalle != 0)
                 {?>
@@ -199,7 +199,7 @@
                     ?>    
                         <button class="btn btn-primary  btn-sm assignarNodo"  role="button">Nodo 
                         <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
-                        <li class="fa fa-check-circle" style="color: #fff;font-size: 23px;"></li>
+                        <li class="fa fa-check-circle" style="color: #fff;font-size: 16px;"></li>
                         </button>
                     <?php
                     }

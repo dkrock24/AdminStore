@@ -114,7 +114,7 @@
     text-align: center;
     font-weight: bold;
     height: 35px;
-    font-size: 14px;
+    font-size: 12px;
     padding: 4px;
     color: #FFF;
 }

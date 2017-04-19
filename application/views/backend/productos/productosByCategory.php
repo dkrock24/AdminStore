@@ -1,4 +1,17 @@
-<script type="text/javascript">
+
+<?php
+   session_start();
+?>
+ <!-- END PRELOADER -->
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
+    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+  
+    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet"><script type="text/javascript">
   $(".associateBranch").click(function()
     {
        var prodcutoID = $(this).find('.idProducto').val();
@@ -66,57 +79,73 @@
   //-------------------------Fin -----------------------------------
 </script>
 <div class="row col-lg-12 conten-productos">
-    <?php
-        if (!empty($producto)) 
-        {
-          foreach ($producto as $value) 
-          {
-          ?>
-            
-          <!--  Vista dinamica de prodcutos --> 
-            <div class="col-md-4">
-              <div class="thumbnail" style="height: 430px;">
-               <?php if($value->ingredientes_completos != 0)
+        <?php
+            if (!empty($producto)) 
+            {
+              //var_dump($producto);
+              foreach ($producto as $value) 
+              {
+              ?>
+                
+              <!--  Vista dinamica de prodcutos --> 
+                <div class="col-md-4">
+
+                  <div class="thumbnail" style="height: 400px;padding: 0px;">
+                  <?php if($value->ingredientes_completos != 0)
                 {?>
-                    <p class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                    <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
                 <?php }
                 else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" aria-hidden="true"></p>
+                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
                 <?php
                 } 
-                ?>
-                <img src="../../../assets/images/productos/<?php echo $value->image ?>" alt="...">
-                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                  <h3><?php echo $value->nombre_producto ?></h3>
-                  <p style="height:90px; overflow: auto;"><?php echo $value->description_producto ?></p>
-                  <p>
-                    <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
+                ?>  
+                <?php 
+                  if($value->video != 'NULL')
+                  {
+                  ?>
+                  <p class="video-div" style="position: absolute;background: #3e9b48;z-index: 1001;bottom: 221px;width: 89%;color: #fff;padding: 4px;cursor: pointer;text-align:center; opacity: 0.9;font-weight: bold;">Ver Video</p> 
+                <?php 
+                  }
+                ?>   
+                    
+                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" style="max-width: 60%;">
+                   
+                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
+                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
 
                         </a> 
                         <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
-                        
-                        <a class="btn btn-primary  btn-sm deletePC" style="margin-left: -9px;" role="button">Eliminar
+                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button">Eliminar
                           <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
                           <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
                         </a>
-  
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!--  Vista dinamica de prodcutos -->
-          <?php
-            }
-        }
-        else
-        {
-          echo '<div class="alert alert-danger" role="alert">No hay datos para mostrar :(</div>';
-        }    
-      ?> 
 
-      </div> 
+                 
+                    </div>
+
+                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
+                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
+                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
+                    </div>
+
+                   
+
+                  </div>
+                
+                </div>
+                <!--  Vista dinamica de prodcutos -->
+              <?php
+                }
+            }
+            else
+            {
+              echo '<div class="alert alert-danger" role="alert">No hay datos para mostrar :(</div>';
+            }    
+          ?> 
+          </div> 
 
 
 

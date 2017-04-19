@@ -391,6 +391,10 @@ $(document).ready(function()
     float: left;
 }
 
+.btn.btn-sm {
+    font-size: 9px !important;
+    padding: 5px 12px !important;
+}
 </style>
 
 
@@ -431,7 +435,7 @@ $(document).ready(function()
               <!--  Vista dinamica de prodcutos --> 
                 <div class="col-md-4">
 
-                  <div class="thumbnail" style="height: 450px;padding: 0px;">
+                  <div class="thumbnail" style="height: 400px;padding: 0px;">
                   <?php if($value->ingredientes_completos != 0)
                 {?>
                     <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
@@ -450,13 +454,9 @@ $(document).ready(function()
                   }
                 ?>   
                     
-                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" alt="...">
-                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
-                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
-                    </div>
-
-                    <div class="action-btn-img">
+                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" style="max-width: 60%;">
+                   
+                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
                       <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
 
@@ -470,6 +470,13 @@ $(document).ready(function()
 
                  
                     </div>
+
+                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
+                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
+                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
+                    </div>
+
+                   
 
                   </div>
                 
@@ -488,15 +495,12 @@ $(document).ready(function()
 
 
 
-
-
-
     <div class="tab-pane includ fade" id="tab1_2">
      <div class="row line col-md-12">
             <div class="col-md-6">
                  <form enctype="multipart/form-data" id="productos" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" />
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" required="true" name="nombre" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Nombres</span>
                       </label>
@@ -630,12 +634,14 @@ $(document).ready(function()
                 <thead class='titulos'>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripcion</th>                                                    
+                        <th>Descripcion</th>
+                        <th>Fecha Creacion</th>                                                    
                         <th>Acciones</th>
                           </tr>
                       </thead>
                       <tbody>
                       <?php
+                      //var_dump($categoria);
                           if (!empty($categoria)) 
                           {
                             foreach ($categoria as $value) 
@@ -644,6 +650,7 @@ $(document).ready(function()
                           <tr>
                               <td><?php echo $value->nombre_categoria_producto;  ?></td>
                               <td><?php echo $value->descripcion;  ?></td>
+                              <td><?php echo $value->fecha_creacion;  ?></td>
                               <td>
                                 <button type="button" class="btn btn-primary  btn-sm EditData">
                                   <input type="hidden" name="editValID" class="editValID" value="<?php echo $value->id_categoria_producto ?>">Modificar

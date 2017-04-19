@@ -87,6 +87,12 @@ class Cproduccion extends CI_Controller {
 		echo "Envio realizado correctamente";
 	}
 
+	public function saveEnvioDos()
+	{
+		$envioResult = $this->produccion_model->saveEnvioDos($_POST);
+		echo "Envio realizado correctamente";
+	}
+
 	public function viewEmpleado($empleadoID)
 	{	
 		$data['empleado'] = $this->produccion_model->getEmpleadoById($empleadoID);
@@ -106,4 +112,21 @@ class Cproduccion extends CI_Controller {
 		$this->produccion_model->delete_empleado($_POST);
 	
 	}
+
+	public function vieListEnvio($cproduccionID)
+	{	
+		$data['cproduccionID'] = $cproduccionID;	
+		$data['unidadMedida'] = $this->produccion_model->getAllUnidadMedida();
+		$data['sucursales'] = $this->produccion_model->getAllSucursales();
+		$this->load->view('backend/produccion/VviewListEnvios.php',$data);
+
+	}
+
+	public function catalogo_materiales_inventario()
+	{		
+		$data['catalogoMateriales'] = $this->produccion_model->getCatalogoMateriales($_GET);
+		$this->load->view('backend/produccion/autoSearch.php',$data);
+	}
+	//--------------------------------End mantenimiento de catalogos---------------
+
 }

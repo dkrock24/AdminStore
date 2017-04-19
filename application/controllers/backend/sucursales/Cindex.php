@@ -399,6 +399,13 @@ class Cindex extends CI_Controller {
 		$this->sucursales_model->despacharPedido($id_orden,$id_sucursal,$nodo);
 	}
 
+	//-------------------------Funcione para pantalla de caja
+
+	public function caja_view($id_sucursal){
+		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);	
+		$this->load->view('backend/sucursales/Vcaja.php',$data);
+	}
+
 
 	
 	

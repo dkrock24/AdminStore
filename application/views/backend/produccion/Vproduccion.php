@@ -15,7 +15,21 @@
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 
-<script>    
+<script>
+
+
+  //-----------------Jquery insercion de  productos----------------
+  $(".AddListEnvio").click(function()
+  {
+
+    var cproduccionID = $("#cproduccionID").val();    
+    //alert(cproduccionID);
+    $(".load-table").hide();
+    $(".load-dataDinamic").show();
+    $(".load-dataDinamic").load("../produccion/Cproduccion/vieListEnvio/"+cproduccionID);
+  });
+  //-------------------------Fin -----------------------------------  
+
   //-----------------Jquery insercion de  productos----------------
   $(".viewDataEmpleao").click(function()
   {
@@ -116,6 +130,8 @@
   <li id="menu_li" class="D "><a href="#tab1_4" data-toggle="tab"><i class='fa fa-area-chart'></i>Reporte de envios</a></li> </li>    
 <div id="actions-bar">
 <span  style="float:right;background-color: #c75757;" class="btn btn-success back">Regresar</span>
+<span  style="float:right;background-color: #c75757;" class="btn btn-success AddListEnvio">
+<input type="hidden" name="cproduccionID" id="cproduccionID" value="<?php echo $cpID; ?>">Realizar Envio</span>
 </div>
 </ul>
 
@@ -177,8 +193,7 @@
                         <th>Material</th>
                         <th>Categoria</th>
                         <th>Total Existencia</th> 
-                        <th>Minimo Existencia</th>                                                                      
-                        <th></th>
+                        <th>Minimo Existencia</th>                                                                    
                     </tr>
                 </thead>
                 <tbody>
@@ -201,17 +216,7 @@
                         <p class="valCelda">
                           <?php echo $value->minimo_existencia; ?></td>                         
                         </p>
-                        <td>
-                        
-                    <button type="button" class="btn btn-primary  btn-sm realizarEnvio">
-                    <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_inventario_sucursal ?>">
-                    <input type="hidden" name="tipoUnidad" class="tipoUnidad" value="<?php echo $value->id_tipo_unidad_medida ?>">
-                    <input type="hidden" name="codigoMaterial" class="codigoMaterial" value="<?php echo $value->codigo_material ?>">
-                  
-                    Realizar Envio
-                            </button>         
 
-                        </td>
                     </tr>        
                  <!--  Vista dinamica de prodcutos -->
           <?php

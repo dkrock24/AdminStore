@@ -7,32 +7,32 @@
  setTimeout(function()
   {
       $("#pedidosLoad").load("../despacho_view_master/"+3);
-  }, 5000);
+  }, 500000);
   //--------Libreria para controlar timepos de pedido
-  $(".DateCountdown").TimeCircles({
-    "animation": "smooth",
-    "bg_width": 1.3,
-    "fg_width": 0.06666666666666667,
-    "circle_bg_color": "#60686F",
+  $(".timer").TimeCircles({
+   "animation": "smooth",
+    "bg_width": 0.7,
+    "fg_width": 0.04,
+    "circle_bg_color": "#0f1015",
     "time": {
         "Days": {
             "text": "Days",
-            "color": "#FFCC66",
+            "color": "#CCCCCC",
             "show": false
         },
         "Hours": {
             "text": "Hours",
-            "color": "#99CCFF",
+            "color": "#8b1a13",
             "show": true
         },
         "Minutes": {
             "text": "Minutes",
-            "color": "#BBFFBB",
+            "color": "#4bc51b",
             "show": true
         },
         "Seconds": {
             "text": "Seconds",
-            "color": "#FF9999",
+            "color": "#e2ae18",
             "show": true
         }
     }
@@ -88,7 +88,7 @@
   ?>
     
     <div class="orden <?php echo $classElaborado; ?>" id="<?php echo 'orden_'.$value->id_pedido; ?>">
-    <div class="DateCountdown" data-date="<?php echo $value->fechahora_pedido; ?>" style="width: 350px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #202020;"></div><hr>
+    <div class="timer" data-date="2017-04-17 00:20:00" style="width: 350px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #202020;"></div><hr>
 
     <div class="DatoPedido" data-sucursalid="<?php echo $value->id_sucursal; ?>">
       <span class="numOrden" data-idpedido="<?php echo $value->id_pedido; ?>">#1:</span> 

@@ -1,4 +1,16 @@
-<link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
+<?php
+   session_start();
+?>
+ <!-- END PRELOADER -->
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
+    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+  
+    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 <script>
 $(document).ready(function()
   {
@@ -255,7 +267,7 @@ $(document).ready(function()
 </span>  
     </div> 
 <div class="data-materiales">    
-<table class="table table-hover table-dynamic filter-head">
+<table class="table table-hover table-dynamic">
                 <thead class='titulos'>
                     <tr>
                         <th>Codigo material</th>
@@ -307,7 +319,7 @@ $(document).ready(function()
                          <button type="button" class="btn btn-primary  btn-sm configMateriales">
                         <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_inventario_sucursal ?>">
                         <input type="hidden" name="IdSucursalInventario" class="IdSucursalInventario" value="<?php echo $value->id_sucursal ?>">config
-                        <li class='fa fa-check-circle-o' style="font-size: 20px;"></li>
+                        <li class='fa fa-check-circle-o' style="font-size: 16px;"></li>
                         </button>
 
                         <?php
@@ -354,7 +366,7 @@ $(document).ready(function()
                         <button type="button" class="btn btn-primary  btn-sm updateAdicional">
                             <input type="hidden" name="IdCatalogoInventario" class="IdCatalogoInventario" value="<?php echo $value->id_materiales_adicionales ?>">
                             Adicional
-                            <li class='fa fa-check-circle-o' style="font-size: 20px;"></li>
+                            <li class='fa fa-check-circle-o' style="font-size: 16px;"></li>
                             </button>                  
                         <?php } ?>  
                             
