@@ -22,6 +22,22 @@ class produccion_model extends CI_Model
         
     }   
 
+    public function getAllSucursales()
+    {
+         $query = $this->db->query('Select * from sys_sucursal s where s.centro_produccion = 0');
+         //echo $this->db->queries[0];
+        return $query->result();       
+        
+    }  
+
+    public function getAllUnidadMedida()
+    {
+         $query = $this->db->query('select * from  sys_unidad_medida');
+         //echo $this->db->queries[0];
+        return $query->result();       
+        
+    }  
+
     public function listEmpleadosCP($cpID)
     {
          $query = $this->db->query('Select su.id, u.id_usuario, u.nombres, u.apellidos, u.telefono, u.celular, u.direccion
@@ -130,6 +146,36 @@ class produccion_model extends CI_Model
         }
     }
 
+    public function saveEnvioDos($envio)
+    {
+        $dateNow = date("Y-m-d h:i:s");
+        $codigoEnvio = date("Y-mdhi");
+
+       $envio = json_decode($_POST['data']);
+       //var_dump($envio);
+       foreach ($envio as $data) 
+       {
+         $envios = array(
+            'codigo_envio'    => $codigoEnvio,
+            'codigo_material'    => $data->material,
+            'sucursal_enviado_id'    => $data->sucursalEnvio,
+            'cproduccion_id'    => $data->cproduccionID,
+            'cantidad'=> $data->cantidadPorcion,
+            'cantidad_medida_porcion'=> $data->medidaPorcion,
+            'unidad_medida'    => $data->unidaMedida,
+            'usuario_registro_envio'    => $data->userID,
+            'estatus'    => 1,
+            'fecha_envio'    => $data->fechaEnvio,
+            'fecha_vencimiento_material'    => $data->vencimiento,
+            'fecha_registro'    => $dateNow
+             );
+        
+        $dataInsert = $this->db->insert(self::enviosTable,$envios);
+       }
+       
+    }
+
+
     public function UpdateExistencia($envio)
     {
         //var_dump($envio);
@@ -170,6 +216,19 @@ class produccion_model extends CI_Model
             'id' => $datos['empleadoID']
         );
         $this->db->delete(self::intEmpleados, $data); 
+    }
+
+    public function getCatalogoMateriales()
+    {
+        $searchTerm = $_GET['term'];
+        //echo $_GET;
+        $query = $this->db->query("Select  cm.nombre_matarial, cm.codigo_material 
+        from sys_catalogo_materiales cm 
+        inner join sys_catalogo_inventario_sucursal cis ON cis.codigo_meterial = cm.codigo_material 
+        where cm.nombre_matarial LIKE '%".$searchTerm."%' and cis.id_sucursal =1");
+         //echo $this->db->queries[0];
+         return $query->result_array();
+        
     }
 
 }
