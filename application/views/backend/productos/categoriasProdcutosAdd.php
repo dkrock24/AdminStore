@@ -39,14 +39,14 @@
                 <div class="col-md-6">
                  <form enctype="multipart/form-data" id="categoriaP" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" />
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" required/>
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Nombres</span>
+                      <span class="input__label-content">Nombre *</span>
                       </label>
                   </span>
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" required />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Descripcion</span>
                       </label>

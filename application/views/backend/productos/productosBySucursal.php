@@ -147,9 +147,9 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
-               <div class="thumbnail" style="height: 250px;">
+               <div class="thumbnail" style="height: 320px;">
               
-              <?php if($value->verifiDetalle != 0)
+              <?php if($value->verifiDetalle == 0)
                 {?>
                     <p class="fa fa-list-ol icoAlert" title="Los ingredientes son correctos" aria-hidden="true"></p>
                 <?php }

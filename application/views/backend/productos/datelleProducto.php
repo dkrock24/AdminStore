@@ -12,6 +12,32 @@
    
 <script>
   
+  //-----------------quitar ingredientes----------------
+  //$(".quitarDetalle").click(function()
+  $(document).on('click','.quitarDetalle',function() 
+  {
+      var detalleId = $(this).find(".detalleID").val();
+      $.ajax
+      ({
+        url: "../productos/Cproductos/quitar_detalle",
+        type: "post",
+        data: {detalleId:detalleId},                           
+      
+        success: function(data)
+        {                                                  
+         
+          $('.myModalDetalle').modal('toggle');
+          //$(".pages").load("../productos/Cproductos/index"); 
+        },
+        error:function()
+        {
+
+        }
+      });
+  });
+  //-------------------------Fin -----------------------------------
+
+
   $(".agregarIngrediente").click(function()
   {
     
@@ -23,7 +49,9 @@
    //-----------------Jquery insercion de  ingredientes----------------
   $("#saveDetalle").click(function()
   {
-  
+    var formulario = document.getElementById('addIngredienteForm');
+    if(formulario.checkValidity())
+    {
       $.ajax
       ({
         url: "../productos/Cproductos/save_ingrediente",
@@ -41,6 +69,11 @@
 
         }
       });
+    }
+    else
+    {
+      alert("Hay campos requeridos");
+    }
   });
   //-------------------------Fin -----------------------------------
 
@@ -78,7 +111,6 @@
       }
       else
       {
-         //alert('estoy uncehcked');
          $.ajax
           ({
             url: "../productos/Cproductos/incompletos_ingrediente",
@@ -101,29 +133,7 @@
   });
  //----------------End ingredientes comletos------------------------- 
 
-  //-----------------quitar ingredientes----------------
-  $(".quitarDetalle").click(function()
-  {
-      var detalleId = $(this).find(".detalleID").val();
-      $.ajax
-      ({
-        url: "../productos/Cproductos/quitar_detalle",
-        type: "post",
-        data: {detalleId:detalleId},                           
-      
-        success: function(data)
-        {                                                  
-         
-          $('.myModalDetalle').modal('toggle');
-          //$(".pages").load("../productos/Cproductos/index"); 
-        },
-        error:function()
-        {
-
-        }
-      });
-  });
-  //-------------------------Fin -----------------------------------
+  
 </script>
  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
 </head>
@@ -191,8 +201,8 @@
                         <td><?php echo $value->cantidad;  ?></td>
                         <td><?php echo $value->nombre_unidad_medida;  ?></td>                         
                         <td>
-                          <button type="button" class="btn btn-primary quitarDetalle">
-                            <input type="hidden" name="detalleID" class="detalleID" value="<?php echo $value->id_detalle_producto ?>">Eliminar
+                          <button type="button" class="btn btn-primary btn-sm quitarDetalle">
+                            <input type="hidden" name="detalleID" class="detalleID" value="<?php echo $value->id_detalle_producto ?>">Quitar
                             </button>
                         </td>
                     </tr>        
@@ -241,9 +251,9 @@
                <div class="content">
                  <form enctype="multipart/form-data" id="productos" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="ingrediente" required name="ingrediente" />
+                      <input class="input__field input__field--hoshi" type="text" id="ingrediente" name="ingrediente" required/>
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Ingrediente</span>
+                      <span class="input__label-content">Ingrediente*</span>
                       </label>
                   </span>
                 </div>
@@ -252,7 +262,7 @@
                 
                  <div class="col-md-6">  
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" required />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Descripcion</span>
                       </label>
@@ -264,7 +274,7 @@
                    <span class="input input--hoshi">
                       <input class="input__field input__field--hoshi" type="text" id="cantidad" name="cantidad" required />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Cantidad</span>
+                      <span class="input__label-content">Cantidad*</span>
                       </label>
                   </span>
                 </div>
@@ -272,8 +282,8 @@
 
                 <div class="col-md-6"> 
                    <span class="input input--hoshi">
-                        <span class="input__label-content">Unida Medida</span>
-                        <select class="form-control form-grey" name="unidaMedida" id="unidaMedida" data-style="white" data-placeholder="Seleccion una categoria">
+                        <span class="input__label-content">Unidad Medida*</span>
+                        <select class="form-control form-grey" name="unidaMedida" id="unidaMedida" data-style="white" data-placeholder="Seleccion una categoria"  required> 
                          <option value="0">N/A </option>
                         <?php
                         foreach ($unidadMedida as $value) {

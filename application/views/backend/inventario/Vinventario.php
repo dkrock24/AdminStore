@@ -47,7 +47,8 @@
     //-------------------------Fin ------------------
 
     //----------------modificar material---------------
-    $(".editInventario").click(function() 
+    //$(".editInventario").click(function()
+    $(document).on('click','.editInventario',function()
     {
         var materialID = $(this).find('.editValID').val();
         $(".pages").load("../inventario/Cinventario/editMaterial/"+materialID); 

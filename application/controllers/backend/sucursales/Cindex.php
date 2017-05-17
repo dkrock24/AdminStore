@@ -383,12 +383,16 @@ class Cindex extends CI_Controller {
 		$this->sucursales_model->update_despacho($_POST);
 	}
 
-	public function despacho_view($id_sucursal){
+	public function despacho_view($id_sucursal)
+	{
+		$data['idSucursal'] = $id_sucursal;
 		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);	
 		$this->load->view('backend/sucursales/Vdespacho.php',$data);
 	}
 
-	public function despacho_view_master($id_sucursal){
+	public function despacho_view_master($id_sucursal)
+	{
+		$data['idSucursal'] = $id_sucursal;
 		$data['pedidos'] = $this->sucursales_model->getPedidosDespachoBySucursal($id_sucursal);
 		$this->load->view('backend/sucursales/master.chef.php',$data);
 	}
@@ -401,8 +405,11 @@ class Cindex extends CI_Controller {
 
 	//-------------------------Funcione para pantalla de caja
 
-	public function caja_view($id_sucursal){
-		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);	
+	public function caja_view($id_sucursal)
+	{
+		$data['idSucursal'] = $id_sucursal;
+		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);
+		$data['pedidos'] = $this->sucursales_model->getPedidosDespachoBySucursal($id_sucursal);	
 		$this->load->view('backend/sucursales/Vcaja.php',$data);
 	}
 

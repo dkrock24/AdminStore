@@ -209,7 +209,7 @@ div.DatoPedido
     display: block;
     width: 100%;
     color: yellow;
-    font-size: 40px !important;
+    font-size: 25px !important;
     text-align: center;
     line-height: 1;
     font-weight: bold;
@@ -218,7 +218,7 @@ div.DatoPedido
 .time_circles > div > h4 
 {
     color: yellow;
-     font-size: 12px !important;
+    font-size: 12px !important;
     font-weight: bolder;
 
 }

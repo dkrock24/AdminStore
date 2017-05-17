@@ -71,50 +71,60 @@ $(document).ready(function()
     //-----------------Jquery insercion de  productos----------------
       $("#saveProducto").click(function()
       {
-          $(".loading").show();
-          var formData = new FormData();
-                formData.append('files', $('#files')[0].files[0]);
-                formData.append('filevideo', $('#video')[0].files[0]);
-                formData.append('nombre', $('#nombre').val());
-                formData.append('categoria', $('#categoria').val());
-                formData.append('descripcion', $('#descripcion').val());
-                formData.append('precio', $('#precio').val());
-          
-        $.ajax({
-           url: "../productos/Cproductos/save_producto",
-            type:"post",
-            processData: false,  // tell jQuery not to process the data
-            contentType: false,  // tell jQuery not to set contentType
-            data: formData,
+        
+         var formulario = document.getElementById('productos');
+         if(formulario.checkValidity())
+         {
+              $(".loading").show();
+              var formData = new FormData();
+                    formData.append('files', $('#files')[0].files[0]);
+                    formData.append('filevideo', $('#video')[0].files[0]);
+                    formData.append('nombre', $('#nombre').val());
+                    formData.append('categoria', $('#categoria').val());
+                    formData.append('descripcion', $('#descripcion').val());
+                    formData.append('precio', $('#precio').val());
+              
+            $.ajax({
+               url: "../productos/Cproductos/save_producto",
+                type:"post",
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formData,
 
-                success: function(data)
-                {
-                  if (data == "3") 
-                  {
-                    alert("El tamaño de la imagen no es correcto");
-                    $(".loading").hide();
-                  }
-                  else
-                  {
-                    $(".loading").hide();
-                    $("#list").hide();
-                    $('#nombre').val("");
-                    $('#descripcion').val("");
-                    $('#precio').val("");
-                    document.getElementById("files").value = "";
-                    //$('#files').val("");
-                    $('#video').val("");
-                    $(".pages").load("../productos/Cproductos/index");
-                    
-                  }
-                  
-                  
-                },
-                error:function(data)
-                {
-                    alert(data);
-                }
-            });
+                    success: function(data)
+                    {
+                      if (data == "3") 
+                      {
+                        alert("El tamaño de la imagen no es correcto");
+                        $(".loading").hide();
+                      }
+                      else
+                      {
+                        $(".loading").hide();
+                        $("#list").hide();
+                        $('#nombre').val("");
+                        $('#descripcion').val("");
+                        $('#precio').val("");
+                        document.getElementById("files").value = "";
+                        //$('#files').val("");
+                        $('#video').val("");
+                        $(".pages").load("../productos/Cproductos/index");
+                        
+                      }
+                      
+                      
+                    },
+                    error:function(data)
+                    {
+                        alert(data);
+                    }
+                });
+         }
+         else
+         {
+            alert('Hay campos requeridos');
+         }
+         
 
       });
       //-------------------------Fin -----------------------------------
@@ -123,20 +133,28 @@ $(document).ready(function()
       $("#saveCategoria").click(function()
       {
 
-        $.ajax
-           ({
-            url: "../productos/Cproductos/save_categoria",
-            type:"post",
-            data: $("#categoriaP").serialize(),
-            success: function()
-            {
-              $('#myModal').modal('toggle');
-              $(".pages").load("../productos/Cproductos/index"); 
-            },
-            error:function(){
-                alert("failure");
-            }
-          });
+        var formulario = document.getElementById('categoriaP');
+         if(formulario.checkValidity())
+         {
+          $.ajax
+             ({
+              url: "../productos/Cproductos/save_categoria",
+              type:"post",
+              data: $("#categoriaP").serialize(),
+              success: function()
+              {
+                $('#myModal').modal('toggle');
+                $(".pages").load("../productos/Cproductos/index"); 
+              },
+              error:function(){
+                  alert("failure");
+              }
+            });
+         }
+         else
+         {
+            alert("Hay campos requeridos");
+         }   
 
       });
       //-------------------------Fin -----------------------------------
@@ -235,7 +253,8 @@ $(document).ready(function()
 
 
   //----------------- Open modal view data-------------------
-  $(".viewData").click(function()
+  //$(".viewData").click(function()
+  $(document).on('click','.viewData',function() 
   {
      $(".ModaViewdata").modal({
            backdrop: 'static', 
@@ -246,7 +265,8 @@ $(document).ready(function()
   });
 
   //----------------modificar data---------------
-    $(".EditData").click(function() 
+    //$(".EditData").click(function()
+    $(document).on('click','.EditData',function() 
     {
         var categoriaID = $(this).find('.editValID').val();
         $(".pages").load("../productos/Cproductos/editDataControll/"+categoriaID); 
@@ -254,7 +274,8 @@ $(document).ready(function()
 
 
 //--------------------Delete caegoria------------------------------ 
-  $(".deleteBTN").click(function()
+  //$(".deleteBTN").click(function()
+  $(document).on('click','.deleteBTN',function() 
   {
       var dataDeleteID = $(this).find('.deleteValID').val();
       //alert(ProductoId);
@@ -411,7 +432,7 @@ $(document).ready(function()
            <div>
             <span>Categoria:   </span>
              <span><select style="width: 70%; margin:12px;" class="form-control form-grey categoriaSearch" name="categoriaSearch"  data-style="white" data-placeholder="Seleccione una categoria...">
-             <option value="0"> ALL </option>
+             <option value="0"> Todas </option>
             <?php
               foreach ($categoria as $value) {
             ?>
@@ -500,16 +521,16 @@ $(document).ready(function()
             <div class="col-md-6">
                  <form enctype="multipart/form-data" id="productos" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required="true" name="nombre" />
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" name="nombre" required/>
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Nombres</span>
+                      <span class="input__label-content">Nombres<strong>*</strong></span>
                       </label>
                   </span>
     
           
                    <span class="input input--hoshi">
-                        <span class="input__label-content">Categoria</span>
-                        <select style="width: 60%;" class="form-control form-grey" name="categoria" id="categoria" data-style="white" data-placeholder="Seleccion una categoria">
+                        <span class="input__label-content">Categoria<strong>*</strong></span>
+                        <select style="width: 60%;" class="form-control form-grey" name="categoria" id="categoria" data-style="white" data-placeholder="Seleccion una categoria" required>
                         <?php
                         foreach ($categoria as $value) {
                           ?>
@@ -525,14 +546,14 @@ $(document).ready(function()
 
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" required />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Descripcion</span>
+                      <span class="input__label-content">Descripción</span>
                       </label>
                   </span>
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="file" id="video" name="video[]" required />
+                      <input class="input__field input__field--hoshi" type="file" id="video" name="video[]" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Video</span>
                       </label>
@@ -553,7 +574,7 @@ $(document).ready(function()
                         <span class="input input--hoshi">
                       <input class="input__field input__field--hoshi" type="file" id="files" name="files[]" required />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Imagen</span>
+                      <span class="input__label-content">Imagen<strong>*</strong></span>
                       </label>
                      </span>
                          
@@ -694,14 +715,14 @@ $(document).ready(function()
 
                  <form id="categoriaP" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" />
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" required/>
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Nombres</span>
+                      <span class="input__label-content">Nombre*</span>
                       </label>
                   </span>
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" required />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Descripcion</span>
                       </label>
@@ -776,16 +797,16 @@ $(document).ready(function()
               <div class="cont-formDetalle" style="display:none;">
                  <form id="categoriaP" method="POST">
                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" />
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" required/>
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Nombres</span>
                       </label>
                   </span>
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" required />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Descripcion</span>
+                      <span class="input__label-content">Descripción</span>
                       </label>
                   </span>
 
@@ -822,7 +843,7 @@ $(document).ready(function()
         <div class="modal-body">
            <div class="cont-message"  style="font-size: 30px;padding: 12px;margin: 6px;">
            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 60px;color: #bb1212;"></span>
-             Seguro que desea eliminar la informacion seleccionada
+             Seguro que desea eliminar la información seleccionada
            </div>
            <hr>
            <div class="bar--action" style="float: right;">
@@ -851,7 +872,7 @@ $(document).ready(function()
       <!-- Modal content-->
       <div class="modal-content">
           <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
-           Informacion categoria de productos
+           Información categoria de productos
           </h4>
           <hr>
         <div class="modal-body modalViewCOntent">
@@ -862,7 +883,7 @@ $(document).ready(function()
         <div class="modal-footer">
         <div id="msg" class="msgShow">
         </div> 
-          <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
+          <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
       
