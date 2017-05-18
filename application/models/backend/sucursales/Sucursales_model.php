@@ -439,9 +439,15 @@ class sucursales_model extends CI_Model
     //---------------Modelos para despacho
     public function getPedidosDespachoBySucursal($id_sucursal)
     {
-         $query = $this->db->query('Select * from sys_pedido sp
-            where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1
-            and sp.id_sucursal = '.$id_sucursal.' order by sp.flag_elaborado = 0, sp.id_pedido asc');
+         $query = $this->db->query('Select sp.id_pedido, sp.id_usuario, sp.id_mesero, sp.numero_mesa, sp.flag_cancelado, sp.flag_elaborado, sp.flag_despachado, sp.porcentaje_descuento, sp.total_descuento,
+        sp.fechahora_pedido, sp.fecha_creado, pd.id_detalle, pd.id_producto, pd.precio_grabado, pd.precio_original, GROUP_CONCAT(p.nombre_producto) as name_producto, u.nombres, u.apellidos, sp.id_sucursal
+          from sys_pedido sp
+        inner join sys_pedido_detalle pd ON pd.id_pedido = sp.id_pedido
+        inner join sys_productos p ON p.id_producto = pd.id_producto
+        inner join sr_usuarios u ON u.id_usuario = sp.id_mesero
+        where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1
+        and sp.id_sucursal = '.$id_sucursal.'  group by sp.id_pedido
+          order by sp.flag_elaborado = 0, sp.id_pedido asc');
          //echo $this->db->queries[0];
         return $query->result();       
         

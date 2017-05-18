@@ -130,7 +130,7 @@
 				<a href="#" class="list-group-item active">
 					<i class='fa fa-money'></i>Caja
 				</a>
-					<a href="../sucursales/Cindex/caja_view/<?php echo $sucursales[0]->id_sucursal; ?>"	target="_black" class="list-group-item go-sucursal" id="">								  	
+					<a href="../sucursales/Ccaja/caja_view/<?php echo $sucursales[0]->id_sucursal; ?>"	target="_black" class="list-group-item go-sucursal" id="">								  	
 					  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
 					</a>
 			</div>

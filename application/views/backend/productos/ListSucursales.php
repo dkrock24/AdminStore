@@ -121,7 +121,7 @@
 
 </style>
 <button type="button" style="float:right;background-color: #c75757;" class="btn btn-success backProductos">Regresar</button>
-<h1>Asocial sucursales</h1>
+<h1>Asociar sucursales</h1>
 
  <div class="row line col-md-12">
           <div class="row col-lg-12 conten-sucursales">

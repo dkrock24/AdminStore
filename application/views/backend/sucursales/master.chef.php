@@ -4,21 +4,24 @@
 <script src="../../../../../assets/js/TimeCircles.js"></script>
 
 <script language="javascript">
+
+ var idSucursal = '<?php echo $idSucursal[0];  ?>';
+ 
  setTimeout(function()
   {
-      $("#pedidosLoad").load("../despacho_view_master/"+3);
-  }, 500000);
+      $("#pedidosLoad").load("../despacho_view_master/"+idSucursal);
+  }, 50000000);
   //--------Libreria para controlar timepos de pedido
   $(".timer").TimeCircles({
    "animation": "smooth",
     "bg_width": 0.7,
     "fg_width": 0.04,
-    "circle_bg_color": "#0f1015",
+    "circle_bg_color": "#fff",
     "time": {
         "Days": {
             "text": "Days",
-            "color": "#CCCCCC",
-            "show": false
+            "color": "#3F51B5",
+            "show": true
         },
         "Hours": {
             "text": "Hours",
@@ -32,7 +35,7 @@
         },
         "Seconds": {
             "text": "Seconds",
-            "color": "#e2ae18",
+            "color": "#673AB7",
             "show": true
         }
     }
@@ -80,27 +83,31 @@
   <?php
     if (!empty($pedidos)) 
       {
-        //var_dump($pedidos);
+
         foreach ($pedidos as $value) 
         {
 
          $classElaborado = ($value->flag_elaborado == 1) ? "classElaborado" : "" ; 
+         $listProductos = explode(",", $value->name_producto);
   ?>
     
     <div class="orden <?php echo $classElaborado; ?>" id="<?php echo 'orden_'.$value->id_pedido; ?>">
-    <div class="timer" data-date="2017-04-17 00:20:00" style="width: 350px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #202020;"></div><hr>
+    <div class="timer" data-date="<?php echo $value->fechahora_pedido; ?>" style="width: 350px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #202020; font-size: 25px !important;"></div><hr>
 
     <div class="DatoPedido" data-sucursalid="<?php echo $value->id_sucursal; ?>">
-      <span class="numOrden" data-idpedido="<?php echo $value->id_pedido; ?>">#1:</span> 
-      <span class="meseroName">Jose lopez</span>
+      <span class="numOrden" data-idpedido="<?php echo $value->id_pedido; ?>">Mesa: #<?php echo $value->numero_mesa; ?>:</span> 
+      <span class="meseroName" data-idmesero="<?php echo $value->id_mesero; ?>"><?php echo $value->nombres." ".$value->apellidos; ?></span>
     </div>
     <hr>
     <div class="cont-listItems">
-      <li class="itemPedido"> Pizza aventador </li>
-      <li class="itemPedido"> Pizza aventador </li>
-      <li class="itemPedido"> Pizza aventador </li>
-      <li class="itemPedido"> Pizza aventador </li>
-      <li class="itemPedido"> Pizza aventador </li>
+      <?php
+      foreach ($listProductos as $producto)
+      {
+      ?>  
+        <li class="itemPedido"> <?php echo $producto; ?> </li>
+      <?php
+      }
+      ?>
     </div>  
     </div> 
   <?php

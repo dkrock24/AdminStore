@@ -15,14 +15,14 @@
 <script language="javascript">
 $( document ).ready(function() 
 {
+	var idSucursal = <?php echo $idSucursal[0];  ?>
   //------------------Load de la data de masterChef----------------
-  $("#pedidosLoad").load("../despacho_view_master/"+3);
+  $("#pedidosLoad").load("../despacho_view_master/"+idSucursal);
   //---------------------Fin del codigo load
 });      
 </script>
  
-<body>
-
+<body style="font-family: serif !important;">
 <div id="pedidosLoad"  style="height: 100%;"></div>
 </body>
 </html>

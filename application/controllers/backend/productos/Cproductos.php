@@ -246,22 +246,23 @@ class Cproductos extends CI_Controller {
 		$materialInventario = $this->productos_model->getArrayInventario($_POST);
 		$ingredienteProucto = $this->productos_model->getArrayIngredientes($_POST);
 		$material = array();
-		foreach ($materialInventario as $value) 
+		/*foreach ($materialInventario as $value) 
 		{
 			array_push($material, $value['codigo_meterial']);
 		}
-	
+		var_dump($ingredienteProucto);
+		*/
 		$ingredieFaltante=0;
 		$ingredieExiste=0;
 		foreach ($ingredienteProucto as  $ingrediente) 
 		{
-			if (in_array($ingrediente['name_detalle'], $material)) 
+			if (in_array($ingrediente['name_detalle'], $materialInventario)) 
 			{
-			    $ingredieExiste++;
+			    $ingredieExiste = 1;
 			}
 			else
 			{
-				$ingredieFaltante++;
+				$ingredieFaltante = 1;
 			}
 		}
 		$datoValida = ($ingredieFaltante<=0) ? 1 : 0 ;

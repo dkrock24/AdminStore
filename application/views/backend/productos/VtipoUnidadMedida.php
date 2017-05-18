@@ -48,7 +48,8 @@ $(document).ready(function()
   //-------------------------Fin -----------------------------------   
 
   //----------------modificar data---------------
-    $(".EditData").click(function() 
+    //$(".EditData").click(function()
+    $(document).on('click','.EditData',function() 
     {
        $(".AddUnidadMedidaEdit").modal({
            backdrop: 'static', 
@@ -63,7 +64,8 @@ $(document).ready(function()
  
 
   //--------------------Delete caegoria------------------------------ 
-  $(".deleteBTN").click(function()
+  //$(".deleteBTN").click(function()
+  $(document).on('click','.deleteBTN',function()  
   {
       var dataDeleteID = $(this).find('.dataDeleteID').val();
       //alert(ProductoId);
