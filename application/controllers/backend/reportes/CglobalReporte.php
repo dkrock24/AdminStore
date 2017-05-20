@@ -202,6 +202,7 @@ class CglobalReporte extends CI_Controller {
 					<th>Cantidad</th>
 					<th>Unidad</th>
 					<th>Empleado</th>				
+					<th>Fecha</th>		
 				</tr>";
 		foreach ($data as $value) {
 			$html .= "<tr>";
@@ -227,6 +228,84 @@ class CglobalReporte extends CI_Controller {
 
 				$html .= "<td>";
 					$html .= $value->nickname;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->fecha_registro;
+				$html .= "</td>";
+
+			$html .= "<tr>";
+		}
+		$html .="</table>";
+		echo $html;
+	}
+
+	public function envios(){
+		$data['sucursales'] =  $this->sucursales_model->getSucursales();
+		$this->load->view('backend/reportes/Venvios.php',$data);
+	}
+
+	public function getEnvios()
+	{		
+		$data =  $this->globalReporte_model->getEnvios($_POST);		
+
+		
+		$html="";
+		$html="<table>
+				<tr>						
+					<th>Sucursal</th>
+					<th>Centro Pro.</th>
+					<th>Codigo</th>
+					<th>Material</th>
+					<th>Cantidad</th>
+					<th>Unidad</th>
+					<th>Empleado</th>				
+					<th>Estado</th>
+					<th>Fecha Creacion</th>		
+				</tr>";
+		foreach ($data as $value) {
+			$html .= "<tr>";
+				$html .= "<td>";
+					$html .= $value->nombre_sucursal;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->Centro;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->codigo_material;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->nombre_matarial;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->cantidad;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->nombre_unidad_medida;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->nickname;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$estado="";
+					if($value->estatus ==1){
+						$estado="Pendiente Recibido";
+					}
+					else{
+						$estado="Recibido";
+					}
+					$html .= $estado;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->fecha_registro;
 				$html .= "</td>";
 
 			$html .= "<tr>";
