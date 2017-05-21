@@ -52,6 +52,9 @@ $( document ).ready(function() {
     <link href="../../../assets/plugins/maps-amcharts/ammap/ammap.min.css" rel="stylesheet">
     <!-- END PAGE STYLE -->
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../../../assets/plugglobalreportins/js/generatorCharts2.js"></script>
+
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <style>
     .fa-bell{

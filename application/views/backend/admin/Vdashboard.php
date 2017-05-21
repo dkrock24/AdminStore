@@ -9,63 +9,6 @@
     <script type="text/javascript">
     $(document).ready(function(){
 
-        $(function () {
-            Highcharts.chart('container1', {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Pizza mas Vendida'
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'Pizza1',
-                        y: 56.33
-                    }, {
-                        name: 'Pizza2',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    }, {
-                        name: 'Pizza3',
-                        y: 10.38
-                    }, {
-                        name: 'Pizza4',
-                        y: 4.77
-                    }, {
-                        name: 'Pizza5',
-                        y: 0.91
-                    }, {
-                        name: 'Pizza6',
-                        y: 0.2
-                    }]
-                }]
-            });
-
-     
-
-        });
 
 
         $("#guardar_reporte").click(function(){
@@ -215,24 +158,9 @@
 
 <div class="tab-content">
     <div class="tab-pane fade active in" id="tab1_1">
-        <div class="row">
-        <?php
-            foreach ($querys as $datos) 
-            {
-                ?>
-                    <div class="col-md-6">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">
-                            Demo
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div id="container<?php echo $datos->id_global_report; ?>"></div>
-                        </a>
-                    </div>
-                    </div>
-                <?php
-            }
-        ?>
+        <div class="row" id="yes">
+
+
         </div>
     </div>
 

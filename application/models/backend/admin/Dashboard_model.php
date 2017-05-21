@@ -16,7 +16,9 @@ class Dashboard_model extends CI_Model
     public function getQuerys()
     {
         $this->db->select('*');
-        $this->db->from(self::querys);        
+        $this->db->from(self::querys);    
+        $this->db->where('status',1);  
+
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
@@ -210,11 +212,36 @@ class Dashboard_model extends CI_Model
         }
     }
 
+    // Obtener la query mas el tipo de grafica segun la consulta seleccionada
+    public function getDataQuery2(){
+        $this->db->select('*');
+        $this->db->from(self::querys);         
+        $this->db->join(self::tipos_grafica,' on '. 
+                        self::tipos_grafica.'.global_report_chart_id = '.
+                        self::querys.'.chart_type_id');
+        $this->db->where(self::querys.'.status',1);
+        $this->db->order_by("id_global_report", "asc");
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
     function getBuilQuery($oParameter,$sTringQuery){
         $query;
         eval("\$query = \"$sTringQuery\";");
 
         $aSettings =  $this->db->query($query)->result();
+        return $aSettings;
+    }
+
+    function getBuilQuery2($sTringQuery){
+        //$query;
+        //eval("\$query = \"$sTringQuery\";");
+
+        $aSettings =  $this->db->query($sTringQuery)->result();
         return $aSettings;
     }
     

@@ -13,12 +13,72 @@ class Cdashboard extends CI_Controller {
 
 	public function index()
 	{		
-		$data['querys'] =  $this->dashboard_model->getQuerys();
-		$data['graficos'] = $this->dashboard_model->getTiposGraficas();
-		$data['reportes'] = $this->dashboard_model->getReportes();
-		$data['consultas1'] = $this->dashboard_model->getConsultas();
 		
-		$this->load->view('backend/admin/Vdashboard.php',$data);
+		$data1['graficos'] 		= $this->dashboard_model->getTiposGraficas();
+		$data1['reportes'] 		= $this->dashboard_model->getReportes();
+		$data1['consultas1'] 	= $this->dashboard_model->getConsultas();
+
+		$querys 				=  $this->dashboard_model->getDataQuery2();
+
+		if($querys != null)
+		{
+			
+			$contador	=1;
+			$data 		= array();
+			foreach ($querys as  $value) {
+				echo "<script type='text/javascript'>";
+				echo "$('#yes').append('<div class=col-md-6><div class=list-group><a href=# class=list-group-item active>Demo24</a><a href=# class=list-group-item><div id=container'+$contador+'></div></a></div></div>')";
+				echo "</script>";
+				$data['id_global_report'] 	= $value->id_global_report;
+				$data['descripcion'] 		= $value->description;
+				$data['query'] 				= $value->query;
+				$data['title'] 				= $value->title;
+				$data['chrarType'] 			= $value->chart_type_id;
+				$data['chartFunction'] 		= $value->chart_function;
+
+				$query 			= $data['query'];
+				$type_chart 	= $value->chart_type;
+				$function 		= $data['chartFunction'];
+				$description 	= $data['descripcion'];
+				$builQuery 	= $this->dashboard_model->getBuilQuery2($query);
+
+				$this->ActionReport2($builQuery,$type_chart,$function,$description,$contador);
+				$contador++;
+			}
+			
+		}		
+		$this->load->view('backend/admin/Vdashboard.php',$data1);
+	}
+
+	public function ActionReport2($dataChart,$type_chart,$function,$description,$contador)
+	{		
+		$a = $dataChart;
+		if($type_chart=='Data Table')
+		{
+			$this->build_table($dataChart);
+		}
+		else
+		{
+			$this->drawChart($dataChart,$type_chart,$function,$description,$contador);  
+        }	
+	}
+
+	public function drawChart($dataChart,$type_chart,$function,$description,$contador){
+			$url = 'http://45.33.3.227/lapizzeria/assets/globalreport/js/generatorCharts2.js';
+			//$url = 'http://localhost/lapizzeria/assets/globalreport/js/generatorCharts2.js';
+	        echo '<script type="text/javascript" src="'.$url.'"></script>';
+	        $data 	= array();
+	        $cont 	=0;
+	        $alias 	= array();
+
+	        $c = json_encode( $dataChart, JSON_NUMERIC_CHECK );
+
+	        echo '	<div id="chart" style="width: 100% !important;"></div>';
+	        echo "	<script type='text/javascript'>
+	        			//$('#yes').append('<div class=col-md-6><div class=list-group><a href=# class=list-group-item active>Demo24</a><a href=# class=list-group-item><div id=container'+$contador+'></div></a></div></div>');
+	        			var obj = JSON.parse('".$c."');
+	        			typeChart(obj,'".$type_chart."','".$function."','".$description."','".$contador."');
+	        		</script>";
 	}
 
 	public function editarQuery($id_query){
