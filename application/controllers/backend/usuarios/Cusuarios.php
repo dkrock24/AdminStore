@@ -28,6 +28,9 @@ class Cusuarios extends CI_Controller {
 		echo $id;
 		$this->usuarios_model->eliminar_usuario($id);
 	}
+	public function editar_usuarios(){
+
+	}
 
 	public function userAdmin(){
 		$data['cargos'] =  $this->usuarios_model->cargos();
@@ -36,5 +39,20 @@ class Cusuarios extends CI_Controller {
 		$data['usuario'] = $this->usuarios_model->getAllUsers();
 		$data['sucursal'] = $this->usuarios_model->getAllSucursal();
 		$this->load->view('backend/usuarios/VuserAdmin.php',$data);
+	}
+
+	public function getUsuarioByID($id_usuario){
+		$data['cargos'] =  $this->usuarios_model->cargos();
+		$data['roles'] =  $this->usuarios_model->roles();
+		$data['avatar'] =  $this->usuarios_model->avatar();
+		$data['usuario'] = $this->usuarios_model->getUsuarioByID($id_usuario);
+		$this->load->view('backend/usuarios/VusuariosEdit.php',$data);
+	}
+	public function update_user()
+	{
+		//var_dump($_POST);
+		$this->usuarios_model->update_user($_POST);	
+		
+
 	}
 }

@@ -120,6 +120,41 @@ class usuarios_model extends CI_Model
         $this->db->delete(self::usuarios, $data); 
     }
 
+    public function getUsuarioByID($id_usuario){
+        $this->db->select('*');
+        $this->db->from(self::usuarios);
+        $this->db->join(self::cargos,' on '. self::usuarios .'.cargo = id_cargo');
+        $this->db->join(self::roles,' on '. self::usuarios .'.rol = id_rol');
+        $this->db->where(self::usuarios.'.id_usuario', $id_usuario);
+        $query = $this->db->get();
+        //echo $this->db->queries[3];        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    public function update_user($user){
+        
+        $usuario = array(
+             'nombres'      => $user['nombres'],
+             'apellidos'    => $user['apellidos'],
+             'telefono'     => $user['telefono'],
+             'celular'      => $user['celular'],
+             'direccion'    => $user['direccion'],
+             'dui'          => $user['dui'],
+             'usuario'      => $user['usuario'],             
+             'nickname'     => $user['nombres'].".".$user['apellidos'],
+             'fecha'        => $user['fecha'],
+             'genero'       => $user['genero'],
+             'cargo'        => $user['cargo'],
+             'rol'          => $user['rol'],                          
+             'estado'       =>1
+             );
+        $this->db->where(self::usuarios.'.id_usuario', $user['id_usuario']);
+        $this->db->update(self::usuarios, $usuario);   
+    }
+
     // Retorna las sucursales para la vista de creacion de usuarios
     public function getAllSucursal(){
         $this->db->select('*');

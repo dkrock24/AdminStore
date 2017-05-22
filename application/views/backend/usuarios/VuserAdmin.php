@@ -56,6 +56,22 @@
 
   });
 
+    // Ver detalle de usuarios
+  $("a#enlance").click(function()
+    {
+        var id = $(this).attr("class");   
+         $.ajax({
+            url: "../usuarios/Cusuarios/getUsuarioByID/"+id,
+            type:"post",
+            success: function(){     
+              $(".pages").load("../usuarios/Cusuarios/getUsuarioByID/"+id);      
+            },
+            error:function(){
+                //alert("Error.. No se subio la imagen");
+            }
+        });   
+    });
+
   $("#abc").click(function(){
     saveData1();
   });
@@ -394,7 +410,7 @@
                                 <td><?php echo $usuarios->estado;  ?></td>
                                 <td>
 
-                                    <a id="enlance" class="<?php echo 1; ?>" href="#">
+                                    <a id="enlance" class="<?php echo $usuarios->id_usuario; ?>" href="#">
                                     <button type="button" class="btn btn-dark btn-transparent">Detalle</button>
                                      </a>
                                      
