@@ -1,17 +1,31 @@
+.removeIco
+{
+    color: #F44336;
+    font-size: 20px;
+    margin: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.preciograbado
+{
+    font-size: 18px;
+    color: #3F51B5;
+    margin-left: 6px;
+    font-weight: bold;
+}
 .iten-cuenta
 {
-    width: 60%; 
+    width: 50%; 
     color: #000; 
     float: left;
     text-align: initial;
 }
 .list-logs
 {
-    width: 39%;
+    width: 49%;
     float: right;
     color: #000;
     background: rgba(158, 158, 158, 0.22);
-    display: none;
     padding: 6px;
     border-radius: 4px;
     text-align: center;
@@ -181,7 +195,7 @@ body {
 {
     float: right;
     color: red;
-    font-weight: bold;
     font-size: 28px;
+    font-weight: bold;
 
 }

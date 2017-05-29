@@ -20,6 +20,24 @@
 <script language="javascript">
 $( document ).ready(function() 
 {
+  $(".go-sucursal").click(function(){
+        var id_sucursal = $("#id_sucursal").val();
+        var url1 = $(this).attr("id");
+          $.ajax({
+              url: url1+id_sucursal,
+              type:"post",
+              success: function(){     
+                $(".pages").load(url1+id_sucursal);      
+              },
+              error:function(){
+                  //alert("Error.. No se subio la imagen");
+              }
+          });  
+      });
+
+  var sucursalID = $("#sucursalID").val();
+  //alert(sucursalID);
+
 	$(".timer").TimeCircles({
     "animation": "smooth",
     "bg_width": 0.5,
@@ -248,15 +266,13 @@ $('.itemProducto').click(function()
 {
   if ($(this).is(':checked')) 
   {
-    
-    var nameBar = $(this).attr("id");
     var idProdcuto = $(this).data("idproducto");
-    $('#optionUnica'+nameBar).show();
+    $('#optionUnica_'+idProdcuto).show();
   }
   else
   {
-     var nameBar = $(this).attr("id");
-    $('#optionUnica'+nameBar).hide();
+    var idProdcuto = $(this).data("idproducto");
+    $('#optionUnica_'+idProdcuto).hide();
   }
 });
 //------------------Fin del codifo
@@ -273,15 +289,121 @@ $('.cambiarM').click(function()
 //--------------------Separar Cuenta
 $('.separarC').click(function() 
 {
-  alert("Codigo para separar cuenta");
+  if (confirm('Realmente desea separar cuentas'))
+  {
+    var idpedidounico = $(this).data("idpediseparar");
+    var className = ".itemProducto_"+idpedidounico;
+    var myItems = new Array();
+    $(className+':checked').each(function()
+    {        
+       myItems.push($(this).val());
+    });
+
+    $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/separar_cuenta",
+          type: "post",
+          data: {myItems:myItems, idpedidounico:idpedidounico},
+          success: function(data)
+          {                                                  
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      });
+  }
+ 
 });
 //------------------Fin del codifo
 
 
-//--------------------Separar Cuenta
-$('.num_mesa').click(function() 
+//--------------------Descuento Cupon
+$('.descuentoCupon').click(function() 
 {
-  alert("Mover cuenta de mesa");
+  var idpedidounico = $(this).data("idpedidocupon");
+  if (confirm('Realmente desea aplicar descuento por cupon'))
+  {
+    var codigoCupon = window.prompt("Ingrese el codigo del cupon");
+    if (codigoCupon.length > 0) 
+    {
+      $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/descuento_cupon",
+          type: "post",
+          data: {codigoCupon:codigoCupon, idpedidounico:idpedidounico, sucursalID:sucursalID},                           
+              
+          success: function(data)
+          {                                                  
+            alert(data);
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      });
+    }
+    else
+    {
+      alert("No ingreso un codigo de cupon valido");
+      return;
+    }
+  }
+});
+//------------------Fin del codifo
+
+//--------------------Separar Cuenta
+$('.removeIco').click(function() 
+{
+  if (confirm('Seguro que quiere cancelar este item de su pedido?')) 
+    {
+       var idpedidounico = $(this).data("idpedidocancelarpro");
+       $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/eliminar_item",
+          type: "post",
+          data: {idpedidounico:idpedidounico},                           
+          success: function(data)
+          {                                                  
+            alert(data);
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      });
+    }
+    else
+    {
+      return;
+    }
+  
+});
+//------------------Fin del codifo
+
+//--------------------Separar Cuenta
+$('.quitar_propina').click(function() 
+{
+  var idpedidounico = $(this).data("idpedidounicopropina");
+  if (confirm('Realmente desea quitar la propina esta orden?'))
+  {
+    var commentPropina = window.prompt("Ingrese el motivo");
+    if (commentPropina.length > 0) 
+    {
+      $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/quitar_propina",
+          type: "post",
+          data: {commentPropina:commentPropina, idpedidounico:idpedidounico},                           
+              
+          success: function(data)
+          {                                                  
+            alert("Propina eliminada con exito");
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      });
+    }
+    else
+    {
+      alert("Es necesario un comentario");
+      return;
+    }
+  }
+  else
+  {
+    return;
+  }
 });
 //------------------Fin del codifo
 
@@ -293,9 +415,9 @@ $('.anularPedido').click(function()
   {
     var idpedidounico = $(this).data("idpedidoanular");
     var commentAnulacion = window.prompt("Ingrese el motivo de anulacion");
-    if (commentAnulacion != "") 
+    if (commentAnulacion.length > 0) 
     {
-       $.ajax
+      $.ajax
       ({
           url: "../../../sucursales/Ccaja/anular_cuenta",
           type: "post",
@@ -327,41 +449,48 @@ $('.descuento').click(function()
   if (confirm('Realmente desea hacer un descuento?'))
   {
     var idpedidounico = $(this).data("idpedidodescuento");
+    var total = $(".totalneto_"+idpedidounico).text();
+
     var comment = window.prompt("Ingrese el motivo del descuento");
-    if (comment != "") 
+
+    if (comment.length > 0) 
     {
       var porcent = window.prompt("Porcentaje a descontar")
-      if(porcent != "")
+      if(porcent.length > 0)
       {
         $.ajax
         ({
-            url: "../../../sucursales/Ccaja/descuento_cuenta",
+            url: "../../../sucursales/Ccaja/addevento_historial",
             type: "post",
-            data: {comment:comment, porcent:porcent, idpedidounico:idpedidounico},                           
-                
+            data: {comment:comment, porcent:porcent, idpedidounico:idpedidounico}, 
             success: function(data)
-            {                                                  
-              alert("Cuenta anulada con exito");
-              $('.pedidoID_'+idpedidounico).remove();
+            {          
+
+              alert("Descuento aplicado correctamente");
+              $("#all-content").load(location.href+"#all-content>*","");
+         
             }
         });
       }
       else
       {
         alert("Es necesario el porcentaje del descuento");
+        return;
       }
        
     }
     else
     {
       alert("Es necesario agregar un comentario");
+      return;
     }   
      
-  } 
+  }
 
 
 });
 //------------------Fin del codifo 
+
 
 });   
 </script>
@@ -447,22 +576,20 @@ $('.descuento').click(function()
         }
       else
         {
-          echo '<div class="alertDespacho">NADA PENDIENTE </span><span class="icoGreate glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></div>';
+          echo '<div class="alertDespacho">NADA PENDIENTE<span class="icoGreate glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></div>';
         }    
     ?>     
     <!-- fin Panel de ordenes en cocina -->
+  </div>
 
-
-    	</div>
-
-    	<div class="main-contenido">
+  <div class="main-contenido">
     	<div class="main header">
     		<header>
     		<nav>
     			<ul>
-    			<li><a title="Opcion 1" href="#">Detalle</a></li>
-    			<li><a title="Opcion 2" href="#">Historial</a></li>
-    			<li><a title="Opcion 3" href="#">Corte Z</a></li>
+    			<!--<li><a title="Opcion 1" href="#">Detalle</a></li> -->
+    			<!--<li><a title="Opcion 2" href="#">Historial</a></li> -->
+    			<li><a href="#" class="list-group-item go-sucursal" id="../sucursales/Ccortes/index/">Corte</a></li>
     			<li class='doCompras'><a title="Opcion 3" href="#">Compras</a></li>
     			<li class="date-caja"><?php echo date('Y-m-d');  ?></li>
     			</ul>
@@ -478,12 +605,12 @@ $('.descuento').click(function()
     		<div class="input-group-btn"> 
     			<button type="button" class="btn btn-default ImpTicket" style="height: 40px;">Tiquete</span></button> 
     			<button type="button" class="btn btn-default cerrarCuenta" style="height: 40px;">Cerrar</button> 
-    			</div>
+    		</div>
     			<input class="form-control" placeholder="Numero Mesa" aria-label="Text input with multiple buttons" style="width: 30%;height: 42px;border: 2px solid #88b32f;" id="NumMesa">
     		</div>
     	</center>	 
     	</div>		
-
+  </div>
 
     <!--iv contiene lista de pedido para cerrar en caja-->
     <?php
@@ -495,9 +622,13 @@ $('.descuento').click(function()
           
           $classElaborado = ($value->flag_elaborado == 1) ? "panel-primary" : "panel-success" ;
           $listProductos = explode(",", $value->name_producto);
+
+          $listHistorial = explode(",", $value->historial);
+          //var_dump($listHistorial);
     ?>  
+        <input type="hidden" id="sucursalID"  name="sucursalID" value="<?php echo $value->id_sucursal; ?>">
       	<div class="panel panel-primary pedidoID_<?php echo $value->id_pedido; ?>" data>
-      	  <div class="panel-heading" style="text-align: center;">
+      	  <div class="panel-heading" style="text-align: center;color: #fff;">
       	   <span class="num-cuenta">Cuenta #<?php echo $value->id_pedido; ?> </span><span class="antendida">Atendida por <?php echo $value->nombres." ".$value->apellidos; ?></span></div>
       	  	<div class="btn-group" role="group">
       		  <button type="button" class="btn btn-default" style="height: 40px;">Factura</button>
@@ -506,15 +637,15 @@ $('.descuento').click(function()
       		  <button type="button" class="btn btn-default" style="height: 40px;">Tiquete</button>
       		  <button type="button" class="btn btn-default cerraCuentaUnica" data-idpedidounico="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cerrar</button>
       		  <button type="button" class="btn btn-default anularPedido" data-idpedidoanular="<?php echo $value->id_pedido; ?>" style="height: 40px;">Anular</button>
-      		  <button type="button" class="btn btn-default descuento" ata-idpedidodescuento="<?php echo $value->id_pedido; ?>" style="height: 40px;">Descuento</button>
-      		  <button type="button" class="btn btn-default" style="height: 40px;">Cupon</button>
+      		  <button type="button" class="btn btn-default descuento" data-idpedidodescuento="<?php echo $value->id_pedido; ?>" style="height: 40px;">Descuento</button>
+      		  <button type="button" class="btn btn-default descuentoCupon" data-idpedidocupon="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cupon</button>
       		  <!--<button type="button" class="btn btn-default" style="height: 40px;">VIP</button>-->
       		</div>
           
 
           <div class="btn-group optionUnica" role="group" id="optionUnica_<?php echo $value->id_pedido; ?>" style="display: none;">
-            <button type="button" class="btn btn-info separarC" style="height: 40px;">Separar Cuenta</button>
-            <button type="button" class="btn btn-info cambiarM" style="height: 40px;">Cambiar mesa</button>
+            <button type="button" class="btn btn-danger separarC" data-idpediseparar="<?php echo $value->id_pedido; ?>" style="height: 40px;">Separar Cuenta</button>
+           <!-- <button type="button" class="btn btn-danger cambiarM" data-idpedidocambiarmesa="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cambiar mesa</button> -->
           </div>
       	  <div class="panel-body">
       	   <div class="alert alert-success" role="alert">
@@ -522,43 +653,69 @@ $('.descuento').click(function()
       	   	<span class="formula">
               
               (((
-              <span style="cursor: not-allowed;" title="Total sin IVA">
-              <?php  
-                echo $value->totalSin; 
+              <span class="totalneto_<?php echo $value->id_pedido; ?>" style="cursor: not-allowed;" title="Total sin IVA">
+              <?php
+              if ($value->grupo == "CUPON$") 
+              {  
+                  $totalSinShowFull = $value->totalSin - $value->descuentos; 
+                  echo $totalSinShowFull;
+              }
+              elseif ($value->grupo == "CUPON%") 
+              {  
+                  $totalSinShow =  $value->totalSin * $value->descuentos;
+                  $totalSinShowFull = $value->totalSin - $totalSinShow; 
+                  echo $totalSinShowFull;
+              }
+              else
+              {
+                  $totalSinShow = $value->totalSin / 100;
+                  $totalSinShow = $totalSinShow * $value->descuentos;
+                  $totalSinShowFull = $value->totalSin - $totalSinShow; 
+                  echo $totalSinShowFull;
+              }
               ?>
               </span>
                + 
-              <span class="quitar_iva" style="cursor: pointer;" title="IVA Clic para quitar IVA">
+              <span class="quitar_iva IvaClean_$value->id_pedido'>" style="cursor: pointer;" title="IVA Clic para quitar IVA" data-ivasucursal="<?php echo $value->monto_impuesto; ?>">
               <?php 
-                $iva = $value->totalSin * $value->monto_impuesto;
-                echo $iva; ?>
+                $iva = $totalSinShowFull * $value->monto_impuesto;
+                echo round($iva,2); ?>
               </span>
               
                 ) = 
-              <span class="totalMasIva" style="cursor: not-allowed;color:blue;font-weight:bold;" title="Total con IVA sin propina">
+              <span class="totalMasIva totalIvaClean_$value->id_pedido'>" style="cursor: not-allowed;color:blue;font-weight:bold;" title="Total con IVA sin propina">
               <?php 
-                $totalIva =  $value->totalSin + $iva;
-                echo $totalIva; 
+                $totalIva =  $totalSinShowFull + $iva;
+                echo round($totalIva,2); 
               ?>
               </span>
 
               ) + 
 
-              <span class="quitar_propina" style="cursor: pointer;color:red;font-weight:bold;" title="Propina
-              Clic para quitar propina">
+              <span class="quitar_propina propinaClean_$value->id_pedido'>" style="cursor: pointer;color:red;font-weight:bold;" title="Propina
+              Clic para quitar propina" data-idpedidounicopropina="<?php echo $value->id_pedido; ?>">
               <?php 
-                $propina =  $totalIva * 0.10;
-                echo round($propina,2); 
+                if ($value->grupo == "PROPINA") 
+                {
+                  $propina =  $totalIva * 0;
+                  echo "$0"; 
+                }
+                else
+                {
+                  $propina =  $totalIva * 0.10;
+                  echo round($propina,2); 
+                }
+                
               ?>
               </span>
               ) 
       
       
-              <span class="totalFull" title="Total con IVA y con propina">
+              <span class="totalFull totalFull_<?php echo $value->id_pedido; ?>" title="Total con IVA y con propina">
               $
                <?php 
                   $total =  $totalIva + $propina;
-                  echo round($total,2); 
+                  echo "<span class='totalClean_$value->id_pedido'>".round($total,2)."</span>"; 
                 ?>
               </span>
 
@@ -572,10 +729,12 @@ $('.descuento').click(function()
               foreach ($listProductos as $producto)
               {
                  $dataSeparada = explode("_", $producto);
-                 
+                 //var_dump($dataSeparada);
               ?>  
-                <input type="checkbox" name="item-venta[]" class="itemProducto" id="_<?php echo $value->id_pedido; ?>" data-idproducto="<?php echo $dataSeparada[0]; ?>" value="0"> 
-                <?php echo $dataSeparada[1]; ?><br>
+                <span class="removeIco glyphicon glyphicon-remove" data-idpedidocancelarpro="<?php echo $dataSeparada[0]; ?>"></span>
+                <input type="checkbox" name="item-venta[]" class="itemProducto itemProducto_<?php echo $value->id_pedido; ?>" data-idproducto="<?php echo $value->id_pedido; ?>" value="<?php echo $dataSeparada[0]; ?>"> 
+                <?php echo $dataSeparada[1]; ?>
+                <span class="preciograbado">$<?php echo $dataSeparada[2]; ?></span><br>
               <?php
               }
               ?>
@@ -583,11 +742,17 @@ $('.descuento').click(function()
       			</ul>
       	   	</div>
       	   	<div class="list-logs">
-      	   		<div>test de log</div>
+            <?php
+      	   		foreach ($listHistorial as $historia)
+              {  
+              ?>
+              <div class="alert alert-warning" role="alert" style="color: #000000;padding: 3px;margin: 2px;"><?php echo $historia; ?></div>  
+              <?php
+              }
+              ?>
       	   	</div>
       	  </div>
       	</div>
-      </div>
     <?php
           }
         }
@@ -671,7 +836,5 @@ $('.descuento').click(function()
           <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
         </div>
       </div>
-      
-    </div>
   </div>
 <!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
