@@ -752,18 +752,21 @@
 			success: function(data){  	
 					
 				var longitud = data.length;
-				for (index = 0; index < data.length; ++index) {    			
+				for (index = 0; index < data.length; ++index) {    	
+					
 	    			if(data[index]==1){//alert("Todo Bien");
 	    				estado=1;    				
 	    			}
 	    			if(data[index]==0){
-	    				alert("No Se Puede Calcular Elemento. Unidades de Medida No Configuradas");
+	    				//alert("No Se Puede Calcular Elemento. Unidades de Medida No Configuradas");
+	    				console.log("No Se Puede Calcular Elemnto. Unidades de Medida No Configuradas");
 	    				//reiniciarInterfaz();
 	    			}
 	    			if(data[index]==2){
-	    				alert("Cantidad Menor En Inventario Para Un Elemento De Este Producto");
+	    				//alert("Cantidad Menor En Inventario Para Un Elemento De Este Producto...");
+	    				console.log("Cantidad Menor En Inventario Para Un Elemento De Este Producto - XD");
 	    				//reiniciarInterfaz();    
-	    				console.log(_orden)	;
+	    				//console.log(_orden)	;
 	    				var leng = _orden.length;
 	    				var eliminar = leng-1;
 	    				_orden.splice(eliminar,1);
@@ -792,11 +795,13 @@
 	    				estado=1;    				
 	    			}
 	    			if(data[index]==0){
-	    				alert("No Se Puede Calcular Elemnto. Unidades de Medida No Configuradas");
+	    				//alert("No Se Puede Calcular Elemnto. Unidades de Medida No Configuradas");
+	    				console.log("No Se Puede Calcular Elemnto. Unidades de Medida No Configuradas");
 	    				//reiniciarInterfaz();
 	    			}
 	    			if(data[index]==2){
-	    				alert("Cantidad Menor En Inventario Para Un Elemento De Este Producto");
+	    				//alert("Cantidad Menor En Inventario Para Un Elemento De Este Producto");
+	    				console.log("Cantidad Menor En Inventario Para Un Elemento De Este Producto -");
 	    				
 	    				$.modal.close();
 	    				//reiniciarInterfaz();

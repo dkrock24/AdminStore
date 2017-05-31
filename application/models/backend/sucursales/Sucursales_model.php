@@ -207,7 +207,9 @@ class sucursales_model extends CI_Model
         $this->db->join(self::unidad_medida.' AS SUM',' on SUM.id_unidad_medida = '.'CM.id_unidad_medida');
         $this->db->where('S.id_sucursal',$sucursal);
         $this->db->where('P.id_producto',$id_producto);
-        $query = $this->db->get();        
+        $this->db->group_by('IS.codigo_meterial');
+        $query = $this->db->get();   
+        //echo $this->db->queries[0];
         
         if($query->num_rows() > 0 )
         {
@@ -237,13 +239,16 @@ class sucursales_model extends CI_Model
         } 
     }
 
-    public function getValidarDescuentoInventario($codigo_material){
+    public function getValidarDescuentoInventario($sucursal,$codigo_material){
         $this->db->select('*');
         $this->db->from(self::catalogo_materiales.' AS CM');
         $this->db->join(self::inventario_sucursal.' AS IS',' on IS.codigo_meterial = '.'CM.codigo_material');      
         $this->db->join(self::unidad_medida.' AS UM',' on UM.id_unidad_medida = '.'CM.id_unidad_medida');
         $this->db->where('CM.codigo_material',$codigo_material);        
+        $this->db->where('IS.id_sucursal',$sucursal);  
         $query = $this->db->get();
+        //echo $this->db->queries[2];
+        //echo "<br>";
         
         if($query->num_rows() > 0 )
         {
@@ -253,14 +258,17 @@ class sucursales_model extends CI_Model
 
     // INSERTAR PEDIDO - ENCABEZADO
     public function InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal){
+
         // obtener la secuencia de la secursal
         $date = date("Y-m-d");
         $fecha_secuencia;
         $valor_secuencia;
+
         $this->db->select('*');
         $this->db->from(self::sys_secuencia.' AS s');
         $this->db->where('s.id_sucursal',$Id_Sucursal);
         $query = $this->db->get();
+
         if($query->num_rows() > 0 )
         {
             $info = $query->result();
@@ -275,7 +283,7 @@ class sucursales_model extends CI_Model
                 }
                 else
                 {
-                    $valor_secuencia = "0001";
+                    $valor_secuencia = "00001";
                     $this->UpdateSecuencia($Id_Sucursal,$valor_secuencia);
                 }
             }
@@ -366,6 +374,7 @@ class sucursales_model extends CI_Model
         $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
         $this->db->where('InvS.id_sucursal',$sucursal);        
         $query = $this->db->get();
+        //echo $this->db->queries[0];
         
         if($query->num_rows() > 0 )
         {
@@ -378,8 +387,10 @@ class sucursales_model extends CI_Model
         $this->db->select('CM.nombre_matarial,CM.codigo_material');
         $this->db->from(self::inventario_sucursal.' AS InvS');        
         $this->db->join(self::catalogo_materiales.' AS CM',' on CM.codigo_material = '.'InvS.codigo_meterial');              
-        $this->db->where('CM.codigo_material',$codigo);        
+        $this->db->where('CM.codigo_material',$codigo);    
+        $this->db->limit(1);
         $query = $this->db->get();
+        //echo $this->db->queries[0];
         if($query->num_rows() > 0 )
         {
             return $query->result();

@@ -121,12 +121,12 @@ class Cindex extends CI_Controller {
 					//"[ ".$producto->Simbolo2." ] ".
 					"[ ".$producto->Unidad2." ] ".
 					"[ ".$producto->total_existencia." ] "."\n\n";*/
-			$valor = $this->ConvertUnidades($producto->Unidad2,$producto->unidad_medida_id,$producto->cantidad,$producto->name_detalle);
-			echo $valor;		
+			$valor = $this->ConvertUnidades($sucursal,$producto->Unidad2,$producto->unidad_medida_id,$producto->cantidad,$producto->name_detalle);
+			echo $valor;
 		}	
 	}
 
-	public function ConvertUnidades($unidadAConvert,$unidadDeConvert,$cantidadAConvert,$codigo_material)
+	public function ConvertUnidades($sucursal,$unidadAConvert,$unidadDeConvert,$cantidadAConvert,$codigo_material)
 	{
 		//echo "De ".$unidadAConvert;
 		//echo " A ";
@@ -142,31 +142,34 @@ class Cindex extends CI_Controller {
 			//echo "<br>";
 		}
 		//var_dump($datosEquivalentes[0]['cantidad_equivalencia']);		
-		$estado = $this->getCantidadExistencia($unidadAConvert,$resultConvert,$codigo_material);		
+		$estado = $this->getCantidadExistencia($sucursal,$unidadAConvert,$resultConvert,$codigo_material);		
 		return $estado;
 	}
 
-	public function getCantidadExistencia($unidadAConvert,$resultConvert,$codigo_material){
+	public function getCantidadExistencia($sucursal,$unidadAConvert,$resultConvert,$codigo_material){
 		$aprobado=0;
 		//echo $resultConvert;
-		$info = $this->sucursales_model->getValidarDescuentoInventario($codigo_material);
+		//echo $codigo_material . "<br>";
+		$info = $this->sucursales_model->getValidarDescuentoInventario($sucursal,$codigo_material);
+
 		foreach ($info as $value) {
 			if($value->id_unidad_medida==$unidadAConvert)
 			{
-				if($value->total_existencia>=$resultConvert){
+				if($value->total_existencia >= $resultConvert){
 					$aprobado=1;
 				}
 				else
 				{
+					//echo $codigo_material;
 					$aprobado=2;
 				}
 			}
 			else
 			{
-				$aprobado = 0;
+				$aprobado = 0;				
 			}			
 		}
-	return $aprobado;
+		return $aprobado;
 	}
 
 	// Guarda  el en Encabezado de la Orden
