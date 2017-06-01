@@ -1,4 +1,7 @@
 <?php
+/*
+* Clase que implementa la logica de cortes de caja por sucursal
+*/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ccortes extends CI_Controller {
@@ -34,11 +37,17 @@ class Ccortes extends CI_Controller {
 		$Monto 	= $data[0]->Monto;
 
 		//Obtener Total de Dinero en Todas las Ordenes a Con Adicionales
-		$data 	= $this->cortes_model->getTotalAdicinales($id_sucursal);
-		$Monto_Adicional = $data[0]->Total_Adisional;
+		$data 	= $this->cortes_model->getTotalAdicinales_($id_sucursal);
+		if($data[0]->Total_Adisional== null)
+		{
+			$Monto_Adicional = 0;
+		}else{
+			$Monto_Adicional = $data[0]->Total_Adisional;
+		}
+		
 
 		//Obtener Total El Numero de Ordenes Sin cortar
-		$data 	= $this->cortes_model->getTotalOrdenes($id_sucursal);
+		$data 	= $this->cortes_model->getTotalOrdenes_($id_sucursal);
 		$Totalordenes = $data[0]->Totalordenes;
 
 		//Ultima Serie al Corte del Dia
@@ -46,7 +55,7 @@ class Ccortes extends CI_Controller {
 		$Serie 	= $data[0]->secuencia_orden;
 
 		//Total de Cupones
-		$data 	= $this->cortes_model->getTotalOrdenesCupon($id_sucursal);
+		$data 	= $this->cortes_model->getTotalOrdenesCupon_($id_sucursal);
 		$Total_Cupones = $data[0]->Cupones;
 
 		//InsetCorte
@@ -66,6 +75,7 @@ class Ccortes extends CI_Controller {
 		$html="";
 		$html="<table>
 				<tr>	
+					<th>Sucursal</th>
 					<th>Usuario</th>
 					<th>Fecha Corte</th>
 					<th>Monto</th>
@@ -76,6 +86,9 @@ class Ccortes extends CI_Controller {
 				</tr>";
 		foreach ($data as $value) {
 			$html .= "<tr>";
+				$html .= "<td>";
+					$html .= $value->nombre_sucursal;
+				$html .= "</td>";
 				$html .= "<td>";
 					$html .= $value->nickname;
 				$html .= "</td>";

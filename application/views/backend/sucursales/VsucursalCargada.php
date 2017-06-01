@@ -2,6 +2,7 @@
   	$(document).ready(function(){
   		//Cargar Sucursal
   		$(".go-sucursal").click(function(){
+  			$(".sk-three-bounce").show();
     		var id_sucursal = $("#id_sucursal").val();
     		var url1 = $(this).attr("id");
 	        $.ajax({
@@ -9,6 +10,9 @@
 	            type:"post",
 	            success: function(){     
 	              $(".pages").load(url1+id_sucursal);      
+	              setTimeout(function() {
+			     	$(".sk-three-bounce").css('display','none');
+			    }, 1000);
 	            },
 	            error:function(){
 	                //alert("Error.. No se subio la imagen");
@@ -103,31 +107,6 @@
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
-					<i class='fa fa-bell'></i>Notificacion 
-
-				</a>
-					<a  class="list-group-item go-sucursal" id="">										  	
-					  	<p class="center"><img src="../../../asset_/img/notificacion.png"></p>
-					</a>
-			</div>
-        </div>
-    </div>
-
-     <div class="row">       
-          <div class="col-md-4">
-        	<div class="list-group">
-				<a href="#" class="list-group-item active">
-					<i class='fa fa-file-text'></i>Productos
-				</a>
-					<a  class="list-group-item go-sucursal" id="">										  	
-					  	<p class="center"><img src="../../../asset_/img/catalogo.png"></p>
-					</a>
-			</div>
-        </div>
-
-        <div class="col-md-4">
-        	<div class="list-group">
-				<a href="#" class="list-group-item active">
 					<i class='fa fa-money'></i>Caja
 				</a>
 					<a href="../sucursales/Ccaja/caja_view/<?php echo $sucursales[0]->id_sucursal; ?>"	target="_black" class="list-group-item go-sucursal" id="">								  	
@@ -135,8 +114,8 @@
 					</a>
 			</div>
         </div>
-        
     </div>
+
 </div>
 
 

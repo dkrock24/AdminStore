@@ -2,12 +2,16 @@
   	$(document).ready(function(){
   		//Cargar Sucursal
   		$(".go-sucursal").click(function(){
+  			$(".sk-three-bounce").show();
     		var id_sucursal = $(this).attr("id");
 	        $.ajax({
 	            //url: "../sucursales/Cindex/cargar_sucursal/"+id_sucursal,
 	            type:"post",
 	            success: function(){    
-	              $(".pages").load("../sucursales/Cindex/cargar_sucursal/"+id_sucursal);      
+	              $(".pages").load("../sucursales/Cindex/cargar_sucursal/"+id_sucursal);    
+	              setTimeout(function() {
+			     	$(".sk-three-bounce").css('display','none');
+			    }, 1000);  
 	            },
 	            error:function(){
 	                //alert("Error.. No se subio la imagen");
@@ -21,6 +25,7 @@
 a.sucursal:hover{
 	background: #88B32F;
 	color: white;
+	cursor: pointer;
 }
 </style>
 <div class="tab-content">

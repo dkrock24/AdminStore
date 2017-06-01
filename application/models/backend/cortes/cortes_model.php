@@ -51,7 +51,7 @@ class cortes_model extends CI_Model
 
     public function getTotalOrdenesCupon($id_sucursal){
         $query = $this->db->query('select count(pedido.id_pedido)as Cupones from sys_pedido as pedido
-        where pedido.cortado=1  and pedido.id_sucursal='.$id_sucursal.' and pedido.codigo_cupon!=null');
+        where pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' and pedido.codigo_cupon!=null');
 
          return $query->result(); 
     }
@@ -63,7 +63,7 @@ class cortes_model extends CI_Model
                 join sys_pais_departamento as departamento on departamento.id_departamento=sucursal.id_departamento
                 join sys_pais as pais on pais.id_pais=departamento.id_pais
                 join sys_pedido_detalle as detalle on detalle.id_pedido=pedido.id_pedido    
-                where pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' group by pedido.id_sucursal
+                where (pedido.flag_cancelado=0 or pedido.flag_cancelado=1) and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' group by pedido.id_sucursal
                 ');
          return $query->result(); 
     }
@@ -89,7 +89,7 @@ class cortes_model extends CI_Model
     public function getTotalOrdenes($id_sucursal){
         $query = $this->db->query('select count(pedido.id_pedido)as Totalordenes
             from sys_pedido as pedido          
-            where pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0
+            where pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0 and pedido.flag_cancelado=1
             
                 ');
          return $query->result();
@@ -139,12 +139,12 @@ class cortes_model extends CI_Model
 
     public function getTodasLasOrdenes($id_sucursal){
         $query = $this->db->query('select * from sys_pedido as pedido          
-                where pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0');
+                where pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0 and pedido.flag_cancelado=1');
                 return $query->result();
     }
 
     public function getCortesByFilter($id_sucursal,$data_filter){
-        $query = $this->db->query('select u.nickname,fecha_corte,monto_corte,monto_adicionales,total_ordenes,serie_fin,cupones,P.moneda from sys_pedido_cortes as pedido_corte
+        $query = $this->db->query('select S.nombre_sucursal, u.nickname,fecha_corte,monto_corte,monto_adicionales,total_ordenes,serie_fin,cupones,P.moneda from sys_pedido_cortes as pedido_corte
             join sr_usuarios as u on u.id_usuario=pedido_corte.id_usuario
             join sys_sucursal as S on S.id_sucursal=pedido_corte.id_sucursal
             join sys_pais_departamento as D on D.id_departamento=S.id_departamento
@@ -152,6 +152,46 @@ class cortes_model extends CI_Model
                 where pedido_corte.id_sucursal='.$id_sucursal.' and 
                 CAST(pedido_corte.fecha_corte AS DATE) between "'.$data_filter['fecha_inicio'].'" and "'.$data_filter['fecha_fin'].'"');
                 return $query->result();
+    }
+
+    /*
+    *   CONSULTAS PARA REALIZAR LOS CORTES
+    */
+
+    public function getTotalAdicinales_($id_sucursal){
+        $query = $this->db->query('select pais.moneda,(select sum(d.precio_adicional) from      sys_pedido_detalle_materia as d where d.id_detalle=detalle.id_detalle)AS Total_Adisional
+                from sys_pedido as pedido
+                join sys_sucursal as sucursal on sucursal.id_sucursal=pedido.id_sucursal
+                join sys_pais_departamento as departamento on departamento.id_departamento=sucursal.id_departamento
+                join sys_pais as pais on pais.id_pais=departamento.id_pais
+                join sys_pedido_detalle as detalle on detalle.id_pedido=pedido.id_pedido    
+                where pedido.flag_cancelado=1 and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' group by pedido.id_sucursal
+                ');
+         return $query->result(); 
+    }
+
+    public function getTotalOrdenes_($id_sucursal){
+        $query = $this->db->query('select count(pedido.id_pedido)as Totalordenes
+            from sys_pedido as pedido          
+            where pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0 and pedido.flag_cancelado=1
+            
+                ');
+         return $query->result();
+    }
+
+    public function getSeriesCortesBySucursal_($id_sucursal)
+    {      
+        $query = $this->db->query('select pedido.secuencia_orden from sys_pedido as pedido
+            where pedido.flag_cancelado=1 and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' order by pedido.secuencia_orden desc limit 1');
+            //echo $this->db->queries[0];
+            return $query->result(); 
+    } 
+
+    public function getTotalOrdenesCupon_($id_sucursal){
+        $query = $this->db->query('select count(pedido.id_pedido)as Cupones from sys_pedido as pedido
+        where pedido.flag_cancelado=1 and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.' and pedido.codigo_cupon!=null');
+
+         return $query->result(); 
     }
 
     /*
