@@ -15,13 +15,13 @@ class cortes_model extends CI_Model
     
     public function getcortesBySucursal($id_sucursal)
     {      
-        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(detalle.precio_grabado)AS Monto
+        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(cc.total_cobrado) AS Monto
             from sys_pedido as pedido
             join sys_sucursal as sucursal on sucursal.id_sucursal=pedido.id_sucursal
             join sys_pais_departamento as departamento on departamento.id_departamento=sucursal.id_departamento
             join sys_pais as pais on pais.id_pais=departamento.id_pais
-            join sys_pedido_detalle as detalle on detalle.id_pedido=pedido.id_pedido    
-            where pedido.flag_cancelado=1 and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.'
+            join sys_cajacuentas as cc on cc.ID_pedido=pedido.id_pedido    
+            where cc.flag_pagado=1 and pedido.cortado=0  and pedido.id_sucursal='.$id_sucursal.'
             group by pedido.id_sucursal');
             //echo $this->db->queries[0];
             return $query->result(); 
@@ -29,13 +29,14 @@ class cortes_model extends CI_Model
 
     public function getcortesBySucursalA($id_sucursal)
     {      
-        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(detalle.precio_grabado)AS Monto
+        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(cc.total_cobrado) AS Monto
             from sys_pedido as pedido
             join sys_sucursal as sucursal on sucursal.id_sucursal=pedido.id_sucursal
             join sys_pais_departamento as departamento on departamento.id_departamento=sucursal.id_departamento
             join sys_pais as pais on pais.id_pais=departamento.id_pais
-            join sys_pedido_detalle as detalle on detalle.id_pedido=pedido.id_pedido    
-            where pedido.flag_cancelado=0  and pedido.id_sucursal='.$id_sucursal.'
+            
+            join sys_cajacuentas as cc on cc.ID_pedido=pedido.id_pedido  
+            where cc.flag_pagado=0  and pedido.id_sucursal='.$id_sucursal.'
             group by pedido.id_sucursal');
             //echo $this->db->queries[0];
             return $query->result(); 
@@ -72,7 +73,6 @@ class cortes_model extends CI_Model
         $query = $this->db->query('select count(pedido.id_pedido)as total
             from sys_pedido as pedido          
             where pedido.flag_cancelado=1  and pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0
-            
                 ');
          return $query->result();
     }
