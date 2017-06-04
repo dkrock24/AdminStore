@@ -244,5 +244,25 @@ class Dashboard_model extends CI_Model
         $aSettings =  $this->db->query($sTringQuery)->result();
         return $aSettings;
     }
+
+    function getExistencias($usuario)
+    {
+        $query = $this->db->query('select Ci.codigo_meterial,Ci.minimo_existencia,Ci.maximo_existencia,Ci.total_existencia,
+                S.nombre_sucursal,
+                Cm.nombre_matarial,
+                Mp.nombre_categoria_materia,
+                Um.nombre_unidad_medida,
+                Um.simbolo_unidad_medida
+            from sys_catalogo_inventario_sucursal as Ci
+            join sys_sucursal as S on S.id_sucursal=Ci.id_sucursal
+            join sys_catalogo_materiales as Cm on Cm.codigo_material=Ci.codigo_meterial
+            join sys_categoria_materia_prima as Mp on Mp.id_categoria_materia=Cm.id_categoria_material
+            join sys_unidad_medida as Um on Um.id_unidad_medida=Cm.id_unidad_medida
+            join sys_sucursal_int_usuarios as su on su.id_sucursal=S.id_sucursal
+            join sr_usuarios as usu on usu.id_usuario=su.id_usuario
+            where Ci.total_existencia<=Ci.minimo_existencia
+            and usu.id_usuario='.$usuario);
+        return $query->result();
+    }
     
 }

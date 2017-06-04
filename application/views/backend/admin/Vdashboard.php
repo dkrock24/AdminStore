@@ -3,8 +3,7 @@
 
 
     <script src="../../../assets/globalreport/js/generatorCharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 
     <script type="text/javascript">
     $(document).ready(function(){
@@ -51,6 +50,7 @@
             $("#numero").val(conta_parametro);  
         });
 
+        // Llamar las querys cargadas en la vista de reportes
         $(".grafica").click(function(){
             var id = $(this).attr("id");
             $.ajax({
@@ -145,6 +145,9 @@
         }
         .boton_generar{
             text-align: center;
+        }
+        .list-group-item{
+            background: none;
         }
     </style>
 

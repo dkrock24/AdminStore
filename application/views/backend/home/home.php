@@ -11,20 +11,6 @@ if(!isset($_SESSION['usuario'])){
 ?>
 
 
-
-<script>
-$( document ).ready(function() {
-    $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/index");  
-
-    $(".remover").click(function(){
-        $(this).hide();
-    });
-    
-
-});
-
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,6 +39,21 @@ $( document ).ready(function() {
     <!-- END PAGE STYLE -->
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../../../assets/plugglobalreportins/js/generatorCharts2.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+    <script>
+      $( document ).ready(function() {
+        $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/index");  
+        //$(".pages").load("http://localhost/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
+        
+        $(".remover").click(function(){
+          $(this).hide();
+        });
+      });
+    </script>
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 

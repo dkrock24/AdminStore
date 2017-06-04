@@ -22,12 +22,12 @@ class Cdashboard extends CI_Controller {
 
 		if($querys != null)
 		{
-			
+			count($querys);
 			$contador	=1;
 			$data 		= array();
 			foreach ($querys as  $value) {
 				echo "<script type='text/javascript'>";
-				echo "$('#yes').append('<div class=col-md-6><div class=list-group><a href=# class=list-group-item active>Demo24</a><a href=# class=list-group-item><div id=container'+$contador+'></div></a></div></div>')";
+				echo "$('#yes').append('<div class=col-md-6><div class=list-group fondo><a href=# class=list-group-item active> $value->title </a><a href=# class=list-group-item><div id=container'+$contador+'></div></a></div></div>')";
 				echo "</script>";
 				$data['id_global_report'] 	= $value->id_global_report;
 				$data['descripcion'] 		= $value->description;
@@ -229,5 +229,13 @@ class Cdashboard extends CI_Controller {
 	    }
 	    $html .= '</table>';
 	    echo  $html;
+	}
+
+	function alertas(){
+		session_start();
+		
+		$data['existencias'] 	= $this->dashboard_model->getExistencias($_SESSION['idUser']);
+
+		$this->load->view('backend/admin/Valertas.php',$data);
 	}
 }
