@@ -46,7 +46,7 @@ if(!isset($_SESSION['usuario'])){
 
     <script>
       $( document ).ready(function() {
-        $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/index");  
+        $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
         //$(".pages").load("http://localhost/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
         
         $(".remover").click(function(){
