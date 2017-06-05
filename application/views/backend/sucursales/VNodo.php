@@ -15,7 +15,7 @@
 	<![endif]-->
 	<script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script>
 	<script>
-		var requestUrl = "http://localhost/lapizzeria/demo.php";
+		var requestUrl = "http://45.33.3.227/lapizzeria/demo.php";
 		/*	set user to 2 here	*/
 		var id_sucursal = $("#id_sucursal").val();
 		var id_nodo 	= $("#id_nodo").val();
