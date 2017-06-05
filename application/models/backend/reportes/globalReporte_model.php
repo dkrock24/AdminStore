@@ -113,7 +113,7 @@ join sr_usuarios as Usu on Usu.id_usuario=E.usuario_registro_envio where '. $fil
         join sys_catalogo_materiales as Cm on Cm.codigo_material=Ci.codigo_meterial
         join sys_categoria_materia_prima as Mp on Mp.id_categoria_materia=Cm.id_categoria_material
         join sys_unidad_medida as Um on Um.id_unidad_medida=Cm.id_unidad_medida
-        where Ci.total_existencia<=Ci.minimo_existencia');
+        where Ci.total_existencia<=Ci.minimo_existencia order by S.nombre_sucursal asc');
                 return $query->result();
     }
     

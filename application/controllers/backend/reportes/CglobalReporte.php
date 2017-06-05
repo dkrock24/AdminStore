@@ -319,17 +319,25 @@ class CglobalReporte extends CI_Controller {
 
 		$uniqueid= uniqid('np');
 
-		$html="";	 
+		$headers="";	 
+		//indicamos las cabeceras del correo
+		$headers = "MIME-Version: 1.0\r\n";
+		$headers .= "From: Alerta-Inventario@lapizzeria.com \r\n";
+		$headers .= "Subject: Alertas\r\n";
+
+		$headers .= "Content-Type: multipart/alternative;boundary=" . $uniqueid. "\r\n";
+
+		$html = "";
 		$html .= "\r\n\r\n--" . $uniqueid. "\r\n";
 		$html .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
 		$html .= "E-mail en Texto Plano sin formato.";
 		 
 		$html .= "\r\n\r\n--" . $uniqueid. "\r\n";
 		$html .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-		$html .= "Reporte de Inventario. <b>LAPIZZERIA</b><br>.";
+		$html .= "ESTADO DEL SERVIDOR. <b>LAPIZZERIA</b><br>.";
 
 
-		$html="<table width='100%'>
+		$html.="<table width='100%'>
 				<tr bgcolor='#49166D' style='color:white;'>						
 					<th>Sucursal</th>
 					<th>Categoria</th>
@@ -358,7 +366,7 @@ class CglobalReporte extends CI_Controller {
 				$html .= "</td>";
 
 				$html .= "<td>";
-					$html .= $value->minimo_existencia ." ".$value->simbolo_unidad_medida;
+					$html .= print_r($value->minimo_existencia,true) ." ".$value->simbolo_unidad_medida;
 				$html .= "</td>";
 
 				$html .= "<td>";
@@ -374,17 +382,14 @@ class CglobalReporte extends CI_Controller {
 		$html .="</table>";
 		echo $html;
 
-		//indicamos las cabeceras del correo
-		$headers = "MIME-Version: 1.0\r\n";
-		$headers .= "From: Alerta-Inventario@lapizzeria.com \r\n";
-		$headers .= "Subject: Alertas\r\n";
+		
 		//lo importante es indicarle que el Content-Type
 		//es multipart/alternative para indicarle que existirá
 		//un contenido alternativo
-		$headers .= "Content-Type: multipart/alternative;boundary=" . $uniqueid. "\r\n";
+		$html .= "\r\n\r\n--" . $uniqueid. "--";
 
 
-		mail('rgutierreztejada@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
+		mail('rgutierreztejada@gmail.com,blen7777@gmail.com,irvnsanchez@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
 	}
 
 
