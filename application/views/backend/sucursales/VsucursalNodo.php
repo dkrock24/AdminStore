@@ -42,7 +42,9 @@
 				foreach($sucursales as $sucursal) 
 				{
 				?>
-				  	<a  href="http://localhost/lapizzeria/index.php/backend/sucursales/Cindex/nodo/<?php echo $sucursal->id_nodo.'/'.$sucursales[0]->id_sucursal; ?>" target="_blank" name="" class="list-group-item nodo" id="">
+				  	<!-- <a  href="http://localhost/lapizzeria/index.php/backend/sucursales/Cindex/nodo/<?php //echo $sucursal->id_nodo.'/'.$sucursales[0]->id_sucursal; ?>" target="_blank" name="" class="list-group-item nodo" id=""> -->
+				  	<a  href="http://45.33.3.227/lapizzeria/index.php/backend/sucursales/Cindex/nodo/<?php echo $sucursal->id_nodo.'/'.$sucursales[0]->id_sucursal; ?>" target="_blank" name="" class="list-group-item nodo" id="">
+				  		
 				  		<td><i class='fa fa-arrow-right'></i> :</td>
 				  		<td><?php echo $sucursal->nombre_nodo; ?></td>
 				  	</a>

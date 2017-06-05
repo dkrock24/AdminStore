@@ -13,7 +13,7 @@
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<script src="http://localhost/lapizzeria/js/longpoll.js"></script>
+	<script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script>
 	<script>
 		var requestUrl = "http://localhost/lapizzeria/demo.php";
 		/*	set user to 2 here	*/
