@@ -1,6 +1,6 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class alertas_model extends CI_Model
+class Alertas_model extends CI_Model
 {
 	const notificaciones    =  'sys_notificaciones';
 
