@@ -334,7 +334,7 @@ class CglobalReporte extends CI_Controller {
 		 
 		$html .= "\r\n\r\n--" . $uniqueid. "\r\n";
 		$html .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-		$html .= "ESTADO DEL SERVIDOR. <b>LAPIZZERIA</b><br>.";
+		$html .= "MINIMOS EN INVENTARIOS . <b>LAPIZZERIA</b><br>.";
 
 
 		$html.="<table width='100%'>
@@ -389,7 +389,7 @@ class CglobalReporte extends CI_Controller {
 		$html .= "\r\n\r\n--" . $uniqueid. "--";
 
 
-		mail('rgutierreztejada@gmail.com,blen7777@gmail.com,irvnsanchez@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
+		mail('rgutierreztejada@gmail.com,blen7777@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
 	}
 
 
