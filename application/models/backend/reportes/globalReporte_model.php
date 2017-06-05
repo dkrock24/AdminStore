@@ -100,5 +100,21 @@ join sys_unidad_medida as U on U.id_unidad_medida=E.unidad_medida
 join sr_usuarios as Usu on Usu.id_usuario=E.usuario_registro_envio where '. $filtro.' CAST(E.fecha_registro AS DATE) between "'.$data_filter['fecha_inicio'].'" and "'.$data_filter['fecha_fin'].'"');
                 return $query->result();
     }
+
+    public function getCron(){
+        $query = $this->db->query('select Ci.codigo_meterial,Ci.minimo_existencia,Ci.maximo_existencia,Ci.total_existencia,
+            S.nombre_sucursal,
+            Cm.nombre_matarial,
+            Mp.nombre_categoria_materia,
+            Um.nombre_unidad_medida,
+            Um.simbolo_unidad_medida
+        from sys_catalogo_inventario_sucursal as Ci
+        join sys_sucursal as S on S.id_sucursal=Ci.id_sucursal
+        join sys_catalogo_materiales as Cm on Cm.codigo_material=Ci.codigo_meterial
+        join sys_categoria_materia_prima as Mp on Mp.id_categoria_materia=Cm.id_categoria_material
+        join sys_unidad_medida as Um on Um.id_unidad_medida=Cm.id_unidad_medida
+        where Ci.total_existencia<=Ci.minimo_existencia');
+                return $query->result();
+    }
     
 }
