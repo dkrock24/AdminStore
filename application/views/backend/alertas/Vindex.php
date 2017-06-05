@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".footer").click(function(){
+            $(".sk-three-bounce").show();
             var id = $(this).attr("id");
             $.ajax({        
                 url: "../alertas/Calertas/getAlertasNoVistas/"+id, 
@@ -11,6 +12,10 @@
                 success: function(data){   
                     
                     $(".detalle_alertas").html(data);
+
+                    setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);
                 },
                 error:function(){            
                     alert("Error Al Despachar Pedido");
@@ -51,7 +56,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-user fa-5x"></i>
+                                        <i class="fa fa-user fa-4x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge"><?php echo $vistas[0]->Total ?></div>
@@ -73,11 +78,11 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <i class="fa fa-money fa-5x"></i>
+                                        <i class="fa fa-money fa-4x"></i>
                                     </div>
                                     <div class="col-xs-8 text-right">
-                                        <div class="huge">0</div>
-                                        <div>Cortes</div>
+                                        <div class="huge"><?php echo $cortes[0]->Total ?></div>
+                                        <div>Cortes Sucursales</div>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +100,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                        <i class="fa fa-shopping-cart fa-4x"></i>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <div class="huge">0</div>
@@ -117,7 +122,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <i class="fa fa-book fa-5x"></i>
+                                        <i class="fa fa-book fa-4x"></i>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <div class="huge">0</div>

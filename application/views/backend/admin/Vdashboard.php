@@ -52,6 +52,7 @@
 
         // Llamar las querys cargadas en la vista de reportes
         $(".grafica").click(function(){
+            $(".sk-three-bounce").show();
             var id = $(this).attr("id");
             $.ajax({
                 url: "../admin/Cdashboard/cargar_grafica/"+id,
@@ -60,6 +61,9 @@
                 
                 success: function(data){  
                     $(".tabla_grafica").html(data);
+                    setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);
                 },
                 error:function(){
                     alert("failure");
@@ -68,7 +72,9 @@
         });
 
         $("#generar").click(function(){
+            $("#vista_grafica").html("");
             
+            $(".sk-three-bounce").show();
             $.ajax({
                 url: "../admin/Cdashboard/get_query",
                 data: $("#getQuery").serialize(),
@@ -76,9 +82,17 @@
                 
                 success: function(data){                 
                     $("#vista_grafica").html(data);
+                    
+                    setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);
                 },
                 error:function(){
                     alert("failure");
+                    
+                    setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);
                 }
             });
         });
@@ -124,6 +138,7 @@
             width: 100%;
             height: 130px;
             background: #9AC835;
+            border-radius: 5px;
             display: block;
             position: relative;            
             padding: 10px;
@@ -132,8 +147,10 @@
             margin: 2%;
         }
         .grafica:hover{
-            background: #337ab7;
+            background: #5A55A3;
             color: white;
+            box-shadow: 5px 5px grey;
+            border-radius: 5px;
             cursor: pointer;
         }
         .icon{
@@ -201,6 +218,7 @@
                 <div class="col-md-4"></div>
             </div>
         </form>
+        <hr>
         <div class="row">
             <div id="vista_grafica"></div>
         </div>

@@ -51,13 +51,25 @@ class alertas_model extends CI_Model
     }
     // GEt No Vistas
     public function getAlertasVistas(){
-    	$query = $this->db->query('select count(*)as Total from sys_notificaciones as N 
-    								join sys_notificaciones_mensajes as NM on N.id_mensaje=NM.id_mensaje 
-    								join sys_sucursal as S on S.id_sucursal=N.id_sucursal
-    								join sr_usuarios as U on U.id_usuario=N.id_usuario
-    								and N.visto=0');    
+    	$query = $this->db->query("select count(*)as Total from sys_notificaciones as N 
+                                    join sys_notificaciones_mensajes as NM on N.id_mensaje=NM.id_mensaje 
+                                    join sys_sucursal as S on S.id_sucursal=N.id_sucursal
+                                    join sr_usuarios as U on U.id_usuario=N.id_usuario
+                                    where N.visto=0 and DATE_FORMAT(N.fecha_creado,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')  and N.id_mensaje=1");    
         return $query->result(); 
     }
+
+    // Cantidad de Cortes    
+    public function getCantidadCortes(){
+        $query = $this->db->query("select count(*)as Total from 
+                                    sys_pedido_cortes as c
+                                    where DATE_FORMAT(c.fecha_corte,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')");
+                                    return $query->result(); 
+    }
+
+
+
+
     // Obtener Alertas Por Tipo de Mensaje
     public function getAlertasLoginNoVistas($id_mensaje,$data){
 

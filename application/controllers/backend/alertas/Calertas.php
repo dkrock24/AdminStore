@@ -10,12 +10,12 @@ class Calertas extends CI_Controller {
 		$this->load->database('default');	
 		$this->load->model('backend/alertas/alertas_model');	
 
-
 	}
 
 	public function index()
 	{			
 		$data['vistas'] = $this->alertas_model->getAlertasVistas();
+		$data['cortes'] = $this->alertas_model->getCantidadCortes();
 		$data['mensajes'] = $this->alertas_model->getMensajes();
 		$data['sucursales'] = $this->alertas_model->getSucursales();
 		$this->load->view('backend/alertas/Vindex.php',$data);
@@ -61,8 +61,6 @@ class Calertas extends CI_Controller {
 		$html .="</table>";
 		echo $html;
 	}
-
-	
 
 	public function getAlertas(){
 		$sucursal = $_POST['id_sucursal'];
