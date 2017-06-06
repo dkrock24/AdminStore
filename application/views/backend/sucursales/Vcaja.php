@@ -20,6 +20,12 @@
 <script language="javascript">
 $( document ).ready(function() 
 {
+
+  setTimeout(function()
+  {
+      $("#all-content").load(location.href+"#all-content>*","");
+  }, 5000);
+  
   $(".go-sucursal").click(function(){
         var id_sucursal = $("#id_sucursal").val();
         var url1 = $(this).attr("id");

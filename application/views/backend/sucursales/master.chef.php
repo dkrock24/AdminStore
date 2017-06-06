@@ -10,7 +10,7 @@
  setTimeout(function()
   {
       $("#pedidosLoad").load("../despacho_view_master/"+idSucursal);
-  }, 50000000);
+  }, 5000);
   //--------Libreria para controlar timepos de pedido
   $(".timer").TimeCircles({
    "animation": "smooth",
