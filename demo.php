@@ -1,4 +1,13 @@
 <?php
+	//var_dump($_POST);
+/*
+$mysql_hostname = "127.0.0.1";
+$mysql_user = "root";
+$mysql_password = "lapizzeria2016!";
+$mysql_database = "db_global_lapizzeria";
+$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_database) or die("Could not connect database 2");
+die;*/
+
 	$con = mysqli_connect("45.33.3.227", "root", "")or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
 	mysqli_select_db($con, "db_global_lapizzeria")or die(mysqli_error($con));
