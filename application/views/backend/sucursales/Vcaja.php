@@ -128,14 +128,19 @@ $(".cerrarCuenta").click(function()
           var numSend = tarjetaNum;
           var metodoPago = "tarjeta";
           var idpedidounico = $("."+mesaId).data("idpedidomesa");
-             
+
+          var pagoNeto = $(".totalneto_"+idpedidounico).text();
+          var pagoIva = $(".IvaClean_"+idpedidounico).text();
+          var pagoPropina = $(".propinaClean_"+idpedidounico).text();
+          var pagoTotal = $(".totalClean_"+idpedidounico).text();
+
               if (tarjetaNum =! "" && !isNaN(tarjetaNum))  
               {
                 $.ajax
                 ({
                     url: "../../../sucursales/Ccaja/cerrar_cuenta",
                     type: "post",
-                    data: {idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
+                    data: {pagoNeto:pagoNeto,pagoIva:pagoIva,pagoPropina:pagoPropina,pagoTotal:pagoTotal,idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
                   
                     success: function(data)
                     {                                                  
@@ -155,13 +160,19 @@ $(".cerrarCuenta").click(function()
             else 
             {
               var idpedidounico = $("."+mesaId).data("idpedidomesa");
+
+              var pagoNeto = $(".totalneto_"+idpedidounico).text();
+              var pagoIva = $(".IvaClean_"+idpedidounico).text();
+              var pagoPropina = $(".propinaClean_"+idpedidounico).text();
+              var pagoTotal = $(".totalClean_"+idpedidounico).text();
+
               var numSend = "0000";
               var metodoPago = "efectivo";
                 $.ajax
                 ({
                     url: "../../../sucursales/Ccaja/cerrar_cuenta",
                     type: "post",
-                    data: {idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
+                    data: {pagoNeto:pagoNeto,pagoIva:pagoIva,pagoPropina:pagoPropina,pagoTotal:pagoTotal,idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
                   
                     success: function(data)
                     {                                                  
@@ -210,13 +221,19 @@ $(".cerraCuentaUnica").click(function()
           var numSend = tarjetaNum;
           var metodoPago = "tarjeta";
           var idpedidounico = $(this).data("idpedidounico");
+          
+          var pagoNeto = $(".totalneto_"+idpedidounico).text();
+          var pagoIva = $(".IvaClean_"+idpedidounico).text();
+          var pagoPropina = $(".propinaClean_"+idpedidounico).text();
+          var pagoTotal = $(".totalClean_"+idpedidounico).text();
+
           if (tarjetaNum =! "" && !isNaN(tarjetaNum))  
           {
             $.ajax
             ({
                 url: "../../../sucursales/Ccaja/cerrar_cuenta",
                 type: "post",
-                data: {idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
+                data: {pagoNeto:pagoNeto,pagoIva:pagoIva,pagoPropina:pagoPropina,pagoTotal:pagoTotal,idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
               
                 success: function(data)
                 {                                                  
@@ -236,13 +253,20 @@ $(".cerraCuentaUnica").click(function()
         else 
         {
           var idpedidounico = $(this).data("idpedidounico");
+
+          var pagoNeto = $(".totalneto_"+idpedidounico).text();
+          var pagoIva = $(".IvaClean_"+idpedidounico).text();
+          var pagoPropina = $(".propinaClean_"+idpedidounico).text();
+          var pagoTotal = $(".totalClean_"+idpedidounico).text();
+
+
           var numSend = "0000";
           var metodoPago = "efectivo";
             $.ajax
             ({
                 url: "../../../sucursales/Ccaja/cerrar_cuenta",
                 type: "post",
-                data: {idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
+                data: {pagoNeto:pagoNeto,pagoIva:pagoIva,pagoPropina:pagoPropina,pagoTotal:pagoTotal,idpedidounico:idpedidounico,numSend:numSend,metodoPago:metodoPago},                           
               
                 success: function(data)
                 {                                                  
@@ -676,14 +700,14 @@ $('.descuento').click(function()
               ?>
               </span>
                + 
-              <span class="quitar_iva IvaClean_$value->id_pedido'>" style="cursor: pointer;" title="IVA Clic para quitar IVA" data-ivasucursal="<?php echo $value->monto_impuesto; ?>">
+              <span class="quitar_iva IvaClean_<?php echo $value->id_pedido; ?>" style="cursor: pointer;" title="IVA Clic para quitar IVA" data-ivasucursal="<?php echo $value->monto_impuesto; ?>">
               <?php 
                 $iva = $totalSinShowFull * $value->monto_impuesto;
                 echo round($iva,2); ?>
               </span>
               
                 ) = 
-              <span class="totalMasIva totalIvaClean_$value->id_pedido'>" style="cursor: not-allowed;color:blue;font-weight:bold;" title="Total con IVA sin propina">
+              <span class="totalMasIva totalIvaClean_<?php echo $value->id_pedido; ?>" style="cursor: not-allowed;color:blue;font-weight:bold;" title="Total con IVA sin propina">
               <?php 
                 $totalIva =  $totalSinShowFull + $iva;
                 echo round($totalIva,2); 
@@ -692,13 +716,13 @@ $('.descuento').click(function()
 
               ) + 
 
-              <span class="quitar_propina propinaClean_$value->id_pedido'>" style="cursor: pointer;color:red;font-weight:bold;" title="Propina
+              <span class="quitar_propina propinaClean_<?php echo $value->id_pedido; ?>" style="cursor: pointer;color:red;font-weight:bold;" title="Propina
               Clic para quitar propina" data-idpedidounicopropina="<?php echo $value->id_pedido; ?>">
               <?php 
                 if ($value->grupo == "PROPINA") 
                 {
                   $propina =  $totalIva * 0;
-                  echo "$0"; 
+                  echo "0"; 
                 }
                 else
                 {
