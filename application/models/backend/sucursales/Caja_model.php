@@ -63,12 +63,13 @@ class caja_model extends CI_Model
         sp.fechahora_pedido, sp.fecha_creado, pd.id_detalle, pd.id_producto, pd.precio_grabado, pd.precio_original, GROUP_CONCAT(Distinct pd.id_detalle,"_",p.nombre_producto,"_",pd.precio_original) as name_producto, GROUP_CONCAT(Distinct pd.id_detalle,"_",p.nombre_producto) as name_productos, u.nombres, u.apellidos, sp.id_sucursal, SUM(pd.precio_original) as totalSin, si.monto_impuesto, GROUP_CONCAT(Distinct sh.fechahora,"::",sh.accion,"::",sh.nota) as historial, if(max(sh.valor) IS NULL, 0, max(sh.valor)) as descuentos, sh.grupo
           from sys_pedido sp
         inner join sys_pedido_detalle pd ON pd.id_pedido = sp.id_pedido and pd.estado !=5
+        left join sys_cajacuentas cc ON cc.ID_pedido = sp.id_pedido 
         inner join sys_productos p ON p.id_producto = pd.id_producto
         inner join sr_usuarios u ON u.id_usuario = sp.id_mesero
         inner join sys_sucursal s ON s.id_sucursal = sp.id_sucursal
         inner join sys_sucursal_impuesto si ON si.id_sucursal = s.id_sucursal
         left join sys_historial sh ON sh.ID_pedido = sp.id_pedido
-        where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1
+        where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1 and cc.flag_pagado is null
         and sp.id_sucursal = '.$id_sucursal.'  group by sp.id_pedido
           order by sp.flag_elaborado = 0, sp.id_pedido asc');
          //echo $this->db->queries[0];
@@ -97,6 +98,10 @@ class caja_model extends CI_Model
              'flag_anulado'      => 0,
              'metodo_pago'    => $cuenta['metodoPago'],
              'numero_tarjeta'    => $cuenta['numSend'],
+             'total_neto'    => trim($cuenta['pagoNeto']),
+             'total_iva'    => trim($cuenta['pagoIva']),
+             'total_propina'    => trim($cuenta['pagoPropina']),
+             'total_cobrado'    => trim($cuenta['pagoTotal']),
              'fechahora_pagado'      => $datePagado,
              'fechahora_anulado'    => $dateAnulado,
              );
