@@ -37,7 +37,7 @@
 				console.log(response);
 				for(var i=0 ; i<response.pedido.length ; i++)
 				{
-					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 				
 					// pedido
 					var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
@@ -120,7 +120,8 @@
 
 			var ID_mesa = $(this).attr('id');
 			var ID_pedido = $(this).attr('pedido');
-			if (confirm('Despachar ' + ID_mesa + '?'))
+			var iSecuencia = $(this).attr('secuencia');
+			if (confirm('Despachar Orden # '+ iSecuencia +" Mesa :"+ ID_mesa + '?'))
 	        {	            
 	            $.ajax({
 				    url: "../../despacharPedido/"+ID_pedido+"/"+id_sucursal+"/"+id_nodo,
