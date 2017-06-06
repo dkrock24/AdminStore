@@ -51,22 +51,22 @@ $( document ).ready(function()
     "circle_bg_color": "#0f1015",
     "time": {
         "Days": {
-            "text": "Days",
+            "text": "Dias",
             "color": "#CCCCCC",
             "show": true
         },
         "Hours": {
-            "text": "Hours",
+            "text": "Horas",
             "color": "#8b1a13",
             "show": true
         },
         "Minutes": {
-            "text": "Minutes",
+            "text": "Minutos",
             "color": "#4bc51b",
             "show": true
         },
         "Seconds": {
-            "text": "Seconds",
+            "text": "Segundos",
             "color": "#e2ae18",
             "show": true
         }

@@ -19,22 +19,22 @@
     "circle_bg_color": "#fff",
     "time": {
         "Days": {
-            "text": "Days",
+            "text": "Dias",
             "color": "#3F51B5",
             "show": true
         },
         "Hours": {
-            "text": "Hours",
+            "text": "Horas",
             "color": "#8b1a13",
             "show": true
         },
         "Minutes": {
-            "text": "Minutes",
+            "text": "Minutos",
             "color": "#4bc51b",
             "show": true
         },
         "Seconds": {
-            "text": "Seconds",
+            "text": "Segundos",
             "color": "#673AB7",
             "show": true
         }
