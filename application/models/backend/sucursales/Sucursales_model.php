@@ -301,7 +301,7 @@ class sucursales_model extends CI_Model
             'elaborado'         => 0,
             'flag_cancelado'    => 0,
             'fechahora_pedido'  => $date,
-            'flag_elaborado'    => 0,
+            'flag_elaborado'    => 1,
             'flag_despachado'   => 0,
             'flag_pausa'        => 0,
             'estado'            => 1,
