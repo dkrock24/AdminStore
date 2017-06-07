@@ -14,7 +14,7 @@
     <script src="../../../assets/js/pages/table_dynamic.js"></script>
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
 
 <script>
 
@@ -36,19 +36,12 @@
     $(".agregarSobras").show();
 
   });
- 
-//-------------------------Fin -----------------------------------
-
-   $("#ingrediente").autocomplete({
-        source: "../productos/Cproductos/catalogo_materiales",
-        minLength: 1
-  });
-//------------------END--------------------------------------------
-
 
  //-----------------Jquery insercion de  productos----------------
       $("#saveSobras").click(function()
       {
+
+        alert("test");
         var formData = new FormData();
                 formData.append('files', $('#files')[0].files[0]);
                 formData.append('ingrediente', $('#ingrediente').val());
@@ -88,10 +81,16 @@
       $(".modalViewCOntent").load("../sobras/Csobras/viewSobras/"+sobrasID);
       //$(".modal-footer").append("<button type='button' class='btn btn-primary changeStatus'>Revisado</button> ")
     });
+//-------------------------Fin -----------------------------------
 
+   $("#ingrediente").autocomplete({
+        source: "../productos/Cproductos/catalogo_materiales",
+        minLength: 1
+  });
+//------------------END--------------------------------------------
 
 </script>
- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+ 
 <style>
   .table-dynamic{width: 100%;}
   .form-inline .form-control {

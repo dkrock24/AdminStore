@@ -125,9 +125,8 @@
 
 <ul class="nav nav-tabs">
  <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-users'></i>Ver Empleados</a></li>
-  <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-list-ol'></i>Inventario</a></li> </li> 
-  <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-paper-plane-o'></i>Lista de Envios</a></li> </li>
-  <li id="menu_li" class="D "><a href="#tab1_4" data-toggle="tab"><i class='fa fa-area-chart'></i>Reporte de envios</a></li> </li>    
+  <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-list-ol'></i>Inventario</a></li>
+  <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-paper-plane-o'></i>Lista de Envios</a></li> 
 <div id="actions-bar">
 <span  style="float:right;background-color: #c75757;" class="btn btn-success back">Regresar</span>
 <span  style="float:right;background-color: #c75757;" class="btn btn-success AddListEnvio">
@@ -286,11 +285,6 @@
     </tbody>   
   </table>
     </div>
-
-<div class="tab-pane includ fade" id="tab1_4">
-Test tab 4
-</div>
-
 
   
 </div>

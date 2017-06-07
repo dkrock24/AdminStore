@@ -51,7 +51,7 @@ $(document).ready(function()
     //$(".EditData").click(function()
     $(document).on('click','.EditData',function() 
     {
-       $(".AddUnidadMedidaEdit").modal({
+       $(".AddUnidadMedidaEditTipo").modal({
            backdrop: 'static', 
            keyboard: false 
         });
@@ -207,8 +207,10 @@ $(document).ready(function()
 <!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
 
 
+
+
 <!-- Codigo de funcionalidad de Modals para editar tipo de unidad de medid -->
-<div class="modal fade AddUnidadMedidaEdit" role="dialog" tabindex="-1">
+<div class="modal fade AddUnidadMedidaEditTipo" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
