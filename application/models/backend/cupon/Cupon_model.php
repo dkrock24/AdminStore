@@ -104,7 +104,7 @@ class cupon_model extends CI_Model
 sys_cupon 
 right join sys_cupon_categoria on 
 sys_cupon.id_categoria= sys_cupon_categoria.id_cupon_categoria
-group by sys_cupon_categoria.id_cupon_categoria;";
+group by sys_cupon_categoria.id_cupon_categoria order by fecha_creacion desc;";
         $query = $this->db->query($query);  
         $data = $query->result_array();      
         //$query = $this->db->get();
