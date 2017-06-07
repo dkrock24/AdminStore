@@ -20,6 +20,14 @@ class Csobras extends CI_Controller {
 		$this->load->view('backend/sobras/Vsobras.php', $data);
 	}
 	
+	public function onlySave()
+	{	
+	
+		$data['unidadMedida'] = $this->sobras_model->getUnidadMedida();
+		$data['sucursales'] = $this->sobras_model->getSucursales();	
+		$this->load->view('backend/sobras/onlySaveSobras.php', $data);
+	}
+
 	public function save_sobras()
 	{
 		 $this->sobras_model->save_sobras($_POST);

@@ -145,6 +145,21 @@ class inventario_model extends CI_Model
         
     }
 
+    public function getCategoriaMaterialesSelect()
+    {
+        $query = $this->db->query("SELECT cm.id_categoria_materia, cm.nombre_categoria_materia, 
+            cm.descripcion_categoria_materia, CASE cm.estado_categoria_materia
+            WHEN 1 THEN 'Activo'
+            ELSE 'Inactivo'
+            END AS cateStatus, cm.fecha_creacion
+            FROM sys_categoria_materia_prima cm
+            where cm.estado_categoria_materia =1");
+         //echo $this->db->queries[0];
+        return $query->result();
+ 
+        
+    }
+
     public function save_estatus($estatus)
     {
         $dateNow = date("Y-m-d");
@@ -305,12 +320,15 @@ class inventario_model extends CI_Model
 
     public function inventarioBySucursalDetall($sucursalID)
     {
+
+        //var_dump($sucursalID);die();
         $query = $this->db->query('Select * from sys_catalogo_inventario_sucursal cis
         Inner join sys_catalogo_materiales cm ON cis.codigo_meterial = cm.codigo_material
         inner join sys_categoria_materia_prima cmp ON cmp.id_categoria_materia = cm.id_categoria_material
         Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
+        inner join sys_unidad_medida um ON um.id_unidad_medida = cm.id_unidad_medida
         left join sys_materiales_adicionales ma ON ma.id_material_sucursal = cis.id_inventario_sucursal
-        where cis.id_sucursal ='.$sucursalID['sucursalID'].' group by cis.id_inventario_sucursal');
+        where cis.id_sucursal ='.$sucursalID.' group by cis.id_inventario_sucursal');
          //echo $this->db->queries[0];
         return $query->result();
 

@@ -127,7 +127,8 @@
 
   
   //-------- mostrar los productos po asignados a sucursal
-  $(".ActiveInactive").click(function()
+  //$(".ActiveInactive").click(function()
+  $(document).on('click','.ActiveInactive',function()
   {
       var categoID = $(this).find(".viewDataIDCat").val();
       if ($(this).find(".vieText").val() == "Inactivar") 
@@ -143,7 +144,7 @@
                 if (message == "0") 
                 {
                   alert("No se puede desactivar esta siendo utilizada!!!");
-                  
+                  return;
                 }
                 else
                 {
@@ -182,7 +183,8 @@
   //-------------------------Fin -----------------------------------
 
  //----------------- Open modal delete Categorias-------------------
-  $(".deleteBTNCat").click(function()
+  //$(".deleteBTNCat").click(function()
+  $(document).on('click','.deleteBTNCat',function()  
   {
      $(".modalEliminarCat").modal({
            backdrop: 'static', 
@@ -229,7 +231,8 @@
 
 
   //----------------modificar material---------------
-    $(".editInventarioCat").click(function() 
+    //$(".editInventarioCat").click(function()
+    $(document).on('click','.editInventarioCat',function()  
     {
         var materialCatID = $(this).find('.editValIDCat').val();
         $(".pages").load("../inventario/Cinventario/editMaterialCat/"+materialCatID); 
@@ -274,6 +277,11 @@
     font-size: 9px !important;
     padding: 5px 12px !important;
 }
+.Inactivar
+{
+  background-color: #4CAF50 !important;
+}
+
 
 </style>
 <ul class="nav nav-tabs">
@@ -461,7 +469,7 @@
                             <input type="hidden" name="deleteValID" class="deleteValIDCat" value="<?php echo $value->id_categoria_materia ?>">Eliminar
                             </button>
                           
-                            <span class="btn btn-primary  btn-sm ActiveInactive">
+                            <span class="btn btn-primary  btn-sm ActiveInactive <?php echo $statusD;?>">
                             <?php echo $statusD;?>
                             <input type="hidden" name="vieText" class="vieText" value="<?php echo $statusD; ?>">
                             <input type="hidden" name="viewDataIDCat" class="viewDataIDCat" value="<?php echo $value->id_categoria_materia ?>">
