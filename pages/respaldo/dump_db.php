@@ -23,7 +23,7 @@ email: insidephp@gmail.com
 	//  Conexión con la Base de Datos.
 	
 	$db_server			= "localhost"; 
-	$db_name			= "db_systema_integrado"; 
+	$db_name			= "db_global_lapizzeria"; 
 	$db_username		= "root"; 
 	$db_password		= ""; 
 

@@ -54,6 +54,13 @@ class sucursales_model extends CI_Model
     // Crear Sucursal
     public function save($sucursal){
         session_start();
+        if(isset($sucursal['CProduccion']))
+        {
+            $cp =  $sucursal['CProduccion'];
+        }
+        else{
+            $cp = "";
+        }
         $data = array(
             'id_departamento'   => $sucursal['departamento'],
             'nombre_sucursal'   => $sucursal['nombre'],
@@ -63,7 +70,7 @@ class sucursales_model extends CI_Model
             'referencia_zona'   => $sucursal['zona'],
             'numero_mesas'      => $sucursal['mesas'],
             'estado'            => $sucursal['estado'],
-            'centro_produccion' => $sucursal['CProduccion'],
+            'centro_produccion' => $cp,
             'creado_usuario'    => $_SESSION['idUser']
         );
         $this->db->insert(self::sys_sucursal,$data);

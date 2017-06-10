@@ -2,6 +2,8 @@
 include_once("../validation/conexion.php");
 $conexion = login();
 
+$GLOBALS['conexion'] = login();
+
 if($conexion)
 {
 	
@@ -53,9 +55,10 @@ function deleteuser(){
 	
 
 		$sql = "delete from ccs_track where id_ccs='$id'";
-	$statement = mysql_query($sql)or die(mysql_error()." Error al hacer Update ccs_track");
+	$statement = mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error()." Error al hacer Update ccs_track");
 	return $statement;
 }
+
 function cambiarStatus(){
 	echo $id = $_POST['id'];
 	echo $status = $_POST['state'];
@@ -65,14 +68,14 @@ function cambiarStatus(){
 									where id_ccs='$id'							
 									
 									";
-	$statement = mysql_query($sql)or die(mysql_error()." Error al hacer Update ccs_track");
+	$statement = mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error()." Error al hacer Update ccs_track");
 	return $statement;
 }
 
 function deleteUsuario(){
 	$id = $_POST['id'];
 	$sql = "delete from sr_usuarios where id_usuario='".$id."'";
-	$statement = mysql_query($sql)or die(mysql_error(). " Error al Eliminar el usuario");
+	$statement = mysqli_query($GLOBALS['conexion']$sql)or die(mysql_error(). " Error al Eliminar el usuario");
 	return $statement;
 }
 
@@ -117,7 +120,7 @@ function updateUsuario()
 									
 									 where id_usuario="'.$id_usuario.'"
 									';
-	mysql_query($sql)or die(mysql_error());
+	mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 }
 
 
@@ -150,7 +153,7 @@ function insertUsuario()
 									"'.$primer_nombre.'","'.$segundo_nombre.'","'.$primer_apellido.'","'.$segundo_apellido.'",
 									"'.$genero.'","'.$avatar.'","'.$telefono.'","'.$celular.'","'.$direccion.'","'.$dui.'","'.$fecha_creacion.'",
 									"'.$cargo.'","'.$rol.'",1)';
-	mysql_query($sql)or die(mysql_error());
+	mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 
 	
 }
@@ -161,7 +164,7 @@ function cambiarPassword()
 	$new_pass		= sha1($password);
 
 	$sql = "update sr_usuarios set password='$new_pass', estado=1 where id_usuario=$usuario";
-	mysql_query($sql)or die(mysql_error());
+	mysql_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 }
 function cambiarAvatar()
 {
@@ -169,7 +172,7 @@ function cambiarAvatar()
 	$usuario	=	$_POST['usuario'];
 
 	$sql = "update sr_usuarios set avatar='$avatar' where id_usuario=$usuario";
-	mysql_query($sql)or die(mysql_error());
+	mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 }
 
 function subirAvatar()
@@ -195,7 +198,7 @@ function subirAvatar()
 
 		$sql = "insert into sr_avatar (nombre_avatar,url_avatar,genero_avatar,usuario_id,usuario_avatar,estado_avatar)
 		values('".$name."','".$name."','".$genero."','".$usuario."','personal',1)";
-		mysql_query($sql)or die(mysql_error());
+		mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 	}
 
 
