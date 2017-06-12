@@ -12,8 +12,6 @@
   
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 <script>
-$(document).ready(function()
-  {
     $(".agregarUnidaMedida").click(function()
     {
         $(".AddUnidadMedida").modal({
@@ -236,8 +234,7 @@ $(document).ready(function()
     $(".pages").load("../inventario/Cinventario/Vupdate_adicionales/"+adicionalID);
   });   
 //-------Fin codigo------------------------------------------
-
-});      
+     
 </script>
 
 <style>
@@ -313,7 +310,7 @@ $(document).ready(function()
 
                         <td>
                           <p class="valCelda" style="font-size: 20px;text-align: center;">
-                          <?php echo $value->total_existencia; ?>
+                          <?php echo $value->total_existencia." (". $value->nombre_unidad_medida.")"; ?>
                           </p>
                         </td>                         
                         <?php } ?>  

@@ -23,7 +23,7 @@ class Cinventario extends CI_Controller {
 	{	
 		$data['estatus'] = $this->inventario_model->getEstatus();
 		$data['unidaMedida'] = $this->inventario_model->getUnidadMedida();
-		$data['categoria'] = $this->inventario_model->getCategoriaMateriales();
+		$data['categoria'] = $this->inventario_model->getCategoriaMaterialesSelect();
 		$this->load->view('backend/inventario/VaddInventario.php', $data);
 	}
 
