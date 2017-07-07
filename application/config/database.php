@@ -79,6 +79,7 @@ $db['default'] = array(
 	'username' => 'root',
 	//'password' => '',
 	//'database' => 'db_lap',
+	//'port'=>'3307',
 	'password' => 'lapizzeria2016!',
 	'database' => 'db_global_lapizzeria',
 	'dbdriver' => 'mysqli',

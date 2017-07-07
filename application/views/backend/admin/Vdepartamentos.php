@@ -1,8 +1,17 @@
  <!-- END PRELOADER -->
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-    
-    <script src="../../../assets/js/plugins.js"></script>
-    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>    
+    <script src="../../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+    <!-- BEGIN PAGE SCRIPT -->
+    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
+    <script src="../../../assets/js/pages/table_dynamic.js"></script>
+    <!-- BEGIN PAGE SCRIPT -->
 
 
 <script>

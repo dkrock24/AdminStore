@@ -40,8 +40,11 @@ if(!isset($_SESSION['usuario'])){
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../../../assets/plugglobalreportins/js/generatorCharts2.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+
 
 
     <script>
@@ -372,6 +375,8 @@ if(!isset($_SESSION['usuario'])){
     <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
     <script src="../../../assets/js/application.js"></script> <!-- Main Application Script -->
     <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+
+    <script src="../../../assets/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
   </body>

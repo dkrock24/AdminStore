@@ -143,7 +143,7 @@
 
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <form action="#" method="POST" name="sucursal" id="updateSucursal">
                 <div class="list-group">
                     <a href="#" class="list-group-item active">

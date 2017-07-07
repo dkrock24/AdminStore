@@ -6,11 +6,15 @@
             $(".pages").load(ruta);
         });
 
-        $("a#usuarios").click(function(){        
+        $("a#usuarios").click(function(){    
+        	$(".sk-three-bounce").show();      
             var ruta = $(this).attr('name');           
             $(".pages").load(ruta);
             $(".A").removeClass("active");
             $(".B").addClass("active");
+            setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000); 
         });
 
         $("#actualizar").click(function(){
@@ -72,6 +76,9 @@
 }
 #btn-emilinar:hover{
 	color: black;	
+}
+a#usuarios{
+    cursor: pointer;
 }
 
 </style>

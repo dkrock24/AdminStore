@@ -450,7 +450,7 @@ function createCollapsedSidebar() {
     $('.sidebar').css('width', '').resizable().resizable('destroy');
     $('.nav-sidebar ul').attr('style', '');
     $(this).addClass('menu-collapsed');
-    destroySideScroll();
+    createSideScroll();
     $('#switch-sidebar').prop('checked');
     $.cookie('sidebar-collapsed', 1);
     $.cookie('sidebar-collapsed', 1, {

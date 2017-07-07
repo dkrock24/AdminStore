@@ -33,6 +33,7 @@
         });
 
         $("#guardar").click(function(){
+        	$(".sk-three-bounce").show();
         	var id_sucursal = $(this).attr("name");
         	$.ajax({
             url: "../admin/Csucursales/saveUpdate/"+id_sucursal,  
@@ -41,6 +42,9 @@
 
                 success: function(data){                              	                	
                 	$(".pages").load("../admin/Csucursales/index");
+                	setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);  
                 },
                 error:function(){
                 }

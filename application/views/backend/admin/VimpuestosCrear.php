@@ -121,6 +121,9 @@
     float: right;
     font-size: 20px;
 }
+a#usuarios{
+    cursor: pointer;
+}
 </style>
 
 <ul class="nav nav-tabs">
