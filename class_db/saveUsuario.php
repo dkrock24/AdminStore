@@ -75,7 +75,7 @@ function cambiarStatus(){
 function deleteUsuario(){
 	$id = $_POST['id'];
 	$sql = "delete from sr_usuarios where id_usuario='".$id."'";
-	$statement = mysqli_query($GLOBALS['conexion']$sql)or die(mysql_error(). " Error al Eliminar el usuario");
+	$statement = mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error(). " Error al Eliminar el usuario");
 	return $statement;
 }
 

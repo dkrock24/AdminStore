@@ -68,9 +68,9 @@
                             <button type="submit" id="submit-form" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Entrar</button> -->
                             
                             <div class="clearfix">
-
+                            <!--
                                 <p class="pull-left m-t-20"><a id="password" href="#">Olvidates Tu Password</a></p>
-                                
+                            -->
                             </div>
                         </form>
                         <form class="form-password" role="form">
