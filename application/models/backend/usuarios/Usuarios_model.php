@@ -9,6 +9,8 @@ class usuarios_model extends CI_Model
     const sys_sucursal = 'sys_sucursal';
     const sys_pais_departamento  = 'sys_pais_departamento';
     const sys_pais          = 'sys_pais';
+    const sys_sucursal_int_usuarios          = 'sys_sucursal_int_usuarios';
+
     
 
     
@@ -117,6 +119,7 @@ class usuarios_model extends CI_Model
          $data = array(
             'id_usuario' => $id_usuario
         );
+        $this->db->delete(self::sys_sucursal_int_usuarios, $data); 
         $this->db->delete(self::usuarios, $data); 
     }
 

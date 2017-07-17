@@ -307,6 +307,7 @@
                     <th>Titulo</th>
                     <th>Descripcion</th>
                     <th>Grafico</th>
+                    <th>Estado</th>
                     <th>Accion</th>
                 </thead>
                 <tbody>
@@ -318,9 +319,10 @@
                             <td><?php echo $value->title ?></td>
                             <td><?php echo $value->description ?></td>
                             <td><?php echo $value->chart_type ?></td>
+                            <td><?php  if($value->status==0){ echo "Inactivo";}else{echo "Activo";}  ?></td>
                             <td>      
-                                <a href="#" class="btn btn-primary editar_consulta" name="<?php echo $value->id_global_report ?>">Editar</a>                          
-                                <a href="#" class="btn btn-success borrar_consulta" name="<?php echo $value->id_global_report ?>">Eliminar</a>
+                                <a href="#" class="btn-xs btn-primary editar_consulta" name="<?php echo $value->id_global_report ?>">Editar</a>                          
+                                <a href="#" class="btn-xs btn-success borrar_consulta" name="<?php echo $value->id_global_report ?>">Eliminar</a>
                             </td>
                         </tr>
                     <?php

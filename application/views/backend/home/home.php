@@ -136,8 +136,10 @@ if(!isset($_SESSION['usuario'])){
     -webkit-transform: scale(1);
             transform: scale(1); } }
           
-          
-    </style>
+
+
+</style>
+  
 
   </head>
 
@@ -256,7 +258,7 @@ if(!isset($_SESSION['usuario'])){
 
               <!-- BEGIN USER DROPDOWN -->              
             <li class="dropdown alertas">
-                <ul class="nav navbar-right top-nav">
+                <ul class="nav navbar-right top-nav abcd">
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="numero-alerta">0</span><i class="fa fa-bell"></i><b class="caret"></b></a>
                       <ul class="dropdown-menu alert-dropdown">

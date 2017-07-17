@@ -25,7 +25,6 @@ class Cusuarios extends CI_Controller {
 		 $this->usuarios_model->save_user($_POST);
 	}
 	public function eliminar_usuario($id){
-		echo $id;
 		$this->usuarios_model->eliminar_usuario($id);
 	}
 	public function editar_usuarios(){

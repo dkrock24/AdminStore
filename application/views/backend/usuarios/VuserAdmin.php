@@ -392,7 +392,6 @@
                         <th>Rol</th>                        
                         <th>Estado</th>                        
                         <th>Detalle</th>
-                        <th>Eliminar</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -415,11 +414,6 @@
                                      </a>
                                      
                                 </td>  
-                                <td>
-                                    <a data-toggle="modal" data-target="#eliminar-usuario" class="eliminar" id="<?php echo $usuarios->id_usuario; ?>" name='<?php echo $usuarios->nickname; ?>' href="#">
-                                    <button type="button" class="btn btn-primary btn-transparent">Eliminar</button>
-                                     </a>
-                                </td>
 
                             
                              </tr>
