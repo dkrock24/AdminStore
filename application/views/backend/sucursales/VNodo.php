@@ -13,9 +13,11 @@
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script>
+	<!-- <script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script> -->
+	<script src="/lapizzeria/js/longpoll.js"></script>
 	<script>
-		var requestUrl = "http://45.33.3.227/lapizzeria/demo.php";
+		//var requestUrl = "http://45.33.3.227/lapizzeria/demo.php";
+		var requestUrl = "/lapizzeria/demo.php";
 		/*	set user to 2 here	*/
 		var id_sucursal = $("#id_sucursal").val();
 		var id_nodo 	= $("#id_nodo").val();

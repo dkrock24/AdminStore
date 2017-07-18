@@ -110,6 +110,7 @@ class cortes_model extends CI_Model
             'cupones'           => $Total_Cupones,
             'estado_corte'      => 1,
         );
+
         $this->db->insert(self::corte,$data);
         $id_corte = $this->db->insert_id();
         //Registrar Todas Las ordenes como historico de corte
@@ -117,6 +118,7 @@ class cortes_model extends CI_Model
 
         // Insertar Historico de Cortes
         $id_pedido;
+
         foreach ($ordenes as $value){
             $id_pedido = $value->id_pedido;
             $data = array(
@@ -129,6 +131,7 @@ class cortes_model extends CI_Model
             $data = array(
             'cortado'   => 1,
             );
+
             $this->db->where('id_pedido', $id_pedido);                
             $this->db->update(self::sys_pedido,$data);
         }

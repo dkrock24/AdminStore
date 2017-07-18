@@ -38,13 +38,18 @@ class Ccortes extends CI_Controller {
 
 		//Obtener Total de Dinero en Todas las Ordenes a Con Adicionales
 		$data 	= $this->cortes_model->getTotalAdicinales_($id_sucursal);
-		if($data[0]->Total_Adisional== null)
+
+		if(isset($data[0]))
 		{
-			$Monto_Adicional = 0;
+			if($data[0]->Total_Adisional== null)
+			{
+				$Monto_Adicional = 0;
+			}else{
+				$Monto_Adicional = $data[0]->Total_Adisional;
+			}
 		}else{
-			$Monto_Adicional = $data[0]->Total_Adisional;
+			$Monto_Adicional = 0;
 		}
-		
 
 		//Obtener Total El Numero de Ordenes Sin cortar
 		$data 	= $this->cortes_model->getTotalOrdenes_($id_sucursal);
@@ -62,7 +67,7 @@ class Ccortes extends CI_Controller {
 		$this->cortes_model->SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones);
 
 		/* NOTIFICACION DE CORTE*/
-		session_start();
+		//session_start();
 		$var_id_usuario = $_SESSION['idUser'];
 		$this->alertas_model->setAlerta($id_sucursal,$var_id_usuario,16,2);	
 		/* NOTIFICACION DE CORTE*/

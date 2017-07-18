@@ -38,7 +38,7 @@ if(!isset($_SESSION['usuario'])){
     <link href="../../../assets/plugins/maps-amcharts/ammap/ammap.min.css" rel="stylesheet">
     <!-- END PAGE STYLE -->
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../../../assets/plugglobalreportins/js/generatorCharts2.js"></script>
+    <script src="../../../assets/globalreport/js/generatorCharts2.js"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -49,8 +49,8 @@ if(!isset($_SESSION['usuario'])){
 
     <script>
       $( document ).ready(function() {
-        $(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
-        //$(".pages").load("http://localhost/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
+        //$(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
+        $(".pages").load("../../../../../lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
         
         $(".remover").click(function(){
           $(this).hide();
