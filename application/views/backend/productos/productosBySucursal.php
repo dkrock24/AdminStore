@@ -28,7 +28,7 @@
   {
     if ($(".precioData").text() != "Null") 
     {
-      alert("Desea modoficar el precio actual");
+      alert("Desea modificar el precio actual");
     }
     
     $(".modalAsignarPrecio").modal({

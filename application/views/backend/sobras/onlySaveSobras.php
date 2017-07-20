@@ -21,13 +21,12 @@
  //-----------------Jquery insercion de  productos----------------
       $("#saveSobras").click(function()
       {
-
-        alert("test");
         var formData = new FormData();
                 formData.append('files', $('#files')[0].files[0]);
                 formData.append('ingrediente', $('#ingrediente').val());
                 formData.append('cantidad', $('#cantidad').val());
                 formData.append('sucursal', $('#sucursal').val());
+                formData.append('comment', $('#comment').val());
                 formData.append('unidaMedida', $('#unidaMedida').val());
                 formData.append('userID', $('#userID').val());
       //alert(formData);
@@ -184,6 +183,14 @@
                         </span>
                       </div>  
                       
+                      <div class="col-md-6">   
+                       <span class="input input--hoshi">
+                          <input class="input__field input__field--hoshi" type="text" id="comment" name="comment"  />
+                          <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                          <span class="input__label-content">Comentario</span>
+                          </label>
+                      </span>
+                    </div>
 
                     <div class="col-md-12"> 
                        <span class="input input--hoshi">

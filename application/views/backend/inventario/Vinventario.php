@@ -3,11 +3,7 @@
 ?>
  <!-- END PRELOADER -->
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-      <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
-    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> 
-    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
-    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-<script>
+   <script>
   //----------------- Open modal view data-------------------
   $(".viewDataM").click(function()
   {
@@ -427,7 +423,7 @@
  <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarCategoria">Agregar categoria</span>
     </div>
     <div class="row line col-md-12">
-      <table class="table table-hover table-dynamic" id="inventarioSucursal">
+      <table class="table" id="inventarioSucursal">
                 <thead class='titulos'>
                     <tr>
                         <th>Nombre</th>

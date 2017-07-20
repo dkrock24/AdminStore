@@ -96,7 +96,7 @@ class Cproductos extends CI_Controller {
 		}
 		else
 		{
-			echo "Este producto esta asociado a una sucursal!!! :(";	
+			echo "Este producto esta asociado a una o mas sucursales!!! :(";	
 		}
 
 	}

@@ -2,8 +2,7 @@
    session_start();
 ?>
  <!-- END PRELOADER -->
-    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
+ <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
 <script>
     $(".agregarUnidaMedida").click(function()
     {
@@ -263,7 +262,7 @@
 </span>  
     </div> 
 <div class="data-materiales">    
-<table class="table table-hover table-dynamic">
+<table class="table table-hover table-dynamic" id="inventarioSucursal">
                 <thead class='titulos'>
                     <tr>
                         <th>Codigo</th>
@@ -277,7 +276,7 @@
                 <?php
                     if (!empty($materiales)) 
                     {
-                      //var_dump($materiales);
+
                       foreach ($materiales as $value) 
                       {
                       ?>

@@ -359,7 +359,7 @@ class inventario_model extends CI_Model
         $query = $this->db->query('Select * 
                 from sys_catalogo_inventario_sucursal cis
                 right join sys_catalogo_materiales cm  ON cm.codigo_material = cis.codigo_meterial
-                and cis.id_sucursal = '.@$sucursalID['sucursalID'].'
+                and cis.id_sucursal = '.$sucursalID.'
                 inner join sys_categoria_materia_prima cmp ON cmp.id_categoria_materia = cm.id_categoria_material
                 where cis.id_sucursal Is null');
          //echo $this->db->queries[0];
