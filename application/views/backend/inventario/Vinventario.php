@@ -3,21 +3,11 @@
 ?>
  <!-- END PRELOADER -->
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
+      <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
+    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> 
     <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
     <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
-    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
-    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
-    <!-- BEGIN PAGE SCRIPT -->
-    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
-    <script src="../../../assets/js/pages/table_dynamic.js"></script>
-    <!-- BEGIN PAGE SCRIPT -->
-    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-
-
 <script>
-
   //----------------- Open modal view data-------------------
   $(".viewDataM").click(function()
   {
@@ -57,7 +47,8 @@
 
 
   //----------------- Open modal delete-------------------
-  $(".deleteBTN").click(function()
+  //$(".deleteBTN").click(function()
+  $(document).on('click','.deleteBTN',function()  
   {
      $(".modalEliminar").modal({
            backdrop: 'static', 
@@ -300,7 +291,7 @@
      <div id="actions-bar">
  <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarMateria">Agregar material</span>
     </div> 
-         <table class="table table-hover table-dynamic">
+         <table class="table table-hover table-dynamic" id="inventarioGeneral">
                 <thead class='titulos'>
                     <tr>
                         <th >Nombre</th>
@@ -436,7 +427,7 @@
  <span type="button" style="float:right;background-color: #c75757;" class="btn btn-success agregarCategoria">Agregar categoria</span>
     </div>
     <div class="row line col-md-12">
-      <table class="table table-hover table-dynamic">
+      <table class="table table-hover table-dynamic" id="inventarioSucursal">
                 <thead class='titulos'>
                     <tr>
                         <th>Nombre</th>

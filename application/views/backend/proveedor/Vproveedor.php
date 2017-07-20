@@ -78,12 +78,11 @@
           data: {proveedorID:proveedorID},
           success: function(message)
           {
-            //alert(message);
             $(".pages").load("../proveedor/Cproveedor/index");
           },
           error:function()
           {
-            alert("failure");
+            alert("Posiblemente esta siendo utilizado, Proceso no terminado");
           }
       });
 
@@ -236,6 +235,7 @@
                     {
                       foreach ($proveedor as $value) 
                       {
+                        $AsociarActive = ($value->proveedorAsociado != null) ? "fa fa-check-circle" : "" ;
                       ?>
                     <tr>
                         <td><?php echo $value->nombre_proveedor;  ?></td>
@@ -251,7 +251,8 @@
                             <button type="button" class="btn btn-primary  btn-sm viewData">
                             <input type="hidden" name="viewDataID" class="viewDataID" value="<?php echo $value->id_proveedor ?>">Ver
                             </button>
-                            <button type="button" class="btn btn-primary  btn-sm associateBranch">
+
+                            <button type="button" class="btn btn-primary  btn-sm associateBranch <?php echo $AsociarActive?>">
                             <input type="hidden" name="proveedorID" class="proveedorID" value="<?php echo $value->id_proveedor ?>">Asociar
                             </button>
                         </td>

@@ -14,7 +14,7 @@ class sobras_model extends CI_Model
    
     public function getDataSobras()
     {
-         $query = $this->db->query('Select s.id_sobras, s.codigo_material, s.cantidad_sobras, s.fecha_registro, ss.nombre_sucursal, 
+         $query = $this->db->query('Select s.id_sobras, s.codigo_material, s.cantidad_sobras, s.comentario, s.fecha_registro, ss.nombre_sucursal, 
             um.nombre_unidad_medida, cm.nombre_matarial, cm.descripcion_meterial, cm.estatus, um.simbolo_unidad_medida, s.estatus_registro
             from sys_sobras s
             inner join sys_sucursal ss on ss.id_sucursal = s.id_sucursal
@@ -26,7 +26,7 @@ class sobras_model extends CI_Model
 
     public function viewSobras($sobrasID)
     {
-         $query = $this->db->query('Select s.id_sobras, s.codigo_material, s.cantidad_sobras, s.fecha_registro, ss.nombre_sucursal, 
+         $query = $this->db->query('Select s.id_sobras, s.codigo_material, s.cantidad_sobras, s.comentario, s.fecha_registro, ss.nombre_sucursal, 
         um.nombre_unidad_medida, cm.nombre_matarial, cm.descripcion_meterial, cm.estatus, um.simbolo_unidad_medida,  cmp.nombre_categoria_materia, s.estatus_registro as statusChange, s.image
         from sys_sobras s
         inner join sys_sucursal ss on ss.id_sucursal = s.id_sucursal
@@ -89,6 +89,7 @@ class sobras_model extends CI_Model
              'cantidad_sobras'    => $sobras['cantidad'],
              'id_unidad_medida'    => $sobras['unidaMedida'],
              'image'     => $name,
+             'comentario'    => $sobras['comment'],
              'fecha_registro'    => $dateNow
              );
         

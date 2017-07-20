@@ -1,17 +1,6 @@
  <!-- END PRELOADER -->
-    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
-    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
-    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
-    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
-    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
-    <!-- BEGIN PAGE SCRIPT -->
-    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
-    <script src="../../../assets/js/pages/table_dynamic.js"></script>
-    <!-- BEGIN PAGE SCRIPT -->
-    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-
+<a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+  
 
 <script>
 

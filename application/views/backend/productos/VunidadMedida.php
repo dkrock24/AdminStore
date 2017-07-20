@@ -2,13 +2,7 @@
    session_start()
 ?>
  <!-- END PRELOADER -->
-    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
-    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
-    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
-    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
-    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+<a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a>   
 <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 
 <script>
@@ -112,8 +106,8 @@ $(document).ready(function()
         });
 
         var unidadID = $(this).find('.dataModifiID').val();
-        $(".laod-tipoModificar").show();
-        $(".laod-tipoModificar").load("../productos/Cproductos/editDataControllUnidad/"+unidadID); 
+        $(".laod-tipoModificarU").show();
+        $(".laod-tipoModificarU").load("../productos/Cproductos/editDataControllUnidad/"+unidadID); 
     });
 
  //----------------------Edita data code END-------------
@@ -121,8 +115,8 @@ $(document).ready(function()
   
 
   //--------------------Delete caegoria------------------------------ 
-  //$(".deleteBTN").click(function()
-  $(document).on('click','.deleteBTN',function()  
+  $(".deleteBTN").click(function()
+  //$(document).on('click','.deleteBTN',function()  
   {
       var dataDeleteID = $(this).find('.dataDeleteID').val();
       //alert(ProductoId);
@@ -343,7 +337,7 @@ $(document).ready(function()
           </h4>
           <hr>
         <div class="modal-body">
-          <div class="laod-tipoModificar" style="display: none;"></div> 
+          <div class="laod-tipoModificarU" style="display: none;"></div> 
         </div>
         <div class="modal-footer">
         <div id="msg" class="msgShow">

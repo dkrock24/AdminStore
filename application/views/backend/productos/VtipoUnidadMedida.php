@@ -1,4 +1,5 @@
 <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
+
 <script>
 $(document).ready(function()
   {
@@ -64,8 +65,8 @@ $(document).ready(function()
  
 
   //--------------------Delete caegoria------------------------------ 
-  //$(".deleteBTN").click(function()
-  $(document).on('click','.deleteBTN',function()  
+  $(".deleteBTN").click(function()
+  //$(document).on('click','.deleteBTN',function()  
   {
       var dataDeleteID = $(this).find('.dataDeleteID').val();
       //alert(ProductoId);

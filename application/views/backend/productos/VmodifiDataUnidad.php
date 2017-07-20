@@ -1,4 +1,3 @@
-<link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 <script type="text/javascript">
   //----------------go to add proveedores---------------
     $(".backProveedor").click(function()

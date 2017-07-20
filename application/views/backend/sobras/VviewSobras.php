@@ -96,6 +96,9 @@
        <dt>Descripcion material:</dt> 
           <dd><?php echo $value->descripcion_meterial;  ?></dd> 
 
+        <dt>Comentario:</dt> 
+          <dd><?php echo $value->comentario;  ?></dd>    
+
        <dt>Codigo material</dt> 
           <dd><?php echo $value->codigo_material;  ?></dd> 
 
@@ -106,8 +109,8 @@
       if ($value->image !="") 
       {
       ?>  
-          <div class="thumbnail" style="height: 450px;padding: 0px;">
-            <img src="../../../assets/images/desperdicios/<?php echo $value->image ?>">   
+          <div class="thumbnail">
+            <img src="../../../assets/images/desperdicios/<?php echo $value->image ?>" style="height: auto;width: 200px;>   
          </div>
       <?php
       }

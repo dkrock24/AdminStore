@@ -2,6 +2,8 @@
    session_start();
 ?>
  <!-- END PRELOADER -->
+ <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
      <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
     <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
@@ -14,7 +16,7 @@
     <script src="../../../assets/js/pages/table_dynamic.js"></script>
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+
 
 <script>
 
@@ -41,11 +43,12 @@
       $("#saveSobras").click(function()
       {
 
-        alert("test");
+        //alert("test");
         var formData = new FormData();
                 formData.append('files', $('#files')[0].files[0]);
                 formData.append('ingrediente', $('#ingrediente').val());
                 formData.append('cantidad', $('#cantidad').val());
+                formData.append('comment', $('#comment').val());
                 formData.append('sucursal', $('#sucursal').val());
                 formData.append('unidaMedida', $('#unidaMedida').val());
                 formData.append('userID', $('#userID').val());
@@ -290,6 +293,15 @@
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">   
                         </span>
                       </div>  
+
+                      <div class="col-md-6">   
+                       <span class="input input--hoshi">
+                          <input class="input__field input__field--hoshi" type="text" id="comment" name="comment"  />
+                          <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                          <span class="input__label-content">Comentario</span>
+                          </label>
+                      </span>
+                    </div>
                       
 
                     <div class="col-md-12"> 

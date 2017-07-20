@@ -56,6 +56,16 @@
   //-------------------------Fin -----------------------------------
 
 
+//----action para regresar al home de inventario----------------
+
+  $("#cancelAction").click(function()
+  {
+    
+    var sucursalID = $(".sucursalID").val();
+    $(".pages").load("../inventario/Cinventario/inventarioBySucursal/"+sucursalID);
+  });
+
+//------------END CODE -------------------------------------------
 
 //-------- Desasociar proveedor a material-------------------
   $(".desasociarProvee").click(function()
@@ -99,8 +109,7 @@
             success: function(data)
             {                                                  
             
-
-          
+               $(".pages").load("../inventario/Cinventario/config_meteriales/"+materialSucursalId);
             },
             error:function()
             {
@@ -113,6 +122,7 @@
    //-----------------save proveedor--------------
       $("#saveConfigMaterial").click(function()
       {
+
         var minimoExistencia = $("#miniExistencia").val();
         var maximoExistencia = $("#maximoExistencia").val();
         var sucursalID = $(".sucursalID").val();
@@ -305,6 +315,7 @@
             <input type="hidden" name="catalogoSucursalID" class="catalogoSucursalID" value="<?php echo $materialSucursal[0]['id_inventario_sucursal'] ?>">
             <input type="hidden" name="sucursalID" class="sucursalID" value="<?php echo $materialSucursal[0]['id_sucursal'] ?>">
               <button type="button" id="saveConfigMaterial" class="btn btn-primary">Guardar</button>
+              <button type="button" id="cancelAction" class="btn btn-primary">Cancelar</button>
             </span>
           </div>
 

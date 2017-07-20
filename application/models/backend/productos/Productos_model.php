@@ -270,7 +270,7 @@ class productos_model extends CI_Model
     {
         $query = $this->db->query('Select * from sys_productos p
         Inner join sys_productos_sucursal ps ON ps.id_producto = p.id_producto
-        where ps.id_sucursal ='.@$sucursalID['sucursalID'].' group by p.id_producto');
+        where ps.id_sucursal ='.$sucursalID.' group by p.id_producto');
          //echo $this->db->queries[0];
         return $query->result();
        

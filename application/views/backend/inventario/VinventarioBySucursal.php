@@ -2,6 +2,7 @@
 <script>
 $(document).ready(function()
   {
+
     $(".agregarUnidaMedida").click(function()
     {
         $(".AddUnidadMedida").modal({

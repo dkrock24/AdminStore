@@ -15,14 +15,11 @@ class proveedor_model extends CI_Model
    
     public function getProveedor()
     {
-        $this->db->select('*');
-        $this->db->from(self::proveedor);
-        $query = $this->db->get();
-        
-        if($query->num_rows() > 0 )
-        {
-            return $query->result();
-        }        
+        $query = $this->db->query('Select p.id_proveedor, p.nombre_proveedor, p.descripcion_proveedor, p.correo_proveedor, p.direccion_proveedor, p.telefono_proveedor, p.contacto_referencia_proveedor, p.fecha_creacion_proveedor, ps.id_proveedor_sucursal as proveedorAsociado
+            from sys_proveedores p
+            left join sys_proveedores_sucursal ps ON ps.id_proveedor =p.id_proveedor
+            group by p.id_proveedor');
+         return $query->result();  
         
     }
 

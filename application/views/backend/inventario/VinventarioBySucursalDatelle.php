@@ -3,13 +3,6 @@
 ?>
  <!-- END PRELOADER -->
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
-    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
-    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
-    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
-    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
-  
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
 <script>
     $(".agregarUnidaMedida").click(function()
@@ -273,7 +266,7 @@
 <table class="table table-hover table-dynamic">
                 <thead class='titulos'>
                     <tr>
-                        <th>Codigo material</th>
+                        <th>Codigo</th>
                         <th>Material</th>
                         <th>Categoria</th>
                         <th>Existencia</th>                                                                      

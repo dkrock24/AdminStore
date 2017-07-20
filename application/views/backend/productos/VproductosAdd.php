@@ -2,19 +2,14 @@
    session_start()
 ?>
  <!-- END PRELOADER -->
+
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
-     <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->
-    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
-    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
-    <script src="../../../assets/js/widgets/notes.js"></script> <!-- Notes Widget -->
-    <script src="../../../assets/js/quickview.js"></script> <!-- Chat Script -->
-    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
-    <!-- BEGIN PAGE SCRIPT -->
     <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
     <script src="../../../assets/js/pages/table_dynamic.js"></script>
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-
+    
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
 <script>
   function archivo(evt) 
   {
@@ -221,7 +216,7 @@ $(document).ready(function()
   $(".cont-sucursales").click(function()
   {
       var sucursalID = $(this).find(".idSucursal").val();
-     // alert(sucursalID);
+      //alert(sucursalID);
       $(".conten-sucursales").hide();
       $(".load-productoBySucursal").show();
       $(".load-productoBySucursal").load("../productos/Cproductos/productosBySucursal/"+sucursalID);
@@ -274,8 +269,8 @@ $(document).ready(function()
 
 
 //--------------------Delete caegoria------------------------------ 
-  //$(".deleteBTN").click(function()
-  $(document).on('click','.deleteBTN',function() 
+  $(".deleteBTN").click(function()
+  //$(document).on('click','.deleteBTN',function() 
   {
       var dataDeleteID = $(this).find('.deleteValID').val();
       //alert(ProductoId);
@@ -516,7 +511,7 @@ $(document).ready(function()
 
 
 
-    <div class="tab-pane includ fade" id="tab1_2">
+    <div class="tab-pane includ fade" id="tab1_2" spellcheck="true">
      <div class="row line col-md-12">
             <div class="col-md-6">
                  <form enctype="multipart/form-data" id="productos" method="POST">
@@ -546,7 +541,7 @@ $(document).ready(function()
 
 
                    <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" />
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" spellcheck="true" />
                       <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
                       <span class="input__label-content">Descripción</span>
                       </label>

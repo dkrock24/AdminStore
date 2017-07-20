@@ -422,7 +422,7 @@ class inventario_model extends CI_Model
             inner join sys_unidad_medida um ON um.id_unidad_medida = cm.id_unidad_medida
             inner join sys_proveedores_sucursal ps ON ps.id_sucursal = cis.id_sucursal
             inner join sys_proveedores p ON p.id_proveedor = ps.id_proveedor
-            left join sys_list_inventario_proveedor lip ON lip.id_proveedor_sucursal = ps.id_proveedor_sucursal 
+            left join sys_list_inventario_proveedor lip ON lip.id_proveedor_sucursal = ps.id_proveedor 
                 and lip.id_catalogo_inventario_sucursal = cis.id_inventario_sucursal 
             where cis.id_inventario_sucursal =".$inventarioSucursal." group by ps.id_proveedor");
          //echo $this->db->queries[0];
