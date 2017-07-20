@@ -170,6 +170,9 @@ class sucursales_model extends CI_Model
         $this->db->join(self::sucursal_suarios.' AS SU ',' on SU.id_sucursal = S.id_sucursal');
         $this->db->join(self::usuarios.' AS U',' on U.id_usuario = '.'SU.id_usuario');
         $this->db->where('S.id_sucursal',$id_sucursal);
+        $this->db->where('U.rol <>',1);
+        $this->db->where('U.rol <>',15);
+
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
@@ -283,7 +286,7 @@ class sucursales_model extends CI_Model
                 }
                 else
                 {
-                    $valor_secuencia = "00001";
+                    $valor_secuencia = "0001";
                     $this->UpdateSecuencia($Id_Sucursal,$valor_secuencia);
                 }
             }

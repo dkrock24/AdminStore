@@ -23,6 +23,7 @@ if(!isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
     <title>Sistema Integrado</title>
     <script src="../../../js/jquery.js"></script>
+    <script src="../../../js/jquery-ui-1.10.3.custom.js"></script>
     <?php
       foreach ($lib_login as $value) {
       ?>
