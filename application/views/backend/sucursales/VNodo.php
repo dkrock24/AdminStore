@@ -51,6 +51,7 @@
 							console.log(response);
 							for(var i=0 ; i<response.pedido.length ; i++)
 							{
+
 								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 							
 								// pedido
@@ -58,36 +59,52 @@
 								html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
 								html += "<tr><td>#</td><td>Producto</td></tr>";
 								
-								for(var j=0 ; j< response.detalle.length; j++)
+				
+								
+								var de = Object.keys(response.pedido[0]).length;
+								de = de - 9;
+								for(var j=0 ; j< de; j++)
 								{
+									if(response.pedido[i][j]['nombre_producto']!=null)
+									{
+
+
 									// Detalle Productos
 									html += "<tr><td>"+contador+"</td>";
-									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'];
-										if(response.detalle[i].items){
-											for(var x=0; x < response.detalle[i].items.length; x++){	
-												if(response.detalle[i].items[x])
+									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'];
+										
+
+
+											var ob = Object.keys(response.pedido[i][j]).length;
+											
+											ob = ob - 6;
+											for(var x=0; x < ob; x++){	
+												if(response.pedido[i][j][0]['nombre_matarial']!=null)
 												{
 													html += "<ul>";
-													if(response.detalle[j].items[x]['eliminado']==1)								
+													if(response.pedido[i][j][x]['eliminado']==1)								
 													{
-														html += "<li> Quitar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";
+														html += "<li> Quitar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";
 													}
-													if(response.detalle[j].items[x]['adicional']==1)
+													if(response.pedido[i][j][x]['adicional']==1)
 													{
-														html += "<li> Agregar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";	
+														html += "<li> Agregar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";	
 													}
 													html += "</ul>";																				
 												}
 											}
-										}
+										
+										
 											html +="</td></tr>";
 									contador++;
-								}					
-							}
-							html += "</table></a>";
+									}
+								}	
+								html += "</table></a>";
 							html += "</div><span class='tiempo'></div>";
 							$('.ordenes').append(html);		
-							html="";
+							html="";			
+							}
+							
 						}
 
 					},
