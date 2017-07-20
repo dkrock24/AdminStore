@@ -17,11 +17,11 @@ die;*/
 	$response = array();
 	//by default set to error
 	$response['success'] = 1;
-	$iter = 0;
+	$iter = 1;
 	do{
-		$sql_pedido = "	select pedido.secuencia_orden from sys_pedido as pedido	
+		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa,pedido.fechahora_pedido,pedido.secuencia_orden from sys_pedido as pedido	
 						join sys_pedido_detalle as PD on pedido.id_pedido=PD.id_pedido
-						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.producto_elaborado=0  AND PD.id_nodo=".$_POST['id_nodo']." order by PD.id_pedido asc";
+						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.producto_elaborado=0  AND PD.id_nodo=".$_POST['id_nodo']." group by PD.id_pedido order by PD.id_pedido asc";
 		$res = mysqli_query($con, $sql_pedido)or die(mysqli_error($con));
 
 		if(mysqli_num_rows($res) > 0){
@@ -30,20 +30,20 @@ die;*/
 			for($i=0 ; $row = mysqli_fetch_array($res) ; $i++)
 			{
 				$response['pedido'][$i] = $row;
-				var_dump($response['pedido'][$i]);
+				
 
 				// Pedido Detalle
+				
 				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar,productos.nombre_producto from sys_pedido_detalle as pedido_d 
 										join sys_productos as productos on productos.id_producto=pedido_d.id_producto
-										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.id_nodo=".$_POST['id_nodo'];
+										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.producto_elaborado=0 AND pedido_d.id_nodo=".$_POST['id_nodo'];
 				$res2 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
-				/*
+				
 				if(mysqli_num_rows($res2) > 0)
 				{
-					echo "A";
 					for($j=0 ; $row2 = mysqli_fetch_array($res2) ; $j++)
-					{						
-						$response['detalle'][$j] = $row2;
+					{					
+						$response['pedido'][$i][$j] = $row2;
 						// Pedido Detalle Materiales
 						$sql_pedido_detalle = "select cm.nombre_matarial,pedido_d_m.adicional,pedido_d_m.eliminado from sys_pedido as pedido
 												join sys_pedido_detalle as pedido_d on pedido.id_pedido=pedido_d.id_pedido
@@ -55,19 +55,21 @@ die;*/
 						if(mysqli_num_rows($res3) > 0)
 						{
 							for($k=0 ; $row3 = mysqli_fetch_array($res3) ; $k++){
-								$response['detalle'][$j]['items'][$k] = $row3;
+								$response['pedido'][$i][$j][$k] = $row3;
 							}
 						}
 					}
-				}*/
+
+				}
 	
 				//break;		
-			}						
+			}	
+			//var_dump($response['detalle']);				
 		}
 		//sleep for 5 secs to check for update
 		//sleep(1);
 		++$iter;
-	}while($iter < 2);//just check for 3 times, i.e 15 sec ... else respond with success=1
+	}while($iter < 0);//just check for 3 times, i.e 15 sec ... else respond with success=1
 	mysqli_close($con);
-	//echo json_encode($response);
+	echo json_encode($response);
 ?>
