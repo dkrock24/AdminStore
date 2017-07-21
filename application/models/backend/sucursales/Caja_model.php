@@ -59,7 +59,7 @@ class caja_model extends CI_Model
     //---------------Modelos para despacho
     public function getPedidosDespachoBySucursal($id_sucursal)
     {
-         $query = $this->db->query('Select sp.id_pedido, sp.id_usuario, sp.id_mesero, sp.numero_mesa, sp.elaborado, sp.flag_cancelado, sp.flag_elaborado, sp.flag_despachado, sp.porcentaje_descuento, sp.total_descuento,
+         $query = $this->db->query('Select sp.id_pedido, sp.secuencia_orden, sp.id_usuario, sp.id_mesero, sp.numero_mesa, sp.elaborado, sp.flag_cancelado, sp.flag_elaborado, sp.flag_despachado, sp.porcentaje_descuento, sp.total_descuento,
         sp.fechahora_pedido, sp.fecha_creado, pd.id_detalle, pd.id_producto, pd.precio_grabado, pd.precio_original, GROUP_CONCAT(Distinct pd.id_detalle,"_",p.nombre_producto,"_",pd.precio_original) as name_producto, GROUP_CONCAT(Distinct pd.id_detalle,"_",p.nombre_producto) as name_productos, u.nombres, u.apellidos, sp.id_sucursal, SUM(pd.precio_original) as totalSin, si.monto_impuesto, GROUP_CONCAT(Distinct sh.fechahora,"::",sh.accion,"::",sh.nota) as historial, if(max(sh.valor) IS NULL, 0, max(sh.valor)) as descuentos, sh.grupo
           from sys_pedido sp
         inner join sys_pedido_detalle pd ON pd.id_pedido = sp.id_pedido and pd.estado !=5
@@ -108,6 +108,12 @@ class caja_model extends CI_Model
         
         $this->db->insert(self::cuentaTabla,$categorias);
 
+        $data = array(
+            'flag_cancelado'   => 1,
+        );
+        $this->db->where('id_pedido', $cuenta['idpedidounico']);                
+        $this->db->update(self::pedidos,$data);
+
     }
 
     public function anular_cuenta_insert($cuenta)
@@ -129,11 +135,6 @@ class caja_model extends CI_Model
         
         $this->db->insert(self::cuentaTabla,$categorias);
 
-        $data = array(
-            'flag_cancelado'   => 1
-        );
-        $this->db->where('id_pedido', $cuenta['idpedidounico']);                
-        $this->db->update(self::pedidos,$data);
     }
 
 

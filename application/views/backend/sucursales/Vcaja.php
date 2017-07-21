@@ -585,7 +585,7 @@ $('.descuento').click(function()
       			<div class="timer" data-date="<?php echo $values->fechahora_pedido; ?>" style="width: 100%;"></div>
       		</div>
 
-      		<span class="num-cuenta">Cuenta #<?php echo $values->id_pedido; ?> </span><span class="antendida">Atendida por <?php echo $values->nombres." ".$values->apellidos; ?></span>
+      		<span class="num-cuenta">Cuenta #<?php echo $values->secuencia_orden; ?> </span><span class="antendida">Atendida por <?php echo $values->nombres." ".$values->apellidos; ?></span>
       		<div class="panel-body">
       			<ul class="list-group" style="text-align: initial;">
       			  <li class="list-group-item">
