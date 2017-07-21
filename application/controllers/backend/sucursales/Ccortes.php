@@ -24,7 +24,7 @@ class Ccortes extends CI_Controller {
 		$data['ordenes'] 	= $this->cortes_model->getcortesBySucursal( $id_sucursal );
 		$data['ordenesA'] 	= $this->cortes_model->getcortesBySucursalA( $id_sucursal );
 		$data['Adicional'] 	= $this->cortes_model->getTotalAdicinales( $id_sucursal );
-		$data['series'] 	= $this->cortes_model->getSeriesCortesBySucursal( $id_sucursal );
+		$data['series'] 	= $this->cortes_model->getSeriesCortesBySucursal_( $id_sucursal );
 		$data['cupones'] 	= $this->cortes_model->getTotalOrdenesCupon( $id_sucursal );
 		$data['pedidosCerrados'] 	= $this->cortes_model->getPedidosCerrados( $id_sucursal );
 		$data['pedidosAbiertos'] 	= $this->cortes_model->getPedidosAbiertos( $id_sucursal );
