@@ -185,7 +185,7 @@ class cortes_model extends CI_Model
     public function getSeriesCortesBySucursal_($id_sucursal)
     {      
         $query = $this->db->query('select pedido.secuencia_orden from sys_pedido as pedido
-             order by pedido.secuencia_orden desc limit 1');
+            where pedido.id_sucursal='.$id_sucursal.' order by pedido.secuencia_orden desc limit 1');
             //echo $this->db->queries[0];
             return $query->result(); 
     } 
