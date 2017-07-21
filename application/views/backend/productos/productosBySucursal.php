@@ -147,7 +147,7 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4">
-               <div class="thumbnail" style="height: 320px;">
+               <div class="thumbnail">
               
               <?php if($value->verifiDetalle == 0)
                 {?>

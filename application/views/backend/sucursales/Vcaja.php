@@ -476,6 +476,7 @@ $('.anularPedido').click(function()
 //--------------------Hacer descuento
 $('.descuento').click(function() 
 {
+  var porcent = "";
   if (confirm('Realmente desea hacer un descuento?'))
   {
     var idpedidounico = $(this).data("idpedidodescuento");
@@ -485,7 +486,7 @@ $('.descuento').click(function()
 
     if (comment.length > 0) 
     {
-      var porcent = window.prompt("Porcentaje a descontar")
+       porcent = window.prompt("Porcentaje a descontar")
       if(porcent.length > 0)
       {
         $.ajax
@@ -575,7 +576,7 @@ $('.descuento').click(function()
         foreach ($pedidos as $values) 
         {
 
-          $classElaborado = ($values->flag_elaborado == 1) ? "panel-primary" : "panel-success" ;
+          $classElaborado = ($values->elaborado == 1) ? "panel-primary" : "panel-success" ;
           $listProductos = explode(",", $values->name_productos);
     ?>	
 

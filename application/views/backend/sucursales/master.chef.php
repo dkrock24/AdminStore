@@ -87,7 +87,7 @@
         foreach ($pedidos as $value) 
         {
 
-         $classElaborado = ($value->flag_elaborado == 1) ? "classElaborado" : "" ; 
+         $classElaborado = ($value->elaborado == 1) ? "classElaborado" : "" ; 
          $listProductos = explode(",", $value->name_producto);
   ?>
     

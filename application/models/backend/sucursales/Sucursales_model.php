@@ -492,8 +492,6 @@ class sucursales_model extends CI_Model
          //echo $this->db->queries[0];
         return $query->result_array();       
         
-    }
-
     
 }
 /*
