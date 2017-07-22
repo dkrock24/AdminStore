@@ -328,7 +328,7 @@ class inventario_model extends CI_Model
         Inner join sys_sucursal s ON cis.id_sucursal = s.id_sucursal  
         inner join sys_unidad_medida um ON um.id_unidad_medida = cm.id_unidad_medida
         left join sys_materiales_adicionales ma ON ma.id_material_sucursal = cis.id_inventario_sucursal
-        where cis.id_sucursal ='.$sucursalID.' group by cis.id_inventario_sucursal');
+        where cis.id_sucursal ='.$sucursalID.' group by cis.id_inventario_sucursal order by cis.total_existencia');
          //echo $this->db->queries[0];
         return $query->result();
 
