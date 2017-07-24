@@ -122,6 +122,25 @@
         });  
    });
 
+  // Detalle pc
+  $(".detalle_pc").click(function(){
+    $(".sk-three-bounce").show();
+      var id_sucursal = $(this).attr("id");
+      $.ajax({
+        //url: "../admin/Csucursales/getPc",
+          type:"post",
+          success: function(){     
+            $(".pages").load("../admin/Csucursales/getPc/"+id_sucursal);      
+              setTimeout(function() {
+                $(".sk-three-bounce").css('display','none');
+              }, 1000);  
+          },
+          error:function(){
+            //alert("Error.. No se subio la imagen");
+          }
+      });  
+   });
+
    $(".nodo_detalle").click(function(){
     var id_nodo = $(this).attr("id");
         $.ajax({
@@ -206,6 +225,7 @@
     <li id="menu_li" class="B "><a href="#tab1_2" id="usuarios" name="../admin/Csucursales/acceso" data-toggle="tab"><i class='fa fa-user'></i>Usuarios</a></li>  
     <li id="menu_li" class="C "><a href="#tab1_3" id="nodos" name="../admin/Csucursales/nodos" data-toggle="tab"><i class='fa fa-desktop'></i>Nodos Sucursal</a></li>  
     <li id="menu_li" class="D "><a href="#tab1_4" id="getNodos" name="../admin/Csucursales/getNodos" data-toggle="tab"><i class='fa fa-th-list'></i>Lista Nodos</a></li> 
+    <li id="menu_li" class="F "><a href="#tab1_5" id="getPc" name="../admin/Csucursales/getPc" data-toggle="tab"><i class='fa fa-desktop'></i>Pc Sucursal</a></li>
 </ul>
 <form action="../usuarios/Cusuarios/guardar_usuario" id="usuario" method="POST">
     <div class="tab-content">
@@ -353,6 +373,43 @@
                 ?>                      
                 </tbody>
             </table>
+    </div>
+
+    <div class="tab-pane fade" id="tab1_5">
+      <table class="table table-hover table-dynamic ">
+        <thead class='titulos'>
+          <tr>
+            <th>Nombre</th>
+            <th>Pais</th>
+            <th>Departamento</th>
+            <th>Creada</th>                                                
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+                <?php
+                if($sucursales !=""){
+                foreach ($sucursales as $sucursall) 
+                {
+                ?>
+                    <tr>
+                        <td><?php echo $sucursall->nombre_sucursal;  ?></td>
+                        <td><?php echo $sucursall->nombre_pais;  ?></td>
+                        <td><?php echo $sucursall->nombre_departamento;  ?></td>
+                        <td><?php $date = date_create($sucursall->fecha_creacion); echo date_format($date,"Y/m/d");  ?></td>                         
+                        <td>
+                            <a class="detalle_pc" id="<?php echo $sucursall->id_sucursal; ?>" name='<?php echo $sucursall->nombre_sucursal; ?>' href="#">
+                                <button type="button" class="btn btn-primary btn-transparent">Detalle</button>
+                            </a>
+                        </td>
+                    </tr>        
+                <?php
+                }
+              }
+            ?>
+        </tbody>
+      </table>
     </div>
 
 

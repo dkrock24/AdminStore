@@ -85,6 +85,36 @@ class Csucursales extends CI_Controller {
 		$this->load->view('backend/admin/VSucursalNodo.php',$data);
 	}
 
+	// Pc Por Sucursales
+	public function getPc($id){	
+		
+		$data['sucursales']	=  $this->sucursales_model->getSucursalesByID($id);
+		$data['pc']			=  $this->sucursales_model->getPcPorSucursal($id);
+		
+		$this->load->view('backend/admin/VpcSucursal.php',$data);
+	}
+
+	// Agregando nueva pc a la sucursal
+	public function agregarPc($pc_nombre,$id_sucursal){
+		$this->sucursales_model->setPc($pc_nombre,$id_sucursal);
+
+		$data['sucursales']	=  $this->sucursales_model->getSucursalesByID($id_sucursal);
+		$data['pc']			=  $this->sucursales_model->getPcPorSucursal($id_sucursal);
+
+		$this->load->view('backend/admin/VpcSucursal.php',$data);
+	}
+
+	// Elimina la pc asociada a la sucursal
+	public function eliminarPc($id_pc,$id_sucursal){
+		$this->sucursales_model->eliminarPc($id_pc);
+
+		$data['sucursales']	=  $this->sucursales_model->getSucursalesByID($id_sucursal);
+		$data['pc']			=  $this->sucursales_model->getPcPorSucursal($id_sucursal);
+
+		$this->load->view('backend/admin/VpcSucursal.php',$data);
+
+	}
+
 	// Check nodos por sucursal
 	public function checkNodosSucursal($id,$estado){		
 		if($estado==1){

@@ -27,8 +27,7 @@ class sucursales_model extends CI_Model
     const materiales_adicionales = 'sys_materiales_adicionales';
     const pedidos = 'sys_pedido';
     const sys_secuencia = 'sys_secuencia';
-
-    
+    const sys_sucursal_pc = 'sys_sucursal_pc';
 
     
 
@@ -41,6 +40,8 @@ class sucursales_model extends CI_Model
     
     public function getSucursalesByUser($id_user)
     {
+        $pc = $this->getMac();
+
         $this->db->select('*');
         $this->db->from(self::sys_sucursal);
         $this->db->join(self::sys_sucursal_int_usuarios,' on '. 
@@ -50,7 +51,13 @@ class sucursales_model extends CI_Model
         $this->db->join(self::usuarios,' on '. 
                         self::usuarios.'.id_usuario = '.
                         self::sys_sucursal_int_usuarios.'.id_usuario');
+
+        $this->db->join(self::sys_sucursal_pc,' on '. 
+                        self::sys_sucursal_pc.'.id_sucursal = '.
+                        self::sys_sucursal.'.id_sucursal');
+
         $this->db->where(self::usuarios.'.id_usuario',$id_user);
+        $this->db->where(self::sys_sucursal_pc.'.mac_address',$pc);
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
@@ -58,6 +65,18 @@ class sucursales_model extends CI_Model
             return $query->result();
         }        
     } 
+
+    
+
+    // obtiene la mc de la pc y valida el permiso
+    public function getMac()
+    {
+        $user =  gethostbyaddr($_SERVER['REMOTE_ADDR'])  ;
+        //$pass =  sha1($user);
+        return $user;
+    }
+
+
     public function getSucursalesById($id_sucursal)
     {
         $this->db->select('*');
@@ -491,8 +510,7 @@ class sucursales_model extends CI_Model
          $query = $this->db->query('Select * from sys_sucursal s where s.id_sucursal ='.$id_sucursal);
          //echo $this->db->queries[0];
         return $query->result_array();       
-        
-    
+    }
 }
 /*
  * end of application/models/consultas_model.php
