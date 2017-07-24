@@ -9,6 +9,7 @@ class sucursales_model extends CI_Model
     const sys_pais                  = 'sys_pais';   
     const sys_sucursal_int_usuarios = 'sys_sucursal_int_usuarios';   
     const sys_secuencia             = 'sys_secuencia';
+    const sys_sucursal_pc           = 'sys_sucursal_pc';
     
 
     
@@ -37,6 +38,45 @@ class sucursales_model extends CI_Model
             return $query->result();
         }        
     }
+
+    // Obtener las compuitadoras que estan asociadas a la sucursal
+    public function getPcPorSucursal($id_sucursal){
+
+        $this->db->select('*');
+        $this->db->from(self::sys_sucursal);
+        
+        $this->db->join(self::sys_sucursal_pc,' on '. 
+                        self::sys_sucursal_pc.'.id_sucursal = '.
+                        self::sys_sucursal.'.id_sucursal');
+
+        $this->db->where(self::sys_sucursal.'.id_sucursal',$id_sucursal);
+        $query = $this->db->get();
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
+    // Nueva pc para la sucursal
+    public function setPc($pc_nombre,$id_sucursal){
+        $data = array(
+            'mac_address'   => $pc_nombre,
+            'id_sucursal'   => $id_sucursal,
+            'fecha_creacion' => $date = date("Y-m-d"),
+            'estado' => 1
+        );
+        $this->db->insert(self::sys_sucursal_pc,$data);
+    }
+
+    // Eliminar cp
+        public function eliminarPc($id_pc)
+        {
+            $data = array(
+            'id_pc' => $id_pc        
+            );
+            $this->db->delete(self::sys_sucursal_pc, $data);
+        }
 
     // Get Sucurales
     public function getOnlySucursal()
@@ -183,6 +223,8 @@ class sucursales_model extends CI_Model
                 return $query->result();
             }        
         }
+
+
     //  Sucursal
         public function getSucursal($id){
             $this->db->select('*');

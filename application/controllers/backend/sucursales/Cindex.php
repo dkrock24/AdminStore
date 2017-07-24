@@ -24,6 +24,7 @@ class Cindex extends CI_Controller {
 
 		$this->load->view('backend/sucursales/Vindex.php',$data);
 	}
+
 	public function cargar_sucursal($id_sucursal){
 		session_start();
 		$var_id_usuario = $_SESSION['idUser'];
@@ -415,9 +416,4 @@ class Cindex extends CI_Controller {
 		$data['pedidos'] = $this->sucursales_model->getPedidosDespachoBySucursal($id_sucursal);	
 		$this->load->view('backend/sucursales/Vcaja.php',$data);
 	}
-
-
-	
-	
-	
 }
