@@ -17,15 +17,36 @@
 
 
 </head>
-<script language="javascript">
+<script language="javascript" > 
 $( document ).ready(function() 
 {
 
-  setTimeout(function()
+  function actualizarCaja() 
   {
-      $("#all-content").load(location.href+"#all-content>*","");
-  }, 5000);
-  
+    var sucursalID = $("#sucursalID").val();
+    var lastPedido = $("#lastPedido").val();
+    $.ajax
+    ({
+      url: "../../../sucursales/Ccaja/get_lastPedidos",
+      type: "post",
+      data: {sucursalID:sucursalID, lastPedido:lastPedido},                           
+      success: function(data)
+      {                                                
+          if(data ==1)
+          {
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      }
+    });
+  }
+
+  $(function()
+  {
+    actualizarCaja();
+  });
+
+  setInterval(actualizarCaja,5000);
+
   $(".go-sucursal").click(function(){
         var id_sucursal = $("#id_sucursal").val();
         var url1 = $(this).attr("id");
@@ -570,22 +591,31 @@ $('.descuento').click(function()
 
     <!--     Panel de ordenes en cocina -->
     <?php
-      if(!empty($pedidos)) 
+      if(!empty($detallePedido)) 
       {
-        //var_dump($pedidos);
-        foreach ($pedidos as $values) 
+        //var_dump($detallePedido);
+        foreach ($detallePedido as $values) 
         {
-
-          $classElaborado = ($values->elaborado == 1) ? "panel-primary" : "panel-success" ;
           $listProductos = explode(",", $values->name_productos);
+          if ($values->elaborado == 1) 
+          {
+            echo "<div class='panel panel-danger' style='color: #000;'>
+          <div class='panel-heading'>";
+          } 
+          else 
+          {
+            echo "<div class='panel panel-success' style='color: #000;'>
+          <div class='panel-heading'>";
+          }
+          
     ?>	
 
-      	<div class="panel <?php echo $classElaborado; ?>" style="color: #000;">
-      		<div class="panel-heading">
+
+      	
       			<div class="timer" data-date="<?php echo $values->fechahora_pedido; ?>" style="width: 100%;"></div>
       		</div>
 
-      		<span class="num-cuenta">Cuenta #<?php echo $values->secuencia_orden; ?> </span><span class="antendida">Atendida por <?php echo $values->nombres." ".$values->apellidos; ?></span>
+      		<span class="num-cuenta" style="font-size: 16px">Cuenta #<?php echo $values->secuencia_orden; ?> Atendida por <?php echo $values->nombres." ".$values->apellidos; ?></span>
       		<div class="panel-body">
       			<ul class="list-group" style="text-align: initial;">
       			  <li class="list-group-item">
@@ -643,6 +673,7 @@ $('.descuento').click(function()
     	</div>		
   </div>
 
+
     <!--iv contiene lista de pedido para cerrar en caja-->
     <?php
       if(!empty($pedidos)) 
@@ -651,16 +682,22 @@ $('.descuento').click(function()
         foreach ($pedidos as $value) 
         {
           
-          $classElaborado = ($value->flag_elaborado == 1) ? "panel-primary" : "panel-success" ;
+         
           $listProductos = explode(",", $value->name_producto);
 
           $listHistorial = explode(",", $value->historial);
           //var_dump($listHistorial);
     ?>  
-        <input type="hidden" id="sucursalID"  name="sucursalID" value="<?php echo $value->id_sucursal; ?>">
-      	<div class="panel panel-primary pedidoID_<?php echo $value->id_pedido; ?>" data>
-      	  <div class="panel-heading" style="text-align: center;color: #fff;">
-      	   <span class="num-cuenta">Cuenta #<?php echo $value->id_pedido; ?> </span><span class="antendida">Atendida por <?php echo $value->nombres." ".$value->apellidos; ?></span></div>
+      	<div class="panel panel-primary pedidoID_<?php echo $value->id_pedido; ?>">
+      	  <div class="panel-heading" style="text-align: center;color: #fff; height: 70px;">
+      	   <span class="num-cuenta" style="font-size: 18px">Cuenta #<?php echo $value->secuencia_orden; ?>   Atendida por <?php echo $value->nombres." ".$value->apellidos; ?></span>
+           <?php
+            if ($value->elaborado == 1) 
+            {
+              echo "<span class='glyphicon glyphicon-usd' title='Pendiente de cobro'></span>";
+            } 
+          ?>
+           </div>
       	  	<div class="btn-group" role="group">
       		  <button type="button" class="btn btn-default" style="height: 40px;">Factura</button>
       		  <button type="button" class="btn btn-default" style="height: 40px;">Fiscal</button>
@@ -676,48 +713,34 @@ $('.descuento').click(function()
 
           <div class="btn-group optionUnica" role="group" id="optionUnica_<?php echo $value->id_pedido; ?>" style="display: none;">
             <button type="button" class="btn btn-danger separarC" data-idpediseparar="<?php echo $value->id_pedido; ?>" style="height: 40px;">Separar Cuenta</button>
-           <!-- <button type="button" class="btn btn-danger cambiarM" data-idpedidocambiarmesa="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cambiar mesa</button> -->
+           <button type="button" class="btn btn-danger cambiarM" data-idpedidocambiarmesa="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cambiar mesa</button>
           </div>
       	  <div class="panel-body">
-      	   <div class="alert alert-success" role="alert">
-      	   	<span class="num_mesa mesa_id_<?php echo $value->numero_mesa; ?>  badge" data-idpedidomesa="<?php echo $value->id_pedido; ?>"><?php echo $value->numero_mesa; ?></span>
-      	   	<span class="formula">
+           <div class="alert alert-success" role="alert">
+            <span class="num_mesa mesa_id_<?php echo $value->numero_mesa; ?>  badge" data-idpedidomesa="<?php echo $value->id_pedido; ?>"><?php echo $value->numero_mesa; ?></span>
+            <span class="formula">
               
               (((
               <span class="totalneto_<?php echo $value->id_pedido; ?>" style="cursor: not-allowed;" title="Total sin IVA">
               <?php
-              if ($value->grupo == "CUPON$") 
-              {  
-                  $totalSinShowFull = $value->totalSin - $value->descuentos; 
-                  echo $totalSinShowFull;
-              }
-              elseif ($value->grupo == "CUPON%") 
-              {  
-                  $totalSinShow =  $value->totalSin * $value->descuentos;
-                  $totalSinShowFull = $value->totalSin - $totalSinShow; 
-                  echo $totalSinShowFull;
-              }
-              else
-              {
-                  $totalSinShow = $value->totalSin / 100;
-                  $totalSinShow = $totalSinShow * $value->descuentos;
-                  $totalSinShowFull = $value->totalSin - $totalSinShow; 
-                  echo $totalSinShowFull;
-              }
+              $totalIva = $value->totalSin * $value->monto_impuesto;
+              $totalNeto = $value->totalSin - $totalIva;
+              echo $totalNeto;
+
               ?>
               </span>
-               + 
+               +
               <span class="quitar_iva IvaClean_<?php echo $value->id_pedido; ?>" style="cursor: pointer;" title="IVA Clic para quitar IVA" data-ivasucursal="<?php echo $value->monto_impuesto; ?>">
               <?php 
-                $iva = $totalSinShowFull * $value->monto_impuesto;
-                echo round($iva,2); ?>
+                
+                echo round($totalIva,2); ?>
               </span>
               
                 ) = 
               <span class="totalMasIva totalIvaClean_<?php echo $value->id_pedido; ?>" style="cursor: not-allowed;color:blue;font-weight:bold;" title="Total con IVA sin propina">
               <?php 
-                $totalIva =  $totalSinShowFull + $iva;
-                echo round($totalIva,2); 
+                $totalNeto = $totalNeto + $totalIva;
+                echo round($totalNeto,2); 
               ?>
               </span>
 
@@ -726,14 +749,34 @@ $('.descuento').click(function()
               <span class="quitar_propina propinaClean_<?php echo $value->id_pedido; ?>" style="cursor: pointer;color:red;font-weight:bold;" title="Propina
               Clic para quitar propina" data-idpedidounicopropina="<?php echo $value->id_pedido; ?>">
               <?php 
+
+              if ($value->grupo == "CUPON$") 
+              {  
+                  $totalMasIVA = $totalNeto - $value->descuentos; 
+                  //echo $totalMasIVA;
+              }
+              elseif ($value->grupo == "CUPON%") 
+              {  
+                  $totalDescuento =  $totalNeto * $value->descuentos;
+                  $totalMasIVA = $totalNeto - $totalDescuento; 
+                  //echo $totalMasIVA;
+              }
+              else
+              {
+                  $porcentDescuento = $totalNeto / 100;
+                  $totalDescuento = $porcentDescuento * $value->descuentos;
+                  $totalMasIVA = $totalNeto - $totalDescuento; 
+                  //echo $totalMasIVA;
+              }
+                
+
                 if ($value->grupo == "PROPINA") 
                 {
-                  $propina =  $totalIva * 0;
-                  echo "0"; 
+                  $propina =  $totalMasIVA * 0;
                 }
                 else
                 {
-                  $propina =  $totalIva * 0.10;
+                  $propina =  $totalMasIVA * 0.10;
                   echo round($propina,2); 
                 }
                 
@@ -745,17 +788,17 @@ $('.descuento').click(function()
               <span class="totalFull totalFull_<?php echo $value->id_pedido; ?>" title="Total con IVA y con propina">
               $
                <?php 
-                  $total =  $totalIva + $propina;
+                  $total =  $totalMasIVA + $propina;
                   echo "<span class='totalClean_$value->id_pedido'>".round($total,2)."</span>"; 
                 ?>
               </span>
 
             </span>
-      	   </div>	
+           </div> 
 
-      	   	<div class="iten-cuenta">
-      	   		<ul class="list-group">
-      				<li class="list-group-item">
+            <div class="iten-cuenta">
+              <ul class="list-group">
+              <li class="list-group-item">
               <?php
               foreach ($listProductos as $producto)
               {
@@ -769,21 +812,21 @@ $('.descuento').click(function()
               <?php
               }
               ?>
-      				</li>
-      			</ul>
-      	   	</div>
-      	   	<div class="list-logs">
+              </li>
+            </ul>
+            </div>
+            <div class="list-logs">
             <?php
-      	   		foreach ($listHistorial as $historia)
+              foreach ($listHistorial as $historia)
               {  
               ?>
               <div class="alert alert-warning" role="alert" style="color: #000000;padding: 3px;margin: 2px;"><?php echo $historia; ?></div>  
               <?php
               }
               ?>
-      	   	</div>
-      	  </div>
-      	</div>
+            </div>
+          </div>
+        </div>
     <?php
           }
         }
@@ -794,7 +837,10 @@ $('.descuento').click(function()
     ?>     
     <!-- fin Panel de ordenes en cocina -->
 
-
+ <!--          Variables globales para consultar datos nuevos SucursalID, lastPedidoID  -->    
+        <input type="hidden" id="sucursalID"  name="sucursalID" value="<?php echo $idSucursal["id_sucursal"]; ?>">
+        <input type="hidden" id="lastPedido"  name="lastPedido" value="<?php echo $value->id_pedido; ?>">
+    <!--                                      END                                          -->
 
 
 
