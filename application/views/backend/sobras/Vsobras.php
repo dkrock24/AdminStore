@@ -82,9 +82,22 @@
           });
       var sobrasID = $(this).find('.sobrasID').val();
       $(".modalViewCOntent").load("../sobras/Csobras/viewSobras/"+sobrasID);
-      //$(".modal-footer").append("<button type='button' class='btn btn-primary changeStatus'>Revisado</button> ")
     });
 //-------------------------Fin -----------------------------------
+
+ //----------------- Open modal view data-------------------
+    $(".viewDataP").click(function()
+    {
+       $(".ViewdataModalP").modal({
+             backdrop: 'static', 
+             keyboard: false 
+          });
+      var sobrasIDP = $(this).find('.sobraspID').val();
+      $(".modalViewCOntentP").load("../sobras/Csobras/viewSobrasP/"+sobrasIDP);
+    });
+//-------------------------Fin -----------------------------------
+
+//------------------------AutoComplete---------------------------------
 
    $("#ingrediente").autocomplete({
         source: "../productos/Cproductos/catalogo_materiales",
@@ -144,7 +157,7 @@
 
 <ul class="nav nav-tabs">
   <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-list-alt'></i>Ver Desperdicios</a></li>
-  <!--<li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-bar-chart'></i>Estadisticas de sobras</a></li> -->
+  <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-bar-chart'></i>Ver Desperdicios Productos</a></li>
   
 </ul>
   <div class="tab-content">
@@ -155,7 +168,7 @@
     </div>    
 
       <div class="cont-table-sobras">  
-      <table class="table table-hover table-dynamic filter-head">
+      <table class="table">
                 <thead class='titulos'>
                     <tr>
                         <th>Sucursal</th>
@@ -168,10 +181,6 @@
                 </thead>
                 <tbody>
                 <?php
-               // echo '<pre>';
-                //print_r($_SESSION);
-                //echo '</pre>';
-                //var_dump($datosSobras);
                       foreach ($datosSobras as $value) 
                       {
                       ?>
@@ -212,7 +221,51 @@
 
     <div class="tab-pane includ fade" id="tab1_2">
     <div class="row line col-md-12">
-      echo tab 3
+      <div class="cont-table-sobras">  
+      <table class="table">
+                <thead class='titulos'>
+                    <tr>
+                        <th>Sucursal</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>                        
+                        <th>Estatus</th>
+                        <th>Fecha</th>                                                
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                      foreach ($datosSobrasP as $values) 
+                      {
+                      ?>
+                    <tr>
+                        <td>
+                         <?php if ($values->estatus_registro == "1") 
+                          {
+                            ?>
+                          
+                             <p style="margin-right: 10px;color: #3e9b48;font-size: 25px;" class="fa fa-check-circle icoAlert" aria-hidden="true"></p>
+                          <?php } ?>
+                        <?php echo $values->nombre_sucursal;  ?></td>
+                        <td><?php echo $values->nombre_producto;  ?></td>
+                        <td><?php echo $values->cantidad;  ?></td>
+                        <td><?php echo $values->estatus_registro;  ?></td>
+                        <td><?php echo $values->fecha_registro;  ?></td>                         
+                        <td>
+                          <button type="button" class="btn btn-primary viewDataP">
+                            <input type="hidden" name="sobraspID" class="sobraspID" value="<?php echo $values->id_sobra_producto ?>">Ver
+                          </button>
+                         
+                        </td>
+                    </tr>        
+                 <!--  Vista dinamica de prodcutos -->
+          <?php
+            }
+      ?> 
+                   
+    </tbody>   
+    </table>
+    </div>  
     </div>  
     </div>
 
@@ -324,10 +377,38 @@
       <!-- Modal content-->
       <div class="modal-content">
           <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
-           Detalle de Desperdicios
+           Detalle desperdicios
           </h4>
           <hr>
         <div class="modal-body modalViewCOntent">
+
+            
+          
+        </div>
+        <div class="modal-footer">
+        <div id="msg" class="msgShow">
+        </div> 
+          <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
+
+
+
+<!-- Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->
+<div class="modal fade ViewdataModalP" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+           Detalle desperdicios
+          </h4>
+          <hr>
+        <div class="modal-body modalViewCOntentP">
 
             
           

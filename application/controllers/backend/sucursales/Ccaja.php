@@ -23,8 +23,23 @@ class Ccaja extends CI_Controller {
 	{
 		$data['idSucursal'] = $id_sucursal;
 		$data['datoSucursal'] = $this->caja_model->getDatosSucursal($id_sucursal);
-		$data['pedidos'] = $this->caja_model->getPedidosDespachoBySucursal($id_sucursal);	
+		$data['pedidos'] = $this->caja_model->getPedidosDespachoBySucursal($id_sucursal);
+		$data['detallePedido'] = $this->caja_model->getPedidosByDetalle($id_sucursal);	
 		$this->load->view('backend/sucursales/Vcaja.php',$data);
+	}
+
+	public function get_lastPedidos()
+	{
+
+		$numPedidos = $this->caja_model->get_lastPedidos($_POST);
+		if(empty($numPedidos))
+		{
+			echo 0;	
+		}
+		else
+		{
+			echo 1;
+		}	
 	}
 
 	public function cerrar_cuenta()
