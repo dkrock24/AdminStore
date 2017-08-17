@@ -163,7 +163,7 @@ td {
 	    </div>
 	    <div class="row">
 	    	<div class="col-md-12">
-	    	<?php if ($ordenes == null){ echo "<p class='alerta_corte'>No hay Datos Ha Cortar.. Existen Ordenes Abiertas / No hay Ordenes .. </p>";} ?>
+	    	<?php if ($ordenes == null){ echo "<p class='alerta_corte'>Existen Ordenes Abiertas / No hay Datos .. </p>";} ?>
 	    	<?php foreach ($ordenes as $totales): ?>
 	    		<table class="table">
 	    			<tr class="titulos-tablas">
