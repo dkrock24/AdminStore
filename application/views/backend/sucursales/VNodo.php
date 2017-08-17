@@ -7,8 +7,11 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" media="screen" href="css/master.css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+	<script type="text/javascript" src="/lapizzeria/assets/js/jquery.fullscreen.min.js"></script>
 	
-	<script src="../../../../../../js/jquery.js"></script>
+	
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -250,7 +253,7 @@ body{
 }
 
 .title{
-	background: grey;
+	background: #9AC835;
 	color: white;
 	text-align: center;
 	top: 0px;
@@ -260,8 +263,8 @@ body{
 	padding: 10px;
 }
 </style>
-<body>
-
+<body oncontextmenu="return false;">
+<div class="example" id="fullscreen">
 <div class="tab-content">
 	<div class="row">
 		<div class="col-md-12 title">
@@ -272,12 +275,59 @@ body{
 				<?php				
 			}
 			?>
+
+			<div class="derecha">
+ 				<a href="#" class="requestfullscreen">Pantalla completa</a>
+ 				<a href="#" class="exitfullscreen" style="display: none">Cerrar Nodo</a>.</p>
 		</div>
+		</div>
+		
 	</div>
 </div>
-	
+			
 	<div class="ordenes">
 		
 	</div>
+	</div>
 </body>
+
+<script type="text/javascript">
+				$(function() {
+					// check native support
+					$('#support').text($.fullscreen.isNativelySupported() ? 'supports' : 'doesn\'t support');
+
+					// open in fullscreen
+					$('#fullscreen .requestfullscreen').click(function() {
+						$('#fullscreen').fullscreen();						
+						return false;
+					});
+
+					// exit fullscreen
+					$('#fullscreen .exitfullscreen').click(function() {
+						$.fullscreen.exit();
+						window.close();
+						return false;
+					});
+
+					// document's event
+					$(document).bind('fscreenchange', function(e, state, elem) {
+						// if we currently in fullscreen mode
+						if ($.fullscreen.isFullScreen()) {
+							$('#fullscreen .requestfullscreen').hide();
+							$('#fullscreen .exitfullscreen').show();
+						} else {
+							$('#fullscreen .requestfullscreen').show();
+							$('#fullscreen .exitfullscreen').hide();
+						}
+
+						$('#state').text($.fullscreen.isFullScreen() ? '' : 'not');
+					});
+				});
+			</script>
+
+			<!--
+			<script src="../../../../../../js/jquery.js"></script>
+
+			-->
+
 </html>
