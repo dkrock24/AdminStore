@@ -1,13 +1,15 @@
 <?php
 
-	
+// 45.33.3.227
+// 	lapizzeria2016!
+// db_global_lapizzeria
 
 
 function getID($id_menu){
 
 	$usuario = "root";
 	$password = "lapizzeria2016!";
-	$host = "45.33.3.227";
+	$host = "localhost:3306";
 	$db="db_global_lapizzeria";
 	$db = new PDO("mysql:host=$host;dbname=$db",$usuario,$password);
 
@@ -23,10 +25,12 @@ function login(){
 
 	$usuario = "root";
 	$password = "lapizzeria2016!";
-	$host = "45.33.3.227";
+	$host = "localhost:3306";
 	$db="db_global_lapizzeria";
 	$db = new PDO("mysql:host=$host;dbname=$db",$usuario,$password);
 }
+
+?>
 
 
 
