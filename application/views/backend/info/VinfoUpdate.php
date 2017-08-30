@@ -95,7 +95,7 @@ var fechadeldia = f.getDate()+""+(f.getMonth()+1)+""+f.getFullYear()+""+f.getHou
     <div class="col-md-12">
     	<div class="panel">
             <div class="panel-header bg-primary">
-            	Información de la Municipalidad
+            	Información de la Empresa
             	<div class="opciones">
                     <a href="#" id="regresar" class='btn btn-primary btn-small'>Regresar</a>
             		<a href="#" id="updateInfo" class='btn btn-primary btn-small'>Guardar</a>
@@ -106,7 +106,7 @@ var fechadeldia = f.getDate()+""+(f.getMonth()+1)+""+f.getFullYear()+""+f.getHou
             <form action="#" method="post" id="informacionGeneral1">
             	<div class="row">
             		<div class="col-md-4">
-            			<strong>Nombre Institución:</strong> <br>
+            			<strong>Nombre Empresa:</strong> <br>
                         <input type="text" value="<?php echo $info[0]->nombre_empresa; ?>" name="nombreInstitucion">
             			
             		</div>
@@ -144,18 +144,18 @@ var fechadeldia = f.getDate()+""+(f.getMonth()+1)+""+f.getFullYear()+""+f.getHou
                     <input type="text" value="<?php echo $info[0]->nit; ?>" name="nitInstitucion">
             			
             		</div>
-            		<div class="col-md-4"><strong>Nombre Alcalde</strong><br>
+            		<div class="col-md-4"><strong>Nombre Representante</strong><br>
                     <input type="text" value="<?php echo $info[0]->nombre_alcalde; ?>" name="nombre_alcaldeInstitucion">
             			
             		</div>
             	</div>
             	<hr>
             	<div class="row">
-            		<div class="col-md-4"><strong>Nombre Secretario</strong><br>
+            		<div class="col-md-4"><strong>Nombre Sub Representante</strong><br>
                     <input type="text" value="<?php echo $info[0]->nombre_secretario; ?>" name="nombre_secretarioInstitucion">
             			
             		</div>
-            		<div class="col-md-4"><strong>Jefe del registro familiar</strong><br>
+            		<div class="col-md-4"><strong>Jefe de Area</strong><br>
                     <input type="text" value="<?php echo $info[0]->jefe_registro_familiar; ?>" name="nombre_secretario2Institucion">
             			
             		</div>

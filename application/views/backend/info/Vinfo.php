@@ -19,7 +19,7 @@
     <div class="col-md-12">
     	<div class="panel">
             <div class="panel-header bg-primary">
-            	Información de la Municipalidad
+            	Información de la Empresa
             	<div class="opciones">
             		<a href="#" id="updateInfo" class='btn btn-primary btn-small'>Editar</a>
             	</div>
@@ -27,7 +27,7 @@
             <div class="panel-content">
             	<div class="row">
             		<div class="col-md-4">
-            			<strong>Nombre Institución:</strong> <br>
+            			<strong>Nombre Empresa:</strong> <br>
             			<?php echo $info[0]->nombre_empresa; ?>
             		</div>
             		<div class="col-md-4"><strong>Rubro</strong><br>
@@ -57,16 +57,16 @@
             		<div class="col-md-4"><strong>Nit</strong><br>
             			<?php echo $info[0]->nit; ?>
             		</div>
-            		<div class="col-md-4"><strong>Nombre Alcalde</strong><br>
+            		<div class="col-md-4"><strong>Nombre Representante</strong><br>
             			<?php echo $info[0]->nombre_alcalde; ?>
             		</div>
             	</div>
             	<hr>
             	<div class="row">
-            		<div class="col-md-4"><strong>Nombre Secretario</strong><br>
+            		<div class="col-md-4"><strong>Nombre Sub Representante</strong><br>
             			<?php echo $info[0]->nombre_secretario; ?>
             		</div>
-            		<div class="col-md-4"><strong>Jefe del registro familiar</strong><br>
+            		<div class="col-md-4"><strong>Jefe de Area</strong><br>
             			<?php echo $info[0]->jefe_registro_familiar; ?>
             		</div>
             		<div class="col-md-4"><strong>Logo</strong><br>

@@ -10,14 +10,14 @@ $( document ).ready(function()
 		$(".titulo_submenu").html("<span>"+titulo+"</span>");
 
 		$.ajax({
-		    url: "../../../class_db/configuracion.php",
+		    //url: "../../../class_db/configuracion.php",
 		    type:"post",
 		    data: 1,
 		    
 		    success: function()
 		    {
 		       	//$(".pages").load("http://45.33.3.227/lapizzeria/index.php/"+data);	
-		       	$(".pages").load("../../../../../lapizzeria/index.php/"+data);
+		       	$(".pages").load("../../"+data);
 		       	$(".sk-three-bounce").show();
 			    setTimeout(function() {
 			     	$(".sk-three-bounce").css('display','none');
@@ -25,7 +25,7 @@ $( document ).ready(function()
 		     
 		    },
 		    error:function(){
-		        alert("failure1");
+		        alert("Error en Cargar la página");
 
 		    }
 		});	
