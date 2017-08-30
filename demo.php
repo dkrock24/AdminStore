@@ -8,10 +8,12 @@ $mysql_database = "db_global_lapizzeria";
 $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_database) or die("Could not connect database 2");
 die;*/
 
-	$con = mysqli_connect("localhost:3307", "root", "")or die(mysqli_error($con));
+	$con = mysqli_connect("localhost:3306", "root", "lapizzeria2016!")or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
-	mysqli_select_db($con, "db_lap")or die(mysqli_error($con));
+	mysqli_select_db($con, "db_global_lapizzeria")or die(mysqli_error($con));
 	//mysqli_select_db($con, "db_lap")or die(mysqli_error($con));
+
+	mysqli_query($con,"SET NAMES utf8"); 
 	
 	//create response array
 	$response = array();
@@ -48,6 +50,7 @@ die;*/
 						$res3 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
 						if(mysqli_num_rows($res3) > 0){
 							for($k=0 ; $row3 = mysqli_fetch_array($res3) ; $k++){
+								//echo $row3['nombre_matarial']."<br>";
 								$response['detalle'][$j]['items'][$k] = $row3;
 							}
 						}

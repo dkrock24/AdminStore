@@ -1,5 +1,9 @@
 <?php
 
+// 45.33.3.227
+// 	lapizzeria2016!
+// db_global_lapizzeria
+
 function datos()
 {
 
@@ -22,7 +26,7 @@ function login()
 {
 	$usuario = "root";
 	$password = "lapizzeria2016!";
-	$host = "localhost";
+	$host = "localhost:3306";
 	return conexion($usuario,$password,$host);
 }
 

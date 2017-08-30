@@ -1,6 +1,8 @@
 .DS_Store
 
 application/cache/*
+class_db/conexion.php
+validation/conexion.php
 !application/cache/index.html
 !application/cache/.htaccess
 application/config/*
