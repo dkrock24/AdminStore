@@ -56,7 +56,7 @@
 						if(response.success == 0)
 						{
 							var contador=1;
-							//console.log(response);
+							console.log(response);
 							for(var i=0 ; i<response.pedido.length ; i++)
 							{
 
@@ -67,6 +67,7 @@
 								html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
 								html += "<tr><td>#</td><td>Nombre Producto</td></tr>";
 								
+
 				
 								
 								var de = Object.keys(response.pedido[0]).length;
@@ -78,26 +79,31 @@
 									if(response.pedido[i][j]['nombre_producto']!=null)
 									{
 
+										var llevar = "";
+										if(response.pedido[i][j]['llevar'] == 1){
+											llevar = " Llevar ";
+										}
 
 									// Detalle Productos
 									html += "<tr><td>"+contador+"</td>";
-									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'];
-										
-
+									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)";
+											
+									
+									var llevar = "";
 
 											var ob = Object.keys(response.pedido[i][j]).length;
 											ob = ob - 4;
 											for(var x=0; x < ob; x++){	
 												if(response.pedido[i][j][0]['nombre_matarial']!=null)
 												{
-													html += "<ul>";
+													html += "<ul>";													
 													if(response.pedido[i][j][x]['eliminado']==1)								
 													{
-														html += "<li> Quitar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";
+														html += "<li> <span style='color:green;'> Quitar -> "+response.pedido[i][j][x]['nombre_matarial']+"</span></li>";
 													}
 													if(response.pedido[i][j][x]['adicional']==1)
 													{
-														html += "<li> Agregar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";	
+														html += "<li style='color:blue;'> Agregar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";	
 													}
 													html += "</ul>";																				
 												}
@@ -132,7 +138,7 @@
 			if(response.success == 0)
 			{
 				var contador=1;
-				//console.log(response);
+				console.log(response);
 				for(var i=0 ; i<response.pedido.length ; i++)
 				{
 					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
@@ -151,8 +157,17 @@
 					for(var j=0 ; j< de; j++)
 					{
 						// Detalle Productos
+						var llevar = "";
+						if(response.detalle[j]['llevar'] == 1){
+							llevar = " Llevar ";
+						}
+
 						html += "<tr><td>"+contador+"</td>";
-						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'];
+						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)";
+						
+						llevar = "";
+							
+						
 							if(response.detalle[j].items){
 								for(var x=0; x < response.detalle[j].items.length; x++){	
 									if(response.detalle[j].items[x])
@@ -160,11 +175,11 @@
 										html += "<ul>";
 										if(response.detalle[j].items[x]['eliminado']==1)								
 										{
-											html += "<li> Quitar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";
+											html += "<li style='color:blue;'> Quitar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";
 										}
 										if(response.detalle[j].items[x]['adicional']==1)
 										{
-											html += "<li> Agregar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";	
+											html += "<li style='color:green;'> Agregar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";	
 										}
 										html += "</ul>";																				
 									}
