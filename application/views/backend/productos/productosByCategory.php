@@ -12,6 +12,7 @@
     <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
   
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet"><script type="text/javascript">
+    
   $(".associateBranch").click(function()
     {
        var prodcutoID = $(this).find('.idProducto').val();

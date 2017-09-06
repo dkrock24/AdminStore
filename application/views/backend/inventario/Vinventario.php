@@ -33,8 +33,8 @@
     //-------------------------Fin ------------------
 
     //----------------modificar material---------------
-    //$(".editInventario").click(function()
-    $(document).on('click','.editInventario',function()
+    $(".editInventario").click(function()
+    //$(document).on('click','.editInventario',function()
     {
         var materialID = $(this).find('.editValID').val();
         $(".pages").load("../inventario/Cinventario/editMaterial/"+materialID); 
@@ -43,8 +43,8 @@
 
 
   //----------------- Open modal delete-------------------
-  //$(".deleteBTN").click(function()
-  $(document).on('click','.deleteBTN',function()  
+  $(".deleteBTN").click(function()
+  //$(document).on('click','.deleteBTN',function()  
   {
      $(".modalEliminar").modal({
            backdrop: 'static', 
@@ -114,8 +114,8 @@
 
   
   //-------- mostrar los productos po asignados a sucursal
-  //$(".ActiveInactive").click(function()
-  $(document).on('click','.ActiveInactive',function()
+  $(".ActiveInactive").click(function()
+  //$(document).on('click','.ActiveInactive',function()
   {
       var categoID = $(this).find(".viewDataIDCat").val();
       if ($(this).find(".vieText").val() == "Inactivar") 
@@ -218,8 +218,8 @@
 
 
   //----------------modificar material---------------
-    //$(".editInventarioCat").click(function()
-    $(document).on('click','.editInventarioCat',function()  
+    $(".editInventarioCat").click(function()
+    //s$(document).on('click','.editInventarioCat',function()  
     {
         var materialCatID = $(this).find('.editValIDCat').val();
         $(".pages").load("../inventario/Cinventario/editMaterialCat/"+materialCatID); 

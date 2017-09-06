@@ -49,8 +49,8 @@ $(document).ready(function()
   //-------------------------Fin -----------------------------------   
 
   //----------------modificar data---------------
-    //$(".EditData").click(function()
-    $(document).on('click','.EditData',function() 
+    $(".EditData").click(function()
+    //$(document).on('click','.EditData',function() 
     {
        $(".AddUnidadMedidaEditTipo").modal({
            backdrop: 'static', 

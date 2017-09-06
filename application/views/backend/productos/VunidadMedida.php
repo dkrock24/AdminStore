@@ -97,8 +97,8 @@ $(document).ready(function()
 
 
 //----------------modificar data---------------
-    //$(".EditData").click(function()
-    $(document).on('click','.EditData',function() 
+    $(".EditData").click(function()
+    //$(document).on('click','.EditData',function() 
     {
        $(".AddUnidadMedidaEdit").modal({
            backdrop: 'static', 

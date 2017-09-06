@@ -2,7 +2,8 @@
    session_start();
 ?>
  <!-- END PRELOADER -->
- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+ 
+    <link rel="stylesheet" href="../../../assets/css/jquery-ui.min.css" type="text/css" /> 
 
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
      <script src="../../../assets/plugins/translate/jqueryTranslator.min.js"></script> <!-- Translate Plugin with JSON data -->

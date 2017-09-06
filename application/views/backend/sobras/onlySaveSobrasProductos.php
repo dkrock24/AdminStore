@@ -14,7 +14,7 @@
     <script src="../../../assets/js/pages/table_dynamic.js"></script>
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="../../../assets/css/jquery-ui.min.css" type="text/css" /> 
 
 <script>
 

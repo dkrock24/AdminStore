@@ -129,8 +129,8 @@
 //------------Fin--------------------------------------------------------
  //-------- Quitar Material de la lista de la sucursal -------------------
 
-  //$(".quitarMaterial").click(function()
-  $(document).on('click','.quitarMaterial',function() 
+  $(".quitarMaterial").click(function()
+  //$(document).on('click','.quitarMaterial',function() 
   {
     
     var sucursalID = $('.sucursalID').val();
@@ -157,8 +157,8 @@
 
 
   //-------- mostrar la configuracion del material-------------------
-  //$(".configMateriales").click(function()
-  $(document).on('click','.configMateriales',function()   
+  $(".configMateriales").click(function()
+  //$(document).on('click','.configMateriales',function()   
   {
       var inventarioSucursal = $(this).find(".IdCatalogoInventario").val();
       //alert(inventarioSucursal);
@@ -172,8 +172,8 @@
 
 
 //-------- mostrar la configuracion del material-------------------
-  //$(".addPeidos").click(function()
-  $(document).on('click','.addPeidos',function() 
+  $(".addPeidos").click(function()
+  //$(document).on('click','.addPeidos',function() 
   {
       var inventarioSucursal = $(this).find(".IdCatalogoInventario").val();
       //var sucursalID = $(this).find(".IdSucursalInventario").val();
@@ -187,8 +187,8 @@
   //-------------------------Fin -----------------------------------
 
 //----------------- Open modal view data-------------------
-  //$(".viewDataM").click(function()
-  $(document).on('click','.viewDataM',function()
+  $(".viewDataM").click(function()
+  //$(document).on('click','.viewDataM',function()
   {
      $(".ViewdataModalS").modal({
            backdrop: 'static', 
@@ -210,8 +210,8 @@
 //------ FIn codigo-----------------------------------------
 
 //----------------- vista para agregar adicionales-------------------
-  //$(".addAdicionales").click(function()
-  $(document).on('click','.addAdicionales',function()   
+  $(".addAdicionales").click(function()
+  //$(document).on('click','.addAdicionales',function()   
   {
     var inventarioID = $(this).find('.IdCatalogoInventario').val();
     $(".pages").load("../inventario/Cinventario/add_adicionales/"+inventarioID);
@@ -219,8 +219,8 @@
 //-------Fin codigo------------------------------------------
 
 //-----Vista para actualizar info adicionales---------------
-  //$(".updateAdicional").click(function()
-  $(document).on('click','.updateAdicional',function()   
+  $(".updateAdicional").click(function()
+  //$(document).on('click','.updateAdicional',function()   
   {
     var adicionalID = $(this).find('.IdCatalogoInventario').val();
     $(".pages").load("../inventario/Cinventario/Vupdate_adicionales/"+adicionalID);

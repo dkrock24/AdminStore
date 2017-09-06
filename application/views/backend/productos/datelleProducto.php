@@ -13,8 +13,8 @@
 <script>
   
   //-----------------quitar ingredientes----------------
-  //$(".quitarDetalle").click(function()
-  $(document).on('click','.quitarDetalle',function() 
+  $(".quitarDetalle").click(function()
+  //$(document).on('click','.quitarDetalle',function() 
   {
       var detalleId = $(this).find(".detalleID").val();
       $.ajax
@@ -135,7 +135,7 @@
 
   
 </script>
- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+ <link rel="stylesheet" href="../../../assets/css/jquery-ui.min.css" type="text/css" /> 
 </head>
 <style>
 .table-dynamic{width: 100%;}

@@ -9,7 +9,7 @@
     <!-- BEGIN PAGE SCRIPT -->
     <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="../../../assets/css/jquery-ui.min.css" type="text/css" /> 
 <script>
   function archivo(evt) 
   {
@@ -248,8 +248,8 @@ $(document).ready(function()
 
 
   //----------------- Open modal view data-------------------
-  //$(".viewData").click(function()
-  $(document).on('click','.viewData',function() 
+  $(".viewData").click(function()
+  //$(document).on('click','.viewData',function() 
   {
      $(".ModaViewdata").modal({
            backdrop: 'static', 
@@ -260,8 +260,8 @@ $(document).ready(function()
   });
 
   //----------------modificar data---------------
-    //$(".EditData").click(function()
-    $(document).on('click','.EditData',function() 
+    $(".EditData").click(function()
+    //$(document).on('click','.EditData',function() 
     {
         var categoriaID = $(this).find('.editValID').val();
         $(".pages").load("../productos/Cproductos/editDataControll/"+categoriaID); 
