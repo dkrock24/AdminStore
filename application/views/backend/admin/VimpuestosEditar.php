@@ -195,6 +195,13 @@
                             <option value="<?php echo $impuestos[0]->id_sucursal; ?>"><?php echo $impuestos[0]->nombre_sucursal; ?></option>                                                                                             
                         </select>
                     </a>
+
+                    <a  class="list-group-item">
+                        <td>Categoria :</td>
+                        <select name="sucursal" id="sucursal" class="form-control">
+                            <option value="<?php echo $impuestos[0]->categoria_impuesto; ?>"><?php echo $impuestos[0]->categoria_impuesto; ?></option>                                                                                             
+                        </select>
+                    </a>
                     
                     <a  class="list-group-item">
                         <td>Estado :</td>

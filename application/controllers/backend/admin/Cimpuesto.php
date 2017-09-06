@@ -26,7 +26,7 @@ class Cimpuesto extends CI_Controller {
 	{		
 		$data['paises'] 		=  $this->pais_model->getPaises();
 		$data['departamentos'] 	=  $this->departamentos_model->getDepartamentos();
-		//$data['sucursales'] 	=  $this->sucursales_model->getSucursalesByDepartamento();
+		$data['categorias'] =  $this->impuesto_model->getCategoriaProductos();
 		$this->load->view('backend/admin/VimpuestosCrear.php',$data);
 	}
 	public function saveImpuesto()

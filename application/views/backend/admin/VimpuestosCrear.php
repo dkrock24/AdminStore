@@ -177,6 +177,20 @@ a#usuarios{
                                              
                         </select>
                     </a>
+
+                    <a class="list-group-item">
+                        <td>Categoria :</td>
+                        <select name="categoriaIVA" id="categoriaIVA" class="form-control">
+                        <option value="0"> Toda categorias</option>
+                        <?php
+                        foreach ($categorias as $categorias) {
+                            ?>
+                            <option value="<?php echo $categorias->id_categoria_producto ?>"><?php echo $categorias->nombre_categoria_producto ?></option>
+                            <?php
+                        }
+                        ?>
+                        </select>
+                    </a>
                     
                     <a  class="list-group-item">
                         <td>Estado :</td>

@@ -7,6 +7,7 @@ class impuesto_model extends CI_Model
     const sys_pais                  = 'sys_pais';
     const sys_sucursal_impuesto     = 'sys_sucursal_impuesto';
     const sys_pais_impuesto         = 'sys_pais_impuesto';
+    const categoria_prodcutos  = 'sys_categoria_producto';
 
     
     public function __construct()
@@ -44,7 +45,8 @@ class impuesto_model extends CI_Model
             'id_sucursal'   => $data['sucursal'],           
             'nombre_impuesto'    => $data['nombre'], 
             'monto_impuesto'   => $data['monto'], 
-            'descripcion_impuesto'   => $data['descripcion'], 
+            'descripcion_impuesto'   => $data['descripcion'],
+            'categoria_impuesto'   => $data['categoriaIVA'], 
             'creado'    => $date,            
             'estado_impuesto'    => $data['estado'],
             'id_usuario'    => $_SESSION['idUser']            
@@ -154,6 +156,14 @@ class impuesto_model extends CI_Model
         $this->db->delete(self::sys_sucursal_impuesto, $data);    
     }
 
+
+    public function getCategoriaProductos()
+    {
+         $query = $this->db->query('Select * from sys_categoria_producto cp order by cp.nombre_categoria_producto');
+         //echo $this->db->queries[0];
+        return $query->result();       
+        
+    }
 
      
     
