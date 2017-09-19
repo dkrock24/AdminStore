@@ -313,7 +313,7 @@ class sucursales_model extends CI_Model
         
 
         session_start();
-        $date = date("Y-m-d H:m:i");
+        $date = date("Y-m-d H:i:s");
         $data = array(
             'secuencia_orden'   => $valor_secuencia,
             'id_sucursal'       => $Id_Sucursal,           
