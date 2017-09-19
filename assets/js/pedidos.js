@@ -405,7 +405,7 @@
 			
 			buffer1 += '<table class="table contenedor_adicionales">';
 			buffer1 += '<thead class="titulo2"><td colspan="4">ADICIONALES</td></thead>';
-			buffer1 += '<thead class="cabecera_table"><td colspan="4"><input type="search" placeholder="Buscar" class="form-control" id="busqueda_adicionales"></td></thead>';
+			buffer1 += '<thead class="cabecera_table"><td colspan="4"><input type="search" placeholder="Buscar Ingredientes" class="form-control" id="busqueda_adicionales"></td></thead>';
 			buffer1 += '<tr class="cabecera_table2"><td>Ingrediente</td><td>Codigo</td><td>Precio</td><td>Accion</td></tr>';
 			buffer1 += '<tbody>';			
 			
@@ -413,9 +413,9 @@
 			for (index = 0; index < data.length; ++index) 
 			{   				
 					//buffer_ingredientes[index] = data[index]['name_detalle'];
-	                buffer1 += '<tr class="items2" nombre="'+data[index]['nombre_matarial']+'">';
-	                buffer1 += '<td>'+data[index]['codigo_material']+'</td>';         
-	                buffer1 += '<td>'+data[index]['nombre_matarial']+'</td>';               
+	                buffer1 += '<tr class="items2" nombre="'+data[index]['nombre_matarial']+'">';	                      
+	                buffer1 += '<td>'+data[index]['nombre_matarial']+'</td>'; 
+	                buffer1 += '<td>'+data[index]['codigo_material']+'</td>';                 
 	                buffer1 += '<td>'+data[index]['precio_adicional']+'</td>';   
 	                buffer1 += '<td><button class="btn btn-default remover_ingrediente" onclick=agregar_adicional("'+data[index]["codigo_material"]+'")>Agregar</button></td>';  
 	                buffer1 += '</tr>';
@@ -648,9 +648,16 @@
 	            //alert('No hay pedidos en la orden.');
 	            return;
 	        }                
-	        ValidarMesa();       
+	        var mesa_temp = ValidarMesa(); 
+	        
+	        if( mesa_temp == 0 )      {
+	        	reiniciarInterfaz();
+	        	
+	        }else{
+	        	getMeseros(Id_Sucursal);
+	        }
 	               
-	        getMeseros(Id_Sucursal);
+	        
 	        
 	    });
 	});
@@ -688,15 +695,16 @@
 
 		var Cantidad_mesas = $("#mesasas").val();
 	    var CM = parseInt(Cantidad_mesas); 
+
 		ID_mesa = window.prompt('1. Número de Mesa');
 
 		var temp = parseInt(ID_mesa);
 	    	if (!ID_mesa) {
 	            alert ('Cancelando envío');   
-	            ID_mesa = 0;         
-	            return;
+	            ID_mesa = 0;    	               
+	            return ID_mesa;
 	        }
-	        if(temp >= CM || temp ==0){
+	        if(temp > CM || temp ==0){
 				alert ('No Existe Mesa. Intentarlo de Nuevo');			
 				ID_mesa = 0;     
 				ValidarMesa();       
@@ -710,8 +718,13 @@
 		            type:"post", 
 
 		            success: function(data){     	              
-		            	ID_mesero = window.prompt('2. Número de Mesero.' + "\n" + data, 0 );
-				    	validarMesero(Id_Sucursal,ID_mesero);
+		            	ID_mesero = window.prompt('2. Número de Mesero.' + "\n" + data,  );
+		            	if(ID_mesero){
+		            		validarMesero(Id_Sucursal,ID_mesero);
+		            	}else{
+		            		reiniciarInterfaz();
+		            	}
+				    	
 		            },
 		            error:function(){
 		                
