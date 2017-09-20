@@ -345,6 +345,27 @@ class sucursales_model extends CI_Model
 
     // INSERTAR PEDIDO - DETALLE
     public function InsertPedidoDetalle($Mesa,$Id_Mesero,$Id_Producto,$Precio,$nodo,$Id_Sucursal,$Id_Pedido,$llevar){
+
+          //------ Calculos de precio con y sin IVA por prodcuto
+            $valorImpuesto = 0;
+            $impuesto = $this->validateImpuestoSucursal($Id_Sucursal,$Id_Producto);
+            //var_dump($impuesto);
+            if (empty($impuesto)) 
+            {
+                $impuesto = $this->validateImpuestoPais($Id_Sucursal);
+                $valorImpuesto = $impuesto[0]['monto_impuesto'] + 1;
+                $precioOriginal = $Precio / $valorImpuesto;
+                //echo $precioOriginal."pais<br>";
+            }
+            else
+            {
+                //var_dump($impuesto);
+                $valorImpuesto = $impuesto[0]['monto_impuesto'] + 1;
+                $precioOriginal = $Precio / $valorImpuesto;
+                //echo $precioOriginal."sucursal<br>";
+            }
+
+        // End    
         
         $date = date("Y-m-d H:m:s");
         $data = array(
@@ -353,12 +374,36 @@ class sucursales_model extends CI_Model
             'id_nodo'           => $nodo,           
             'producto_elaborado'=> 0,
             'precio_grabado'    => $Precio,
-            'precio_original'   => $Precio,
+            'precio_original'   => $precioOriginal,
             'llevar'            => $llevar,
             'estado'            => 0,
         );
         $this->db->insert(self::sys_pedido_detalle,$data);
         return $this->db->insert_id();
+    }
+
+    //-------------query para validar  impuesto por sucursal
+    public function validateImpuestoSucursal($idSucursal, $productoID)
+    {
+         $query = $this->db->query('Select si.monto_impuesto from sys_productos_sucursal ps
+            Inner join sys_productos p ON p.id_producto = ps.id_producto
+            Inner join sys_sucursal_impuesto si ON si.categoria_impuesto = p.categoria_id and si.id_sucursal = '.$idSucursal.' where  p.id_producto ='.$productoID.' group by si.monto_impuesto');
+        //echo $this->db->queries[4];
+        return $query->result_array();       
+        
+    }
+
+    
+
+    //-------------query para validar impuesto por pais
+    public function validateImpuestoPais($idSucursal)
+    {
+         $query = $this->db->query('Select sp.monto_impuesto from sys_pais_impuesto sp
+                            inner join sys_pais_departamento pd ON pd.id_pais = sp.id_pais
+                            inner join sys_sucursal s ON s.id_departamento = pd.id_departamento
+                            where s.id_sucursal ='.$idSucursal);
+        return $query->result_array();       
+        
     }
     
     // INSERTAR PEDIDO DETALLE MATERIA 

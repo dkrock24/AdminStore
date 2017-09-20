@@ -105,7 +105,7 @@ class caja_model extends CI_Model
           INNER JOIN sys_pais_impuesto pai ON pai.id_pais = pad.id_pais
           LEFT join sys_sucursal_impuesto si ON si.id_sucursal = s.id_sucursal
           LEFT join sys_historial sh ON sh.ID_pedido = sp.id_pedido
-          where  sp.flag_cancelado = 0 and  cc.flag_pagado is null
+          where  sp.elaborado = 0 and  cc.flag_pagado is null
           and sp.id_sucursal = '.$id_sucursal.'  group by sp.id_pedido
           order by sp.elaborado = 0 desc');
           // echo $this->db->queries[2];
@@ -123,7 +123,7 @@ class caja_model extends CI_Model
         inner join sys_productos p ON p.id_producto = pd.id_producto
         inner join sr_usuarios u ON u.id_usuario = sp.id_mesero
         inner join sys_sucursal s ON s.id_sucursal = sp.id_sucursal
-        inner join sys_sucursal_impuesto si ON si.id_sucursal = s.id_sucursal
+        left join sys_sucursal_impuesto si ON si.id_sucursal = s.id_sucursal
         left join sys_historial sh ON sh.ID_pedido = sp.id_pedido
         where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1 and cc.flag_pagado is null and sp.id_pedido > '.$datosPedido['lastPedido'].'
         and sp.id_sucursal = '.$datosPedido['sucursalID'].'  group by sp.id_pedido
@@ -195,7 +195,7 @@ class caja_model extends CI_Model
 
     public function anular_cuenta_update($cuenta)
     {
-        $dateAnulado = date("Y-m-d H:m:s");
+        $dateAnulado = date("Y-m-d H:i:s");
         $data = array(
             'flag_pagado'   => 0,
             'flag_anulado'   => 1,
@@ -214,7 +214,7 @@ class caja_model extends CI_Model
 
     public function addevento_historial($idPedido, $nota, $grupo, $accion, $valor)
     {
-        $dateregistro = date("Y-m-d H:m:s");
+        $dateregistro = date("Y-m-d H:i:s");
         $categorias = array(
             'ID_pedido'      => $idPedido,
             'fechahora'    => $dateregistro,

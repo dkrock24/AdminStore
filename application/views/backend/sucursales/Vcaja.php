@@ -25,19 +25,23 @@ $( document ).ready(function()
   {
     var sucursalID = $("#sucursalID").val();
     var lastPedido = $("#lastPedido").val();
-    $.ajax
-    ({
-      url: "../../../sucursales/Ccaja/get_lastPedidos",
-      type: "post",
-      data: {sucursalID:sucursalID, lastPedido:lastPedido},                           
-      success: function(data)
-      {                                                
-          if(data ==1)
-          {
-            $("#all-content").load(location.href+"#all-content>*","");
-          }
-      }
-    });
+    if (lastPedido != "") 
+    {
+      $.ajax
+      ({
+        url: "../../../sucursales/Ccaja/get_lastPedidos",
+        type: "post",
+        data: {sucursalID:sucursalID, lastPedido:lastPedido},                           
+        success: function(data)
+        {                                                
+            if(data ==1)
+            {
+              $("#all-content").load(location.href+"#all-content>*","");
+            }
+        }
+      });
+    }
+    
   }
 
   $(function()
@@ -648,9 +652,6 @@ $('.descuento').click(function()
         <header>
         <nav>
           <ul>
-          <!--<li><a title="Opcion 1" href="#">Detalle</a></li> -->
-          <!--<li><a title="Opcion 2" href="#">Historial</a></li> -->
-          <li><a href="#" class="list-group-item go-sucursal" id="../sucursales/Ccortes/index/">Corte</a></li>
           <li class='doCompras'><a title="Opcion 3" href="#">Compras</a></li>
           <li class="date-caja"><?php echo date('Y-m-d');  ?></li>
           </ul>
@@ -847,7 +848,7 @@ $('.descuento').click(function()
 
 <!--          Variables globales para consultar datos nuevos SucursalID, lastPedidoID  -->    
         <input type="hidden" id="sucursalID"  name="sucursalID" value="<?php echo $idSucursal; ?>">
-        <input type="hidden" id="lastPedido"  name="lastPedido" value="<?php echo $value->id_pedido; ?>">
+        <input type="hidden" id="lastPedido"  name="lastPedido" value="<?php echo @$value->id_pedido; ?>">
     <!--                                      END                                          -->
 
 

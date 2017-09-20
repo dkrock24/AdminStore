@@ -161,7 +161,7 @@ class sobras_model extends CI_Model
         }
 
         $ingredienteDiv = explode("-", $sobras['ingrediente']);
-        $dateNow = date("Y-m-d h:i:sa");
+        $dateNow = date("Y-m-d h:i:s");
         $categorias = array(
              'id_sucursal_sobra'  => $sobras['sucursal'],
              'id_producto_sobra'    => $ingredienteDiv[1],
