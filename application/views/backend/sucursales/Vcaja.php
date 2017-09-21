@@ -603,66 +603,6 @@ $('.descuento').click(function()
 <body>
 <div class="cont-general" id="all-content">
 
-  <div class="secction-right">
-    <h2>Ordenes en cocina.</h2>
-    <hr>
- 
-
-
-    <!--     Panel de ordenes en cocina -->
-    <?php
-      if(!empty($detallePedido)) 
-      {
-        //var_dump($detallePedido);
-        foreach ($detallePedido as $values) 
-        {
-          $listProductos = explode(",", $values->name_productos);
-          if ($values->elaborado == 1) 
-          {
-            echo "<div class='panel panel-danger' style='color: #000;'>
-          <div class='panel-heading'>";
-          } 
-          else 
-          {
-            echo "<div class='panel panel-success' style='color: #000;'>
-          <div class='panel-heading'>";
-          }
-          
-    ?>  
-
-
-        
-            <div class="timer" data-date="<?php echo $values->fechahora_pedido; ?>" style="width: 100%;"></div>
-          </div>
-
-          <span class="num-cuenta" style="font-size: 16px;color: #fd373f;font-weight: bold;">Cuenta #<?php echo $values->secuencia_orden; ?> Atendida por <?php echo $values->nombres." ".$values->apellidos; ?></span>
-          <div class="panel-body">
-            <ul class="list-group" style="text-align: initial;">
-              
-              <?php
-              foreach ($listProductos as $producto)
-              {
-              ?>  
-                <?php echo "<li class='badge'>". $producto."</li>"; ?>
-              <?php
-              }
-              ?>
-            
-            </ul>
-          </div>
-        </div>
-        
-    <?php
-          }
-        }
-      else
-        {
-          echo '<div class="alertDespacho">NADA PENDIENTE<span class="icoGreate glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></div>';
-        }    
-    ?>     
-    <!-- fin Panel de ordenes en cocina -->
-  </div>
-
   <div class="main-contenido">
       <div class="main header">
         <header>

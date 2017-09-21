@@ -137,11 +137,11 @@ a:link
 
 .main-contenido
 {
-    width: 70%;
+    width: 100%;
     float: left;
     height: 1200px;
     overflow: auto;
-    padding: 6px;
+    padding: 20px;
     background: black;
 
 }
