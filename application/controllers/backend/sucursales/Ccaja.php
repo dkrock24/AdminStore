@@ -31,15 +31,31 @@ class Ccaja extends CI_Controller {
 	public function get_lastPedidos()
 	{
 
-		$numPedidos = $this->caja_model->get_lastPedidos($_POST);
-		if(empty($numPedidos))
+		if ($_POST['lastPedido'] != 0) 
 		{
-			echo 0;	
+			$numPedidos = $this->caja_model->get_lastPedidos($_POST);
+			if(empty($numPedidos))
+			{
+				echo 0;	
+			}
+			else
+			{
+				echo 1;
+			}	
 		}
 		else
 		{
-			echo 1;
-		}	
+			$numPedidos = $this->caja_model->get_lastPedidosNull($_POST);
+			if(empty($numPedidos))
+			{
+				echo 0;	
+			}
+			else
+			{
+				echo 1;
+			}	
+		}
+		
 	}
 
 	public function cerrar_cuenta()

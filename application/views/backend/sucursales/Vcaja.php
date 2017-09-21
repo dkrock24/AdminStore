@@ -41,6 +41,22 @@ $( document ).ready(function()
         }
       });
     }
+    else
+    {
+      $.ajax
+      ({
+        url: "../../../sucursales/Ccaja/get_lastPedidos",
+        type: "post",
+        data: {sucursalID:sucursalID, lastPedido:0},                           
+        success: function(data)
+        {                                                
+            if(data ==1)
+            {
+              $("#all-content").load(location.href+"#all-content>*","");
+            }
+        }
+      });
+    }
     
   }
 

@@ -92,7 +92,23 @@
                 <div class="col-md-4">
 
                   <div class="thumbnail" style="height: 400px;padding: 0px;">
-                  <?php if($value->ingredientes_completos != 0)
+                  
+                   
+                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
+                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
+                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+
+                        </a> 
+                        <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
+                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
+                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button">Eliminar
+                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                          <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
+                        </a>
+
+                 
+                    </div>
+                    <?php if($value->ingredientes_completos != 0)
                 {?>
                     <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
                 <?php }
@@ -110,22 +126,7 @@
                   }
                 ?>   
                     
-                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" style="max-width: 60%;">
-                   
-                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
-                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-
-                        </a> 
-                        <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
-                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button">Eliminar
-                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-                          <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
-                        </a>
-
-                 
-                    </div>
+                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" style="max-width: 5s0%;">
 
                     <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                       <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>

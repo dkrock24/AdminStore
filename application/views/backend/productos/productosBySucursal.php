@@ -70,7 +70,7 @@
         success: function(data)
         {                                                  
          
-          $('.myModalDetalle').modal('toggle');
+          $('.modalAsignarPrecio').modal('toggle');
           $(".pages").load("../productos/Cproductos/index/"); 
         },
        
@@ -94,7 +94,7 @@
         success: function(data)
         {                                                  
          
-          $('.myModalDetalle').modal('toggle');
+          $('.modalAsignarNodo').modal('toggle');
           $(".pages").load("../productos/Cproductos/index/"); 
         },
        
@@ -133,7 +133,9 @@
       <button type="button" class="btn btn-success backSucursales" style="float: right;background-color: #c75757;">
          Regresar a Sucursales
       </button>
-  </div
+  </div>
+
+
 <div class="cont-loadProductos">
   
   <div class="row col-lg-12 conten-productos">
@@ -146,8 +148,8 @@
           ?>
             
           <!--  Vista dinamica de prodcutos --> 
-            <div class="col-md-4">
-               <div class="thumbnail">
+            <div class="col-md-4" >
+               <div class="thumbnail" style="height: 330px !important;">
               
               <?php if($value->verifiDetalle == 0)
                 {?>
@@ -176,7 +178,7 @@
                 <?php
                 } 
                 ?>
-                <img src="../../../assets/images/productos/<?php echo $value->image ?>">
+                <img src="../../../assets/images/productos/<?php echo $value->image ?>"  height="150" width="170">
                 <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                   <h3><?php echo $value->nombre_producto ?></h3>
                    <span class="precioData">Precio: <?php echo $precio = ($value->precio == null) ? "Null" : $value->precio; ?></span>

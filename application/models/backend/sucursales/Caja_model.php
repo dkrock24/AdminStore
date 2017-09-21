@@ -132,6 +132,25 @@ class caja_model extends CI_Model
         
     } 
 
+    //---------------Modelos para despacho
+    public function get_lastPedidosNull($datosPedido)
+    {
+        $query = $this->db->query('Select count(sp.id_pedido) as "pedidoNum"
+        from sys_pedido sp
+        inner join sys_pedido_detalle pd ON pd.id_pedido = sp.id_pedido and pd.estado !=5
+        left join sys_cajacuentas cc ON cc.ID_pedido = sp.id_pedido 
+        inner join sys_productos p ON p.id_producto = pd.id_producto
+        inner join sr_usuarios u ON u.id_usuario = sp.id_mesero
+        inner join sys_sucursal s ON s.id_sucursal = sp.id_sucursal
+        left join sys_sucursal_impuesto si ON si.id_sucursal = s.id_sucursal
+        left join sys_historial sh ON sh.ID_pedido = sp.id_pedido
+        where  sp.flag_cancelado = 0 and sp.flag_despachado <> 1 and cc.flag_pagado is null
+        and sp.id_sucursal = '.$datosPedido['sucursalID'].'  group by sp.id_pedido
+          order by sp.flag_elaborado = 0, sp.id_pedido asc');
+       return $query->result();       
+        
+    } 
+
     public function getDatosSucursal($id_sucursal)
     {
          $query = $this->db->query('Select * from sys_sucursal s where s.id_sucursal ='.$id_sucursal);
