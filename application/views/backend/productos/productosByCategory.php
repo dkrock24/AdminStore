@@ -91,7 +91,7 @@
               <!--  Vista dinamica de prodcutos --> 
                 <div class="col-md-4">
 
-                  <div class="thumbnail" style="height: 400px;padding: 0px;">
+                  <div class="thumbnail" style="height: 300px;padding: 0px;">
                   
                    
                     <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">

@@ -179,6 +179,18 @@ $(document).ready(function()
   });
 
 
+  $(".modifyP").click(function()
+  {
+     $(".modalEditar").modal({
+           backdrop: 'static', 
+           keyboard: false 
+        });
+    var prodcutoID = $(this).find('.idProducto').val();
+    $(".viewProductoData").load("../productos/Cproductos/updateProducto/"+prodcutoID); 
+  });
+
+
+
   $(".deleteNot").click(function()
   {
 
@@ -457,7 +469,12 @@ $(document).ready(function()
                         </a> 
                         <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
-                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button">Eliminar
+                        
+                        <a class="btn btn-primary  btn-sm modifyP" style="margin-left: -9px;" role="button"><i class="fa fa-pencil" aria-hidden="true"></i>
+                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                        </a>
+
+                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button"><i class="fa fa-trash" aria-hidden="true"></i>
                           <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
                           <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
                         </a>
@@ -465,7 +482,7 @@ $(document).ready(function()
                  
                     </div>
 
-                    <div class="thumbnail" style="height: 400px;padding: 0px;">
+                    <div class="thumbnail" style="height: 300px;padding: 0px;">
                   <?php if($value->ingredientes_completos != 0)
                 {?>
                     <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
@@ -850,6 +867,32 @@ $(document).ready(function()
         <div class="modal-footer">
         <div id="msg" class="msgShow">
         </div> 
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
+
+
+<!-- Codigo de funcionalidad de Modals editars-->
+<div class="modal fade modalEditar" role="dialog" tabindex="1">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+       <span type="button" style="font-size: 50px;" class="close" data-dismiss="modal">&times;</span>
+          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+          Modificar Datos
+          </h4>
+          <hr>
+        
+        <div class="modal-body">
+          <div class="viewProductoData"></div>
+        </div>
+
+        <div class="modal-footer">
+        <div id="msg" class="msgShowP"></div> 
         </div>
       </div>
       

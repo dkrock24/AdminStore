@@ -40,9 +40,23 @@ class Cproductos extends CI_Controller {
 		$this->load->view('backend/productos/ListSucursales.php',$data);
 	}
 
+	public function updateProducto($prodcutoID)
+	{
+		$data['producto'] = $this->productos_model->getProductoByID($prodcutoID);
+		$data['catego'] = $this->productos_model->getCategorias();
+		$this->load->view('backend/productos/VmodifyProducto.php',$data);
+	}
+	
+
 	public function save_producto()
 	{
 		 $this->productos_model->save_producto($_POST);
+	}
+
+	public function udpate_producto()
+	{
+
+		 $this->productos_model->udpate_producto($_POST);
 	}
 
 	public function save_ingrediente()

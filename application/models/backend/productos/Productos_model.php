@@ -73,6 +73,24 @@ class productos_model extends CI_Model
     
     }
 
+    public function getCategorias()
+    {
+        //var_dump($prodcutoID);
+        $query = $this->db->query('select cp.id_categoria_producto, cp.nombre_categoria_producto 
+                from sys_categoria_producto cp ');
+         return $query->result();
+         //return $query->result_array();
+    
+    }
+    public function getProductoByID($prodcutoID)
+    {
+        //var_dump($prodcutoID);
+        $query = $this->db->query('Select * from  sys_productos p where p.id_producto = '.$prodcutoID);
+         return $query->result();
+         //return $query->result_array();
+    
+    }
+
 
     public function getNodos()
         {
@@ -511,6 +529,17 @@ class productos_model extends CI_Model
         );
         $this->db->where('id_producto', $IdProductoSucursal['IdProductoSucursal']);    
         $this->db->update(self::psucursales,$data);
+    }
+
+    public function udpate_producto($producto)
+    {
+        $data = array( 
+            'nombre_producto'   => $producto['nombre'],
+            'categoria_id'   => $producto['categoria'],
+            'description_producto'   => $producto['descripcion'], 
+        );
+        $this->db->where('id_producto', $producto['idProducto']);    
+        $this->db->update(self::producto,$data);
     }
 
 }
