@@ -26,11 +26,7 @@
   //----------------------Asginacion de precio a productos
   $(".assignarPrecio").click(function()
   {
-    if ($(".precioData").text() != "Null") 
-    {
-      alert("Desea modificar el precio actual");
-    }
-    
+
     $(".modalAsignarPrecio").modal({
            backdrop: 'static', 
            keyboard: false 
