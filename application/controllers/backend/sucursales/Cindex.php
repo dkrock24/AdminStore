@@ -175,8 +175,10 @@ class Cindex extends CI_Controller {
 
 	// Guarda  el en Encabezado de la Orden
 	public function GuardarOrden($Mesa,$Id_Mesero,$Id_Sucursal){
+		
+		$id_pedido= 0;
 
-		if($_POST['id_pedido'] == 0 ){
+		if($_POST['id_pedido'] == '0' ){
 			$id_pedido = $this->sucursales_model->InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal);
 		}
 		else{

@@ -9,7 +9,7 @@ $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_databa
 die;*/
 $host = "localhost:3306";
 $db = "db_global_lapizzeria";
-$pass = "";
+$pass = "lapizzeria2016!";
 
 	$con = mysqli_connect($host, "root", $pass)or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));

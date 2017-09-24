@@ -671,7 +671,7 @@
 //		 	var aprobacion = getEstadoMesa( Mesa , Id_Sucursal);
 		 	contador1=0;
 		 	contador2=0;
-
+		 	//alert(pedido_a);
 		 	$.ajax({
 				url: "../GuardarOrden/"+Mesa+"/"+ID_mesero+"/"+Id_Sucursal,
 			    type:"post", 
@@ -730,9 +730,11 @@
 		        		var temp_pregunta = parseInt( pregunta );
 		        		if( temp_pregunta == 1 ){
 		        			//_orden.pedido.push = id_orden_mesa;
-		        			
 		        				
 		        			pedido_a =  id_orden_mesa;
+		        		}
+		        		else{
+		        			pedido_a = 0;
 		        		}
 	        		}
 					
