@@ -15,7 +15,7 @@ class cortes_model extends CI_Model
     
     public function getcortesBySucursal($id_sucursal)
     {      
-        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(cc.total_cobrado) AS Monto
+        $query = $this->db->query('select pais.moneda,pedido.id_pedido,pedido.id_sucursal,count(pedido.id_pedido)AS Pedidos,pedido.secuencia_orden,pedido.fechahora_pedido,sum(cc.total_cobrado) AS Monto,sum(cc.total_neto) AS Neto
             from sys_pedido as pedido
             join sys_sucursal as sucursal on sucursal.id_sucursal=pedido.id_sucursal
             join sys_pais_departamento as departamento on departamento.id_departamento=sucursal.id_departamento
@@ -80,7 +80,7 @@ class cortes_model extends CI_Model
     public function getPedidosAbiertos($id_sucursal){
         $query = $this->db->query('select count(pedido.id_pedido) as total
             from sys_pedido as pedido          
-            where pedido.flag_cancelado=0  and pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0
+            where pedido.flag_cancelado=0  and pedido.id_sucursal='.$id_sucursal.' and pedido.cortado=0  and pedido.flag_pausa!=1
             
                 ');
          return $query->result();
@@ -95,7 +95,7 @@ class cortes_model extends CI_Model
          return $query->result();
     }
 
-    public function SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones){
+    public function SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones,$Neto){
 
         session_start();
         $date = date("Y-m-d H:m:s");
@@ -104,6 +104,7 @@ class cortes_model extends CI_Model
             'id_usuario'        => $_SESSION['idUser'],           
             'fecha_corte'       => $date,
             'monto_corte'       => $Monto,    
+            'monto_neto'        => $Neto,
             'monto_adicionales' => $Monto_Adicional,    
             'total_ordenes'     => $Totalordenes, 
             'serie_fin'         => $Serie,
@@ -147,7 +148,7 @@ class cortes_model extends CI_Model
     }
 
     public function getCortesByFilter($id_sucursal,$data_filter){
-        $query = $this->db->query('select S.nombre_sucursal, u.nickname,fecha_corte,monto_corte,monto_adicionales,total_ordenes,serie_fin,cupones,P.moneda from sys_pedido_cortes as pedido_corte
+        $query = $this->db->query('select S.nombre_sucursal, u.nickname,fecha_corte,monto_corte,monto_neto,monto_adicionales,total_ordenes,serie_fin,cupones,P.moneda from sys_pedido_cortes as pedido_corte
             join sr_usuarios as u on u.id_usuario=pedido_corte.id_usuario
             join sys_sucursal as S on S.id_sucursal=pedido_corte.id_sucursal
             join sys_pais_departamento as D on D.id_departamento=S.id_departamento

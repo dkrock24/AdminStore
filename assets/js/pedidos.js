@@ -21,6 +21,7 @@
 	ID_mesero = 0;
 	Id_Sucursal = 0;
 	estado=0;	
+	pedido_a = 0;
 
 	$(document).ready(function(){
 
@@ -66,7 +67,7 @@
         var ID_producto = $(this).attr('producto');
         //alert(ID_producto);
         //alert($(this).attr('nombre'));
-        var _b_orden = {ID: ID_producto, precio: $(this).attr('precio'), detalle: $(this).attr('nombre'),llevar:[],adicionales:[], ingredientes: [[],[]]};
+        var _b_orden = {ID: ID_producto,pedido_a:100, precio: $(this).attr('precio'), detalle: $(this).attr('nombre'),llevar:[],adicionales:[], ingredientes: [[],[]]};
 
         if (keyCode > 48 && keyCode < 58) {
             convertirProductoEnPedido(_b_orden, parseInt(keyCode) - 48);
@@ -655,6 +656,7 @@
 	        	
 	        }else{
 	        	getMeseros(Id_Sucursal);
+	        	getEstadoMesa( mesa_temp , Id_Sucursal);
 	        }
 	               
 	        
@@ -666,13 +668,14 @@
 		 	//output += property + ': ' + _orden[property]['ID']+'; ';
 		 	//console.log(_orden);
 		 	//var d = _orden.serialize;
+//		 	var aprobacion = getEstadoMesa( Mesa , Id_Sucursal);
 		 	contador1=0;
 		 	contador2=0;
-
+		 	//alert(pedido_a);
 		 	$.ajax({
 				url: "../GuardarOrden/"+Mesa+"/"+ID_mesero+"/"+Id_Sucursal,
 			    type:"post", 
-			    data: {info:_orden },
+			    data: {info:_orden,id_pedido:pedido_a },
 				async: true,
     			cache: false,
 
@@ -688,8 +691,6 @@
 			    }
 			});	
 	}
-
-
 
 	function ValidarMesa(){	
 
@@ -708,8 +709,40 @@
 				alert ('No Existe Mesa. Intentarlo de Nuevo');			
 				ID_mesa = 0;     
 				ValidarMesa();       
-	            return;
+	            return ID_mesa;
 	        } 
+	        return temp;
+	}
+
+	function getEstadoMesa( numero_mesa , id_sucursal ){
+		var id_orden_mesa = 0;
+		$.ajax({
+				url: "../getEstadoMesa/"+numero_mesa+"/"+id_sucursal,
+			    type:"post", 
+				async: true,
+    			cache: false,
+
+			    success: function(data){     // Envia Datos a Detalle	              
+			    	id_orden_mesa = data;
+
+					if(id_orden_mesa!=0){
+		        		var pregunta = window.prompt('Mesa Con Cuenta Abierta! Agregar ? Si = 1  || No = 0');
+		        		var temp_pregunta = parseInt( pregunta );
+		        		if( temp_pregunta == 1 ){
+		        			//_orden.pedido.push = id_orden_mesa;
+		        				
+		        			pedido_a =  id_orden_mesa;
+		        		}
+		        		else{
+		        			pedido_a = 0;
+		        		}
+	        		}
+					
+			    },
+			    error:function(){
+			        alert("Error. Al Buscar mesa abiertas");
+			    }
+			});	
 	}
 
 	function getMeseros(Id_Sucursal){	
