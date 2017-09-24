@@ -175,9 +175,17 @@ class Cindex extends CI_Controller {
 
 	// Guarda  el en Encabezado de la Orden
 	public function GuardarOrden($Mesa,$Id_Mesero,$Id_Sucursal){
-		$id_pedido = $this->sucursales_model->InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal);
+
+		if($_POST['id_pedido'] == 0 ){
+			$id_pedido = $this->sucursales_model->InsertPedido($Mesa,$Id_Mesero,$Id_Sucursal);
+		}
+		else{
+			$id_pedido =  $_POST['id_pedido'];
+		}
+		
 		$data = $_POST['info'];
 
+		
 		/* Si el $id_pedido de Encabezado del pedido existe realiza
 		 los siguientes guardados de informacion*/
 
@@ -200,7 +208,17 @@ class Cindex extends CI_Controller {
 				}else{
 					$adicionales=0;
 				}
-				$this->GuardarOrdenDetalle($Mesa,$Id_Mesero,$pedido['ID'],$pedido['precio'],$Id_Sucursal,$id_pedido,$llevar,$ingredientes,$adicionales);
+
+				if($_POST['id_pedido'] != 0){
+
+					$this->GuardarOrdenDetalle($Mesa,$Id_Mesero,$pedido['ID'],$pedido['precio'],$Id_Sucursal,$_POST['id_pedido'],$llevar,$ingredientes,$adicionales);
+
+				}else{
+
+					$this->GuardarOrdenDetalle($Mesa,$Id_Mesero,$pedido['ID'],$pedido['precio'],$Id_Sucursal,$id_pedido,$llevar,$ingredientes,$adicionales);
+
+				}
+				
 			}
 		}
 	}
@@ -415,5 +433,15 @@ class Cindex extends CI_Controller {
 		$data['datoSucursal'] = $this->sucursales_model->getDatosSucursal($id_sucursal);
 		$data['pedidos'] = $this->sucursales_model->getPedidosDespachoBySucursal($id_sucursal);	
 		$this->load->view('backend/sucursales/Vcaja.php',$data);
+	}
+
+
+	public function getEstadoMesa( $numero_mesa , $id_sucursal ){
+		$data =  $this->sucursales_model->getEstadoMesa( $numero_mesa , $id_sucursal );
+
+		if($data){
+			echo $data[0]['id_pedido'];
+		}
+		
 	}
 }

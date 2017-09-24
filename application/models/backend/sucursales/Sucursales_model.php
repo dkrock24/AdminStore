@@ -71,7 +71,7 @@ class sucursales_model extends CI_Model
     // obtiene la mc de la pc y valida el permiso
     public function getMac()
     {
-        $user =  gethostbyaddr($_SERVER['REMOTE_ADDR'])  ;
+        echo $user =  gethostbyaddr($_SERVER['REMOTE_ADDR'])  ;
         //$pass =  sha1($user);
         return $user;
     }
@@ -555,7 +555,18 @@ class sucursales_model extends CI_Model
          $query = $this->db->query('Select * from sys_sucursal s where s.id_sucursal ='.$id_sucursal);
          //echo $this->db->queries[0];
         return $query->result_array();       
-    }    
+    } 
+
+    public function getEstadoMesa( $numero_mesa , $id_sucursal )
+    {
+         $query = $this->db->query('select p.id_pedido from sys_pedido as p
+                                    where p.flag_cancelado=0 and p.id_sucursal='.$id_sucursal.' and p.numero_mesa='.$numero_mesa);
+         //echo $this->db->queries[0];
+        return $query->result_array();       
+    }   
+
+
+      
 
 }
 ?>

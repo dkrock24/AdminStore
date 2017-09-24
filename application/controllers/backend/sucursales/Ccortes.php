@@ -35,6 +35,7 @@ class Ccortes extends CI_Controller {
 		//Obtener Total de Dinero en Todas las Ordenes a Cortar
 		$data 	= $this->cortes_model->getcortesBySucursal($id_sucursal);
 		$Monto 	= $data[0]->Monto;
+		$Neto 	= $data[0]->Neto;
 
 		//Obtener Total de Dinero en Todas las Ordenes a Con Adicionales
 		$data 	= $this->cortes_model->getTotalAdicinales_($id_sucursal);
@@ -64,7 +65,7 @@ class Ccortes extends CI_Controller {
 		$Total_Cupones = $data[0]->Cupones;
 
 		//InsetCorte
-		$this->cortes_model->SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones);
+		$this->cortes_model->SetInsertCorte($id_sucursal,$Monto,$Monto_Adicional,$Totalordenes,$Serie,$Total_Cupones,$Neto);
 
 		/* NOTIFICACION DE CORTE*/
 		//session_start();
@@ -83,7 +84,8 @@ class Ccortes extends CI_Controller {
 					<th>Sucursal</th>
 					<th>Usuario</th>
 					<th>Fecha Corte</th>
-					<th>Monto</th>
+					<th>Neto</th>
+					<th>Total</th>
 					<th>Adicionales</th>
 					<th>Ordenes</th>
 					<th>Serie Fin</th>
@@ -100,6 +102,10 @@ class Ccortes extends CI_Controller {
 
 				$html .= "<td>";
 					$html .= $value->fecha_corte;
+				$html .= "</td>";
+
+				$html .= "<td>";
+					$html .= $value->moneda." ". number_format($value->monto_neto,2);
 				$html .= "</td>";
 
 				$html .= "<td>";

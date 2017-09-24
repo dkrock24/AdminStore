@@ -9,7 +9,7 @@ $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_databa
 die;*/
 $host = "localhost:3306";
 $db = "db_global_lapizzeria";
-$pass = "lapizzeria2016!";
+$pass = "";
 
 	$con = mysqli_connect($host, "root", $pass)or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
@@ -37,7 +37,7 @@ $pass = "lapizzeria2016!";
 				// Pedido Detalle				
 				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar,productos.nombre_producto from sys_pedido_detalle as pedido_d 
 										join sys_productos as productos on productos.id_producto=pedido_d.id_producto
-										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.id_nodo=".$_POST['id_nodo'];
+										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.mostrado=0 AND pedido_d.id_nodo=".$_POST['id_nodo'];
 				$res2 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
 				if(mysqli_num_rows($res2) > 0){
 					for($j=0 ; $row2 = mysqli_fetch_array($res2) ; $j++){						
