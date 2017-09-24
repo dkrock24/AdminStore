@@ -695,26 +695,6 @@ $('.descuento').click(function()
               $totalIva = $value->totalCon - $value->totalSin; // Cantidad IVA
               $totalNeto = $value->totalCon; // Total con IVA
               $TotalNetoSin = $value->totalSin; // Total sin IVA
-            
-              //--Calcular descuentos
-              if ($value->grupo == "DESCUENTO") 
-              {
-                $porcentDescuento = $totalNeto / 100;
-                $totalNetoDescuento = $porcentDescuento * $value->descuentos;
-              }
-              // -------END----------------
-
-              //---  Calculos de descuentos por CUPON
-              if ($value->grupo == "CUPON$") 
-              {  
-                  $TotalDescuentoCupon = $totalNeto - $value->descuentos; 
-              }
-              elseif ($value->grupo == "CUPON%") 
-              {  
-                  $totalDescuento =  $totalNeto * $value->descuentos;
-                  $TotalDescuentoCupon = $totalNeto - $totalDescuento; 
-              }
-              //---------END --------------- 
 
               //--------_Calculo de propina
               if ($value->grupo == "PROPINA") 
@@ -759,8 +739,38 @@ $('.descuento').click(function()
               <span class="totalFull totalFull_<?php echo $value->id_pedido; ?>" title="Total con IVA y con propina">
               $
                <?php 
-                  $total =  ($totalNeto - $totalNetoDescuento) + $propina;
-                  echo "<span class='totalClean_$value->id_pedido'>".round($total,2)."</span>"; 
+                  //---Suma de total descuentos
+                  $total =  ($totalNeto + $propina);
+
+
+                //----explode group descuentos
+
+                //------------End
+                
+                //--Calcular descuentos %
+                if ($value->grupo == "DESCUENTO") 
+                {
+                  $porcentDescuento = $total / 100;
+                  $totalNetoDescuento = $porcentDescuento * $value->descuentos;
+                }
+                // -------END----------------
+
+                //---  Calculos de descuentos por CUPON $
+                if ($value->grupo == "CUPON$") 
+                {  
+                    $TotalDescuentoCupon = $total - $value->descuentos; 
+                }
+                 // -------END----------------
+
+                 // ---Calculo descuento cupon %
+                if ($value->grupo == "CUPON%") 
+                {  
+                    $totalDescuento =  $total * $value->descuentos;
+                    $TotalDescuentoCupon = $total - $totalDescuento; 
+                }
+                //---------END --------------- 
+                  $totalNetoDescuento = $totalNetoDescuento + $TotalDescuentoCupon;
+                  echo "<span class='totalClean_$value->id_pedido'>".round(($total- $totalNetoDescuento),2)."</span>"; 
                 ?>
               </span>
 

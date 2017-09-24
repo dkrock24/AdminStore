@@ -70,7 +70,7 @@ class Ccaja extends CI_Controller {
 		$nota = $_POST['commentAnulacion'];
 		$grupo = "CUENTA";
 		$accion = "anulacion";
-		$valor = $_POST['porcent'];
+		$valor = "0.0";
 		$existPedido = $this->caja_model->getPedidoCuenta($idPedido);
 		if($existPedido[0]['numPedidos']== 0)
 		{
@@ -122,7 +122,7 @@ class Ccaja extends CI_Controller {
 
 				$tipoGrupo = ($validaCupon[0]['valor_categoria'] < 1) ? "CUPON%" : "CUPON$";
 
-				$tipoValor = ($validaCupon[0]['valor_categoria'] < 1) ? $valorPorcent[1].".00%" : "$".$validaCupon[0]['valor_categoria'];
+				$tipoValor = ($validaCupon[0]['valor_categoria'] < 1) ? "0.".$valorPorcent[1].".00%" : "$".$validaCupon[0]['valor_categoria'];
 
 				$grupo = $tipoGrupo;
 				$accion = "descuento por ".$valorPorcent[1];
