@@ -203,6 +203,10 @@ class caja_model extends CI_Model
              'flag_anulado'      => 1,
              'metodo_pago'    => 'anulada',
              'numero_tarjeta'    => '0000',
+             'total_neto'    => $cuenta['pagoNeto'],
+             'total_iva'    => $cuenta['pagoIva'],
+             'total_propina'    => $cuenta['pagoPropina'],
+             'total_cobrado'    => $cuenta['pagoTotal'],
              'fechahora_pagado'      => $datePagado,
              'fechahora_anulado'    => $dateAnulado,
              );

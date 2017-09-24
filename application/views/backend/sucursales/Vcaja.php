@@ -484,7 +484,13 @@ $('.anularPedido').click(function()
 {
   if (confirm('Realmente desea anular esta orden?'))
   {
-    var idpedidounico = $(this).data("idpedidoanular");
+     var idpedidounico = $(this).data("idpedidoanular");
+    // valor estrax para anular cuenta
+    var pagoNeto = $(".totalneto_"+idpedidounico).text();
+    var pagoIva = $(".IvaClean_"+idpedidounico).text();
+    var pagoPropina = $(".propinaClean_"+idpedidounico).text();
+    var pagoTotal = $(".totalClean_"+idpedidounico).text();
+   
     var commentAnulacion = window.prompt("Ingrese el motivo de anulacion");
     if (commentAnulacion.length > 0) 
     {
@@ -492,7 +498,7 @@ $('.anularPedido').click(function()
       ({
           url: "../../../sucursales/Ccaja/anular_cuenta",
           type: "post",
-          data: {commentAnulacion:commentAnulacion, idpedidounico:idpedidounico},                           
+          data: {commentAnulacion:commentAnulacion, idpedidounico:idpedidounico,pagoNeto:pagoNeto,pagoIva:pagoIva,pagoPropina:pagoPropina,pagoTotal:pagoTotal},                           
               
           success: function(data)
           {                                                  
