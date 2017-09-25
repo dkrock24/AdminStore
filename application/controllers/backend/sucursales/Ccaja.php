@@ -102,6 +102,21 @@ class Ccaja extends CI_Controller {
 		$this->caja_model->separar_cuenta($_POST);	
 	}
 
+	public function cambiar_mesa()
+	{	
+		$this->caja_model->cambiar_mesa($_POST);	
+	}
+
+	public function combinar_mesa()
+	{	
+		$this->caja_model->combinar_mesa($_POST);	
+	}
+	public function mover_mesa()
+	{	
+		$this->caja_model->udpateMesa($_POST['numMesa'], $_POST['idpedidounico']);	
+		$this->caja_model->addevento_historial($_POST['idpedidounico'], "Se cambio de mesa", "Cuenta", "Cambio de mesa", $_POST['numMesa']);
+	}
+	
 	public function descuento_cupon()
 	{	
 		$validaCupon = $this->caja_model->validaCupon($_POST);	

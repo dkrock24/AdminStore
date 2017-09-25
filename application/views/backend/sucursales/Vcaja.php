@@ -352,10 +352,102 @@ $('.itemProducto').click(function()
 //--------------------Cambiar de mesa productos selected
 $('.cambiarM').click(function() 
 {
-  alert("COdigo para cambiar de mesa");
+
+  var numMesa = window.prompt("Ingrese el numero de mesa");
+  var mesaId = "mesa_id_"+numMesa;
+  if ($.isNumeric(numMesa)) 
+  {
+    var searchMesa = document.getElementsByClassName(mesaId);
+    if (searchMesa.length > 0) 
+    {
+      if (confirm('Desea combinar su mesa?'))
+      {
+
+          var idpedidounico = $(this).data("idpedidocambiarmesa");
+          var idpedidounicoMesa = $("."+mesaId).data("idpedidomesa");
+          var className = ".itemProducto_"+idpedidounico;
+          var myItems = new Array();
+          $(className+':checked').each(function()
+          {        
+            myItems.push($(this).val());
+          });
+
+          $.ajax
+          ({
+              url: "../../../sucursales/Ccaja/combinar_mesa",
+              type: "post",
+              data: {myItems:myItems, idpedidounicoMesa:idpedidounicoMesa},
+              success: function(data)
+              {                                                  
+                $("#all-content").load(location.href+"#all-content>*","");
+              }
+          });
+      }
+    }
+    else
+    {
+     
+      var idpedidounico = $(this).data("idpedidocambiarmesa");
+      var className = ".itemProducto_"+idpedidounico;
+      var myItems = new Array();
+      $(className+':checked').each(function()
+      {        
+        myItems.push($(this).val());
+      });
+      
+      $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/cambiar_mesa",
+          type: "post",
+          data: {myItems:myItems, idpedidounico:idpedidounico, numMesa:numMesa},
+          success: function(data)
+          {                                                  
+            $("#all-content").load(location.href+"#all-content>*","");
+          }
+      });
+
+      
+    }
+
+  }
+  else
+  {
+    alert("Es necesario ingresar numero de mesa valido");
+  }
 });
 //------------------Fin del codigo
 
+
+//--------------------mover de Mesa
+$('.moverM').click(function() 
+{
+  if (confirm('Realmente desea mover de mesa?'))
+  {
+    var idpedidounico = $(this).data("idpedidomovermesa");
+    var numMesa = parseInt(window.prompt("Ingrese el numero de mesa"));
+    var mesaId = "mesa_id_"+numMesa;
+    if ($.isNumeric(numMesa)) 
+    {
+      $.ajax
+      ({
+          url: "../../../sucursales/Ccaja/mover_mesa",
+          type: "post",
+          data: {numMesa:numMesa, idpedidounico:idpedidounico},
+          success: function(data)
+          {                                                  
+            $("#all-content").load(location.href+"#all-content>*","");
+            alert("Se movio de mesa correctamente");
+          }
+      });
+    }
+    else
+    {
+      alert("Es necesario que ingrese un numero de mesa valido");
+    }
+  }
+ 
+});
+//------------------Fin del codifo
 
 //--------------------Separar Cuenta
 $('.separarC').click(function() 
@@ -662,14 +754,15 @@ $('.descuento').click(function()
           ?>
            </div>
             <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" style="height: 40px;">Factura</button>
-            <button type="button" class="btn btn-default" style="height: 40px;">Fiscal</button>
+            <!--<button type="button" class="btn btn-default" style="height: 40px;">Factura</button>-->
+            <!--<button type="button" class="btn btn-default" style="height: 40px;">Fiscal</button>-->
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Orden</button>-->
             <button type="button" class="btn btn-default" style="height: 40px;">Tiquete</button>
             <button type="button" class="btn btn-default cerraCuentaUnica" data-idpedidounico="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cerrar</button>
             <button type="button" class="btn btn-default anularPedido" data-idpedidoanular="<?php echo $value->id_pedido; ?>" style="height: 40px;">Anular</button>
             <button type="button" class="btn btn-default descuento" data-idpedidodescuento="<?php echo $value->id_pedido; ?>" style="height: 40px;">Descuento</button>
             <button type="button" class="btn btn-default descuentoCupon" data-idpedidocupon="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cupon</button>
+            <button type="button" class="btn btn-default moverM" data-idpedidomovermesa="<?php echo $value->id_pedido; ?>" style="height: 40px;">Mover de mesa</button>
             <!--<button type="button" class="btn btn-default" style="height: 40px;">VIP</button>-->
           </div>
           
@@ -678,6 +771,7 @@ $('.descuento').click(function()
             <button type="button" class="btn btn-danger separarC" data-idpediseparar="<?php echo $value->id_pedido; ?>" style="height: 40px;">Separar Cuenta</button>
            <button type="button" class="btn btn-danger cambiarM" data-idpedidocambiarmesa="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cambiar mesa</button>
           </div>
+          
           <div class="panel-body">
            <div class="alert alert-success" role="alert">
             <span class="num_mesa mesa_id_<?php echo $value->numero_mesa; ?>  badge" title="Numero de mesa"  data-idpedidomesa="<?php echo $value->id_pedido; ?>"><?php echo $value->numero_mesa; ?></span>

@@ -151,6 +151,15 @@ class caja_model extends CI_Model
         
     } 
 
+     //---------------Modelos para despacho
+    public function validaMesa($mesaNum, $sucursalID)
+    {
+        $query = $this->db->query('Select count(p.id_pedido) as hayMesa from sys_pedido p
+          where p.numero_mesa = '.$mesaNum.' and p.id_sucursal = '.$sucursalID.' and p.flag_cancelado = 0');
+       return $query->result_array();       
+        
+    } 
+
     public function getDatosSucursal($id_sucursal)
     {
          $query = $this->db->query('Select * from sys_sucursal s where s.id_sucursal ='.$id_sucursal);
@@ -264,6 +273,59 @@ class caja_model extends CI_Model
         {
             $data = array(
             'id_pedido'   => $nuevoID[0]['cuentaNueva'],
+            );
+            $this->db->where('id_detalle', $value);                
+            $this->db->update(self::sys_pedido_detalle,$data);
+        }
+
+        return true;
+    }
+
+    public function cambiar_mesa($datosMesa)
+    {
+        //-------create nuevo pedido para la separacion de cuentas
+        $query = $this->db->query('INSERT INTO sys_pedido 
+        SELECT "", secuencia_orden, id_sucursal, id_usuario, id_mesero, numero_mesa, elaborado, mostrado, flag_cancelado,flag_elaborado, flag_despachado, flag_pausa, prioridad, llevar_pedido, porcentaje_descuento, total_descuento, motivo_descuento,codigo_cupon, fechahora_pedido, fechahora_elaborado, fechahora_despachado, fecha_creado, cortado, estado 
+            FROM sys_pedido WHERE id_pedido='.$datosMesa['idpedidounico']);
+    
+        $query2 = $this->db->query("SELECT max(p.id_pedido) as cuentaNueva FROM sys_pedido p");
+        $nuevoID = $query2->result_array();  
+
+        $updatedMesa = $this->caja_model->udpateMesa($datosMesa['numMesa'], $nuevoID[0]['cuentaNueva']);
+        if ($updatedMesa) 
+        {
+            foreach ($datosMesa['myItems'] as $value) 
+            {
+                $data = array(
+                'id_pedido'   => $nuevoID[0]['cuentaNueva'],
+                );
+                $this->db->where('id_detalle', $value);                
+                $this->db->update(self::sys_pedido_detalle,$data);
+            }
+        }
+      return true;
+    }
+
+    public function udpateMesa($numMesa, $pedidoID)
+    {
+
+            $data = array(
+            'numero_mesa'   => $numMesa,
+            );
+            $this->db->where('id_pedido', $pedidoID);                
+            $this->db->update(self::sys_pedido,$data);
+        return true;
+    }
+
+
+
+    public function combinar_mesa($datosMesa)
+    {
+
+        foreach ($datosMesa['myItems'] as $value) 
+        {
+            $data = array(
+            'id_pedido'   => $datosMesa['idpedidounicoMesa'],
             );
             $this->db->where('id_detalle', $value);                
             $this->db->update(self::sys_pedido_detalle,$data);
