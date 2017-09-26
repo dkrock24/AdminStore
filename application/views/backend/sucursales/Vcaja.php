@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../../../../assets/plugins/bootstrap/css/bootstrap.min.css"/>
 
   <script src="../../../../../js/jquery.js"></script>
+  <script src="../../../../../assets/js/caja/caja.js"></script>
   <script src="../../../../../assets/js/TimeCircles.js"></script>
   <script src="../../../../../js/bootstrap.min.js"></script>
 
@@ -719,7 +720,7 @@ $('.descuento').click(function()
         <h2>Cuentas Abiertas</h2>
         <div class="input-group"> 
         <div class="input-group-btn"> 
-          <button type="button" class="btn btn-default ImpTicket" style="height: 40px;">Tiquete</span></button> 
+          <button type="button" class="btn btn-default imp_tiquete" style="height: 40px;">Tiquete</span></button> 
           <button type="button" class="btn btn-default cerrarCuenta" style="height: 40px;">Cerrar</button> 
         </div>
           <input class="form-control" placeholder="Numero Mesa" aria-label="Text input with multiple buttons" style="width: 30%;height: 42px;border: 2px solid #88b32f;" id="NumMesa">
@@ -757,7 +758,7 @@ $('.descuento').click(function()
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Factura</button>-->
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Fiscal</button>-->
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Orden</button>-->
-            <button type="button" class="btn btn-default" style="height: 40px;">Tiquete</button>
+            <button type="button" class="btn btn-default imp_tiquete" style="height: 40px;">Tiquete</button>
             <button type="button" class="btn btn-default cerraCuentaUnica" data-idpedidounico="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cerrar</button>
             <button type="button" class="btn btn-default anularPedido" data-idpedidoanular="<?php echo $value->id_pedido; ?>" style="height: 40px;">Anular</button>
             <button type="button" class="btn btn-default descuento" data-idpedidodescuento="<?php echo $value->id_pedido; ?>" style="height: 40px;">Descuento</button>

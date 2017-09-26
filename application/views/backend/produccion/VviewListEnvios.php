@@ -12,6 +12,12 @@ $("#ingrediente").autocomplete({
         minLength: 1
 });
 
+//----------------Cancelar envio ----
+    $("#cancelEnvio").click(function()
+    {
+      $(".pages").load("../produccion/Cproduccion/index"); 
+    });
+ //-------------------------Fin ------------------
 
 //------------Eliminar item de lista
 $("body").on("click",".btnDeleteItem", function(){

@@ -127,20 +127,19 @@
  <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-users'></i>Ver Empleados</a></li>
   <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-list-ol'></i>Inventario</a></li>
   <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-paper-plane-o'></i>Lista de Envios</a></li> 
-<div id="actions-bar">
-<span  style="float:right;background-color: #c75757;" class="btn btn-success back">Regresar</span>
-<span  style="float:right;background-color: #c75757;" class="btn btn-success AddListEnvio">
-<input type="hidden" name="cproduccionID" id="cproduccionID" value="<?php echo $cpID; ?>">Realizar Envio</span>
-</div>
 </ul>
 
 <div class="tab-content">  
   <div class="tab-pane fade active in" id="tab1_1">
-  
+  <div id="actions-bar">
+<span  style="float:right;background-color: #c75757;" class="btn btn-success back">Regresar</span>
+<span  style="float:right;background-color: #c75757;" class="btn btn-success AddListEnvio">
+<input type="hidden" name="cproduccionID" id="cproduccionID" value="<?php echo $cpID; ?>">Realizar Envio</span>
+</div>
   <div class="load-dataDinamic" style="display: none;"></div>  
 
     <div  class="load-table">
-    <table class="table table-hover table-dynamic">
+    <table class="table table-hover">
                 <thead class='titulos'>
                     <tr>
                         <th>Nombre</th>
@@ -237,7 +236,7 @@
                     <tr>
                         <th>Sucursal</th>
                         <th>Nombre</th>
-                        <th>Cantidad</th>
+                        <th>Codigo Envio</th>
                         <th>Unidad Medida</th>
                         <th>Fecha registro</th> 
                         <th></th>
@@ -257,7 +256,7 @@
                     <tr>
                         <td><?php echo $value->nombre_sucursal;  ?></td>
                         <td><?php echo $value->nombre_matarial; ?></td>
-                        <td><?php echo $value->cantidad;  ?></td>
+                        <td><?php echo $value->codigo_envio;  ?></td>
                         <td><?php echo $value->nombre_unidad_medida;  ?></td>
                         <td><?php echo $value->fecha_registro; ?></td>
                         <td>
