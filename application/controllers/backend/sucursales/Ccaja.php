@@ -174,5 +174,74 @@ class Ccaja extends CI_Controller {
 		echo "Propina eliminada correctamente";	
 	}
 
+	public function imprimir_tiquete()
+	{
+		$data = $this->caja_model->data_tiquete($_POST);
+		$idPedido = $_POST['idpedidounico']; 
+		$nota =  "Impresion de tiquetes";
+		$grupo = "ORDENES";
+		$accion = "TIQUETE";
+		$valor = 1;
+		$dateregistro = date("Y-m-d H:i:s");
+		$this->caja_model->addevento_historial($idPedido, $nota, $grupo, $accion, $valor);
+
+		// HTML Header
+		$tiqueteHTML = '<div class="orden">
+		<p style="font-weight:bold;text-align:center;">'.$data[0]['nombre_legal'].'</p>
+		<p style="text-align:center;">'.$data[0]['nombre_empresa'].'</p>
+		<p style="text-align:center;">Tel. Oficinas administrativas:<br />'.$data[0]['telefono'].'</p><br />
+		<div style="height:1.5em;text-align:center;">
+			<span class="grupo" style="height:1.5em;text-align:center;font-size: 16px; font-weight:bold;">Mesa #'.$data[0]['numero_mesa'].'
+			</span>
+		</div>';
+
+	 	$dataSeparada = explode(",", $data[0]['pedido']);
+
+	 	foreach ($dataSeparada as $value) 
+	 	{
+	 		$itemSeparado = explode("_", $value);
+	 		//   HTML Pedido	
+			$tiqueteHTML .= '<div class="pedido" style="padding:0px;margin:0px;">
+			<div class="producto" style="padding:0px;margin:0px;">'.$itemSeparado[0].' 
+				<div style="z-index:99;float:right;">'.$itemSeparado[1].'</div>
+			</div>
+			</div>';	
+	 	}
+
+	
+		// Footer
+		$tiqueteHTML .= '<br /><br /><table style="width:100%;" class="totales">
+		<tr>
+			<td>SubTotal:</td>
+			<td>'.$data[0]['moneda'].' '.$data[0]['SubTotal'].'</td>
+		</tr>
+		<tr>
+			<td>Propina (10%):</td>
+			<td>'.$data[0]['moneda'].' '.$data[0]['SubTotal'] * 0.10.'</td>
+		</tr>
+		<tr>
+			<td>Total:</td>
+			<td>'.$data[0]['moneda'].' '.($data[0]['SubTotal']  + ($data[0]['SubTotal'] * 0.10)).' </td>
+		</tr>
+		</table>
+		<br /><br /><br /><br />
+		<p style="text-align:center;">'.$data[0]['nombre_sucursal'].'<br />
+		'.$data[0]['direccion'].',<br />
+		'.$data[0]['nombre_departamento'].'.<br />
+		¡Gracias por su compra!<br />
+		<br />'.date("Y-m-d H:i:s").'</p>';
+
+		$this->caja_model->add_comanda($tiqueteHTML, 0, $dateregistro, "tiquetes");
+		echo $tiqueteHTML;
+			
+	}
+
+	public function imprimir_factura()
+	{
+
+		$this->caja_model->imprimir_factura($_POST);
+		echo "Propina eliminada correctamente";	
+	}
+
 	
 }

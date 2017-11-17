@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="../../../../../assets/plugins/bootstrap/css/bootstrap.min.css"/>
 
   <script src="../../../../../js/jquery.js"></script>
-  <script src="../../../../../assets/js/caja/caja.js"></script>
   <script src="../../../../../assets/js/TimeCircles.js"></script>
   <script src="../../../../../js/bootstrap.min.js"></script>
 
@@ -347,7 +346,7 @@ $('.itemProducto').click(function()
     $('#optionUnica_'+idProdcuto).hide();
   }
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 
 //--------------------Cambiar de mesa productos selected
@@ -448,7 +447,7 @@ $('.moverM').click(function()
   }
  
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 //--------------------Separar Cuenta
 $('.separarC').click(function() 
@@ -476,7 +475,7 @@ $('.separarC').click(function()
   }
  
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 
 //--------------------Descuento Cupon
@@ -508,7 +507,7 @@ $('.descuentoCupon').click(function()
     }
   }
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 //--------------------Separar Cuenta
 $('.removeIco').click(function() 
@@ -534,7 +533,7 @@ $('.removeIco').click(function()
     }
   
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 //--------------------Separar Cuenta
 $('.quitar_propina').click(function() 
@@ -569,7 +568,7 @@ $('.quitar_propina').click(function()
     return;
   }
 });
-//------------------Fin del codifo
+//------------------Fin del codigo
 
 
 //--------------------Anular cuenta
@@ -609,7 +608,7 @@ $('.anularPedido').click(function()
 
 
 });
-//------------------Fin del codifo 
+//------------------Fin del codigo 
 
 
 
@@ -660,8 +659,49 @@ $('.descuento').click(function()
 
 
 });
-//------------------Fin del codifo 
+//------------------Fin del codigo 
 
+
+//-------------Imprimir Tiquete
+$('.imp_tiquete').click(function() 
+{
+  if (confirm('Realmente desea imprimir tiquete'))
+  {
+    var idpedidounico = $(this).data("idpedidotiquete");
+    $.ajax
+    ({
+        url: "../../../sucursales/Ccaja/imprimir_tiquete",
+        type: "post",
+        data: {idpedidounico:idpedidounico}, 
+        success: function(data)
+        {          
+          var pageTitle = 'Tiquete La Pizzeria',
+                    stylesheet = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css',
+                    win = window.open('', 'Print', '');
+          win.document.write(data);
+          win.document.close();
+          win.print();
+           $("#all-content").load(location.href+"#all-content>*","");    
+        }
+    });
+  }
+});
+//------------------Fin del codigo
+
+
+//-------------Imprimir Factura
+$('.imp_factura').click(function() 
+{
+  alert("imprimir factura");
+  var divToPrint=document.getElementById("tableList");
+  var pageTitle = 'Lista de envios',
+            stylesheet = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css',
+            win = window.open('', 'Print', 'width=500,height=300');
+        win.document.write(divToPrint.outerHTML);
+        win.document.close();
+        win.print();
+});
+//------------------Fin del codigo
 
 });   
 </script>
@@ -758,7 +798,8 @@ $('.descuento').click(function()
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Factura</button>-->
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Fiscal</button>-->
             <!--<button type="button" class="btn btn-default" style="height: 40px;">Orden</button>-->
-            <button type="button" class="btn btn-default imp_tiquete" style="height: 40px;">Tiquete</button>
+            <button type="button" class="btn btn-default imp_tiquete" data-idpedidotiquete="<?php echo $value->id_pedido; ?>" style="height: 40px;">Tiquete</button>
+             <button type="button" class="btn btn-default imp_factura" data-idpedidofactura="<?php echo $value->id_pedido; ?>" style="height: 40px;">Factura</button>
             <button type="button" class="btn btn-default cerraCuentaUnica" data-idpedidounico="<?php echo $value->id_pedido; ?>" style="height: 40px;">Cerrar</button>
             <button type="button" class="btn btn-default anularPedido" data-idpedidoanular="<?php echo $value->id_pedido; ?>" style="height: 40px;">Anular</button>
             <button type="button" class="btn btn-default descuento" data-idpedidodescuento="<?php echo $value->id_pedido; ?>" style="height: 40px;">Descuento</button>
@@ -777,7 +818,7 @@ $('.descuento').click(function()
            <div class="alert alert-success" role="alert">
             <span class="num_mesa mesa_id_<?php echo $value->numero_mesa; ?>  badge" title="Numero de mesa"  data-idpedidomesa="<?php echo $value->id_pedido; ?>"><?php echo $value->numero_mesa; ?></span>
             <span class="formula">
-              
+               
               (((
               <span class="totalneto_<?php echo $value->id_pedido; ?>" style="cursor: not-allowed;" title="Total sin IVA">
               <?php

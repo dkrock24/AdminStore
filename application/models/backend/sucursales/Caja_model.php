@@ -32,6 +32,7 @@ class caja_model extends CI_Model
     const cuenta_descuento = 'sys_cuenta_descuento';
     const cuenta_historial = 'sys_historial';
     const sys_cupon = 'sys_cupon';
+    const comandas = 'sys_comandas';
 
 
     
@@ -369,4 +370,32 @@ class caja_model extends CI_Model
         $this->db->update(self::sys_pedido_detalle,$data);
     }
     
+    public function data_tiquete($idPedido)
+    {
+          $query = $this->db->query("Select em.nombre_empresa, em.nombre_legal, em.telefono, p.numero_mesa, GROUP_CONCAT(pro.nombre_producto,'_',pd.precio_grabado) AS pedido, s.nombre_sucursal, s.direccion, pdep.nombre_departamento, SUM(pd.precio_grabado) as SubTotal, pa.moneda
+          From sys_pedido p
+          inner join sys_pedido_detalle pd ON pd.id_pedido =  p.id_pedido
+          inner join sys_productos pro ON pro.id_producto = pd.id_producto
+          inner join sys_sucursal s ON s.id_sucursal = p.id_sucursal
+          inner join sys_pais_departamento pdep ON pdep.id_departamento = s.id_departamento
+          inner join sys_pais pa ON pa.id_pais = pdep.id_pais
+          join sr_empresa em
+          WHERE p.id_pedido ='".$idPedido['idpedidounico']."'");
+        //echo $this->db->queries[0];
+        return $query->result_array();       
+        
+    }
+
+    public function add_comanda($data, $impreso, $fecha, $estacion)
+    {
+        $dateregistro = date("Y-m-d H:i:s");
+        $categorias = array(
+            'data'      => $data,
+            'impreso'    => $impreso,
+            'timestamp'    => $fecha,
+            'estacion'    => $estacion,
+             );
+        
+        $this->db->insert(self::comandas,$categorias);
+    }
 }
