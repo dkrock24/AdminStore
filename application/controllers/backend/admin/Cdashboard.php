@@ -71,7 +71,7 @@ class Cdashboard extends CI_Controller {
 	        $cont 	=0;
 	        $alias 	= array();
 
-	        $c = json_encode( $dataChart, JSON_NUMERIC_CHECK );
+	        $c = json_encode( $dataChart, JSON_NUMERIC_CHECK   );
 
 	        echo '	<div id="chart" style="width: 100% !important;"></div>';
 	        echo "	<script type='text/javascript'>
@@ -184,9 +184,24 @@ class Cdashboard extends CI_Controller {
         }	
 	}
 
+	function json_numeric($array)
+  {
+     if (is_array($array) || is_object($array)) {
+        foreach($array as &$prop) {
+            if (is_numeric($prop)) {
+                $prop = intval($prop);
+            }
+            if (is_object($prop) || is_array($prop)) {
+                $prop = json_numeric($prop);
+            }
+        }
+     }
+     return $array;
+  }
+
 	public function myChart($dataChart,$type_chart,$function,$description)
 	{
-			$url = 'http://45.33.3.227/lapizzeria/assets/globalreport/js/generatorCharts.js';
+			$url = 'http://localhost/lapizzeria/assets/globalreport/js/generatorCharts.js';
 	        echo '<script type="text/javascript" src="'.$url.'">    
 	        </script>';
 	        $data 	= array();
@@ -194,7 +209,7 @@ class Cdashboard extends CI_Controller {
 	        $alias 	= array();
 
 
-	        $c = json_encode( $dataChart, JSON_NUMERIC_CHECK );
+	        $c = json_encode( $dataChart, JSON_NUMERIC_CHECK  );
 
 
 	        echo '	<div id="chart" style="width: 100% !important;"></div>';
