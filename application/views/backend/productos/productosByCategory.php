@@ -117,16 +117,8 @@
                 <?php
                 } 
                 ?>  
-                <?php 
-                  if($value->video != 'NULL')
-                  {
-                  ?>
-                  <p class="video-div" style="position: absolute;background: #3e9b48;z-index: 1001;bottom: 221px;width: 89%;color: #fff;padding: 4px;cursor: pointer;text-align:center; opacity: 0.9;font-weight: bold;">Ver Video</p> 
-                <?php 
-                  }
-                ?>   
-                    
-                    <img src="../../../assets/images/productos/<?php echo $value->image ?>" style="max-width: 5s0%;">
+                                    
+                    <img src="/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>" style="max-width: 5s0%;">
 
                     <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                       <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>

@@ -2,8 +2,8 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class productos_model extends CI_Model
 {
-    const categoria = 'sys_categoria_producto';
-    const producto = 'sys_productos';
+    const categoria = 'Categoria';
+    const producto = 'productsv1';
     const sucursales = 'sys_sucursal';
     const detalleProducto = 'sys_detalle_producto';
     const psucursales = 'sys_productos_sucursal';
