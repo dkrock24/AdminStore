@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Index extends CI_Controller {
@@ -14,12 +14,8 @@ class Index extends CI_Controller {
 		
 	}
 
-	public function demo(){
-		echo "yes";
-		exit();
-	}
 
-	public function index()
+	public function index1()
 	{
 		//exit();
 		$configuracion['lib_login'] =  $this->login_model->laodLib("login","header");	
@@ -28,7 +24,7 @@ class Index extends CI_Controller {
 		
 	}
 	public function autenticacion(){
-		session_start();
+		
 		
 		if(isset($_SESSION['usuario']) and isset($_SESSION['password']))
 		{
