@@ -42,6 +42,7 @@ class Cproductos extends CI_Controller {
 
 	public function save_producto()
 	{
+		var_dump($_POST);
 		 $this->productos_model->save_producto($_POST);
 	}
 

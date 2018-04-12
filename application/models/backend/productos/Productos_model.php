@@ -115,7 +115,7 @@ class productos_model extends CI_Model
                 $fileType = $_FILES['files']['type'];
                 $fileError = $_FILES['files']['error'];
                 $fileContent = file_get_contents($_FILES['files']['tmp_name']);
-                $imagen = "assets/images/productos/".$dateNow."_".$_FILES['files']['name'];
+                $imagen =  $_SERVER['DOCUMENT_ROOT']."/kaprichos/uploaded/mod_productos/".$dateNow."_".$_FILES['files']['name'];
 
                 move_uploaded_file($_FILES['files']['tmp_name'], $imagen);
                 //----------------------------------------------------------------------
@@ -154,7 +154,7 @@ class productos_model extends CI_Model
              'nombre_producto'      => $produc['nombre'],
              'categoria_id'    => $produc['categoria'],
              'description_producto'      => $produc['descripcion'],
-             'video'          => $nameVideo,
+             //'video'          => $nameVideo,
              'image'     => $name,
              'fecha_creacion'     => $dateCreated
              );
