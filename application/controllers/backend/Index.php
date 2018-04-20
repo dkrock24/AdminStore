@@ -20,6 +20,7 @@ class Index extends CI_Controller {
 		//exit();
 		$configuracion['lib_login'] =  $this->login_model->laodLib("login","header");	
 		$configuracion['config'] =  $this->login_model->loadConfig("login");
+		$configuracion['empresa'] =  $this->login_model->empresa();
 		$this->load->view('backend/login.php',$configuracion);
 		
 	}

@@ -46,7 +46,15 @@
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <div class="account-wall">
                         <i class="user-img icons-faces-users-03"></i>
-                        <img class="user-img logo" src="../../../assets/images/avatars/141020164726lapizzeria.png">
+                        <?php
+                        foreach ($empresa as $value) {
+                            ?>
+                            <img class="user-img logo" src="../../../assets/images/avatars/<?php echo $value->logo_empresa; ?>">
+                            <?php
+                        }
+                        ?>
+                        <br>
+                        <br>
                         <br>
                         
                         <form class="form-signin" role="form"  method="post" action="autenticacion">

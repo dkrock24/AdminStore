@@ -25,10 +25,6 @@ class login_model extends CI_Model
         $this->db->where('location',$location);
         $this->db->where('parte',$parte);
         $this->db->where('estado_lib',1);
-        //$this->db->join('track_domain as D','D.idDomain = track_domain_site.idSiteDomain');
-        //$this->db->join('track_users_rol as R','R.id_rol = track_users.rol');
-        ///$this->db->join('track_users_positions as P','P.idPosition = track_users.idPosition');
-        //$this->db->join('track_users as U','U.idUser = track_users.idSupervisor');
         $query = $this->db->get();
         //echo $this->db->queries[0];
         
