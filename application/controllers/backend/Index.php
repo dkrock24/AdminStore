@@ -16,8 +16,7 @@ class Index extends CI_Controller {
 
 
 	public function index1()
-	{
-		//exit();
+	{		
 		$configuracion['lib_login'] =  $this->login_model->laodLib("login","header");	
 		$configuracion['config'] =  $this->login_model->loadConfig("login");
 		$configuracion['empresa'] =  $this->login_model->empresa();
@@ -26,7 +25,7 @@ class Index extends CI_Controller {
 	}
 	public function autenticacion(){
 		
-		
+		//echo base_url();
 		if(isset($_SESSION['usuario']) and isset($_SESSION['password']))
 		{
 			$autenticar['login'] =  $this->login_model->login($_SESSION['usuario'],$_SESSION['password']);
@@ -47,12 +46,9 @@ class Index extends CI_Controller {
 	}
 
 	public function home($rol,$idUsuario){	
-		//session_start();
-		
-		
-
 
 		$_SESSION['idUser']		=$idUsuario;
+		
 		if($_POST)
 		{
 			$this->logs_model->setLog(1,null,$idUsuario);	
@@ -65,14 +61,15 @@ class Index extends CI_Controller {
 		$configuracion['submenu']	= $this->login_model->submenu($rol);
 		$configuracion['empresa'] 	= $this->login_model->empresa();	
 		$configuracion['usuario'] 	= $this->login_model->getUserByID($idUsuario);	
-		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);	
+		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);
+		
 
 		$this->load->view('backend/home/home',$configuracion);	
 	}
 
 	public function salir(){
-		session_start();
-		$this->index();
+		//session_start();
+		$this->index1();
 			
 		session_destroy();
 	}

@@ -45,13 +45,10 @@ if(!isset($_SESSION['usuario'])){
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 
-
-
-
     <script>
       $( document ).ready(function() {
         //$(".pages").load("http://45.33.3.227/lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
-        $(".pages").load("../../../../../lapizzeria/index.php/backend/admin/Cdashboard/alertas");  
+        $(".pages").load("/lapizzeria/index.php/backend/admin/Cdashboard/<?php echo $usuario[0]->pagina ?>");  
         
         $(".remover").click(function(){
           $(this).hide();
@@ -182,6 +179,8 @@ if(!isset($_SESSION['usuario'])){
           </div>
           <ul class="nav nav-sidebar">
             <?php
+            if($menu)
+            {
             foreach ($menu as $value) {
               ?>
               <li class="nav-parent <?php echo $value->class_menu ?>">
@@ -209,7 +208,7 @@ if(!isset($_SESSION['usuario'])){
                 </li>
               <?php
             }
-
+          }
             ?>
           </ul>
           <!-- SIDEBAR WIDGET FOLDERS -->

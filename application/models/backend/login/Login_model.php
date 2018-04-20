@@ -94,7 +94,7 @@ class login_model extends CI_Model
     {
         $pass = $this->encrypt($password);
         $this->db->select('*');
-        $this->db->from(self::usuarios); 
+        $this->db->from(self::usuarios);
         $this->db->where('usuario',$usuario);    
         $this->db->where('password',$pass);   
         $query = $this->db->get();            
@@ -113,6 +113,7 @@ class login_model extends CI_Model
     {        
         $this->db->select('*');
         $this->db->from(self::usuarios); 
+        $this->db->join('sr_roles as R','on '. self::usuarios .'.rol = R.id_rol');
         $this->db->where('id_usuario',$id);
         $query = $this->db->get();      
         if($query->num_rows() > 0 )
