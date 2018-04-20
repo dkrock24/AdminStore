@@ -2049,7 +2049,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   pointer-events: none;
 }
 .sidebar .sidebar-inner .nav-sidebar > li.active > a {
-  background-color: #9AC835;
+  background-color: #D82787;
   color: #ffffff;
   opacity: 1;
 }

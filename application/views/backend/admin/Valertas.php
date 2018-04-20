@@ -120,12 +120,8 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
                     	
 
                       <h2 style="margin-top: 0;color:#55518a">BIENVENIDOS</h2>
-                      <h3 style="margin-top: 0;color:#55518a">Sistema Administrativo Global</h3>
-                      <h1 >
-                    		<span class="logo">
-                    			<img id="" src="../../../assets/images/avatars/1410201642251lapizzeria.png">
-                    		</span>
-                    	</h1>
+                      <h3 style="margin-top: 0;color:#55518a">Sistema Administrativo</h3>
+                      
                     </center>
                 </div>
                 <!-- train section -->

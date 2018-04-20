@@ -40,7 +40,7 @@ class sucursales_model extends CI_Model
     
     public function getSucursalesByUser($id_user)
     {
-        $pc = $this->getMac();
+        //$pc = $this->getMac();
 
         $this->db->select('*');
         $this->db->from(self::sys_sucursal);
@@ -52,12 +52,12 @@ class sucursales_model extends CI_Model
                         self::usuarios.'.id_usuario = '.
                         self::sys_sucursal_int_usuarios.'.id_usuario');
 
-        $this->db->join(self::sys_sucursal_pc,' on '. 
-                        self::sys_sucursal_pc.'.id_sucursal = '.
-                        self::sys_sucursal.'.id_sucursal');
+        //$this->db->join(self::sys_sucursal_pc,' on '. 
+          //              self::sys_sucursal_pc.'.id_sucursal = '.
+            //            self::sys_sucursal.'.id_sucursal');
 
-        $this->db->where(self::usuarios.'.id_usuario',$id_user);
-        $this->db->where(self::sys_sucursal_pc.'.mac_address',$pc);
+        //$this->db->where(self::usuarios.'.id_usuario',$id_user);
+        //$this->db->where(self::sys_sucursal_pc.'.mac_address',$pc);
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )

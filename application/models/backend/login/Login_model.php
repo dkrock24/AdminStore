@@ -115,7 +115,9 @@ class login_model extends CI_Model
         $this->db->from(self::usuarios); 
         $this->db->join('sr_roles as R','on '. self::usuarios .'.rol = R.id_rol');
         $this->db->where('id_usuario',$id);
-        $query = $this->db->get();      
+        $query = $this->db->get();  
+        //echo $this->db->queries[6];
+        
         if($query->num_rows() > 0 )
         {
             return $query->result();
