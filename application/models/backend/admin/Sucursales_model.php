@@ -118,6 +118,12 @@ class sucursales_model extends CI_Model
         //Crear Cada Nodo Para la sucursal que se crea
         $id_last_sucursal = $this->db->insert_id();
 
+        //****************************************************************
+        // Agregando simepre al admin rol 1 a todas las sucursales creadas
+        //****************************************************************
+        $sucursal['sucursal'] = $id_last_sucursal;
+        $this->saveAcceso(1,$sucursal);
+
         // Insertar La Secuencia de esta sucursal
         $date = date("Y-m-d");
         $data_secuencia = array(
@@ -333,8 +339,10 @@ class sucursales_model extends CI_Model
 
     // Guardar Acceso Por Usuario a Sucursal
         public function saveAcceso($id_usuario,$sucursal){   
+            
             if($this->getAccesosSucursal($id_usuario,$sucursal)=="")
-            {         
+            {        
+                
                 session_start();
                 $data = array(
                     'id_sucursal'   => $sucursal['sucursal'],
@@ -370,7 +378,7 @@ class sucursales_model extends CI_Model
         }
 
     // Sucursales por usuario
-        public function sucursalAccesos($id_usuario){
+        public function sucursalAccesos($id_usuario){            
             $this->db->select('*');
             $this->db->from(self::sys_sucursal_int_usuarios);
             $this->db->join(self::sys_sucursal,' on '. 

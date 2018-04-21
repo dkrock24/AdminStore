@@ -128,9 +128,11 @@ class login_model extends CI_Model
     }
 
     public function getSucursal($id_usuario){
+        $id = intval($id_usuario);
+        
         $query = $this->db->query('select * from sys_sucursal as S
                                     join sys_sucursal_int_usuarios as SU on SU.id_sucursal=S.id_sucursal
-                                    where SU.id_usuario='.$id_usuario.' and SU.estado=1');    
+                                    where SU.id_usuario='. $id .' and SU.estado=1');    
         return $query->result(); 
     }
 }

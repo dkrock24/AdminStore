@@ -61,8 +61,7 @@ class Index extends CI_Controller {
 		$configuracion['submenu']	= $this->login_model->submenu($rol);
 		$configuracion['empresa'] 	= $this->login_model->empresa();	
 		$configuracion['usuario'] 	= $this->login_model->getUserByID($idUsuario);	
-		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);
-		
+		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);		
 
 		$this->load->view('backend/home/home',$configuracion);	
 	}

@@ -38,6 +38,7 @@ class sucursales_model extends CI_Model
         
     }
     
+    // Busca las sucursales que el usuario tiene asignadas
     public function getSucursalesByUser($id_user)
     {
         //$pc = $this->getMac();
@@ -56,9 +57,10 @@ class sucursales_model extends CI_Model
           //              self::sys_sucursal_pc.'.id_sucursal = '.
             //            self::sys_sucursal.'.id_sucursal');
 
-        //$this->db->where(self::usuarios.'.id_usuario',$id_user);
+        $this->db->where(self::usuarios.'.id_usuario',$id_user);
         //$this->db->where(self::sys_sucursal_pc.'.mac_address',$pc);
         $query = $this->db->get();
+        //echo $this->db->queries[0];
         
         if($query->num_rows() > 0 )
         {

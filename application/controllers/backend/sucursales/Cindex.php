@@ -16,6 +16,7 @@ class Cindex extends CI_Controller {
 		
 	}
 
+	// Sucursales Asignadas a cada usuario
 	public function index()
 	{	
 		session_start();
