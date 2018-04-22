@@ -81,12 +81,13 @@
 
 										var llevar = "";
 										if(response.pedido[i][j]['llevar'] == 1){
-											llevar = " Llevar ";
+											llevar = " Llevar";
 										}
 
 									// Detalle Productos
 									html += "<tr><td>"+contador+"</td>";
-									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)";
+									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)"+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='200px' />";
+
 											
 									
 									var llevar = "";
@@ -163,7 +164,8 @@
 						}
 
 						html += "<tr><td>"+contador+"</td>";
-						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)";
+						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)"
+						+"<img src='/kaprichos/uploaded/mod_productos/"+response.detalle[j]['image']+"' />";
 						
 						llevar = "";
 							
