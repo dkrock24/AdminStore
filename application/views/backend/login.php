@@ -97,7 +97,7 @@
             </div>
 
             <p class="account-copyright">
-                <span>Copyright © 2017 </span><span>SISTEM ADMINISTRATIVO. LAPIZZERIA</span>.<span>Derechos Reservados</span>
+                <span>Copyright © 2018 </span><span>KAPRICHOS FLORISTERIA - SISTEM ADMINISTRATIVO.</span>
             </p>
 
                     <div class="row">

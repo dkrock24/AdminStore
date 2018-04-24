@@ -60,12 +60,12 @@
 							for(var i=0 ; i<response.pedido.length ; i++)
 							{
 
-								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 							
 								// pedido
 								var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
 								html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
-								html += "<tr><td>#</td><td>Nombre Producto</td></tr>";
+								
 								
 
 				
@@ -86,7 +86,7 @@
 
 									// Detalle Productos
 									html += "<tr><td>"+contador+"</td>";
-									html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.pedido[i][j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)"+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='200px' />";
+									html += "<td>[ "+ response.pedido[i][j]['pedido_estado'] +" ]<br>"+response.pedido[i][j]['nombre_producto']+" / " +response.pedido[i][j]['description_producto']+"(<b style='color:red;'>"+llevar+"</b>)<br>"+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='150px' />";
 
 											
 									
@@ -282,14 +282,20 @@ body{
 }
 
 .title{
-	background: #9AC835;
+	background: #D82787;
 	color: white;
 	text-align: center;
 	top: 0px;
 }
+.requestfullscreen{
+	color: white;
+}
 .time{
 	text-align:right;
 	padding: 10px;
+}
+.comanda{
+	text-align: center;	
 }
 </style>
 <body oncontextmenu="return false;">
