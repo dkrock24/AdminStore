@@ -9,10 +9,23 @@ class Corden extends CI_Controller {
 		$this->load->helper('url');		
 		$this->load->database('default');	
 		$this->load->model('backend/orden/orden_model');			
+		$this->load->model('backend/sucursales/Sucursales_model');
+		$this->load->model('backend/productos/Productos_model');
 	}
 
 	public function index(){
-		$this->load->view('backend/orden/Vorden.php');
+		session_start();
+		$data['sucursales'] = $this->Sucursales_model->getSucursalesByUser($_SESSION['idUser']);
+		$data['categorias'] = $this->Productos_model->categoria();
+		
+		$this->load->view('backend/orden/Vorden.php', $data);
+	}
+
+	public function getProductoById($id){
+		if(isset($id)){
+			$data = $this->orden_model->getProductoById($id);
+		}
+		echo json_encode( $data );
 	}
 
 	public function buscar(){
@@ -23,10 +36,10 @@ class Corden extends CI_Controller {
 		}
 
 		if($_POST['categoria']!=null){
-			//$data = $this->orden_model->getByCategoria($_POST['categoria']);
+			$data = $this->orden_model->getByCategoria($_POST['categoria']);
 		}
 		$contador =1;
-		$html = "";
+		$html = '';
 		$html .='<div class="panel panel-default">';
 		$html .='<div class="panel-body">';
 		$html .='<div class="table-responsive">';
@@ -50,7 +63,7 @@ class Corden extends CI_Controller {
 					$html .='<td class="text-center">'. $value->nombre_categoria_producto .'</td>';
 					$html .='<td class="text-center">'. $value->numerico1 .'</td>';
 					$html .='<td class="text-right">'. $value->numerico1 .'</td>';
-					$html .='<td class="text-right"><button class="btn btn-success btn-xs">Agregar</button></td>';
+					$html .='<td class="text-right"><button class="btn btn-success btn-xs">Agregar</button><a href="#" class="viewProducto" id="'.$value->id_producto.'"  onclick="myFunction('.$value->id_producto.')">Ver</a></td>';
 					$html .='</tr>';
 
 					$contador++;
@@ -59,6 +72,6 @@ class Corden extends CI_Controller {
 								$html .='</tbody></table></div></div></div>';
 
 		echo $html;
-		//echo json_encode($html);
+		//echo json_encode( $data);
 	}
 }

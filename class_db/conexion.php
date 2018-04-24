@@ -3,15 +3,12 @@
 // 45.33.3.227
 // 	lapizzeria2016!
 // db_global_lapizzeria
+include "../global_values.php";
 
+$GLOBALS['user'],$GLOBALS['passwd'],$GLOBALS['host']
 
 function getID($id_menu){
-
-	$usuario = "root";
-	$password = "lapizzeria2016!";
-	$host = "localhost:3306";
-	$db="db_global_lapizzeria";
-	$db = new PDO("mysql:host=$host;dbname=$db",$usuario,$password);
+	$db = new PDO("mysql:host=$GLOBALS['host'];dbname=$GLOBALS['db']",$GLOBALS['user'],$GLOBALS['passwd']);
 
 	$query = $db->prepare("select * from sr_submenu where id_menu='".$id_menu."' && estado_submen = 1");
 	
@@ -23,10 +20,10 @@ function getID($id_menu){
 
 function login(){
 
-	$usuario = "root";
-	$password = "lapizzeria2016!";
-	$host = "localhost:3306";
-	$db="db_global_lapizzeria";
+	$usuario = $GLOBALS['user'];
+	$password = $GLOBALS['passwd'];
+	$host = $GLOBALS['host'];
+	$db=$GLOBALS['db'];
 	$db = new PDO("mysql:host=$host;dbname=$db",$usuario,$password);
 }
 

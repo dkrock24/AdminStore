@@ -1,36 +1,57 @@
 <script>
+
+function myFunction(id_producto){
+    $(document).ready(function(){
+
+            $.ajax({
+                url: "../orden/Corden/getProductoById/"+id_producto,
+                type:"get",
+                 dataType : "json",
+                
+                success: function(data){
+                    //console.log(data[0].nombre_producto);
+                    $("#producto_id").text(data[0].nombre_producto);
+                    
+                    $('#viewProducto').modal({
+                        show: 'true'
+                    });              
+                },
+                error:function(){
+                    alert("failure1");
+                }
+            });
+  
+    });
+}
+    
 $(document).ready(function(){
 
-	$(".buscar").click(function(){
-		
-		$.ajax({
-		    url: "../orden/Corden/buscar",
-		    type:"post",
-		    data: $('#ordenForm').serialize(), 
-		    
-		    success: function(data){
-		    	//console.log(data);
-		        $('.data').html(data);
-		        
-		    },
-		    error:function(){
-		        alert("failure1");
-		    }
-		});
-	});
-})
+    $(".buscar").click(function(){
+        
+        $.ajax({
+            url: "../orden/Corden/buscar",
+            type:"post",
+            data: $('#ordenForm').serialize(), 
 
-<?php
+            
+            success: function(data){
+                //console.log(data);
 
-//var_dump($productos);
-
-?>
+                $('.data').html(data);
+                
+            },
+            error:function(){
+                alert("failure1");
+            }
+        });
+    }); 
+});
 
 </script>
 
 	
     <div class="row">
-    	<form name="ordenForm" id="ordenForm">
+    	<form name="ordenForm" id="ordenForm" method="post">
         <div class="col-xs-12">
             <div class="text-center">
                 <i class="fa fa-search-plus pull-left icon"></i>
@@ -52,7 +73,14 @@ $(document).ready(function(){
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Categoria</div>
                         <div class="panel-body" style="border:1px solid grey;">
                             <select class="form-control" name="categoria">
-                            	<option value="1">Categorias</option>
+                                <option></option>
+                                <?php
+
+                                foreach ($categorias as $categoria) {
+                                    ?><option value="<?php echo $categoria->id_categoria_producto; ?>"><?php echo $categoria->nombre_categoria_producto ?></option><?php
+                                }
+                                ?>
+                            	
                             </select>
                         </div>
                     </div>
@@ -62,7 +90,12 @@ $(document).ready(function(){
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Sucursal</div>
                         <div class="panel-body" style="border:1px solid grey;">
                             <select class="form-control" name="sucursal">
-                            	<option value="2">Sucursal</option>
+                            	<?php
+
+                                foreach ($sucursales as $sucursal) {
+                                    ?><option value="<?php echo $sucursal->id_sucursal; ?>"><?php echo $sucursal->nombre_sucursal.' / '. $sucursal->nombre_departamento ?></option><?php
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -71,6 +104,7 @@ $(document).ready(function(){
                     <div class="panel panel-primary height">
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Buscar Producto</div>
                         <div class="panel-body" style="border:1px solid grey;">
+                            
                             <a href="#" class="buscar form-control">Buscar</a>
                             
                         </div>
@@ -82,6 +116,7 @@ $(document).ready(function(){
     </div>
 
     <div class="row">
+        <button class="viewProducto">ejemplo</button>
 		<div class="col-md-12 data">
 			
 		</div>
@@ -179,5 +214,35 @@ $(document).ready(function(){
 </style>
 
 <!-- Simple Invoice - END -->
+
+
+
+<div class="modal fade" id="viewProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        
+            <h1 style="text-align: center"><img src="images/flores-para-el-salvador.png"/></h1>
+            <h4 class="modal-title" id="myModalLabel" style="text-align: center"></h4>
+        </div> <!-- /.modal-header -->
+
+        <div class="modal-body">
+            <ul class="list-group">
+               <span id="producto_id"></span>
+            </ul>
+        </div> <!-- /.modal-body -->
+
+    <div class="modal-footer">
+        
+
+      </div> <!-- /.modal-footer -->
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 

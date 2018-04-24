@@ -20,7 +20,15 @@ class orden_model extends CI_Model
 
     public function getByCategoria($categoria)
     {
-        $query = $this->db->query('Select * from productsv1 as p where p.categoria_id = "'. $categoria .'"');
+        $query = $this->db->query('Select * from productsv1 as p left join categoria as c ON c.id_categoria_producto=p.categoria_id where c.id_categoria_producto = "'. $categoria .'"');
+        //echo $this->db->queries[0];
+        return $query->result();       
+        
+    } 
+
+    public function getProductoById($id)
+    {
+        $query = $this->db->query('Select * from productsv1 as p left join categoria as c ON c.id_categoria_producto=p.categoria_id where p.id_producto = "'. $id .'"');
         //echo $this->db->queries[0];
         return $query->result();       
         

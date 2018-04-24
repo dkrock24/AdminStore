@@ -53,9 +53,9 @@ class sucursales_model extends CI_Model
                         self::usuarios.'.id_usuario = '.
                         self::sys_sucursal_int_usuarios.'.id_usuario');
 
-        $this->db->join(self::usuarios,' on '. 
-                        self::usuarios.'.id_usuario = '.
-                        self::sys_sucursal_int_usuarios.'.id_usuario');
+        $this->db->join(self::sys_pais_departamento,' on '. 
+                        self::sys_pais_departamento.'.id_departamento = '.
+                        self::sys_sucursal.'.id_departamento');
 
         //$this->db->join(self::sys_sucursal_pc,' on '. 
           //              self::sys_sucursal_pc.'.id_sucursal = '.
