@@ -63,7 +63,7 @@ class Corden extends CI_Controller {
 					$html .='<td class="text-center">'. $value->nombre_categoria_producto .'</td>';
 					$html .='<td class="text-center">'. $value->numerico1 .'</td>';
 					$html .='<td class="text-right">'. $value->numerico1 .'</td>';
-					$html .='<td class="text-right"><button class="btn btn-success btn-xs">Agregar</button><a href="#" class="viewProducto" id="'.$value->id_producto.'"  onclick="myFunction('.$value->id_producto.')">Ver</a></td>';
+					$html .='<td class="text-right"><button class="btn btn-success btn-xs">Agregar</button><a href="#" class="btn btn-default btn-xs viewProducto" id="'.$value->id_producto.'"  onclick="myFunction('.$value->id_producto.')">Ver</a></td>';
 					$html .='</tr>';
 
 					$contador++;

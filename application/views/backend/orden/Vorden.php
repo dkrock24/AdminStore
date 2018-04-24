@@ -10,8 +10,13 @@ function myFunction(id_producto){
                 
                 success: function(data){
                     //console.log(data[0].nombre_producto);
-                    $("#producto_id").text(data[0].nombre_producto);
-                    
+                    $("#producto_imagen").attr('src','/kaprichos/uploaded/mod_productos/'+data[0].image);
+                    $('#producto_titulo').text(data[0].nombre_producto);
+                    $('#producto_precio').text(data[0].numerico1);
+                    $('#producto_minimo').text(data[0].numerico1);
+                    $('#producto_categoria').text(data[0].nombre_categoria_producto);
+                    $('#producto_descripcion').text(data[0].description_producto);
+
                     $('#viewProducto').modal({
                         show: 'true'
                     });              
@@ -211,6 +216,12 @@ $(document).ready(function(){
 	.table > tbody > tr > .highrow {
 	    border-top: 3px solid;
 	}
+    .titulo_modal{
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+        color: white;
+    }
 </style>
 
 <!-- Simple Invoice - END -->
@@ -221,17 +232,44 @@ $(document).ready(function(){
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        
-            <h1 style="text-align: center"><img src="images/flores-para-el-salvador.png"/></h1>
-            <h4 class="modal-title" id="myModalLabel" style="text-align: center"></h4>
+      <div class="modal-header" style="background: rgb(216, 39, 135);">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>
+            <div class="row">                
+                <div class="col-md-12">
+                    <b><h3 id="producto_titulo" class="titulo_modal"> </h3></b>
+                </div>
+            </div>
+            
         </div> <!-- /.modal-header -->
 
         <div class="modal-body">
-            <ul class="list-group">
-               <span id="producto_id"></span>
-            </ul>
+            <div class="row">                
+                <div class="col-md-12" style="text-align: center;">
+                    <img src="" width="300px" id="producto_imagen">
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Precio Sugerido : </td>
+                            <td><label id="producto_precio"></label></td>
+                        </tr>
+                        <tr>
+                            <td>Precio Minimo : </td>
+                            <td><label id="producto_minimo"></label></td>
+                        </tr>
+                        <tr>
+                            <td>Categoria : </td>
+                            <td><label id="producto_categoria"></label></td>
+                        </tr>
+                        <tr>
+                            <td>Descripcion : </td>
+                            <td><label id="producto_descripcion"></label></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
         </div> <!-- /.modal-body -->
 
     <div class="modal-footer">
