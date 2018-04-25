@@ -33,6 +33,27 @@ function myFunction(id_producto){
     });
 }
 
+function agregar(id_producto){
+    $(document).ready(function(){
+     
+            $.ajax({
+                url: "../orden/Corden/agregar/"+id_producto,
+                type:"get",
+
+                
+                success: function(data){
+                    //console.log(data);
+                    $('.resumen').html(data);
+                    //$('.data').empty();        
+                },
+                error:function(){
+                    alert("Error Datos Temp");
+                }
+            });
+  
+    });
+}
+
 function deleteItem(id_producto){
     
     $.ajax({
@@ -53,6 +74,10 @@ function deleteItem(id_producto){
 
     
 $(document).ready(function(){
+
+    $("#cerrarBuscador").click(function(){
+        $('.data').empty();   
+    });
 
     $(".buscar").click(function(){
         
@@ -151,7 +176,7 @@ $(document).ready(function(){
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Buscar Producto</div>
                         <div class="panel-body" style="border:1px solid grey;">
                             
-                            <a href="#" class="buscar form-control">Buscar</a>
+                            <a href="#" class="buscar form-control">Buscar</a>                            
                             
                         </div>
                     </div>
