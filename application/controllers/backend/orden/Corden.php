@@ -28,6 +28,155 @@ class Corden extends CI_Controller {
 		echo json_encode( $data );
 	}
 
+	public function delete($id){
+		session_start();
+			$num = 0;
+			//var_dump($_SESSION['cart']);
+			//print_r(array_keys($_SESSION['cart']));
+			//echo $id;
+			
+			foreach ($_SESSION['cart'] as $value) {
+				
+				
+
+				foreach ($value as  $demo) {
+					var_dump($demo);
+					echo "<hr>";
+
+					if( $demo->id_producto == $id ){
+							unset($_SESSION['cart'][$key]);
+						}
+
+					foreach (array_keys($_SESSION['cart']) as $key) {						
+					}
+									
+					
+				}
+				$num++;				
+			}
+			var_dump($_SESSION['cart']);
+			$this->showCart();
+	}
+	public function showCart(){
+
+		$html1 = '';
+		$total = 0;
+		$shipping = 0;
+		$subtotal = 0;
+
+		foreach ($_SESSION['cart'] as $value) {
+			foreach ($value as $demo) {
+				
+				$subtotal +=  $demo->numerico1;
+
+				$html1 .= '<tr>';
+				$html1 .= '<td>'. $demo->nombre_producto .'</td>';
+				$html1 .= '<td class="text-center">'. $demo->nombre_producto .'</td>';
+				$html1 .= '<td class="text-center">'. $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-center">'.  $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right">'. $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right"><a href="#" class="btn btn-default btn-xs" onclick="deleteItem('.$demo->id_producto.')">Eliminar</a></td>';
+				$html1 .= '</tr>'; 	
+			}					
+		}	
+		$html1 .= '<tr>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow text-center"><strong>Subtotal</strong></td>';
+		$html1 .= ' <td class="highrow text-right">'. $subtotal .'</td>';
+		$html1 .= '</tr>'; 
+
+		$html1 .= '<tr>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow text-center"><strong>Shipping</strong></td>';
+		$html1 .= '<td class="emptyrow text-right">'. $shipping .'</td>';
+		$html1 .= '</tr>';
+
+		$html1 .= '<tr>';
+		$html1 .= '<td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow text-center"><strong>Total</strong></td>';
+		$html1 .= '<td class="emptyrow text-right">'. $total .'</td>';
+		$html1 .= '</tr>';
+                                  
+          
+		echo $html1;
+	}
+
+	public function agregar($datos){
+		
+		
+		session_start();
+		$data = $this->orden_model->getProductoById($datos);
+		
+
+		if( !isset( $_SESSION['cart'] ) )
+		{
+			$_SESSION['cart'] = array();
+			array_push($_SESSION['cart'],$data);
+		}else{
+			array_push($_SESSION['cart'],$data);
+		}
+
+		$html1 = '';
+		$total = 0;
+		$shipping = 0;
+		$subtotal = 0;
+
+		foreach ($_SESSION['cart'] as $value) {
+			foreach ($value as $demo) {
+				
+				$subtotal +=  $demo->numerico1;
+
+				$html1 .= '<tr>';
+				$html1 .= '<td>'. $demo->nombre_producto .'</td>';
+				$html1 .= '<td class="text-center">'. $demo->nombre_producto .'</td>';
+				$html1 .= '<td class="text-center">'. $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-center">'.  $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right">'. $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right"><a href="#" class="btn btn-default btn-xs" onclick="deleteItem('.$demo->id_producto.')">Eliminar</a></td>';
+				$html1 .= '</tr>'; 	
+			}					
+		}	
+		$html1 .= '<tr>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow"></td>';
+		$html1 .= '<td class="highrow text-center"><strong>Subtotal</strong></td>';
+		$html1 .= ' <td class="highrow text-right">'. $subtotal .'</td>';
+		$html1 .= '</tr>'; 
+
+		$html1 .= '<tr>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow text-center"><strong>Shipping</strong></td>';
+		$html1 .= '<td class="emptyrow text-right">'. $shipping .'</td>';
+		$html1 .= '</tr>';
+
+		$html1 .= '<tr>';
+		$html1 .= '<td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow"></td>';
+		$html1 .= '<td class="emptyrow text-center"><strong>Total</strong></td>';
+		$html1 .= '<td class="emptyrow text-right">'. $total .'</td>';
+		$html1 .= '</tr>';
+                                  
+          
+		echo $html1;
+		//echo json_encode( $html);
+	}
+
 	public function buscar(){
 		
 		$data='';

@@ -1,4 +1,5 @@
 <script>
+var datosTemp;
 
 function myFunction(id_producto){
     $(document).ready(function(){
@@ -17,9 +18,12 @@ function myFunction(id_producto){
                     $('#producto_categoria').text(data[0].nombre_categoria_producto);
                     $('#producto_descripcion').text(data[0].description_producto);
 
+                    $('.producto_id').attr('name',data[0].id_producto);                    
+
                     $('#viewProducto').modal({
                         show: 'true'
-                    });              
+                    });      
+                    datosTemp = data ;
                 },
                 error:function(){
                     alert("failure1");
@@ -28,6 +32,25 @@ function myFunction(id_producto){
   
     });
 }
+
+function deleteItem(id_producto){
+    
+    $.ajax({
+            url: "../orden/Corden/delete/"+id_producto,
+            type:"post",
+
+            
+            success: function(data){
+                //console.log(data);
+                //$('.resumen').html(data);               
+                
+            },
+            error:function(){
+                alert("failure1");
+            }
+        });
+}
+
     
 $(document).ready(function(){
 
@@ -41,8 +64,7 @@ $(document).ready(function(){
             
             success: function(data){
                 //console.log(data);
-
-                $('.data').html(data);
+                $('.data').html(data);               
                 
             },
             error:function(){
@@ -50,6 +72,25 @@ $(document).ready(function(){
             }
         });
     }); 
+
+    $('.producto_id').click(function(){
+        $.ajax({
+            url: "../orden/Corden/agregar/"+datosTemp[0].id_producto,
+            type:"get",
+
+            
+            success: function(data){
+                //console.log(data);
+                $('.resumen').html(data);
+                $('.data').empty();        
+            },
+            error:function(){
+                alert("Error Datos Temp");
+            }
+        });
+    });
+
+
 });
 
 </script>
@@ -121,7 +162,7 @@ $(document).ready(function(){
     </div>
 
     <div class="row">
-        <button class="viewProducto">ejemplo</button>
+        
 		<div class="col-md-12 data">
 			
 		</div>
@@ -134,36 +175,30 @@ $(document).ready(function(){
                     <h3 class="text-center"><strong>Order summary</strong></h3>
                 </div>
                 <div class="panel-body">
+                    
                     <div class="table-responsive">
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <td><strong>Item Name</strong></td>
-                                    <td class="text-center"><strong>Item Price</strong></td>
-                                    <td class="text-center"><strong>Item Quantity</strong></td>
+                                    <td><strong>Producto</strong></td>
+                                    <td class="text-center"><strong>Precio Sugerido</strong></td>
+                                    <td class="text-center"><strong>Precio Minimo</strong></td>
+                                    <td class="text-center"><strong>Cantidad</strong></td>
                                     <td class="text-right"><strong>Total</strong></td>
+                                    <td class="text-right"><strong></strong></td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="resumen">
                                 <tr>
                                     <td>Samsung Galaxy S5</td>
+                                    <td class="text-center">$900</td>
                                     <td class="text-center">$900</td>
                                     <td class="text-center">1</td>
                                     <td class="text-right">$900</td>
                                 </tr>
+
                                 <tr>
-                                    <td>Samsung Galaxy S5 Extra Battery</td>
-                                    <td class="text-center">$30.00</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">$30.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Screen protector</td>
-                                    <td class="text-center">$7</td>
-                                    <td class="text-center">4</td>
-                                    <td class="text-right">$28</td>
-                                </tr>
-                                <tr>
+                                    <td class="highrow"></td>
                                     <td class="highrow"></td>
                                     <td class="highrow"></td>
                                     <td class="highrow text-center"><strong>Subtotal</strong></td>
@@ -172,11 +207,13 @@ $(document).ready(function(){
                                 <tr>
                                     <td class="emptyrow"></td>
                                     <td class="emptyrow"></td>
+                                    <td class="emptyrow"></td>
                                     <td class="emptyrow text-center"><strong>Shipping</strong></td>
                                     <td class="emptyrow text-right">$20</td>
                                 </tr>
                                 <tr>
                                     <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
+                                    <td class="emptyrow"></td>
                                     <td class="emptyrow"></td>
                                     <td class="emptyrow text-center"><strong>Total</strong></td>
                                     <td class="emptyrow text-right">$978.00</td>
@@ -264,6 +301,14 @@ $(document).ready(function(){
                         <tr>
                             <td>Descripcion : </td>
                             <td><label id="producto_descripcion"></label></td>
+                        </tr>
+                        <tr>
+                            <td>Activar Precio Sugerido</td>
+                            <td><input type="checkbox" name="precioSugerido" value="0" class="form-check-input"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a href="#" class="btn btn-default producto_id" name="">Agregar</a></td>
                         </tr>
                     </table>
                 </div>
