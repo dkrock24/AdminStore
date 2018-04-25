@@ -42,7 +42,7 @@ function deleteItem(id_producto){
             
             success: function(data){
                 //console.log(data);
-                //$('.resumen').html(data);               
+                $('.resumen').html(data);               
                 
             },
             error:function(){

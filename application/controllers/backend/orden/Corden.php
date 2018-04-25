@@ -31,30 +31,43 @@ class Corden extends CI_Controller {
 	public function delete($id){
 		session_start();
 			$num = 0;
-			//var_dump($_SESSION['cart']);
+			//var_dump($_SESSION['cart'][2]);
 			//print_r(array_keys($_SESSION['cart']));
 			//echo $id;
 			
-			foreach ($_SESSION['cart'] as $value) {
 				
-				
-
-				foreach ($value as  $demo) {
-					var_dump($demo);
-					echo "<hr>";
-
-					if( $demo->id_producto == $id ){
-							unset($_SESSION['cart'][$key]);
-						}
-
-					foreach (array_keys($_SESSION['cart']) as $key) {						
-					}
-									
+				//var_dump($_SESSION['cart']);
+				foreach (array_keys($_SESSION['cart']) as $key) {
 					
+					//echo $_SESSION['cart'][$key]['id_producto'];	
+					
+					foreach ($_SESSION['cart'][$key] as $keys => $value) {
+						if($value->id_producto == $id){
+							unset($_SESSION['cart'][$key][$keys]);							
+						}
+					}
+					//echo $key." ************ <br> ";						
 				}
-				$num++;				
-			}
-			var_dump($_SESSION['cart']);
+						
+			
+			/*
+				foreach ($_SESSION['cart'] as $value) {				
+					var_dump($value);
+
+					foreach ($value as  $demo) {
+						//var_dump($demo);
+						//echo "<hr>";
+
+						if( $demo->id_producto == $id )
+						{
+								unset($_SESSION['cart'][$key]);
+						}			
+						$num++;	
+					}							
+				}*/
+							
+			
+			//var_dump($_SESSION['cart']);
 			$this->showCart();
 	}
 	public function showCart(){
