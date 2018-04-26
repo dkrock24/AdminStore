@@ -51,21 +51,24 @@ class Corden extends CI_Controller {
 		$total = 0;
 		$shipping = 0;
 		$subtotal = 0;
+		$contadorTabla =1;
 
 		foreach ($_SESSION['cart'] as $value) {
 
 			foreach ($value as $demo) {
 
-				$subtotal +=  $demo->numerico1;
+				$subtotal +=  $demo->numerico1 * $demo->cnt;
 
 				$html1 .= '<tr>';
+				$html1 .= '<td>'. $contadorTabla .'</td>';
 				$html1 .= '<td>'. $demo->nombre_producto .'</td>';
-				$html1 .= '<td class="text-center">'. $demo->nombre_producto .'</td>';
 				$html1 .= '<td class="text-center">'. $demo->numerico1 .'</td>';
 				$html1 .= '<td class="text-center">'. isset($demo->precio_minimo) .'</td>';
-				$html1 .= '<td class="text-right">'. $demo->cnt .'</td>';
+				$html1 .= '<td class="text-center">'. $demo->cnt .'</td>';
+				$html1 .= '<td class="text-right">'. $demo->cnt * $demo->numerico1 .'</td>';
 				$html1 .= '<td class="text-right"><a href="#" class="btn btn-default btn-xs" onclick="deleteItem('.$demo->id_producto.')">Eliminar</a></td>';
 				$html1 .= '</tr>'; 	
+				$contadorTabla++;
 			}					
 		}	
 		$html1 .= '<tr>';
@@ -73,8 +76,10 @@ class Corden extends CI_Controller {
 		$html1 .= '<td class="highrow"></td>';
 		$html1 .= '<td class="highrow"></td>';
 		$html1 .= '<td class="highrow"></td>';
+
 		$html1 .= '<td class="highrow text-center"><strong>Subtotal</strong></td>';
 		$html1 .= ' <td class="highrow text-right">'. $subtotal .'</td>';
+		$html1 .= '<td class="highrow"></td>';
 		$html1 .= '</tr>'; 
 
 		$html1 .= '<tr>';
@@ -130,9 +135,9 @@ class Corden extends CI_Controller {
 		}
 		$contador =1;
 		$html = '';
-		$html .='<div class="panel panel-default">';
+		$html .='<div class="panel panel-default gridBuscar">';
 		$html .='<div class="panel-body">';
-		$html .='<div class="table-responsive"><span id="cerrarBuscador" style="float:right;padding:5px;">X</span>';
+		$html .='<div class="table-responsive"><a href="#" class="btn btn-success btn-xs" onclick="cerrarBuscador()">Cerrar</a>';
 		$html .='<table class="table table-condensed">';
 		$html .='<thead>';
 		$html .='<tr>';
@@ -153,7 +158,7 @@ class Corden extends CI_Controller {
 					$html .='<td>'. $value->nombre_producto .'</td>';
 					$html .='<td class="text-center">'. $value->nombre_categoria_producto .'</td>';
 					$html .='<td class="text-center">'. $value->numerico1 .'</td>';
-					$html .='<td class="text-right">'. $value->precio_minimo .'</td>';
+					$html .='<td class="text-right">'. $value->precio_minimo .' <input type="checkbox" name="minimo'.$value->id_producto.'"/></td>';
 					$html .='<td class="text-right"><input type="number" id="producto'.$value->id_producto.'" value=1 min="1" name="producto'.$value->id_producto.'"/></td>';
 					$html .='<td class="text-right"><a href="#" class="btn btn-success btn-xs" id="'.$value->id_producto.'" onclick="agregar('.$value->id_producto.')">Agregar</a><a href="#" class="btn btn-default btn-xs viewProducto" id="'.$value->id_producto.'"  onclick="myFunction('.$value->id_producto.')">Ver</a></td>';
 					$html .='</tr>';

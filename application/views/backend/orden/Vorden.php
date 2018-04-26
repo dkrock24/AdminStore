@@ -73,12 +73,16 @@ function deleteItem(id_producto){
             }
         });
 }
+
+function cerrarBuscador(){
+    $(document).ready(function(){
+
+        $('.data').empty();   
+
+    });
+}
     
 $(document).ready(function(){
-
-    $("#cerrarBuscador").click(function(){
-        $('.data').empty();   
-    });
 
     $(".buscar").click(function(){
         
@@ -206,6 +210,7 @@ $(document).ready(function(){
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
+                                    <td><strong>#</strong></td>
                                     <td><strong>Producto</strong></td>
                                     <td class="text-center"><strong>Precio Sugerido</strong></td>
                                     <td class="text-center"><strong>Precio Minimo</strong></td>
@@ -284,6 +289,12 @@ $(document).ready(function(){
         text-align: center;
         width: 100%;
         color: white;
+    }
+
+    .gridBuscar{
+        height: 350px;
+        overflow: scroll;
+
     }
 </style>
 
