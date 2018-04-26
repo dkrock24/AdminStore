@@ -52,20 +52,29 @@ class Corden extends CI_Controller {
 		$shipping = 0;
 		$subtotal = 0;
 		$contadorTabla =1;
+		$precio_minimo=0;
 
 		foreach ($_SESSION['cart'] as $value) {
 
 			foreach ($value as $demo) {
 
-				$subtotal +=  $demo->numerico1 * $demo->cnt;
+				if($demo->ck =='true'){
+					$subtotal +=  $demo->precio_minimo * $demo->cnt;
+					$total = $demo->precio_minimo * $demo->cnt;
+					$precio_minimo = $demo->precio_minimo;
+				}else{
+					$subtotal +=  $demo->numerico1 * $demo->cnt;
+					$total = $demo->numerico1 * $demo->cnt;
+					$precio_minimo = 0;
+				}				
 
 				$html1 .= '<tr>';
 				$html1 .= '<td>'. $contadorTabla .'</td>';
 				$html1 .= '<td>'. $demo->nombre_producto .'</td>';
 				$html1 .= '<td class="text-center">'. $demo->numerico1 .'</td>';
-				$html1 .= '<td class="text-center">'. isset($demo->precio_minimo) .'</td>';
+				$html1 .= '<td class="text-center">'. $precio_minimo .'</td>';
 				$html1 .= '<td class="text-center">'. $demo->cnt .'</td>';
-				$html1 .= '<td class="text-right">'. $demo->cnt * $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right">'. $total .'</td>';
 				$html1 .= '<td class="text-right"><a href="#" class="btn btn-default btn-xs" onclick="deleteItem('.$demo->id_producto.')">Eliminar</a></td>';
 				$html1 .= '</tr>'; 	
 				$contadorTabla++;
@@ -104,12 +113,11 @@ class Corden extends CI_Controller {
 		echo $html1;
 	}
 
-	public function agregar($datos,$cantidad){
+	public function agregar($datos,$cantidad,$ck){
 			
 		session_start();
-		$data = $this->orden_model->getProductoById($datos,$cantidad);
-
-		//var_dump($data);
+		$data = $this->orden_model->getProductoById($datos,$cantidad,$ck);
+		var_dump($data);
 		
 		if( !isset( $_SESSION['cart'] ) )
 		{
@@ -118,7 +126,6 @@ class Corden extends CI_Controller {
 		}else{
 			array_push($_SESSION['cart'],$data);
 		}
-
 
 		$this->showCart();
 	}
@@ -158,7 +165,7 @@ class Corden extends CI_Controller {
 					$html .='<td>'. $value->nombre_producto .'</td>';
 					$html .='<td class="text-center">'. $value->nombre_categoria_producto .'</td>';
 					$html .='<td class="text-center">'. $value->numerico1 .'</td>';
-					$html .='<td class="text-right">'. $value->precio_minimo .' <input type="checkbox" name="minimo'.$value->id_producto.'"/></td>';
+					$html .='<td class="text-right">'. $value->precio_minimo .' <input type="checkbox" id="minimo'.$value->id_producto.'" name="minimo'.$value->id_producto.'" /></td>';
 					$html .='<td class="text-right"><input type="number" id="producto'.$value->id_producto.'" value=1 min="1" name="producto'.$value->id_producto.'"/></td>';
 					$html .='<td class="text-right"><a href="#" class="btn btn-success btn-xs" id="'.$value->id_producto.'" onclick="agregar('.$value->id_producto.')">Agregar</a><a href="#" class="btn btn-default btn-xs viewProducto" id="'.$value->id_producto.'"  onclick="myFunction('.$value->id_producto.')">Ver</a></td>';
 					$html .='</tr>';

@@ -37,9 +37,10 @@ function agregar(id_producto){
     $(document).ready(function(){
         
         var cantidad = $('#producto'+id_producto).val();
+        var ck = $('#minimo'+id_producto).prop('checked');
 
             $.ajax({
-                url: "../orden/Corden/agregar/"+id_producto+"/"+cantidad,
+                url: "../orden/Corden/agregar/"+id_producto+"/"+cantidad+"/"+ck,
                 type:"get",
 
                 
@@ -220,35 +221,7 @@ $(document).ready(function(){
                                 </tr>
                             </thead>
                             <tbody class="resumen">
-                                <tr>
-                                    <td>Samsung Galaxy S5</td>
-                                    <td class="text-center">$900</td>
-                                    <td class="text-center">$900</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">$900</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="highrow"></td>
-                                    <td class="highrow"></td>
-                                    <td class="highrow"></td>
-                                    <td class="highrow text-center"><strong>Subtotal</strong></td>
-                                    <td class="highrow text-right">$958.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow text-center"><strong>Shipping</strong></td>
-                                    <td class="emptyrow text-right">$20</td>
-                                </tr>
-                                <tr>
-                                    <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow text-center"><strong>Total</strong></td>
-                                    <td class="emptyrow text-right">$978.00</td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
