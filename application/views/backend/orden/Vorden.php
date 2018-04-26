@@ -35,10 +35,13 @@ function myFunction(id_producto){
 
 function agregar(id_producto){
     $(document).ready(function(){
-     
+        
+        var cantidad = $('#producto'+id_producto).val();
+
             $.ajax({
                 url: "../orden/Corden/agregar/"+id_producto,
                 type:"get",
+                data: {cant:cantidad},
 
                 
                 success: function(data){
@@ -71,7 +74,6 @@ function deleteItem(id_producto){
             }
         });
 }
-
     
 $(document).ready(function(){
 
