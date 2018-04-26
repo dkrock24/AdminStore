@@ -39,9 +39,8 @@ function agregar(id_producto){
         var cantidad = $('#producto'+id_producto).val();
 
             $.ajax({
-                url: "../orden/Corden/agregar/"+id_producto,
+                url: "../orden/Corden/agregar/"+id_producto+"/"+cantidad,
                 type:"get",
-                data: {cant:cantidad},
 
                 
                 success: function(data){

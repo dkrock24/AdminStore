@@ -51,11 +51,11 @@ class Corden extends CI_Controller {
 		$total = 0;
 		$shipping = 0;
 		$subtotal = 0;
-		var_dump($_SESSION['cart']);
 
 		foreach ($_SESSION['cart'] as $value) {
+
 			foreach ($value as $demo) {
-				
+
 				$subtotal +=  $demo->numerico1;
 
 				$html1 .= '<tr>';
@@ -63,7 +63,7 @@ class Corden extends CI_Controller {
 				$html1 .= '<td class="text-center">'. $demo->nombre_producto .'</td>';
 				$html1 .= '<td class="text-center">'. $demo->numerico1 .'</td>';
 				$html1 .= '<td class="text-center">'. isset($demo->precio_minimo) .'</td>';
-				$html1 .= '<td class="text-right">'. $demo->numerico1 .'</td>';
+				$html1 .= '<td class="text-right">'. $demo->cnt .'</td>';
 				$html1 .= '<td class="text-right"><a href="#" class="btn btn-default btn-xs" onclick="deleteItem('.$demo->id_producto.')">Eliminar</a></td>';
 				$html1 .= '</tr>'; 	
 			}					
@@ -99,25 +99,13 @@ class Corden extends CI_Controller {
 		echo $html1;
 	}
 
-	public function agregar($datos){
+	public function agregar($datos,$cantidad){
 			
 		session_start();
-		$data = $this->orden_model->getProductoById($datos);
-		$df = $_GET['cant'];
-		$cantidad = array('cant' => $df);
-		//array_push($data[0],$cantidad );
-		//$data[0] =  $_GET['cant'] ;
-		
-//array_merge($data , ['ingredientes_completos'] => 1);
-//print_r($data);
+		$data = $this->orden_model->getProductoById($datos,$cantidad);
 
-            
-        array_merge((array)$data, (array)$cantidad); 
-
-        var_dump($data);
+		//var_dump($data);
 		
-		
-
 		if( !isset( $_SESSION['cart'] ) )
 		{
 			$_SESSION['cart'] = array();
