@@ -59,8 +59,15 @@ class Corden extends CI_Controller {
 			foreach ($value as $demo) {
 
 				if($demo->ck =='true'){
-					$subtotal +=  $demo->precio_minimo * $demo->cnt;
-					$total = $demo->precio_minimo * $demo->cnt;
+					
+					if($demo->precio_minimo !=0){
+						$total = $demo->precio_minimo * $demo->cnt;
+						$subtotal +=  $demo->precio_minimo * $demo->cnt;
+					}else{
+						$total = $demo->numerico1 * $demo->cnt;
+						$subtotal +=  $demo->numerico1 * $demo->cnt;
+					}
+					
 					$precio_minimo = $demo->precio_minimo;
 				}else{
 					$subtotal +=  $demo->numerico1 * $demo->cnt;
@@ -101,12 +108,12 @@ class Corden extends CI_Controller {
 		$html1 .= '</tr>';
 
 		$html1 .= '<tr>';
-		$html1 .= '<td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>';
+		$html1 .= '<td class="emptyrow"></td>';
 		$html1 .= '<td class="emptyrow"></td>';
 		$html1 .= '<td class="emptyrow"></td>';
 		$html1 .= '<td class="emptyrow"></td>';
 		$html1 .= '<td class="emptyrow text-center"><strong>Total</strong></td>';
-		$html1 .= '<td class="emptyrow text-right">'. $total .'</td>';
+		$html1 .= '<td class="emptyrow text-right">'. $subtotal .'</td>';
 		$html1 .= '</tr>';
                                   
           

@@ -203,7 +203,7 @@ $(document).ready(function(){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="text-center"><strong>Order summary</strong></h3>
+                    <h3 class="text-center"><strong>Resumen de la Orden</strong></h3>
                 </div>
                 <div class="panel-body">
                     
@@ -222,8 +222,49 @@ $(document).ready(function(){
                             </thead>
                             <tbody class="resumen">
                                 
-                            </tbody>
+                            </tbody>                            
                         </table>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        Cliente : <input type="text" placeholder="Nombre Completo" name="cliente" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        E-mail : <input type="email" placeholder="E-Mail" name="email" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        Telefono : <input type="text" placeholder="Telefono" name="telefono" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        Celular : <input type="text" placeholder="Celular" name="celular" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        Direccion : <textarea name="direccion" class="form-control"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        Texto : <textarea name="texto" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        Fecha Entrega : <input type="date" name="fecha_entrega" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                         Nota Interna :<textarea name="nota_interna" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        De : <input type="text" name="de" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        Para : <input type="text" name="para" class="form-control">
                     </div>
                 </div>
             </div>
