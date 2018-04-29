@@ -185,4 +185,28 @@ class Corden extends CI_Controller {
 		echo $html;
 		//echo json_encode( $data);
 	}
+
+	public function procesarOrden(){
+		session_start();
+		// Procesar Orden de Pedido
+
+		//Datos Cliente desde le dorumlario
+		if(isset($_POST) and isset($_SESSION['cart'])){
+			$datos_cliente = $_POST;
+
+			//Insertando a cliente
+			$this->orden_model->saveOrden($_POST);
+
+
+		}else{
+			echo "No existen Datos que esar";
+		}
+		
+
+
+		//Obteniendo orden de compra
+		var_dump($_SESSION['cart']);
+
+
+	}
 }

@@ -85,6 +85,13 @@ function cerrarBuscador(){
     
 $(document).ready(function(){
 
+    var sucursalId = $("#sucursalId").val();
+    $("#sucursalActiva").val(sucursalId);
+
+    $("#sucursalId").change(function(){        
+        $("#sucursalActiva").val($(this).val());
+    });
+
     $(".buscar").click(function(){
         
         $.ajax({
@@ -121,6 +128,26 @@ $(document).ready(function(){
         });
     });
 
+    // Procesar Orden
+    $("#procesar_orden").click(function(){
+        
+        $.ajax({
+            url: "../orden/Corden/procesarOrden",
+            type:"post",
+            data: $('#detalle_orden').serialize(), 
+
+            
+            success: function(data){
+                //console.log(data);
+                //$('.data').html(data);               
+                
+            },
+            error:function(){
+                alert("failure1");
+            }
+        });
+    });
+
 
 });
 
@@ -130,11 +157,7 @@ $(document).ready(function(){
     <div class="row">
     	<form name="ordenForm" id="ordenForm" method="post">
         <div class="col-xs-12">
-            <div class="text-center">
-                <i class="fa fa-search-plus pull-left icon"></i>
-                <h2>Orden #33221</h2>
-            </div>
-            <hr>
+
             <div class="row">
                 <div class="col-xs-12 col-md-3 col-lg-3 pull-left">
                     <div class="panel panel-primary height">
@@ -166,7 +189,7 @@ $(document).ready(function(){
                     <div class="panel panel-primary height">
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Sucursal</div>
                         <div class="panel-body" style="border:1px solid grey;">
-                            <select class="form-control" name="sucursal">
+                            <select class="form-control" name="sucursal" id="sucursalId">
                             	<?php
 
                                 foreach ($sucursales as $sucursal) {
@@ -227,6 +250,7 @@ $(document).ready(function(){
                         
                     </div>
                 </div>
+                <form action="#" id="detalle_orden" method="post">
                 <div class="row">
                     <div class="col-md-6">
                         Cliente : <input type="text" placeholder="Nombre Completo" name="cliente" class="form-control">
@@ -237,36 +261,67 @@ $(document).ready(function(){
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        Telefono : <input type="text" placeholder="Telefono" name="telefono" class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">Telefono : <input type="text" placeholder="Telefono" name="telefono" class="form-control"></div>
+                            <div class="col-md-6">Celular : <input type="text" placeholder="Celular" name="celular" class="form-control"></div>
+                        </div>                        
                     </div>
                     <div class="col-md-6">
-                        Celular : <input type="text" placeholder="Celular" name="celular" class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                De : <input type="text" name="de" placeholder="De" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                Para : <input type="text" name="para" placeholder="Para" class="form-control">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        Direccion : <textarea name="direccion" class="form-control"></textarea>
+                        Direccion de Entrega: <textarea name="direccion" class="form-control"></textarea>
                     </div>
                     <div class="col-md-6">
-                        Texto : <textarea name="texto" class="form-control"></textarea>
+                        Dedicatoria : <textarea name="texto" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        Fecha Entrega : <input type="date" name="fecha_entrega" class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">Fecha Entrega : <input type="date" name="fecha_entrega" value="<?php echo date('Y-m-d'); ?>" class="form-control"></div>
+                            <div class="col-md-6">Pagado?<br>
+                                <select class="form-control" name="pagado">
+                                    <option value="0">Cancelado</option>
+                                    <option value="1">Pendiente</option>
+                                </select>
+                            </div>
+                        </div>                        
                     </div>
                     <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                Tarjeta Bancaria: <input type="text" name="tarjeta" placeholder="Tarjeta" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                CVS : <input type="text" name="cvs" placeholder="CVS" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                          Nota Interna :<textarea name="nota_interna" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        De : <input type="text" name="de" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        Para : <input type="text" name="para" class="form-control">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3">
+                        <br>
+                        <input type="hidden" name="sucursalActiva" value="" id="sucursalActiva">
+                        <a href="#" name="guardarOrden" id="procesar_orden" class="btn btn-primary">Guardar Orden</a>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
