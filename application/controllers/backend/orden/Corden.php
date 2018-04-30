@@ -191,11 +191,11 @@ class Corden extends CI_Controller {
 		// Procesar Orden de Pedido
 
 		//Datos Cliente desde le dorumlario
-		if(isset($_POST) and isset($_SESSION['cart'])){
+		if(isset($_POST) or isset($_SESSION['cart'])){
 			$datos_cliente = $_POST;
 
 			//Insertando a cliente
-			$this->orden_model->saveOrden($_POST);
+			$this->orden_model->saveOrden($_POST , $_SESSION['cart'] );
 
 
 		}else{
@@ -205,7 +205,7 @@ class Corden extends CI_Controller {
 
 
 		//Obteniendo orden de compra
-		var_dump($_SESSION['cart']);
+		//var_dump($_SESSION['cart']);
 
 
 	}

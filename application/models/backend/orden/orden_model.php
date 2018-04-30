@@ -7,6 +7,8 @@ class orden_model extends CI_Model
     const sys_pedido_detalle = 'sys_pedido_detalle'; 
     const sys_secuencia = 'sys_secuencia';
     const sys_productos_sucursal = 'sys_productos_sucursal';
+    const sys_sucursal_nodo = 'sys_sucursal_nodo';
+    
     
     public function __construct()
     {
@@ -40,7 +42,7 @@ class orden_model extends CI_Model
     } 
 
     // SAve Encabezado de la orden
-    public function saveOrden( $datos_orden ){
+    public function saveOrden( $datos_orden , $productos){
 
         // obtener la secuencia de la secursal
         $date = date("Y-m-d");
@@ -72,7 +74,7 @@ class orden_model extends CI_Model
             }
         }
 
-        session_start();
+        //session_start();
         $date = date("Y-m-d H:i:s");
         $data = array(
             'secuencia_orden'   => $valor_secuencia,
@@ -104,15 +106,22 @@ class orden_model extends CI_Model
 
         //Insertando pedido Detalle
         $id_orden = $this->db->insert_id();
-        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva']);
+        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva'] , $productos);
 
         return $id_orden;
     }
 
-    public function InsertPedidoDetalle( $id_orden , $id_sucursal ){
+    public function InsertPedidoDetalle( $id_orden , $id_sucursal , $productos ){
         // Insertando el detalle de producto por orden
+        $date = date("Y-m-d H:m:s");
 
-        foreach ($_SESSION['cart'] as $value) {
+        $total = 0;
+        $shipping = 0;
+        $subtotal = 0;
+        $contadorTabla =1;
+        $precio_minimo=0;
+
+        foreach ($productos as $value) {
             
             foreach ($value as $demo) {
 
@@ -122,41 +131,46 @@ class orden_model extends CI_Model
                     
                     if($demo->precio_minimo !=0){
                         $total = $demo->precio_minimo * $demo->cnt;
-                        $subtotal +=  $demo->precio_minimo * $demo->cnt;
+                        //$subtotal +=  $demo->precio_minimo * $demo->cnt;
                     }else{
                         $total = $demo->numerico1 * $demo->cnt;
-                        $subtotal +=  $demo->numerico1 * $demo->cnt;
+                        //$subtotal +=  $demo->numerico1 * $demo->cnt;
                     }
                     
                     $precio_minimo = $demo->precio_minimo;
                 }else{
-                    $subtotal +=  $demo->numerico1 * $demo->cnt;
+                    //$subtotal +=  $demo->numerico1 * $demo->cnt;
                     $total = $demo->numerico1 * $demo->cnt;
                     $precio_minimo = 0;
-                }               
+                } 
+                $original = $demo->numerico1 * $demo->cnt;
+
+                $data = array(
+                    'id_pedido'         => $id_orden,           
+                    'id_producto'       => $demo->id_producto,
+                    'id_nodo'           => $nodo[0]->id,           
+                    'producto_elaborado'=> 0,
+                    'precio_grabado'    => $total,
+                    'precio_original'   => $original,
+                    'cantidad'          => $demo->cnt,
+                    'llevar'            => 0,
+                    'estado'            => 1,
+                );     
+                $this->db->insert(self::sys_pedido_detalle,$data);         
             }                   
         }
-
-        $date = date("Y-m-d H:m:s");
-        $data = array(
-            'id_pedido'         => $id_orden,           
-            'id_producto'       => $Id_Producto,
-            'id_nodo'           => $nodo,           
-            'producto_elaborado'=> 0,
-            'precio_grabado'    => $Precio,
-            'precio_original'   => $precioOriginal,
-            'llevar'            => $llevar,
-            'estado'            => 1,
-        );
-        $this->db->insert(self::sys_pedido_detalle,$data);
+        
+        
     }
 
     public function nodoByProducto( $id_sucursal , $id_producto ){
         
         $this->db->select('*');
-        $this->db->from(self::sys_productos_sucursal.' AS pd');
-        $this->db->where('pd.id_sucursal', $id_sucursal );
+        $this->db->from(self::sys_productos_sucursal.' AS ps');
+        $this->db->where('ps.id_sucursal', $id_sucursal );
+        $this->db->where('ps.id_producto', $id_producto );
         $query = $this->db->get();
+        //echo $this->db->queries[3];
 
         if($query->num_rows() > 0 )
         {
@@ -173,5 +187,20 @@ class orden_model extends CI_Model
         );
         $this->db->where('id_sucursal', $Id_Sucursal);                
         $this->db->update(self::sys_secuencia,$data);
+    }
+
+    public function listarOrdenes( $sucursales ){
+
+        $in = '(' . implode(',', $sucursales) .')';
+
+
+        $query = $this->db->query('select * from sys_pedido AS P
+                    left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
+                    left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
+                    left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
+                    where S.id_sucursal IN '. $in );
+        //echo $this->db->queries[3];
+        
+        return $query->result();       
     }
 }

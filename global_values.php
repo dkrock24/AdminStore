@@ -5,8 +5,8 @@ global $db ;
 global $host ;
 
 $user = 'root';
-$passwd = '';
-$db = 'db_global_lapizzeria2';
+$passwd = '24101989';
+$db = 'db_lap';
 $host = 'localhost';
 
 ?>
