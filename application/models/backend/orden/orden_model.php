@@ -159,7 +159,7 @@ class orden_model extends CI_Model
                 $this->db->insert(self::sys_pedido_detalle,$data);         
             }                   
         }
-        
+        return 1;        
         
     }
 
@@ -198,9 +198,25 @@ class orden_model extends CI_Model
                     left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
                     left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
                     left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
-                    where S.id_sucursal IN '. $in );
+                    where S.id_sucursal IN '. $in .' group by P.id_pedido order by P.id_sucursal, P.id_pedido desc' );
         //echo $this->db->queries[3];
         
         return $query->result();       
     }
+
+    public function detaelleOrden( $idOrden ){
+
+        $query = $this->db->query('select * from sys_pedido AS P
+                    left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
+                    left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
+                    left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
+                    left join  sys_pais_departamento AS dep on dep.id_departamento = S.id_departamento
+                    left join sys_pais as Pais on Pais.id_pais = dep.id_pais
+                    where P.id_pedido = '. $idOrden );
+        //echo $this->db->queries[3];
+        
+        return $query->result();       
+    }
+
+
 }

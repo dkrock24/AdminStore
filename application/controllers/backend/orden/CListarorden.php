@@ -25,4 +25,11 @@ class CListarorden extends CI_Controller {
 
 		$this->load->view('backend/orden/VListaorden.php',$data);
 	}
+
+	public function detalle( $idOrden ){
+
+		$data['orden'] = $this->orden_model->detaelleOrden( $idOrden );
+
+		$this->load->view('backend/orden/VordenDetalle.php',$data);
+	}
 }

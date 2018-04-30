@@ -92,23 +92,40 @@ $(document).ready(function(){
         $("#sucursalActiva").val($(this).val());
     });
 
-    $(".buscar").click(function(){
+    $(".borrarBusqueda").click(function(){
+        $("#codProducto").val('');
+        $("#categoria").val('');
+         $("#sucursalId").val('');
         
-        $.ajax({
-            url: "../orden/Corden/buscar",
-            type:"post",
-            data: $('#ordenForm').serialize(), 
+    });
 
-            
-            success: function(data){
-                //console.log(data);
-                $('.data').html(data);               
+    $(".buscar").click(function(){
+
+        var inputCodigo = $("#codProducto").val();
+        var inputCategoria = $("#categoria").val();
+
+        if( inputCodigo != "" ||  inputCategoria != ""){
+
+            $.ajax({
+                url: "../orden/Corden/buscar",
+                type:"post",
+                data: $('#ordenForm').serialize(), 
+
                 
-            },
-            error:function(){
-                alert("failure1");
-            }
-        });
+                success: function(data){
+                    //console.log(data);
+                    $('.data').html(data);               
+                    
+                },
+                error:function(){
+                    alert("failure1");
+                }
+            });
+        }     
+        else{
+            alert("Proporsione Codigo o Categoria de Producto");
+        }   
+        
     }); 
 
     $('.producto_id').click(function(){
@@ -138,14 +155,19 @@ $(document).ready(function(){
 
             
             success: function(data){
-                //console.log(data);
-                //$('.data').html(data);               
+
+                $('.data').empty();     
+                $('.resumen').empty();          
                 
             },
             error:function(){
                 alert("failure1");
             }
         });
+    });
+
+    $('#nueva_orden').click(function(){
+        $("#detalle_orden")[0].reset();
     });
 
 
@@ -158,21 +180,28 @@ $(document).ready(function(){
     	<form name="ordenForm" id="ordenForm" method="post">
         <div class="col-xs-12">
 
-            <div class="row">
-                <div class="col-xs-12 col-md-3 col-lg-3 pull-left">
+          
+                <div class="col-xs-12 col-md-3 col-lg-3">
                     <div class="panel panel-primary height">
-                        <div class="panel-heading" style="background: rgb(216, 39, 135);">Codido Producto</div>
-                        <div class="panel-body" style="border:1px solid grey;">
-                            <input type="text" name="codProducto" value="" class="form-control" placeholder="Codigo">
-
-                        </div>
+                      
+                             <div class="panel-heading" style="background: rgb(216, 39, 135);">Codido Producto</div>
+                            <div class="panel-body" style="border:1px solid grey;">
+                                <input type="text" name="codProducto" style="display: inline-block;" id="codProducto" value="" class="form-control" placeholder="Codigo">
+                            </div>
                     </div>
                 </div>
+                    
+                       
+                        
+
+
+                   
+            
                 <div class="col-xs-12 col-md-3 col-lg-3">
                     <div class="panel panel-primary height">
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Categoria</div>
                         <div class="panel-body" style="border:1px solid grey;">
-                            <select class="form-control" name="categoria">
+                            <select class="form-control" name="categoria" id="categoria">
                                 <option></option>
                                 <?php
 
@@ -204,9 +233,11 @@ $(document).ready(function(){
                     <div class="panel panel-primary height">
                         <div class="panel-heading" style="background: rgb(216, 39, 135);">Buscar Producto</div>
                         <div class="panel-body" style="border:1px solid grey;">
-                            
-                            <a href="#" class="buscar form-control">Buscar</a>                            
-                            
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6"><a href="#" class="buscar form-control btn btn-primary">Buscar</a></div>
+                                <div class="col-xs-6 col-md-6"><a href="#" class="borrarBusqueda form-control btn btn-danger">Borrar</a></div>
+                            </div>
+                                                        
                         </div>
                     </div>
                 </div>
@@ -291,8 +322,8 @@ $(document).ready(function(){
                             <div class="col-md-6">Fecha Entrega : <input type="date" name="fecha_entrega" value="<?php echo date('Y-m-d'); ?>" class="form-control"></div>
                             <div class="col-md-6">Pagado?<br>
                                 <select class="form-control" name="pagado">
-                                    <option value="0">Cancelado</option>
-                                    <option value="1">Pendiente</option>
+                                    <option value="1">Cancelado</option>
+                                    <option value="0">Pendiente</option>
                                 </select>
                             </div>
                         </div>                        
@@ -319,6 +350,7 @@ $(document).ready(function(){
                         <br>
                         <input type="hidden" name="sucursalActiva" value="" id="sucursalActiva">
                         <a href="#" name="guardarOrden" id="procesar_orden" class="btn btn-primary">Guardar Orden</a>
+                        <a href="#" name="guardarOrden" id="nueva_orden" class="btn btn-danger">Nuevo Cliente</a>
                     </div>
                 </div>
                 </form>

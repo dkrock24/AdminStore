@@ -195,18 +195,18 @@ class Corden extends CI_Controller {
 			$datos_cliente = $_POST;
 
 			//Insertando a cliente
-			$this->orden_model->saveOrden($_POST , $_SESSION['cart'] );
+			$result = $this->orden_model->saveOrden($_POST , $_SESSION['cart'] );
+
+			if($result != 0 ){
+				unset($_SESSION['cart']);
+
+			}
 
 
 		}else{
 			echo "No existen Datos que esar";
 		}
-		
 
-
-		//Obteniendo orden de compra
-		//var_dump($_SESSION['cart']);
-
-
+		$this->showCart();
 	}
 }

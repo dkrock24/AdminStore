@@ -93,10 +93,10 @@
        $(".sk-three-bounce").show();
     var id_pais = $(this).attr("id");
         $.ajax({
-            url: "../admin/Cpais/editar",
+            //url: "../orden/CListarorden/detalle",
             type:"post",
             success: function(){     
-              $(".pages").load("../admin/Cpais/editar/"+id_pais);   
+              $(".pages").load("../orden/CListarorden/detalle/"+id_pais);   
               setTimeout(function() {
                         $(".sk-three-bounce").css('display','none');
                     }, 1000);      
@@ -162,16 +162,16 @@
 
 
 </style>
-
 <form action="../usuarios/Cusuarios/guardar_usuario" id="usuario" method="POST">
-  <div class="tab-content">
-  <a href="#" id="../admin/Cpais/crear" class="btn btn-danger btn-crear" name="">Nuevo</a><br>
+  <div class="tab-content">  
     <div class="tab-pane fade active in" id="tab1_1">
       <table class="table table-hover table-dynamic filter-head">
                     <thead class='titulos'>
                       <tr>
-                        <th>Pais</th>                    
-                        <th>Numero Registro</th>
+                        <th>Sucursal</th>                    
+                        <th>Pedido</th>
+                        <th>Cliente</th>
+                        <th>Cobro</th>
                         <th>Creado</th>                        
                         <th>Estado</th>
                         <th>Detalle</th>                        
@@ -183,9 +183,11 @@
                     foreach ($ordenes as $orden) {
                             ?>
                              <tr>
+                                <td><?php echo $orden->nombre_sucursal;  ?></td>
                                 <td><?php echo $orden->secuencia_orden;  ?></td>
-                                <td><?php echo $orden->secuencia_orden;  ?></td>
-                                <td><?php $date = date_create($orden->fechahora_pedido); echo date_format($date,"Y/m/d");  ?></td>
+                                <td><?php echo $orden->cliente;  ?></td>
+                                <td><?php if($orden->flag_cancelado == 1){ echo "<span class='btn btn-primary btn-xs'>Cancelado</span>";}else{echo "<span class='btn btn-danger btn-xs'>Pendiente</span>";}  ?> </td>
+                                <td><?php $date = date_create($orden->fechahora_pedido); echo date_format($date,"d/m/Y - H:i");  ?></td>
                                 <td><?php if($orden->estado == 1){ echo "Activo";}else{echo "Inactivo";}  ?></td>
                                 <td>
                                     <a  class="detalle_pais" id="<?php echo $orden->id_pedido; ?>" name='<?php echo $orden->id_pedido; ?>' href="#">
