@@ -39,7 +39,7 @@ $pass = "";
 
 				// Pedido Detalle
 				
-				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar, estados.pedido_estado, productos.nombre_producto,   pedido_d.nota_interna,pedido_d.precio_grabado,pedido_d.precio_original,productos.image,productos.description_producto from sys_pedido_detalle as pedido_d 
+				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar, estados.pedido_estado, productos.nombre_producto,   pedido_d.nota_interna,pedido_d.precio_grabado,pedido_d.precio_original,pedido_d.cantidad,productos.image,productos.description_producto from sys_pedido_detalle as pedido_d 
 										join productsv1 as productos on productos.id_producto=pedido_d.id_producto
 										join sys_pedido_estados as estados on estados.id_pedido_estado=pedido_d.pedido_estado
 										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.producto_elaborado=0 AND pedido_d.id_nodo=".$_POST['id_nodo'];

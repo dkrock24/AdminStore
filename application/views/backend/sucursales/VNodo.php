@@ -98,7 +98,7 @@
 									html +="<b> $ "+response.pedido[i][j]['precio_original']+"</b><br>";
 
 									html +="Precio Grabado:<b>$ "+response.pedido[i][j]['precio_grabado']+"</b>"+
-											"<br><a  href='#' class='btn btn-warning'>Completar</a>";
+											"<br>Cantidad :<b> "+ response.pedido[i][j]['cantidad'] +"</b><br><a  href='#' class='btn btn-warning'>Completar</a>";
 										
 											html +="</td></tr>";
 									contador++;
