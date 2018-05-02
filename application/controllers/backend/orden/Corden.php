@@ -191,7 +191,7 @@ class Corden extends CI_Controller {
 		// Procesar Orden de Pedido
 
 		//Datos Cliente desde le dorumlario
-		if(isset($_POST) or isset($_SESSION['cart'])){
+		if(isset($_POST) && isset($_SESSION['cart'])){
 			$datos_cliente = $_POST;
 
 			//Insertando a cliente
@@ -202,11 +202,15 @@ class Corden extends CI_Controller {
 
 			}
 
-
+			$this->showCart();
 		}else{
-			echo "No existen Datos que esar";
+			echo "No existen Datos que procesar";
 		}
 
-		$this->showCart();
+		
 	}
+
+	public function asociarProductos(){
+        $this->orden_model->asociarProductos();
+    }
 }

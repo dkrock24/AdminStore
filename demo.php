@@ -8,8 +8,8 @@ $mysql_database = "db_global_lapizzeria";
 $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_database) or die("Could not connect database 2");
 die;*/
 $host = "localhost:3306";
-$db = "db_lap";
-$pass = "24101989";
+$db = "db_global_lapizzeria2";
+$pass = "";
 
 	$con = mysqli_connect($host, "root", $pass)or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
@@ -57,7 +57,7 @@ $pass = "24101989";
 								$response['detalle'][$j]['items'][$k] = $row3;
 							}
 						}
-						$sentencia = "update sys_pedido_detalle set mostrado=1 where id_detalle=".$row2['id_detalle'];
+						$sentencia = "update sys_pedido_detalle set mostrado=1, pedido_estado=2 where id_detalle=".$row2['id_detalle'];
 						mysqli_query($con, $sentencia)or die(mysqli_error($con));	
 					}
 				}

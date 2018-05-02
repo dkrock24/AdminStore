@@ -147,6 +147,34 @@ class sucursales_model extends CI_Model
         }        
     }
 
+    public function getEmpleadosBySucursal( $id_sucursal ){
+        $this->db->select('*');
+        $this->db->from(self::sys_sucursal_int_usuarios);     
+
+        $this->db->join(self::usuarios,' on '. 
+                        self::usuarios.'.id_usuario = '.
+                        self::sys_sucursal_int_usuarios.'.id_usuario');
+
+        $this->db->join(self::sys_sucursal,' on '. 
+                        self::sys_sucursal.'.id_sucursal = '.
+                        self::sys_sucursal_int_usuarios.'.id_sucursal');
+
+        $this->db->join(self::sys_pais_departamento,' on '. 
+                        self::sys_pais_departamento.'.id_departamento = '.
+                        self::sys_sucursal.'.id_departamento');
+
+        $this->db->where(self::sys_sucursal_int_usuarios.'.id_sucursal',$id_sucursal);        
+        $this->db->where(self::usuarios.'.rol <>',1);
+
+        $query = $this->db->get();
+        
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
     public function login($usuario){
         $this->db->select('*');
         $this->db->from(self::usuarios);        
@@ -511,7 +539,8 @@ class sucursales_model extends CI_Model
 
         // Buscar elementos a                   
         $data1 = array(
-            'producto_elaborado'   => 1
+            'producto_elaborado'   => 1,
+            'pedido_estado'         =>3
         );
         $this->db->where('id_nodo',$nodo);
         $this->db->where('id_pedido',$id_orden);          
@@ -571,8 +600,11 @@ class sucursales_model extends CI_Model
         return $query->result_array();       
     }   
 
-
-      
+    public function getEstados(){
+        $query = $this->db->query('select * from sys_pedido_estados');
+         //echo $this->db->queries[0];
+        return $query->result(); 
+    }      
 
 }
 ?>

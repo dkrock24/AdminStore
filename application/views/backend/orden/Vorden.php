@@ -147,28 +147,35 @@ $(document).ready(function(){
 
     // Procesar Orden
     $("#procesar_orden").click(function(){
+
+        if($("#cliente").val() != '' && $("#email").val() != '' && $("#de").val() != '' && $("#para").val() != ''){
         
-        $.ajax({
-            url: "../orden/Corden/procesarOrden",
-            type:"post",
-            data: $('#detalle_orden').serialize(), 
+            $.ajax({
+                url: "../orden/Corden/procesarOrden",
+                type:"post",
+                data: $('#detalle_orden').serialize(), 
 
-            
-            success: function(data){
-
-                $('.data').empty();     
-                $('.resumen').empty();          
                 
-            },
-            error:function(){
-                alert("failure1");
-            }
-        });
+                success: function(data){
+
+                    $('.data').empty();     
+                    $('.resumen').empty();          
+                    
+                },
+                error:function(){
+                    alert("failure1");
+                }
+            });
+        }
+        else{
+            alert('Datos del Cliente Incompletos');
+        }
     });
 
-    $('#nueva_orden').click(function(){
-        $("#detalle_orden")[0].reset();
-    });
+        $('#nueva_orden').click(function(){
+            $("#detalle_orden")[0].reset();
+        });
+
 
 
 });
@@ -284,10 +291,10 @@ $(document).ready(function(){
                 <form action="#" id="detalle_orden" method="post">
                 <div class="row">
                     <div class="col-md-6">
-                        Cliente : <input type="text" placeholder="Nombre Completo" name="cliente" class="form-control">
+                        Cliente : <input type="text" placeholder="Nombre Completo" name="cliente" id="cliente" class="form-control">
                     </div>
                     <div class="col-md-6">
-                        E-mail : <input type="email" placeholder="E-Mail" name="email" class="form-control">
+                        E-mail : <input type="email" placeholder="E-Mail" name="email" id="email" class="form-control">
                     </div>
                 </div>
                 <div class="row">
@@ -300,10 +307,10 @@ $(document).ready(function(){
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
-                                De : <input type="text" name="de" placeholder="De" class="form-control">
+                                De : <input type="text" name="de" placeholder="De" id="de" class="form-control">
                             </div>
                             <div class="col-md-6">
-                                Para : <input type="text" name="para" placeholder="Para" class="form-control">
+                                Para : <input type="text" name="para" id="para" placeholder="Para" class="form-control">
                             </div>
                         </div>
                     </div>

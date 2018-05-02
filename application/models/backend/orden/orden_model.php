@@ -8,6 +8,7 @@ class orden_model extends CI_Model
     const sys_secuencia = 'sys_secuencia';
     const sys_productos_sucursal = 'sys_productos_sucursal';
     const sys_sucursal_nodo = 'sys_sucursal_nodo';
+    const productsv1 = 'productsv1';
     
     
     public function __construct()
@@ -106,12 +107,12 @@ class orden_model extends CI_Model
 
         //Insertando pedido Detalle
         $id_orden = $this->db->insert_id();
-        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva'] , $productos);
+        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva'] , $productos, $datos_orden['nota_interna']);
 
         return $id_orden;
     }
 
-    public function InsertPedidoDetalle( $id_orden , $id_sucursal , $productos ){
+    public function InsertPedidoDetalle( $id_orden , $id_sucursal , $productos ,$nota_interna ){
         // Insertando el detalle de producto por orden
         $date = date("Y-m-d H:m:s");
 
@@ -148,12 +149,14 @@ class orden_model extends CI_Model
                 $data = array(
                     'id_pedido'         => $id_orden,           
                     'id_producto'       => $demo->id_producto,
-                    'id_nodo'           => $nodo[0]->id,           
+                    'id_nodo'           => $nodo[0]->nodoID,           
                     'producto_elaborado'=> 0,
                     'precio_grabado'    => $total,
                     'precio_original'   => $original,
                     'cantidad'          => $demo->cnt,
                     'llevar'            => 0,
+                    'pedido_estado'     => 1,
+                    'nota_interna'      => $nota_interna,
                     'estado'            => 1,
                 );     
                 $this->db->insert(self::sys_pedido_detalle,$data);         
@@ -195,9 +198,10 @@ class orden_model extends CI_Model
 
 
         $query = $this->db->query('select * from sys_pedido AS P
-                    left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
-                    left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
-                    left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
+                    right join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
+                    left join productsv1 AS Pr ON Pr.id_producto = PD.id_producto
+                    left join sys_sucursal AS S ON S.id_sucursal = P.id_sucursal
+                    left join sys_pedido_estados as Pe ON Pe.id_pedido_estado = PD.pedido_estado
                     where S.id_sucursal IN '. $in .' group by P.id_pedido order by P.id_sucursal, P.id_pedido desc' );
         //echo $this->db->queries[3];
         
@@ -216,6 +220,31 @@ class orden_model extends CI_Model
         //echo $this->db->queries[3];
         
         return $query->result();       
+    }
+
+    public function asociarProductos(){
+
+        $this->db->select('*');
+        $this->db->from(self::productsv1);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0 )
+        {
+            //return $query->result();
+
+            foreach ($query->result() as $productos) {
+            $data = array(
+                    'id_sucursal'         => 21,           
+                    'id_producto'       => $productos->id_producto,
+                    'nodoID'           => 1,           
+                );     
+            $this->db->insert(self::sys_productos_sucursal,$data);  
+            }
+        }
+
+        
+        
+         
     }
 
 

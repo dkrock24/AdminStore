@@ -23,12 +23,6 @@
 	<![endif]-->
 	<!-- <script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script> -->
 
-	<script type="text/javascript">
-
-
-	</script>
-
-
 	<script src="/lapizzeria/js/longpoll.js"></script>
 
 	<script>
@@ -60,11 +54,11 @@
 							for(var i=0 ; i<response.pedido.length ; i++)
 							{
 
-								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item default comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 							
 								// pedido
 								var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
-								html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
+								html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover' style='border:1px solid black;'>";
 								
 								
 
@@ -79,37 +73,32 @@
 									if(response.pedido[i][j]['nombre_producto']!=null)
 									{
 
-										var llevar = "";
-										if(response.pedido[i][j]['llevar'] == 1){
-											llevar = " Llevar";
-										}
-
 									// Detalle Productos
-									html += "<tr><td>"+contador+"</td>";
-									html += "<td>[ "+ response.pedido[i][j]['pedido_estado'] +" ]<br>"+response.pedido[i][j]['nombre_producto']+" / " +response.pedido[i][j]['description_producto']+"(<b style='color:red;'>"+llevar+"</b>)<br>"+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='150px' />";
-
-											
+									//html += "<tr><td>"+contador+"</td>";
+									html += "<tr><td width='30%'>[ "+ response.pedido[i][j]['pedido_estado'] +" ] - "+response.pedido[i][j]['nombre_producto']+" / " +response.pedido[i][j]['description_producto']+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='150px' />";
+									html += "<td width='40%'>";
+									html += "Encargado de Produccion : <select name='empleado' class='form-control'>"+
+												"<?php foreach($empleados as $emp){ ?>"+
+												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname; ?></option>"+
+												"<?php } ?>"
+											+"</select><br>";	
+									html += "Encargado de Entrega : <select name='empleado' class='form-control'>"+
+												"<?php foreach($empleados as $emp){ ?>"+
+												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname; ?></option>"+
+												"<?php } ?>"
+											+"</select>";
+									html += "Estado : <select name='estado' class='form-control'>"+
+												"<?php foreach($estados as $est){ ?>"+
+												"<option value='<?php echo $est->id_pedido_estado; ?>'><?php echo $est->pedido_estado; ?></option>"+
+												"<?php } ?></select>";
+									html += "<br>"+response.pedido[i][j]['nota_interna']+"</td>";
 									
-									var llevar = "";
+									html +="<td width='30%'>Precio Original: ";
+									
+									html +="<b> $ "+response.pedido[i][j]['precio_original']+"</b><br>";
 
-											var ob = Object.keys(response.pedido[i][j]).length;
-											ob = ob - 4;
-											for(var x=0; x < ob; x++){	
-												if(response.pedido[i][j][0]['nombre_matarial']!=null)
-												{
-													html += "<ul>";													
-													if(response.pedido[i][j][x]['eliminado']==1)								
-													{
-														html += "<li> <span style='color:green;'> Quitar -> "+response.pedido[i][j][x]['nombre_matarial']+"</span></li>";
-													}
-													if(response.pedido[i][j][x]['adicional']==1)
-													{
-														html += "<li style='color:blue;'> Agregar -> "+response.pedido[i][j][x]['nombre_matarial']+"</li>";	
-													}
-													html += "</ul>";																				
-												}
-											}
-										
+									html +="Precio Grabado:<b>$ "+response.pedido[i][j]['precio_grabado']+"</b>"+
+											"<br><a  href='#' class='btn btn-warning'>Completar</a>";
 										
 											html +="</td></tr>";
 									contador++;
@@ -158,35 +147,13 @@
 					for(var j=0 ; j< de; j++)
 					{
 						// Detalle Productos
-						var llevar = "";
-						if(response.detalle[j]['llevar'] == 1){
-							llevar = " Llevar ";
-						}
-
-						html += "<tr><td>"+contador+"</td>";
+						
 						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)"
 						+"<img src='/kaprichos/uploaded/mod_productos/"+response.detalle[j]['image']+"' />";
+						html += "<tr><td>"+response.detalle[j]['nota_interna']+"</td>";
 						
-						llevar = "";
 							
 						
-							if(response.detalle[j].items){
-								for(var x=0; x < response.detalle[j].items.length; x++){	
-									if(response.detalle[j].items[x])
-									{
-										html += "<ul>";
-										if(response.detalle[j].items[x]['eliminado']==1)								
-										{
-											html += "<li style='color:blue;'> Quitar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";
-										}
-										if(response.detalle[j].items[x]['adicional']==1)
-										{
-											html += "<li style='color:green;'> Agregar -> "+response.detalle[j].items[x]['nombre_matarial']+"</li>";	
-										}
-										html += "</ul>";																				
-									}
-								}
-							}
 								html +="</td></tr>";
 						contador++;
 					}					
@@ -235,7 +202,13 @@
 		$(function(){
 			$(document).on('click', 'div.wrapper', function(){
 
+				
+				    //$(this).children('.abc').toggle();
+				
+
 				$(this).css("background","green");
+
+				
 
 				var ID_mesa = $(this).attr('id');
 				var ID_pedido = $(this).attr('pedido');
@@ -273,7 +246,7 @@ body{
 }
 .wrapper
 {
-   width:350px;
+   width:45%;
    height:100%;
    display:inline-block;
    position: relative;
@@ -300,7 +273,10 @@ body{
 </style>
 <body oncontextmenu="return false;">
 <div class="example" id="fullscreen">
-<div class="tab-content">
+<div class="tab-content" style="width: 100%;
+    position: fixed;
+    display: inline-block;
+    z-index: 1000;">
 	<div class="row">
 		<div class="col-md-12 title">
 			<?php
@@ -320,7 +296,7 @@ body{
 	</div>
 </div>
 			
-	<div class="ordenes">
+	<div class="ordenes" style="padding-top: 100px;">
 		
 	</div>
 	</div>

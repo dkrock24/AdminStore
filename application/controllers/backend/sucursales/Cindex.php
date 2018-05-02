@@ -45,8 +45,12 @@ class Cindex extends CI_Controller {
 		$this->load->view('backend/sucursales/VsucursalNodo.php',$data);
 	}
 	public function nodo($id_nodo,$id_sucursal){
-		$data['sucursales'] = $this->sucursales_model->getSucursalByNodoId($id_nodo,$id_sucursal);	
+		$data['sucursales'] = $this->sucursales_model->getSucursalByNodoId($id_nodo,$id_sucursal);
+		$data['empleados']	= $this->sucursales_model->getEmpleadosBySucursal( $id_sucursal );
+		$data['estados']	= $this->sucursales_model->getEstados();
 		$data['id_sucursal'] = $id_sucursal;
+
+		//var_dump($data['estados']);
 		$this->load->view('backend/sucursales/VNodo.php',$data);
 	}
 	public function login($id_sucursal){
