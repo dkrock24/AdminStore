@@ -85,7 +85,7 @@ class productos_model extends CI_Model
     public function getProductoByID($prodcutoID)
     {
         //var_dump($prodcutoID);
-        $query = $this->db->query('Select * from  sys_productos p where p.id_producto = '.$prodcutoID);
+        $query = $this->db->query('Select * from  productsv1 p where p.id_producto = '.$prodcutoID);
          return $query->result();
          //return $query->result_array();
     
@@ -322,7 +322,7 @@ class productos_model extends CI_Model
             from sys_detalle_producto dp
             inner join sys_catalogo_materiales cm ON cm.codigo_material = dp.name_detalle
             inner join sys_unidad_medida um ON um.id_unidad_medida = dp.unidad_medida_id
-            inner join sys_productos p on p.id_producto = dp.id_producto
+            inner join productsv1 p on p.id_producto = dp.id_producto
             where dp.id_producto ='.$producID);
          //echo $this->db->queries[0];
         return $query->result();

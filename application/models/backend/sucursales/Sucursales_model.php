@@ -139,6 +139,7 @@ class sucursales_model extends CI_Model
         //$this->db->where(self::sys_sucursal_nodo.'.sucursal_estado_nodo',1);
         $this->db->where(self::sys_sucursal_nodo.'.id_nodo',$id_nodo);
         $query = $this->db->get();
+        //echo $this->db->queries[0];
         
         
         if($query->num_rows() > 0 )
@@ -528,7 +529,7 @@ class sucursales_model extends CI_Model
     }
 
     // Flag de Elaborado
-    public function despacharPedido($id_orden,$id_sucursal,$nodo){
+    public function despacharPedido($id_orden,$id_sucursal,$nodo,$elaborado,$entregado,$estado){
         
         $data = array(
             'elaborado'   => 1,
@@ -539,8 +540,10 @@ class sucursales_model extends CI_Model
 
         // Buscar elementos a                   
         $data1 = array(
-            'producto_elaborado'   => 1,
-            'pedido_estado'         =>3
+            'producto_elaborado'    => 1,
+            'pedido_estado'         =>3,
+            'elaborado_por'         =>$elaborado,
+            'entregado_por'         =>$entregado,
         );
         $this->db->where('id_nodo',$nodo);
         $this->db->where('id_pedido',$id_orden);          

@@ -44,7 +44,7 @@
 		            type:"post",
 		            data:data,
 		            success: function(data){     
-		            	response = JSON.parse(data);	
+		            	response = JSON.parse(data);		            	
 						//console.log(response);
 				
 						if(response.success == 0)
@@ -54,7 +54,7 @@
 							for(var i=0 ; i<response.pedido.length ; i++)
 							{
 
-								html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item default comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+								html += "<div class='wrapper' id='wrapper"+response.pedido[i]['id_pedido']+"' ><div class='list-group abc'><a href='#' class='list-group-item default comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 							
 								// pedido
 								var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
@@ -75,19 +75,19 @@
 
 									// Detalle Productos
 									//html += "<tr><td>"+contador+"</td>";
-									html += "<tr><td width='30%'>[ "+ response.pedido[i][j]['pedido_estado'] +" ] - "+response.pedido[i][j]['nombre_producto']+" / " +response.pedido[i][j]['description_producto']+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='150px' />";
+									html += "<tr><td width='30%'>[ "+ response.pedido[i][j]['pedido_estado'] +" ] - "+response.pedido[i][j]['nombre_producto']+" / " +response.pedido[i][j]['description_producto']+"<img src='/kaprichos/uploaded/mod_productos/"+response.pedido[i][j]['image']+"' width='150px' height='' />";
 									html += "<td width='40%'>";
-									html += "Encargado de Produccion : <select name='empleado' class='form-control'>"+
+									html += "Encargado de Produccion : <select name='empleado1' class='form-control' id='empleado1"+response.pedido[i]['id_pedido']+"'>"+
 												"<?php foreach($empleados as $emp){ ?>"+
-												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname; ?></option>"+
+												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname;  ?></option>"+
 												"<?php } ?>"
 											+"</select><br>";	
-									html += "Encargado de Entrega : <select name='empleado' class='form-control'>"+
+									html += "Encargado de Entrega : <select name='empleado2' class='form-control' id='empleado2"+response.pedido[i]['id_pedido']+"'>"+
 												"<?php foreach($empleados as $emp){ ?>"+
 												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname; ?></option>"+
 												"<?php } ?>"
 											+"</select>";
-									html += "Estado : <select name='estado' class='form-control'>"+
+									html += "Estado : <select name='estado' class='form-control' id='estado"+response.pedido[i]['id_pedido']+"'>"+
 												"<?php foreach($estados as $est){ ?>"+
 												"<option value='<?php echo $est->id_pedido_estado; ?>'><?php echo $est->pedido_estado; ?></option>"+
 												"<?php } ?></select>";
@@ -98,7 +98,7 @@
 									html +="<b> $ "+response.pedido[i][j]['precio_original']+"</b><br>";
 
 									html +="Precio Grabado:<b>$ "+response.pedido[i][j]['precio_grabado']+"</b>"+
-											"<br>Cantidad :<b> "+ response.pedido[i][j]['cantidad'] +"</b><br><a  href='#' class='btn btn-warning'>Completar</a>";
+											"<br>Cantidad :<b> "+ response.pedido[i][j]['cantidad'] +"</b><br><a  href='#' class='btn btn-warning completar' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'>Completar</a>";
 										
 											html +="</td></tr>";
 									contador++;
@@ -200,23 +200,26 @@
 
 	<script>
 		$(function(){
-			$(document).on('click', 'div.wrapper', function(){
+			$(document).on('click', '.completar', function(){
+				//$(this).children('.abc').toggle();				
 
-				
-				    //$(this).children('.abc').toggle();
-				
+				$(this).css("background","green");	
 
-				$(this).css("background","green");
-
-				
 
 				var ID_mesa = $(this).attr('id');
 				var ID_pedido = $(this).attr('pedido');
 				var iSecuencia = $(this).attr('secuencia');
-				if (confirm('Despachar Orden # '+ iSecuencia +" Mesa :"+ ID_mesa + '?'))
+				
+				
+				var elaborado = $('#empleado1'+ID_pedido).val();
+				var entregado = $('#empleado2'+ID_pedido).val();
+				var estado = $('#estado'+ID_pedido).val();
+
+
+				if (confirm('Despachar Orden # '+ iSecuencia + '?'))
 		        {	            
 		            $.ajax({
-					    url: "../../despacharPedido/"+ID_pedido+"/"+id_sucursal+"/"+id_nodo,
+					    url: "../../despacharPedido/"+ID_pedido+"/"+id_sucursal+"/"+id_nodo+"/"+elaborado+"/"+entregado+"/"+estado,
 					    type:"post", 
 
 					    success: function(){     
@@ -226,7 +229,7 @@
 					        alert("Error Al Despachar Pedido");
 					    }
 					}); 
-					$(this).remove();
+					$('#wrapper'+ID_pedido).remove();
 		            return;
 		        }        	
 	        });

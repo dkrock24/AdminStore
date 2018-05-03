@@ -50,7 +50,8 @@ class Cindex extends CI_Controller {
 		$data['estados']	= $this->sucursales_model->getEstados();
 		$data['id_sucursal'] = $id_sucursal;
 
-		//var_dump($data['estados']);
+		//var_dump($data['sucursales']);
+		
 		$this->load->view('backend/sucursales/VNodo.php',$data);
 	}
 	public function login($id_sucursal){
@@ -428,8 +429,8 @@ class Cindex extends CI_Controller {
 	
 
 	// Despachar pedido
-	function despacharPedido($id_orden,$id_sucursal,$nodo){
-		$this->sucursales_model->despacharPedido($id_orden,$id_sucursal,$nodo);
+	function despacharPedido($id_orden,$id_sucursal,$nodo,$elaborado,$entregado,$estado){
+		$this->sucursales_model->despacharPedido($id_orden,$id_sucursal,$nodo,$elaborado,$entregado,$estado);
 	}
 
 	//-------------------------Funcione para pantalla de caja

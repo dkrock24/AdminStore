@@ -210,12 +210,15 @@ class orden_model extends CI_Model
 
     public function detaelleOrden( $idOrden ){
 
-        $query = $this->db->query('select * from sys_pedido AS P
+        $query = $this->db->query('select *, Us.nickname as Uno, U.nickname as Dos , es.pedido_estado from sys_pedido AS P
                     left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
                     left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
                     left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
                     left join  sys_pais_departamento AS dep on dep.id_departamento = S.id_departamento
                     left join sys_pais as Pais on Pais.id_pais = dep.id_pais
+                    left join sr_usuarios as U on U.id_usuario = PD.elaborado_por
+                    left join sr_usuarios as Us on Us.id_usuario = PD.entregado_por
+                    left join sys_pedido_estados as es on es.id_pedido_estado=PD.pedido_estado
                     where P.id_pedido = '. $idOrden );
         //echo $this->db->queries[3];
         
@@ -240,11 +243,18 @@ class orden_model extends CI_Model
                 );     
             $this->db->insert(self::sys_productos_sucursal,$data);  
             }
-        }
+        }      
+    }
 
-        
-        
-         
+    public function actualizarOrden( $orden )
+    {
+        //$date = date("Y-m-d H:m:s");
+        $data = array(
+            'pedido_estado'   => $orden['estado'],
+            
+        );
+        $this->db->where('id_pedido', $orden['idOrden']);                
+        $this->db->update(self::sys_pedido_detalle,$data);
     }
 
 

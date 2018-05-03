@@ -184,7 +184,7 @@
                             ?>
                              <tr>
                                 <td><?php echo $orden->nombre_sucursal;  ?></td>
-                                <td><?php echo $orden->secuencia_orden;  ?></td>
+                                <td><?php echo $orden->id_pedido.$orden->secuencia_orden;  ?></td>
                                 <td><?php echo $orden->cliente;  ?></td>
                                 <td><?php if($orden->flag_cancelado == 1){ echo "<span class='btn btn-success btn-xs'>Cancelado</span>";}else{echo "<span class='btn btn-danger btn-xs'>Pendiente</span>";}  ?> </td>
                                 <td><?php $date = date_create($orden->fechahora_pedido); echo date_format($date,"d/m/Y - H:i");  ?></td>
