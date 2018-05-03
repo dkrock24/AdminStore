@@ -52,6 +52,11 @@ class Cproductos extends CI_Controller {
 	{
 		 $this->productos_model->save_producto($_POST);
 	}
+	public function update_producto2()
+	{
+
+		 $this->productos_model->update_producto2($_POST);
+	}
 
 	public function udpate_producto()
 	{
@@ -138,6 +143,21 @@ class Cproductos extends CI_Controller {
 		$data['ingredienteC'] = $this->productos_model->getStatusIngrediente($productoID);
 		$data['unidadMedida'] = $this->productos_model->unidadMedida();
 		$this->load->view('backend/productos/datelleProducto.php',$data);
+
+	}
+
+// Detalle del producto
+	public function detalleProducto2($productoID)
+	{	
+		$data['productoID'] = $productoID;
+		//$data['detalle'] = $this->productos_model->getDetalle($productoID);
+		//$data['ingredienteC'] = $this->productos_model->getStatusIngrediente($productoID);
+		//$data['unidadMedida'] = $this->productos_model->unidadMedida();
+
+		$data['detalle'] = $this->productos_model->getDetalle2($productoID);		
+		$data['categoria'] = $this->productos_model->categoria();	
+
+		$this->load->view('backend/productos/datelleProducto2.php',$data);
 
 	}
 

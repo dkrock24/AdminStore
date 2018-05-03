@@ -20,6 +20,22 @@
                 }
             });
         });
+
+        $('#regresar').click(function(){
+            $.ajax({
+                //url: "../orden/CListarorden/actualizarOrden",
+                //type:"post",
+                //data: $('#ordenDetalle').serialize(), 
+
+                
+                success: function(data){
+                    $(".pages").load("../orden/CListarorden/index");                    
+                },
+                error:function(){
+                    alert("failure1");
+                }
+            });
+        });
     });
 </script>
 
@@ -50,7 +66,7 @@
                             <td>
                                 <a href="#" class="btn btn-info" name="" id="actualizar_orden">Actualizar</a>
                                 <a href="#" class="btn btn-primary" id="imprimir_orden">Imprimir</a>
-                                <a href="#" class="btn btn-danger" id="imprimir_orden">Cancelar</a>
+                                <a href="#" class="btn btn-danger" id="regresar">Regresar</a>
                             </td>
                         </tr>
                     </table>
@@ -73,9 +89,9 @@
                                                     <table class="table table-striped">
                                                         <tr>
                                                             <td>Producto</td>
-                                                            <td>Cantidad</td>
-                                                            <td>Precio Grabado</td>
+                                                            <td>Cantidad</td>                                                            
                                                             <td>Precio Original</td>
+                                                            <td>Precio Grabado</td>
                                                         </tr>
                                                         <?php
                                                             foreach ($orden as $value) {
@@ -96,19 +112,17 @@
                                                         
                                                         <tr>
         
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td>Totales</td>
                                                             <td>
-                                                                <b>
                                                                 <?php
-                                                                    $total =0;
+                                                                    $total_cantidad = 0;
                                                                     foreach ($orden as $value) {
-                                                                        $total += $value->precio_grabado * $value->cantidad;
+
+                                                                        $total_cantidad += $value->cantidad;
                                                                     }
-                                                                    
-                                                                    echo $orden[0]->moneda .' '. number_format($total, 2);
+                                                                    echo $total_cantidad ;
+
                                                                 ?>
-                                                                </b>
                                                             </td>
                                                             <td>
                                                                 <b>
@@ -122,6 +136,19 @@
                                                                     ?>
                                                                 </b>
                                                             </td>
+                                                            <td>
+                                                                <b>
+                                                                <?php
+                                                                    $total =0;
+                                                                    foreach ($orden as $value) {
+                                                                        $total += $value->precio_grabado * $value->cantidad;
+                                                                    }
+                                                                    
+                                                                    echo $orden[0]->moneda .' '. number_format($total, 2);
+                                                                ?>
+                                                                </b>
+                                                            </td>
+                                                            
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -145,28 +172,65 @@
                                     
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <div style="text-align: center; width:100%;"><?php echo $orden[0]->cliente; ?></div>
-                                    </h4>
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div style="text-align: center; width:100%;">Cliente</div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <?php echo $orden[0]->cliente; ?>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
+
+                            <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
-
                                 <div class="panel-heading">
-                                    <table>
+                                        <h4 class="panel-title">
+                                            <div style="text-align: center; width:100%;">Datos de Pedido</div>
+                                        </h4>
+                                </div>
+
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <table class="table">
+                                                <tr>
+                                            <td>
+                                                <span class="">Correo</span>                                                
+                                            </td>
+                                            <td>
+                                                <?php echo $orden[0]->email; ?>
+                                            </td>
+                                        </tr> 
                                         <tr>
-                                            <td><span class="badge badge-secondary"><i class="fa fa-envelope"></i></span> <?php echo $orden[0]->email; ?></td>
-                                            <td><span class="badge badge-secondary"><i class="fa fa-phone"></i> </span> <?php echo $orden[0]->telefono; ?></td>
-                                            <td><span class="badge badge-secondary"><i class="fa fa-phone"></i> </span> <?php echo $orden[0]->celular; ?></td>
-                                            <td><span class="badge badge-secondary"><i class="fa fa-calendar"></i> </span> <?php echo $orden[0]->fechahora_pedido; ?></td>
-
-                                             
+                                            <td>
+                                                <span class="">Telefono</span>                                                
+                                            </td>
+                                            <td>
+                                                <?php echo $orden[0]->telefono; ?>
+                                            </td>
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                <span class="">Celular</span>                                                
+                                            </td>
+                                            <td>
+                                                <?php echo $orden[0]->celular; ?>
+                                            </td>
                                         </tr>
-
-                                    </table>
-                                    <table style="border:1px solid grey;padding: 5px;margin: 5px;">
+                                        <tr>
+                                            <td>
+                                                <span class="">Fecha Pedido</span>                                                
+                                            </td>
+                                            <td>
+                                                <?php echo $orden[0]->fechahora_pedido; ?>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 <span class="">Tarjeta</span> 
@@ -197,12 +261,7 @@
                                             <td>
                                                  <?php echo $orden[0]->fechahora_pedido; ?>
                                             </td>
-                                        </tr>                                       
-                                    </table>
-                                </div>
-                                <div class="panel-heading">
-                                    <span>Datos de Pedido</span><hr>
-                                     <table class="table">
+                                        </tr>  
                                         <tr>
                                             <td>De </td>
                                             <td><?php echo $orden[0]->de; ?></td>
@@ -228,11 +287,19 @@
                                             <td><?php echo $orden[0]->pedido_estado; ?></td>
                                         </tr>
                                     </table>
+                                    </div>
                                 </div>
 
-                                <div class="panel-heading">
-                                    <span>Datos de produccion</span><hr>
-                                    <table class="table">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div style="text-align: center; width:100%;">Datos de produccion</div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <table class="table">
                                         <tr>
                                             <td>Pais </td>
                                             <td><?php echo $orden[0]->nombre_pais; ?></td>
@@ -258,8 +325,13 @@
                                             <td><?php echo $orden[0]->Dos; ?></td>
                                         </tr>
                                     </table>
+                                        </div>
+                                    </div>
                                 </div>
-                                <br>
+                            </div>
+      
+
+        
                                
                             </div>
 

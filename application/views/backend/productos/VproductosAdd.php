@@ -49,6 +49,7 @@
 
     });
 
+/*
     $(".viewDetalle").click(function()
     {
         $(".myModalDetalle").modal({
@@ -60,9 +61,26 @@
         //alert(prodcutoID);
         $(".cont-detalleView").load("../productos/Cproductos/detalleProducto/"+prodcutoID);
 
+    });*/
+
+    $(".viewDetalle").click(function()
+    {
+        $(".myModalDetalle2").modal({
+           backdrop: 'static', 
+           keyboard: false 
+        });
+
+        var prodcutoID = $(this).find('.idProducto').val();
+        //alert(prodcutoID);
+        $(".cont-detalleView").load("../productos/Cproductos/detalleProducto2/"+prodcutoID);
+
     });
 $(document).ready(function()
   {
+
+
+
+
     //-----------------Jquery insercion de  productos----------------
       $("#saveProducto").click(function()
       {
@@ -305,7 +323,11 @@ $(document).ready(function()
   });
   //-------------------------Fin -----------------------------------
 
+
+
  });
+
+
 </script>
 
 <style>
@@ -461,7 +483,7 @@ $(document).ready(function()
               ?>
                 
               <!--  Vista dinamica de prodcutos --> 
-                <div class="col-md-4">
+                <div class="col-md-4" style="">
                     <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
                       <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
                         <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
@@ -494,7 +516,7 @@ $(document).ready(function()
                 ?>  
                   
                     
-                    <img src="/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>" style="max-width: 50%;">
+                    <img src="/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>" style="">
 
                     <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
                       <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
@@ -509,6 +531,7 @@ $(document).ready(function()
                 <!--  Vista dinamica de prodcutos -->
               <?php
                 }
+                ?><?php
             }
             else
             {
@@ -778,6 +801,56 @@ $(document).ready(function()
 <!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
 
 
+<!-- Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->
+<div class="modal fade myModalDetalle2" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+         <!-- Modal content-->
+      <div class="modal-content">
+          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+           Detalle del Producto.
+          </h4>
+          <hr>
+        <div class="modal-body">
+
+              <div class="cont-detalleView">
+                
+                  <div class="alert alert-warning" role="alert">No hay informacion de detalle!!!</div>
+
+
+              </div>
+
+              <div class="cont-formDetalle" style="display:none;">
+                 <form id="categoriaP" method="POST">
+                  <span class="input input--hoshi">
+                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" required/>
+                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                      <span class="input__label-content">Nombres</span>
+                      </label>
+                  </span>
+
+                   <span class="input input--hoshi">
+                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
+                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                      <span class="input__label-content">Descripción</span>
+                      </label>
+                  </span>
+
+                   <span class="input input--hoshi">
+                     <button type="button" id="saveCategoria" class="btn btn-primary">Guardar</button>
+                  </span>
+                 </form>
+              </div>
+        </div>
+        <div class="modal-footer">
+        <div id="msg" class="msgShow">
+        </div> 
+          <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Fin del Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->  
 
 
 <!-- Codigo de funcionalidad de Modals para aagregar sucursales y metodos de pago -->

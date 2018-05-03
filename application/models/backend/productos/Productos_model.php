@@ -99,6 +99,10 @@ class productos_model extends CI_Model
         
         }
 
+    public function update_producto2($produc){
+        var_dump($produc);
+    }
+
 
     public function save_producto($produc)
     {
@@ -324,6 +328,13 @@ class productos_model extends CI_Model
             inner join sys_unidad_medida um ON um.id_unidad_medida = dp.unidad_medida_id
             inner join productsv1 p on p.id_producto = dp.id_producto
             where dp.id_producto ='.$producID);
+         //echo $this->db->queries[0];
+        return $query->result();
+       
+    }
+    public function getDetalle2($producID)
+    {
+         $query = $this->db->query('SELECT p.*, c.nombre_categoria_producto FROM productsv1 p left join categoria as c on c.id_categoria_producto = p.categoria_id WHERE p.id_producto ='.$producID);
          //echo $this->db->queries[0];
         return $query->result();
        
