@@ -20,6 +20,7 @@
       $(".pages").load("../productos/Cproductos/loadSucursales/"+prodcutoID); 
     });
 
+/*
   $(".viewDetalle").click(function()
     {
         $(".myModalDetalle").modal({
@@ -30,6 +31,20 @@
         var prodcutoID = $(this).find('.idProducto').val();
         //alert(prodcutoID);
         $(".cont-detalleView").load("../productos/Cproductos/detalleProducto/"+prodcutoID);
+
+    });
+    */
+
+    $(".viewDetalle").click(function()
+    {
+        $(".myModalDetalle2").modal({
+           backdrop: 'static', 
+           keyboard: false 
+        });
+
+        var prodcutoID = $(this).find('.idProducto').val();
+        //alert(prodcutoID);
+        $(".cont-detalleView").load("../productos/Cproductos/detalleProducto2/"+prodcutoID);
 
     });
 
@@ -91,7 +106,7 @@
               <!--  Vista dinamica de prodcutos --> 
                 <div class="col-md-4">
 
-                  <div class="thumbnail" style="height: 300px;padding: 0px;">
+                  
                   
                    
                     <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
@@ -105,25 +120,30 @@
                           <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
                           <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
                         </a>
+                        <?php if($value->ingredientes_completos != 0)
+                                      {?>
+                        <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
 
-                 
-                    </div>
-                    <?php if($value->ingredientes_completos != 0)
-                {?>
-                    <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
-                <?php }
+                 <?php }
                 else{?>
                        <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
                 <?php
                 } 
-                ?>  
-                                    
-                    <img src="/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>" style="max-width: 5s0%;">
+                ?> 
 
+                       </div>
+
+                    <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
+                  
+                  <h3 style="font-weight: bold;color: white; position: absolute; background-color: #D82787; width: 90%;margin-top: 0px; "><?php echo $value->nombre_producto ?>
+                    
+                  </h3>
+                    
                     <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
-                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
+                      
+                      
                     </div>
+
 
                    
 

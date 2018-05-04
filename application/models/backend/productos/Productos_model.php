@@ -10,6 +10,7 @@ class productos_model extends CI_Model
     const unidadMedida = 'sys_unidad_medida';
     const tipoUnidad = 'sys_tipo_unidad_medida';
     const catalogoMateriales = 'sys_catalogo_materiales';
+    const productsv1 = 'productsv1';
 
     
     public function __construct()
@@ -100,7 +101,54 @@ class productos_model extends CI_Model
         }
 
     public function update_producto2($produc){
-        var_dump($produc);
+
+        //var_dump($_FILES['files1']['tmp_name']);
+
+        $dateNow = date("YmdHis");
+        $dateCreated = date("Y-m-d");
+
+        if (isset($_FILES['files1']['tmp_name'])) 
+        {
+            $dataImg = getimagesize($_FILES['files1']['tmp_name']);
+            if ($dataImg[0] >= 200 or $dataImg[0] <= 350  and $dataImg[1] >= 100 or $dataImg[1] <= 200) 
+            {
+                //-----------File Imagen profuctos--------------------------------------
+                $name = $dateNow."_".$_FILES['files1']['name'];
+                $fileType = $_FILES['files1']['type'];
+                $fileError = $_FILES['files1']['error'];
+                $fileContent = file_get_contents($_FILES['files1']['tmp_name']);
+                $imagen =  $_SERVER['DOCUMENT_ROOT']."/kaprichos/uploaded/mod_productos/".$dateNow."_".$_FILES['files1']['name'];
+
+                move_uploaded_file( $_FILES['files1']['tmp_name'], $imagen );
+                //----------------------------------------------------------------------
+            }
+
+            $data = array(
+            'nombre_producto'   => $produc['nombre'],
+            'categoria_id'   => $produc['categoria'],
+            'description_producto'   => $produc['descripcion'],
+            'numerico1'   => $produc['precio1'],
+            'precio_minimo'   => $produc['precio2'],
+            'image' => $name
+            
+            );
+            
+        }else{
+            $data = array(
+            'nombre_producto'   => $produc['nombre'],
+            'categoria_id'   => $produc['categoria'],
+            'description_producto'   => $produc['descripcion'],
+            'numerico1'   => $produc['precio1'],
+            'precio_minimo'   => $produc['precio2'],
+            
+            
+        );
+        }
+
+        
+        $this->db->where('id_producto', $produc['id']);        
+        $this->db->update(self::productsv1,$data);
+
     }
 
 

@@ -131,12 +131,12 @@
 				console.log(response);
 				for(var i=0 ; i<response.pedido.length ; i++)
 				{
-					html += "<div class='wrapper' id='"+response.pedido[i]['numero_mesa']+"' secuencia='"+response.pedido[i]['secuencia_orden']+"' pedido='"+response.pedido[i]['id_pedido']+"'><div class='list-group abc'><a href='#' class='list-group-item active'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
+					html += "<div class='wrapper' id='wrapper"+response.pedido[i]['id_pedido']+"' ><div class='list-group abc'><a href='#' class='list-group-item default comanda'><i class='fa fa-home'></i>ORDEN -  # "+response.pedido[i]['secuencia_orden']+"</a>";
 				
 					// pedido
 					var ID_PEDIDO_VALUE = response.pedido[i]['id_pedido'];
-					html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover'>";
-					html += "<tr><td>#</td><td>Producto</td></tr>";
+					html += "<a href='#' name='' class='list-group-item nodo'><table class='table table-hover' style='border:1px solid black;'>";
+								
 
 
 					var de = Object.keys(response.detalle).length;
@@ -148,14 +148,35 @@
 					{
 						// Detalle Productos
 						
-						html += "<td><img src='../../../../../../assets/images/icon-no-elaborado.png' width='20px'/>"+response.detalle[j]['nombre_producto'] +"(<b style='color:red;'>"+llevar+"</b>)"
-						+"<img src='/kaprichos/uploaded/mod_productos/"+response.detalle[j]['image']+"' />";
-						html += "<tr><td>"+response.detalle[j]['nota_interna']+"</td>";
-						
-							
-						
-								html +="</td></tr>";
-						contador++;
+						// Detalle Productos
+									//html += "<tr><td>"+contador+"</td>";
+									html += "<tr><td width='30%'>[ "+ response.detalle[j]['pedido_estado'] +" ] - "+response.detalle[j]['nombre_producto']+" / " +response.detalle[j]['description_producto']+"<img src='/kaprichos/uploaded/mod_productos/"+response.detalle[j]['image']+"' width='150px' height='' />";
+									html += "<td width='40%'>";
+									html += "Encargado de Produccion : <select name='empleado1' class='form-control' id='empleado1"+response.detalle[j]['id_pedido']+"'>"+
+												"<?php foreach($empleados as $emp){ ?>"+
+												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname;  ?></option>"+
+												"<?php } ?>"
+											+"</select><br>";	
+									html += "Encargado de Entrega : <select name='empleado2' class='form-control' id='empleado2"+response.detalle[j]['id_pedido']+"'>"+
+												"<?php foreach($empleados as $emp){ ?>"+
+												"<option value='<?php echo $emp->id_usuario; ?>'><?php echo $emp->nickname; ?></option>"+
+												"<?php } ?>"
+											+"</select>";
+									html += "Estado : <select name='estado' class='form-control' id='estado"+response.detalle[j]['id_pedido']+"'>"+
+												"<?php foreach($estados as $est){ ?>"+
+												"<option value='<?php echo $est->id_pedido_estado; ?>'><?php echo $est->pedido_estado; ?></option>"+
+												"<?php } ?></select>";
+									html += "<br>"+response.detalle[i]['nota_interna']+"</td>";
+									
+									html +="<td width='30%'>Precio Original: ";
+									
+									html +="<b> $ "+response.detalle[i]['precio_original']+"</b><br>";
+
+									html +="Precio Grabado:<b>$ "+response.detalle[i]['precio_grabado']+"</b>"+
+											"<br>Cantidad :<b> "+ response.detalle[i]['cantidad'] +"</b><br><a  href='#' class='btn btn-warning completar' id='"+response.detalle[j]['numero_mesa']+"' secuencia='"+response.detalle[i]['secuencia_orden']+"' pedido='"+response.detalle[i]['id_pedido']+"'>Completar</a>";
+										
+											html +="</td></tr>";
+									contador++;
 					}					
 				}
 				html += "</table></a>";
@@ -206,7 +227,7 @@
 				$(this).css("background","green");	
 
 
-				var ID_mesa = $(this).attr('id');
+				//var ID_mesa = $(this).attr('id');
 				var ID_pedido = $(this).attr('pedido');
 				var iSecuencia = $(this).attr('secuencia');
 				

@@ -62,6 +62,17 @@
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
+					<i class='fa fa-file-text'></i>Cortes de caja
+				</a>
+				<a href="#" class="list-group-item go-sucursal" id="../sucursales/Ccortes/index/">										  	
+				  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
+				</a>
+			</div>
+        </div>
+<!--
+        <div class="col-md-4">
+        	<div class="list-group">
+				<a href="#" class="list-group-item active">
 					<i class='fa fa-money'></i>Despachos
 				</a>
 					<a href="../sucursales/Cindex/despacho_view/<?php echo $sucursales[0]->id_sucursal; ?>" target="_black" class="list-group-item go-sucursal" id="">					
@@ -69,7 +80,8 @@
 					</a>
 			</div>
         </div>
-
+-->
+<!--
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
@@ -80,10 +92,11 @@
 				</a>
 			</div>
         </div>
-
+-->
     </div>
 
-    <div class="row">       
+    <div class="row">   
+    <!--    
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
@@ -94,16 +107,9 @@
 					</a>
 			</div>
         </div>
-        <div class="col-md-4">
-        	<div class="list-group">
-				<a href="#" class="list-group-item active">
-					<i class='fa fa-file-text'></i>Cortes
-				</a>
-				<a href="#" class="list-group-item go-sucursal" id="../sucursales/Ccortes/index/">										  	
-				  	<p class="center"><img src="../../../asset_/img/cortes.png"></p>
-				</a>
-			</div>
-        </div>
+    -->
+        
+        <!--
         <div class="col-md-4">
         	<div class="list-group">
 				<a href="#" class="list-group-item active">
@@ -114,6 +120,7 @@
 					</a>
 			</div>
         </div>
+    -->
     </div>
 
 </div>

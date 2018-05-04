@@ -145,7 +145,7 @@
             
           <!--  Vista dinamica de prodcutos --> 
             <div class="col-md-4" >
-               <div class="thumbnail" style="height: 330px !important;">
+               <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
               
               <?php if($value->verifiDetalle == 0)
                 {?>
@@ -175,22 +175,23 @@
                 } 
                 ?>
                 <img src="../../../assets/images/productos/<?php echo $value->image ?>"  height="150" width="170">
-                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
+                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px; background-color: white; ">
                   <h3><?php echo $value->nombre_producto ?></h3>
+                  <!--
                    <span class="precioData">Precio: <?php echo $precio = ($value->precio == null) ? "Null" : $value->precio; ?></span>
                   <p>
                     <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
                     Precio 
                     <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
 
-                    </a> 
-
+                    </a> -->
+<!--
                     <a class="btn btn-primary  btn-sm validarIngre"  role="button" title="Valida existencia de ingredientes en inventario">
                     Ingredientes 
                     <input type="hidden" name="IdValidar" class="IdValidar" value="<?php echo $value->id_producto ?>">
                     <input type="hidden" name="IdProductoSucursal" class="IdProductoSucursal" value="<?php echo $value->id ?>">
                      <input type="hidden" name="IdSucursal" class="IdSucursal" value="<?php echo $value->id_sucursal ?>">
-                    </a> 
+                    </a> -->
 
                       <?php if($value->nodoID != null)
                       {
@@ -272,7 +273,7 @@
     
       <!-- Modal content-->
       <div class="modal-content">
-      <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+      <h4 class="modal-title" style="background-color: #D82787;padding: 20px;color: white;text-align: center;font-weight: bold;">
            Asignar Nodo
           </h4>
  

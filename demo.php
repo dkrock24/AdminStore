@@ -9,7 +9,7 @@ $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_databa
 die;*/
 $host = "localhost:3306";
 $db = "db_global_lapizzeria2";
-$pass = "24101989";
+$pass = "";
 
 	$con = mysqli_connect($host, "root", $pass)or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
@@ -35,8 +35,10 @@ $pass = "24101989";
 				$response['pedido'][$i] = $row;
 
 				// Pedido Detalle				
-				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar,productos.nombre_producto from sys_pedido_detalle as pedido_d 
+				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar, estados.pedido_estado, productos.nombre_producto,   pedido_d.nota_interna,pedido_d.precio_grabado,pedido_d.precio_original,pedido_d.cantidad,productos.image,productos.description_producto, pedido_d.id_pedido, P.secuencia_orden from sys_pedido_detalle as pedido_d 
+										JOIN sys_pedido as P on P.id_pedido = pedido_d.id_pedido
 										join productsv1 as productos on productos.id_producto=pedido_d.id_producto
+										join sys_pedido_estados as estados on estados.id_pedido_estado=pedido_d.pedido_estado
 										where pedido_d.id_pedido=".$row['id_pedido']." AND pedido_d.mostrado=0 AND pedido_d.id_nodo=".$_POST['id_nodo'];
 				$res2 = mysqli_query($con, $sql_pedido_detalle)or die(mysqli_error($con));
 				if(mysqli_num_rows($res2) > 0){

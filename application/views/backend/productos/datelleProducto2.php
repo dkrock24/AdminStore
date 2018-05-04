@@ -12,13 +12,16 @@
         var formulario = document.getElementById('productos');
 
         var formData = new FormData();
-                    formData.append('files', $('#files')[0].files[0]);
+                    formData.append('files1', $('#files1')[0].files[0]);
                     
                     formData.append('nombre', $('#p_name').val());
-                    formData.append('categoria', $('#categoria').val());
+                    formData.append('categoria', $('#categoria1').val());
                     formData.append('descripcion', $('#p_descripcion').val());
                     formData.append('precio1', $('#p_precio_sugerido').val());
                     formData.append('precio2', $('#p_precio_minimo').val());
+                    formData.append('id', $(this).attr('name'));
+
+                    
               
             $.ajax({
                url: "../productos/Cproductos/update_producto2",
@@ -29,11 +32,7 @@
 
                     success: function(data)
                     {
-                      if (data == "3") 
-                      {
-                        alert("El tamaño de la imagen no es correcto");
-                        $(".loading").hide();
-                      }                      
+                        $(".pages").load("../productos/Cproductos/index");                    
                       
                     },
                     error:function(data)
@@ -92,6 +91,9 @@
     <form enctype="multipart/form-data" id="productos" method="POST">
     <table class="table table-hover table-dynamic">
         <tr>
+            <td rowspan="10" width="30%">
+                <img src="/kaprichos/uploaded/mod_productos/<?php echo $detalle[0]->image; ?>" width="100%">
+            </td>
             <td>Producto</td>
             <td><input type="" class="form-control" name="" id="p_name" value="<?php echo $detalle[0]->nombre_producto; ?>"></td>
         </tr>
@@ -111,11 +113,11 @@
             <td>Categoria</td>
             <td>
                 <?php echo $detalle[0]->nombre_categoria_producto; ?>
-                <select name="categoria" id="categoria" class="form-control">
+                <select name="categoria1" id="categoria1" class="form-control">
                 <?php
                 foreach ($categoria as $value) {
                     ?>
-                    <option value=""><?php echo $value->nombre_categoria_producto; ?></option>
+                    <option value="<?php echo $value->id_categoria_producto; ?>"><?php echo $value->nombre_categoria_producto; ?></option>
                     <?php
                 }
                 ?>
@@ -125,8 +127,8 @@
         </tr>
         <tr>
             <td colspan="2">
-                <img src="/kaprichos/uploaded/mod_productos/<?php echo $detalle[0]->image; ?>" width="50%">
-                <input class="input__field input__field--hoshi" type="file" id="files" name="files[]" required />
+                
+                <input class="input__field input__field--hoshi" type="file" id="files1" name="files[]" required />
 
             </td>
         </tr>
@@ -134,7 +136,7 @@
     </form>
 
   <div class="bar-other-actions">
-     <a href="#" id="saveProducto2" class="btn btn-default">Guardar</a>
+     <a href="#" id="saveProducto2" name="<?php echo $detalle[0]->id_producto; ?>" class="btn btn-success" style="float: right;">Guardar</a>
   </div>
 </div>
 

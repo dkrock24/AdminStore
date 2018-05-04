@@ -500,27 +500,27 @@ $(document).ready(function()
                           <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
                           <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
                         </a>
+                      <?php if($value->ingredientes_completos != 0)
+                                      {?>
+                        <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
 
-                 
-                    </div>
-
-                    <div class="thumbnail" style="height: 300px;padding: 0px;">
-                  <?php if($value->ingredientes_completos != 0)
-                {?>
-                    <p class="fa fa-check-circle icoAlert" title="Ingredientes completos" aria-hidden="true"></p>
-                <?php }
+                 <?php }
                 else{?>
                        <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
                 <?php
                 } 
-                ?>  
-                  
-                    
-                    <img src="/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>" style="">
+                ?> 
+                    </div>
 
+                    <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
+                  
+                  <h3 style="font-weight: bold;color: white; position: absolute; background-color: #D82787; width: 90%;margin-top: 0px; "><?php echo $value->nombre_producto ?>
+                    
+                  </h3>
+                    
                     <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                      <h3 style="font-weight: bold;color: #88b32f;"><?php echo $value->nombre_producto ?></h3>
-                      <p style="height:100px; overflow: auto;"><?php echo $value->description_producto ?></p>
+                      
+                      <p style="height:100px; overflow: auto;"><?php //echo $value->description_producto ?></p>
                     </div>
 
                    
@@ -734,7 +734,7 @@ $(document).ready(function()
     
       <!-- Modal content-->
       <div class="modal-content">
-          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
+          <h4 class="modal-title" style="background-color: #D82787;padding: 20px;color: white;text-align: center;font-weight: bold;">
            Agregar Categoria de productos
           </h4>
           <hr>
@@ -806,12 +806,12 @@ $(document).ready(function()
     <div class="modal-dialog modal-lg">
          <!-- Modal content-->
       <div class="modal-content">
-          <h4 class="modal-title" style="background-color: #445a18;padding: 20px;color: white;text-align: center;font-weight: bold;">
-           Detalle del Producto.
+          <h4 class="modal-title" style="background-color: #D82787;padding: 20px;color: white;text-align: center;font-weight: bold;">
+           Detalle de Producto.
           </h4>
-          <hr>
+          
         <div class="modal-body">
-
+          <button type="button" style="color: #fff; float: right;" class="btn btn-danger" data-dismiss="modal">Close</button>
               <div class="cont-detalleView">
                 
                   <div class="alert alert-warning" role="alert">No hay informacion de detalle!!!</div>
@@ -819,32 +819,13 @@ $(document).ready(function()
 
               </div>
 
-              <div class="cont-formDetalle" style="display:none;">
-                 <form id="categoriaP" method="POST">
-                  <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" required name="nombre" required/>
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Nombres</span>
-                      </label>
-                  </span>
 
-                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion"  />
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Descripción</span>
-                      </label>
-                  </span>
 
-                   <span class="input input--hoshi">
-                     <button type="button" id="saveCategoria" class="btn btn-primary">Guardar</button>
-                  </span>
-                 </form>
-              </div>
         </div>
         <div class="modal-footer">
         <div id="msg" class="msgShow">
         </div> 
-          <button type="button" style="background-color: #16171a;color: #fff;" class="btn btn-info" data-dismiss="modal">Close</button>
+          
         </div>
       </div>
       
