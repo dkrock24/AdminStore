@@ -202,7 +202,7 @@ class orden_model extends CI_Model
                     left join productsv1 AS Pr ON Pr.id_producto = PD.id_producto
                     left join sys_sucursal AS S ON S.id_sucursal = P.id_sucursal
                     left join sys_pedido_estados as Pe ON Pe.id_pedido_estado = PD.pedido_estado
-                    where S.id_sucursal IN '. $in .' group by P.id_pedido order by P.id_sucursal, P.id_pedido desc' );
+                    where S.id_sucursal IN '. $in .' group by P.id_pedido order by P.fechahora_pedido desc, P.id_pedido desc' );
         //echo $this->db->queries[3];
         
         return $query->result();       

@@ -187,7 +187,7 @@
                                 <td><?php echo $orden->id_pedido.$orden->secuencia_orden;  ?></td>
                                 <td><?php echo $orden->cliente;  ?></td>
                                 <td><?php if($orden->flag_cancelado == 1){ echo "<span class='btn btn-success btn-xs'>Cancelado</span>";}else{echo "<span class='btn btn-danger btn-xs'>Pendiente</span>";}  ?> </td>
-                                <td><?php $date = date_create($orden->fechahora_pedido); echo date_format($date,"d/m/Y - H:i");  ?></td>
+                                <td><?php $date = date_create($orden->fechahora_pedido); echo date_format($date,"d M Y | <b>h:i a</b>");  ?></td>
                                 <td>
                                     <span class="<?php echo  $orden->clase_css; ?>"><?php echo  $orden->pedido_estado; ?>   </span>                                 
                                 </td>
