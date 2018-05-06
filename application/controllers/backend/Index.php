@@ -15,7 +15,7 @@ class Index extends CI_Controller {
 	}
 
 
-	public function index1()
+	public function index()
 	{		
 		$configuracion['lib_login'] =  $this->login_model->laodLib("login","header");	
 		$configuracion['config'] =  $this->login_model->loadConfig("login");
@@ -68,7 +68,7 @@ class Index extends CI_Controller {
 
 	public function salir(){
 		//session_start();
-		$this->index1();
+		$this->index();
 			
 		session_destroy();
 	}

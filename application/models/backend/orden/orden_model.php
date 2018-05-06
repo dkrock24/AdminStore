@@ -210,7 +210,7 @@ class orden_model extends CI_Model
 
     public function detaelleOrden( $idOrden ){
 
-        $query = $this->db->query('select *, Us.nickname as Uno, U.nickname as Dos , es.pedido_estado from sys_pedido AS P
+        $query = $this->db->query('select *,P.telefono as telefono1,P.celular as celular1 , Us.nickname as Uno, U.nickname as Dos , es.pedido_estado from sys_pedido AS P
                     left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
                     left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
                     left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal

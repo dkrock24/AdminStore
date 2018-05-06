@@ -164,7 +164,7 @@ function cambiarPassword()
 	$new_pass		= sha1($password);
 
 	$sql = "update sr_usuarios set password='$new_pass', estado=1 where id_usuario=$usuario";
-	mysql_query($GLOBALS['conexion'],$sql)or die(mysql_error());
+	mysqli_query($GLOBALS['conexion'],$sql)or die(mysql_error());
 }
 function cambiarAvatar()
 {

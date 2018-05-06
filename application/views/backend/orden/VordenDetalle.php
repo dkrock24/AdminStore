@@ -212,7 +212,7 @@
                                                 <span class="">Telefono</span>                                                
                                             </td>
                                             <td>
-                                                <?php echo $orden[0]->telefono; ?>
+                                                <?php echo $orden[0]->telefono1; ?>
                                             </td>
                                         </tr> 
                                         <tr>
@@ -220,7 +220,7 @@
                                                 <span class="">Celular</span>                                                
                                             </td>
                                             <td>
-                                                <?php echo $orden[0]->celular; ?>
+                                                <?php echo $orden[0]->celular1; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -259,7 +259,7 @@
                                                
                                             </td>
                                             <td>
-                                                 <?php echo $orden[0]->fechahora_pedido; ?>
+                                                 <?php echo $orden[0]->fecha_sugerida_entrega; ?>
                                             </td>
                                         </tr>  
                                         <tr>
