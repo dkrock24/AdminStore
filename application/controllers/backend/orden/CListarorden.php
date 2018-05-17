@@ -27,12 +27,22 @@ class CListarorden extends CI_Controller {
 		$this->load->view('backend/orden/VListaorden.php',$data);
 	}
 
+	// Detalle de cada orden
 	public function detalle( $idOrden ){
 
 		$data['orden'] = $this->orden_model->detaelleOrden( $idOrden );
 		$data['estados']	= $this->sucursales_model->getEstados();
 
 		$this->load->view('backend/orden/VordenDetalle.php',$data);
+	}
+
+	//Impresion de Orden
+	public function impresion( $idOrden ){
+
+		$data['orden'] = $this->orden_model->detaelleOrden( $idOrden );
+		$data['estados']	= $this->sucursales_model->getEstados();
+		
+		$this->load->view('backend/orden/VimpresionOrden.php',$data);
 	}
 
 	public function actualizarOrden( ){

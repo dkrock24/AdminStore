@@ -21,24 +21,6 @@
             });
         });
 
-        $('#imprimir_orden').click(function(){
-            var id_pedido = $(this).attr('name');
-            $.ajax({
-                type:"post",
-                
-                success: function(data){
-                    $(".pages").load("../orden/CListarorden/impresion/"+id_pedido);                    
-                },
-                error:function(){
-                    alert("failure1");
-                }
-            });
-        });
-
-
-
-        
-
         $('#regresar').click(function(){
             $.ajax({
                 //url: "../orden/CListarorden/actualizarOrden",
@@ -62,7 +44,7 @@
             <div id='mainContentWrapper'>
                 <div class="col-md-8 col-md-offset-2">
                     <h2 style="text-align: center;">
-                        Detalle De La Orden
+                        Detalle De La Orden **************
                     </h2>
                     <hr/>
                     <a href="#" class="btn btn-info" style="width: 100%;">Orden # <?php echo $orden[0]->id_pedido.$orden[0]->secuencia_orden; ?></a>
@@ -83,7 +65,7 @@
                             </td>
                             <td>
                                 <a href="#" class="btn btn-info" name="" id="actualizar_orden">Actualizar</a>
-                                <a href="../index/impresion" class="btn btn-primary" id="imprimir_orden" target="_blank" name="<?php echo $orden[0]->id_pedido ?>">Imprimir</a>
+                                <a href="javascript:window.print()" class="btn btn-primary" id="imprimir_orden" >Imprimir</a>
                                 <a href="#" class="btn btn-danger" id="regresar">Regresar</a>
                             </td>
                         </tr>

@@ -72,4 +72,8 @@ class Index extends CI_Controller {
 			
 		session_destroy();
 	}
+
+	public function impresion(){
+		echo 1;
+	}
 }
