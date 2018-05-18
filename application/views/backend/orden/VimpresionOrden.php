@@ -1,346 +1,175 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Cupones</title>
+</head>
+<link rel="stylesheet" type="text/css" href="../../../../../assets/images/print.css" media="print">
+<script src="../../../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>  
 
-<script type="text/javascript">
+<script src="../../../../../assets/js/jquery.editable.js"></script> 
+<script src="../../../../../assets/js/jquery.editable.min.js"></script>  
+
+
+<style type="text/css" media="print">
+@media print {
+    body {-webkit-print-color-adjust: exact; }
+    .bloc{
+        background:url(../../../../../assets/images/imagen_cupon.jpg) no-repeat ;
+        background-size: 340.15px 188.9px;
+    }
+    .titulo{
+        float: left;
+        position: relative;
+        margin-top: 80px;
+        font-size: 135px;
+    }
+    .codigo{
+    display: inline-block;
+    position: absolute;
+    float: right;
+    margin-left: 25%; 
+    margin-top: 11%;
+    transform: rotate(-20deg);
+    font-size: 11px;
+    }
+
+}
+@page {
+    margin: 0;
+    -webkit-print-color-adjust: exact;    
+    background:url(../../../../../assets/images/imagen_cupon.jpg) no-repeat ;
+    background-size: 340.15px 188.9px;
+
+}
+
+
+</style>
+
+<style type="text/css">
+    
+    .table{
+      padding: 10px;
+
+    }
+    .bloc{
+      width:341px;
+      height: 510px;
+      border:dashed;
+      display: inline-block;  
+      background: url("../../../../../assets/images/imagen_cupon.jpg") no-repeat; 
+      background-size: 340.15px 188.9px;
+    }
+    .banda{
+      width: 290px;
+      height: 100%;
+      background: grey;
+      display: inline-block;
+      padding: 5px;
+      margin: 10px;
+      margin-top:0px;
+      margin: 0 auto;
+    }
+
+    #container {
+        position:absolute;
+        background-color: none;
+    }
+
+    #elem{
+        width: 100%;
+        position: absolute;
+        background-color: orange;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        -ms-user-select: none;
+        -khtml-user-select: none;     
+        user-select: none;
+    }
+
+</style>
+
+
+<script>
+
     $(document).ready(function(){
-        $('#actualizar_orden').click(function(){
-            $.ajax({
-                url: "../orden/CListarorden/actualizarOrden",
-                type:"post",
-                data: $('#ordenDetalle').serialize(), 
-
-                
-                success: function(data){
-                    $(".pages").load("../orden/CListarorden/index");                    
-                },
-                error:function(){
-                    alert("failure1");
-                }
-            });
-        });
-
-        $('#regresar').click(function(){
-            $.ajax({
-                //url: "../orden/CListarorden/actualizarOrden",
-                //type:"post",
-                //data: $('#ordenDetalle').serialize(), 
-
-                
-                success: function(data){
-                    $(".pages").load("../orden/CListarorden/index");                    
-                },
-                error:function(){
-                    alert("failure1");
-                }
-            });
+        var option = {trigger : $("#editar"), action : "click"};
+        $(".demo").editable(option, function(e){
+            alert(e.text);
         });
     });
+
+            var mydragg = function(){
+                return {
+                    move : function(divid,xpos,ypos){
+                        //divid.style.left = xpos + 'px';
+                        divid.style.top = ypos + 'px';
+                    },
+                    startMoving : function(divid,container,evt){
+                        evt = evt || window.event;
+                        var posX = evt.clientX,
+                            posY = evt.clientY,
+                        divTop = divid.style.top,
+                        divLeft = divid.style.left,
+                        eWi = parseInt(divid.style.width),
+                        eHe = parseInt(divid.style.height),
+                        cWi = parseInt(document.getElementById(container).style.width),
+                        cHe = parseInt(document.getElementById(container).style.height);
+                        document.getElementById(container).style.cursor='move';
+                        divTop = divTop.replace('px','');
+                        divLeft = divLeft.replace('px','');
+                        var diffX = posX - divLeft,
+                            diffY = posY - divTop;
+                        document.onmousemove = function(evt){
+                            evt = evt || window.event;
+                            var posX = evt.clientX,
+                                posY = evt.clientY,
+                                aX = posX - diffX,
+                                aY = posY - diffY;
+                                if (aX < 0) aX = 0;
+                                if (aY < 0) aY = 0;
+                                if (aX + eWi > cWi) aX = cWi - eWi;
+                                if (aY + eHe > cHe) aY = cHe -eHe;
+                            mydragg.move(divid,aX,aY);
+                        }
+                    },
+                    stopMoving : function(container){
+                        var a = document.createElement('script');
+                        document.getElementById(container).style.cursor='default';
+                        document.onmousemove = function(){}
+                    },
+                }
+            }();
 </script>
 
-    <div class='row' style='padding-top:25px; padding-bottom:25px;'>
-        <div class='col-md-12'>
-            <div id='mainContentWrapper'>
-                <div class="col-md-8 col-md-offset-2">
-                    <h2 style="text-align: center;">
-                        Detalle De La Orden **************
-                    </h2>
-                    <hr/>
-                    <a href="#" class="btn btn-info" style="width: 100%;">Orden # <?php echo $orden[0]->id_pedido.$orden[0]->secuencia_orden; ?></a>
-                    <form name="ordenDetalle" id="ordenDetalle" action="" method="">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <select class="form-control" name="estado">
-                                    <?php
-                                        foreach ($estados as $value) {
-                                            ?>
-                                            <option value='<?php echo $value->id_pedido_estado;  ?>'><?php echo $value->pedido_estado;  ?></option>
-                                            <?php
-                                        }
-                                    ?>
-                                </select>
-                                <input type="hidden" name="idOrden" value="<?php echo $orden[0]->id_pedido ?> ">
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-info" name="" id="actualizar_orden">Actualizar</a>
-                                <a href="javascript:window.print()" class="btn btn-primary" id="imprimir_orden" >Imprimir</a>
-                                <a href="#" class="btn btn-danger" id="regresar">Regresar</a>
-                            </td>
-                        </tr>
-                    </table>
-                    </form>
-                    
-                    <hr/>
-                    <div class="shopping_cart">
-                        <form class="form-horizontal" role="form" action="" method="post" id="payment-form">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Resumen del Pedido</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <div class="items">
-                                                <div class="col-md-9">
-                                                    <table class="table table-striped">
-                                                        <tr>
-                                                            <td>Producto</td>
-                                                            <td>Cantidad</td>                                                            
-                                                            <td>Precio Original</td>
-                                                            <td>Precio Grabado</td>
-                                                        </tr>
-                                                        <?php
-                                                            foreach ($orden as $value) {
-                                                                ?>
-                                                                <tr>
-                                                                    <td>
-                                                                        <b><?php echo $value->nombre_producto; ?></b>
-                                                                    </td>
-                                                                    <td><?php echo $value->cantidad; ?></td>
-                                                                    <td><?php echo $value->moneda .' '. number_format($value->precio_grabado,2); ?></td>
-                                                                    <td>
-                                                                        <?php echo $value->moneda .' '. number_format($value->precio_original,2); ?>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                        
-                                                        <tr>
-        
-                                                            <td>Totales</td>
-                                                            <td>
-                                                                <?php
-                                                                    $total_cantidad = 0;
-                                                                    foreach ($orden as $value) {
 
-                                                                        $total_cantidad += $value->cantidad;
-                                                                    }
-                                                                    echo $total_cantidad ;
 
-                                                                ?>
-                                                            </td>
-                                                            <td>
-                                                                <b>
-                                                                    <?php
-                                                                    $total =0;
-                                                                    foreach ($orden as $value) {
-                                                                        $total += $value->precio_original * $value->cantidad;
-                                                                    }
-                                                                   
-                                                                    echo $orden[0]->moneda .' '. number_format($total, 2);
-                                                                    ?>
-                                                                </b>
-                                                            </td>
-                                                            <td>
-                                                                <b>
-                                                                <?php
-                                                                    $total =0;
-                                                                    foreach ($orden as $value) {
-                                                                        $total += $value->precio_grabado * $value->cantidad;
-                                                                    }
-                                                                    
-                                                                    echo $orden[0]->moneda .' '. number_format($total, 2);
-                                                                ?>
-                                                                </b>
-                                                            </td>
-                                                            
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div style="text-align: center;">
-                                                        <h3>Total Orden</h3>
-                                                        <h3><span style="color:green;">
-                                                            <?php
-                                                            $total =0;
-                                                            foreach ($orden as $value) {
-                                                                $total += $value->precio_grabado * $value->cantidad;
-                                                            }
-                                                            echo $orden[0]->moneda .' '. number_format($total, 2);
-                                                            ?>
-                                                        </span></h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <div style="text-align: center; width:100%;">Cliente</div>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <?php echo $orden[0]->cliente; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
+<body>
 
-                            <div class="panel-group" id="accordion">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <div style="text-align: center; width:100%;">Datos de Pedido</div>
-                                        </h4>
-                                </div>
-
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <table class="table">
-                                                <tr>
-                                            <td>
-                                                <span class="">Correo</span>                                                
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->email; ?>
-                                            </td>
-                                        </tr> 
-                                        <tr>
-                                            <td>
-                                                <span class="">Telefono</span>                                                
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->telefono1; ?>
-                                            </td>
-                                        </tr> 
-                                        <tr>
-                                            <td>
-                                                <span class="">Celular</span>                                                
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->celular1; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="">Fecha Pedido</span>                                                
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->fechahora_pedido; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="">Tarjeta</span> 
-                                                
-
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->tarjeta; ?>
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td>
-                                                
-                                                <span class="">CVS </span>
-                                                
-                                               
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->cvs; ?><br>
-                                            </td>
-                                        </tr> 
-                                        <tr>
-                                            <td>
-                                               
-                                                <span class="">Fecha Pedido </span>
-                                               
-                                            </td>
-                                            <td>
-                                                 <?php echo $orden[0]->fecha_sugerida_entrega; ?>
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td>De </td>
-                                            <td><?php echo $orden[0]->de; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Para </td>
-                                            <td><?php echo $orden[0]->para; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dedicatoria </td>
-                                            <td><?php echo $orden[0]->dedicatoria; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Direccion </td>
-                                            <td><?php echo $orden[0]->direccion; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nota Interna </td>
-                                            <td><?php echo $orden[0]->nota_interna; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Estado </td>
-                                            <td><?php echo $orden[0]->pedido_estado; ?></td>
-                                        </tr>
-                                    </table>
-                                    </div>
-                                </div>
-
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <div style="text-align: center; width:100%;">Datos de produccion</div>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <table class="table">
-                                        <tr>
-                                            <td>Pais </td>
-                                            <td><?php echo $orden[0]->nombre_pais; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Departamento </td>
-                                            <td><?php echo $orden[0]->nombre_departamento; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sucursal </td>
-                                            <td><?php echo $orden[0]->nombre_sucursal; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nodo </td>
-                                            <td><?php echo $orden[0]->id_nodo; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Encargado de Produccion </td>
-                                            <td><?php echo $orden[0]->Uno; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Encargado de Entrega </td>
-                                            <td><?php echo $orden[0]->Dos; ?></td>
-                                        </tr>
-                                    </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-      
-
-        
-                               
-                            </div>
-
-                         
+    <div class="table">
+        <div class="bloc">
+            <div class="content" id="content">                      
+                <div id='container' style="width: 341px;height: 510px;">     
+                    <div id="elem" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="width: 100%;height: 100px;">
+                        <div style='padding:10px' class="demo">
+                            <?php echo $orden[0]->dedicatoria; ?>    
+                        </div>
                     </div>
-                </div>
-                </form>
+                </div> 
             </div>
         </div>
-    
+    </div>
 
+
+ 
+
+
+
+    <a href="javascript:window.print()" class="btn btn-primary" id="imprimir_orden">Imprimir</a>
+    <a href="#" class="btn btn-primary" id="editar">Editar</a>
+</body>
+</html>
 
