@@ -83,7 +83,7 @@
                             </td>
                             <td>
                                 <a href="#" class="btn btn-info" name="" id="actualizar_orden">Actualizar</a>
-                                <a href="../orden/CListarorden/impresion/<?php echo $orden[0]->id_pedido ?>" class="btn btn-primary" id="imprimir_orden" target="_blank" name="<?php echo $orden[0]->id_pedido ?>">Imprimir</a>
+                                <a href="../orden/CListarorden/impresion/<?php echo $orden[0]->id_pedido ?>" class="btn btn-primary" id="" target="_blank" name="<?php echo $orden[0]->id_pedido ?>">Imprimir</a>
                                 <a href="#" class="btn btn-danger" id="regresar">Regresar</a>
                             </td>
                         </tr>
