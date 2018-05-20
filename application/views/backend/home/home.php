@@ -30,7 +30,7 @@ if(!isset($_SESSION['usuario'])){
       <script src="../../../<?php echo $value->url_libreria; ?>"></script>      
       <?php
     }
-    ?>
+    ?>z
     <link href="../../../assets/css/style.css" rel="stylesheet">
     <link href="../../../assets/css/theme.css" rel="stylesheet">
     <link href="../../../assets/css/ui.css" rel="stylesheet">
@@ -233,12 +233,14 @@ if(!isset($_SESSION['usuario'])){
         <div class="topbar">
           <div class="header-left">
             <div class="topnav">
+              <!--
               <a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
+              -->
               <ul class="nav nav-icons">
               <h3>
                 <?php
                 foreach ($empresa as $value) {
-                  echo $value->nombre_empresa.' '.$value->departamento;
+                  echo "  ".$value->nombre_empresa.' '.$value->departamento;
                 }
                 
                 ?>

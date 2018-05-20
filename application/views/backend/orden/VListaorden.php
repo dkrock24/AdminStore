@@ -179,7 +179,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    if($ordenes !=""){
+                    if($ordenes){
                     foreach ($ordenes as $orden) {
                             ?>
                              <tr>

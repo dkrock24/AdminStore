@@ -18,11 +18,18 @@ class CListarorden extends CI_Controller {
 		session_start();
 		$data['sucursales'] = $this->Sucursales_model->getSucursalesByUser($_SESSION['idUser']);
 		$sucursales = array();
-		foreach ($data['sucursales'] as $value) {
-			$sucursales[] = $value->id_sucursal;
+		if($data['sucursales'])
+		{
+			foreach ($data['sucursales'] as $value) {
+				$sucursales[] = $value->id_sucursal;
+			}
+			$data['ordenes'] = $this->orden_model->listarOrdenes( $sucursales );
+		}else{
+			$data['ordenes'] = null;
 		}
+		
 
-		$data['ordenes'] = $this->orden_model->listarOrdenes( $sucursales );
+		
 
 		$this->load->view('backend/orden/VListaorden.php',$data);
 	}
