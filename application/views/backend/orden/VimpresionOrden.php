@@ -1,12 +1,12 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Impresion Tarjeta</title>
 </head>
-<link rel="stylesheet" type="text/css" href="../../../../../assets/images/print.css" media="print">
+
 <link rel="stylesheet" type="text/css" href="../../../../../assets/css/icons/font-awesome/font-awesome.css">
 <script src="../../../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>  
 
@@ -18,7 +18,7 @@
 @media print {
     body {-webkit-print-color-adjust: exact; }
     .bloc{
-        background:url(../../../../../assets/images/imagen_cupon.jpg) no-repeat ;
+        /*background:url(../../../../../assets/images/imagen_cupon.jpg) no-repeat ;*/
         background-size: 340.15px 188.9px;
     }
     .titulo{
@@ -67,7 +67,7 @@
       position: relative;
       border:dashed;
       display: inline-block;  
-      background: url("../../../../../assets/images/imagen_cupon.jpg") no-repeat; 
+      /*background: url("../../../../../assets/images/imagen_cupon.jpg") no-repeat; */
       background-size: 340.15px 188.9px;
     }
     .banda{
@@ -135,6 +135,7 @@
                 $(".action").css("margin-top","300");            
                 $(".bloc").css("width","566");
                 $(".bloc").css("height","377");
+                $(".bloc").css("border","dashed");
             }
             else
             {
@@ -144,6 +145,7 @@
                 $(".bloc").css("width","341");
                 $(".bloc").css("height","510");
                 $("#elem").css("left","0");
+                $(".bloc").css("border","dashed");
             }            
 
         });
@@ -154,13 +156,15 @@
         });
 
         $("#zoomOut").click(function(){
-            fontSize+=2;
+            fontSize+=4;
             $('.demo').animate({ 'font-size' : fontSize+'px' });
+            $(".bloc").css("border","dashed");
         });
 
         $("#zoomIn").click(function(){
-            fontSize-=2;
+            fontSize-=4;
             $('.demo').animate({ 'font-size' : fontSize+'px' });
+            $(".bloc").css("border","dashed");
         });
 
 
@@ -171,8 +175,8 @@
 
             var option = {trigger : $("#editar")};
             $('.demo').editable(option, function(e){
-                $('.demo').focus();
-                
+                //$('.demo').focus();
+                $(".bloc").css("border","dashed");                
             });
             
         });
@@ -301,3 +305,4 @@
 </body>
 </html>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
