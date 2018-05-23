@@ -18,7 +18,7 @@
 @media print {
     body {-webkit-print-color-adjust: exact; }
     .bloc{
-        /*background:url(../../../../../assets/images/imagen_cupon.jpg) no-repeat ;*/
+        background:url(../../../../../assets/images/regalo.jpg) no-repeat ;
         background-size: 340.15px 188.9px;
     }
     .titulo{
@@ -58,6 +58,7 @@
     
     .table{
       padding: 10px;
+      text-align: center;
 
     }
     .bloc{
@@ -67,8 +68,8 @@
       position: relative;
       border:dashed;
       display: inline-block;  
-      /*background: url("../../../../../assets/images/imagen_cupon.jpg") no-repeat; */
-      background-size: 340.15px 188.9px;
+        background:url(../../../../../assets/images/regalo.jpg) no-repeat ;
+
     }
     .banda{
       width: 290px;
@@ -89,7 +90,7 @@
     #elem{
         width: 100%;
         position: absolute;
-        background-color: #FFFF00;
+        text-align: left;
         -webkit-user-select: none;
         -moz-user-select: none;
         -o-user-select: none;
@@ -101,18 +102,15 @@
     .demo{
         font-family: oswald;
         font-size: 20px;   
-        font-weight: 10px;
+        font-weight: 1px;
         
     }
     .action{
-        float: right;
+
         background: none;
-        display: inline-block ;
         position: absolute;
-        margin-top: 0px;
-        top: 0px;
-        margin-left: 60%;
-        padding: 1%;
+        bottom:0;
+
     }
 
 </style>
@@ -136,16 +134,22 @@
                 $(".bloc").css("width","566");
                 $(".bloc").css("height","377");
                 $(".bloc").css("border","dashed");
+                var imageUrl = "../../../../../assets/images/condolencia.jpg";
+                $(".bloc").css("background-image", 'url(' + imageUrl + ')' );
             }
             else
             {
                 // Impresion Modo Tarjeta Condolencia
-
+                
                 $(".action").css("margin-top","0");            
                 $(".bloc").css("width","341");
                 $(".bloc").css("height","510");
                 $("#elem").css("left","0");
                 $(".bloc").css("border","dashed");
+                var imageUrl = "../../../../../assets/images/regalo.jpg";
+                $(".bloc").css("background-image", 'url(' + imageUrl + ')' );
+
+                //background:url() no-repeat ;
             }            
 
         });
@@ -166,6 +170,13 @@
             $('.demo').animate({ 'font-size' : fontSize+'px' });
             $(".bloc").css("border","dashed");
         });
+
+        $("#center").click(function(){
+            $('.demo').css('text-align', 'center');
+          
+        });
+
+        
 
 
         $('#editar').click(function() {
@@ -194,12 +205,13 @@
                             divid.style.left = xpos + 'px';
                             $("#container").css('width',510);
                             $("#container").css('height',341);
+                            //$(".elem").css("left","0");
 
                         }else{
                             divid.style.left = xpos + 'px';
                             $("#container").css('width',341);
                             $("#container").css('height',510);
-                            $(".elem").css("left","0");
+                            //$(".elem").css("left","0");
                         }
                         
                         divid.style.top = ypos + 'px';
@@ -265,42 +277,41 @@
                 </div> 
             </div>
         </div>
-    </div>
 
-    <div class="action">
-        <fieldset>  
-            <legend>    Controles de Impresión</legend>
-            <a href="javascript:window.print()" class="btn btn-primary" id="imprimir_orden"><i class="fa fa-print"> </i> Imprimir</a>
-        <a href="#" class="btn btn-primary" id="editar"> <i class="fa fa-edit"> </i> Editar</a>
-        <a href="#" class="btn btn-primary" id="zoomOut"> <i class="fa fa-search-plus"> </i> Zoom </a>
-        <a href="#" class="btn btn-primary" id="zoomIn"> <i class="fa fa-search-minus"> </i> Zoom </a>
-        </fieldset>
-        
-        <hr>
-
-        <fieldset>  
-            <legend>    Controles de Posición</legend>
-            <div class="Valores">
+            <div class="action" style="text-align: center; width: 100%;">
+                <fieldset>  
+                    <legend>    Controles de Impresión</legend>
+                    <a href="javascript:window.print()" class="btn btn-primary" id="imprimir_orden"><i class="fa fa-print"> </i> Imprimir</a>
+                <a href="#" class="btn btn-primary" id="editar"> <i class="fa fa-edit"> </i> Editar</a>
+                <a href="#" class="btn btn-primary" id="zoomOut"> <i class="fa fa-search-plus"> </i> Zoom </a>
+                <a href="#" class="btn btn-primary" id="zoomIn"> <i class="fa fa-search-minus"> </i> Zoom </a>
+                <a href="#" class="btn btn-primary" id="center"> <i class="fa fa-align-center"> </i> Center </a>
+                </fieldset>
                 
-                <button type="button" class="btn btn-primary">
-                    Posición <span class="badge badge-light"><span class="posicion"></span></span>
-                </button>
+                <hr>
 
-                <span>
-                <select class="form-control" style="width:200px; display: inline-block;" id="tarjeta">
-                    <option value="1">Tarjeta de Regalo</option>
-                    <option value="2">Tarjeta de Condolencia</option>
-                </select>
-            </span>
+                <fieldset>  
+                    <legend>    Controles de Posición</legend>
+                    <div class="Valores">
+                        
+                        <button type="button" class="btn btn-primary">
+                            Posición <span class="badge badge-light"><span class="posicion"></span></span>
+                        </button>
 
+                        <span>
+                        <select class="form-control" style="width:200px; display: inline-block;" id="tarjeta">
+                            <option value="1">Tarjeta de Regalo</option>
+                            <option value="2">Tarjeta de Condolencia</option>
+                        </select>
+                    </span>
+
+                    </div>
+                    
+                </fieldset>
             </div>
-            
-        </fieldset>
-
-
-
-        
     </div>
+
+
     
 </body>
 </html>
