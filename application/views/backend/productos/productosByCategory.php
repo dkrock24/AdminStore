@@ -98,61 +98,60 @@
         <?php
             if (!empty($producto)) 
             {
-              //var_dump($producto);
-              foreach ($producto as $value) 
-              {
               ?>
-                
-              <!--  Vista dinamica de prodcutos --> 
-                <div class="col-md-4">
+              <table class="table table-hover table-dynamic ">
+                    <thead class='titulos'>
+                      <tr>
+                        <th>Nombre</th>                                          
+                        <th>Estado</th>
+                        <th>Detalle</th>                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if($producto){
+                    foreach ($producto as $value) {
+                            ?>
+                             <tr>
+                                <td><?php echo $value->nombre_producto;  ?></td>
+                                <td></td>
+                                <td>
+                                    <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
+                                            <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
 
-                  
-                  
-                   
-                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
-                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                                            </a> 
+                                            <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
+                                            <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
+                                            
+                                            <a class="btn btn-primary  btn-sm modifyP" style="margin-left: -9px;" role="button"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                              <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                                            </a>
 
-                        </a> 
-                        <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
-                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button">Eliminar
-                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-                          <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
-                        </a>
-                        <?php if($value->ingredientes_completos != 0)
-                                      {?>
-                        <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
+                                            <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button"><i class="fa fa-trash" aria-hidden="true"></i>
+                                              <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                                              <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
+                                            </a>
+                                          <?php if($value->ingredientes_completos != 0)
+                                                          {?>
+                                            <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
 
-                 <?php }
-                else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
-                <?php
-                } 
-                ?> 
-
-                       </div>
-
-                    <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
-                  
-                  <h3 style="font-weight: bold;color: white; position: absolute; background-color: #D82787; width: 90%;margin-top: 0px; "><?php echo $value->nombre_producto ?>
-                    
-                  </h3>
-                    
-                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                      
-                      
-                    </div>
-
-
-                   
-
-                  </div>
-                
-                </div>
-                <!--  Vista dinamica de prodcutos -->
+                                     <?php }
+                                    else{?>
+                                           <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
+                                    <?php
+                                    } 
+                                    ?> 
+                                </td>                                                           
+                             </tr>
+                            
+                            <?php
+                          }
+                        }
+                    ?>                      
+                    </tbody>
+    </table>
               <?php
-                }
+
             }
             else
             {

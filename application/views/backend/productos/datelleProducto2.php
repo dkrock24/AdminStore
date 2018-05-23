@@ -19,6 +19,7 @@
                     formData.append('descripcion', $('#p_descripcion').val());
                     formData.append('precio1', $('#p_precio_sugerido').val());
                     formData.append('precio2', $('#p_precio_minimo').val());
+                    formData.append('estado', $('#estado').val());
                     formData.append('id', $(this).attr('name'));
 
                     
@@ -112,9 +113,11 @@
         <tr>
             <td>Categoria</td>
             <td>
-                <?php echo $detalle[0]->nombre_categoria_producto; ?>
+                
                 <select name="categoria1" id="categoria1" class="form-control">
+                <option value="<?php echo $detalle[0]->categoria_id; ?>"><?php echo $detalle[0]->nombre_categoria_producto; ?></option>
                 <?php
+
                 foreach ($categoria as $value) {
                     ?>
                     <option value="<?php echo $value->id_categoria_producto; ?>"><?php echo $value->nombre_categoria_producto; ?></option>
@@ -122,6 +125,31 @@
                 }
                 ?>
                 </select>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>Estado producto</td>
+            <td>               
+
+                <select nmae="estado" id="estado" class="form-control">
+                    <?php
+                        if($detalle[0]->prodStado == 1){
+                            ?>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                            <?php
+                        }else{
+                            ?>
+                             <option value="0">Inactivo</option>
+                             <option value="1">Activo</option>
+                            <?php
+                        }
+                    ?>
+                   
+                    
+                </select>
+
                 
             </td>
         </tr>

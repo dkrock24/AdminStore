@@ -37,6 +37,15 @@ class productos_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from(self::producto);
+
+        $this->db->join(self::categoria,' on '. 
+                        self::categoria.'.id_categoria_producto = '.
+                        self::producto.'.categoria_id');
+        $this->db->where(self::categoria.'.id_categoria_producto <>',10); 
+        $this->db->where(self::categoria.'.id_categoria_producto <>',21); 
+        $this->db->order_by(self::categoria.'.id_categoria_producto', "asc");
+        //
+
         $query = $this->db->get();
         
         if($query->num_rows() > 0 )
@@ -129,6 +138,7 @@ class productos_model extends CI_Model
             'description_producto'   => $produc['descripcion'],
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
+            'prodStado'   => $produc['estado'],
             'image' => $name
             
             );
@@ -140,9 +150,8 @@ class productos_model extends CI_Model
             'description_producto'   => $produc['descripcion'],
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
-            
-            
-        );
+            'prodStado'   => $produc['estado']                      
+            );
         }
 
         
@@ -340,7 +349,9 @@ class productos_model extends CI_Model
     {
         $query = $this->db->query('Select * from productsv1 p
         Inner join sys_productos_sucursal ps ON ps.id_producto = p.id_producto
-        where ps.id_sucursal ='.$sucursalID.' group by p.id_producto');
+        Inner join sys_sucursal s ON s.id_sucursal = ps.id_sucursal
+        Inner join categoria ca ON ca.id_categoria_producto = p.categoria_id
+        where ps.id_sucursal ='.$sucursalID.' and ca.id_categoria_producto NOT IN (10,21) order by ca.id_categoria_producto asc');
          //echo $this->db->queries[0];
         return $query->result();
        

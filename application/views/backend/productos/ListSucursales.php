@@ -110,7 +110,7 @@
 
 .name-sucursal
 {
-    background-color: #2b2e33;
+    background-color: #D82787;
     text-align: center;
     font-weight: bold;
     height: 35px;
@@ -137,7 +137,7 @@
             <div class="cont-sucursales">
                  <input type="hidden" name="idSucursal" class="idSucursal" value="<?php echo $value->id ?>">
                  <input type="hidden" name="productoID" class="productoID" value="<?php echo $productoID; ?>">
-                <i class='fa fa-home' style="font-size: 150px;color:#88b32f;"></i>
+                <i class='fa fa-home' style="font-size: 150px;color:#D82787;"></i>
                 <div class="name-sucursal"><?php echo $value->nombre_pais."(".$value->name.")"; ?> 
                 <?php if($value->validate != null)
                 {?>

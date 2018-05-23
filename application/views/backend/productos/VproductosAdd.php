@@ -1,15 +1,19 @@
-<?php
-   session_start()
-?>
  <!-- END PRELOADER -->
 
     <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+ <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
+    <!-- BEGIN PAGE SCRIPT -->
+   <script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>    
+    <script src="../../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+    <!-- BEGIN PAGE SCRIPT -->
     <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
     <script src="../../../assets/js/pages/table_dynamic.js"></script>
     <!-- BEGIN PAGE SCRIPT -->
-    <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../../../assets/css/jquery-ui.min.css" type="text/css" /> 
 <script>
   function archivo(evt) 
   {
@@ -37,31 +41,27 @@
   }
     document.getElementById('files').addEventListener('change', archivo, false);
 </script>
+<script>
 
-<script>    
-    $("#addCategoria").click(function()
-    {
-        $(".ModaAddCategory").modal({
-           backdrop: 'static', 
-           keyboard: false 
-        });
+    $('.associateBranch').click(function(){
 
+       var prodcutoID =  $(this).find('.idProducto').val();
 
+        $(".sk-three-bounce").show();
+        $.ajax({
+            //url: "../orden/CListarorden/detalle",
+            type:"post",
+            success: function(){     
+              $(".pages").load("../productos/Cproductos/loadSucursales/"+prodcutoID); 
+              setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);      
+            },
+            error:function(){
+                //alert("Error.. No se subio la imagen");
+            }
+        });  
     });
-
-/*
-    $(".viewDetalle").click(function()
-    {
-        $(".myModalDetalle").modal({
-           backdrop: 'static', 
-           keyboard: false 
-        });
-
-        var prodcutoID = $(this).find('.idProducto').val();
-        //alert(prodcutoID);
-        $(".cont-detalleView").load("../productos/Cproductos/detalleProducto/"+prodcutoID);
-
-    });*/
 
     $(".viewDetalle").click(function()
     {
@@ -75,8 +75,9 @@
         $(".cont-detalleView").load("../productos/Cproductos/detalleProducto2/"+prodcutoID);
 
     });
-$(document).ready(function()
-  {
+
+    $(document).ready(function()
+    {
 
 
 
@@ -176,9 +177,25 @@ $(document).ready(function()
       //----------------add proveedor---------------
     $(".associateBranch").click(function()
     {
-       var prodcutoID = $(this).find('.idProducto').val();
-       //alert(prodcutoID);
-      $(".pages").load("../productos/Cproductos/loadSucursales/"+prodcutoID); 
+
+       var prodcutoID =  $(this).find('.idProducto').val();
+
+        $(".sk-three-bounce").show();
+        $.ajax({
+            //url: "../orden/CListarorden/detalle",
+            type:"post",
+            success: function(){     
+              $(".pages").load("../productos/Cproductos/loadSucursales/"+prodcutoID); 
+              setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);      
+            },
+            error:function(){
+                //alert("Error.. No se subio la imagen");
+            }
+        });  
+
+      
     });
     //-------------------------Fin ------------------
       //-------------------------Fin -----------------------------------
@@ -249,7 +266,22 @@ $(document).ready(function()
       //alert(sucursalID);
       $(".conten-sucursales").hide();
       $(".load-productoBySucursal").show();
-      $(".load-productoBySucursal").load("../productos/Cproductos/productosBySucursal/"+sucursalID);
+      
+
+      $(".sk-three-bounce").show();
+        $.ajax({
+            //url: "../orden/CListarorden/detalle",
+            type:"post",
+            success: function(){     
+              $(".load-productoBySucursal").load("../productos/Cproductos/productosBySucursal/"+sucursalID); 
+              setTimeout(function() {
+                        $(".sk-three-bounce").css('display','none');
+                    }, 1000);      
+            },
+            error:function(){
+                //alert("Error.. No se subio la imagen");
+            }
+        });
 
   });
   //-------------------------Fin -----------------------------------
@@ -327,9 +359,10 @@ $(document).ready(function()
 
  });
 
+  
+  //-------------------------Fin -----------------------------------
 
 </script>
-
 <style>
   .table-dynamic{width: 100%;}
   .form-inline .form-control {
@@ -405,7 +438,7 @@ $(document).ready(function()
 
 .name-sucursal
 {
-    background-color: #2b2e33;
+    background-color: #D82787;
     text-align: center;
     font-weight: bold;
     font-size: 16px;
@@ -446,285 +479,254 @@ $(document).ready(function()
     padding: 5px 12px !important;
 }
 </style>
-
-
 <ul class="nav nav-tabs">
   <li id="menu_li" class="B "><a href="#tab1_2" data-toggle="tab"><i class='fa fa-plus'></i>Agregar producto</a></li> 
-   <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-eye'></i>Ver Productos</a></li>
+   <li id="menu_li" class="A active"><a href="#tab1_1" data-toggle="tab"><i class='fa fa-eye'></i>Productos</a></li>
   <li id="menu_li" class="C "><a href="#tab1_3" data-toggle="tab"><i class='fa fa-home'></i>Productos por sucursal</a></li>
   <li id="menu_li" class="D "><a href="#tab1_4" data-toggle="tab"><i class='fa fa-list-ul'></i>Categoria de productos</a></li>  
 </ul>
-  <div class="tab-content">
 
+<div class="cont-loadProductos">
+  
+    <div class="tab-content">
 
-    <div class="tab-pane fade active in" id="tab1_1">
-           <div>
-            <span>Categoria:   </span>
-             <span><select style="width: 70%; margin:12px;" class="form-control form-grey categoriaSearch" name="categoriaSearch"  data-style="white" data-placeholder="Seleccione una categoria...">
-             <option value="0"> Todas </option>
-            <?php
-              foreach ($categoria as $value) {
-            ?>
-          <option value="<?php echo $value->id_categoria_producto ?>"><?php echo $value->nombre_categoria_producto?>
-          </option>
-            <?php
-              }
-            ?>                      
-          </select> <span>              
+        <div class="tab-pane fade active in" id="tab1_1">
+            <div class="row col-lg-12 conten-productos">
+
+                    <table class="table table-hover table-dynamic ">
+                            <thead class='titulos'>
+                              <tr>
+                                <th>Nombre</th>                                          
+                                <th>Categoria</th>
+                                <th>2checkoutID</th>
+                                <th>Precio Sugerido</th>
+                                <th>Precio Minimo</th>
+                                <th>Estado</th>
+                                <th>Detalle</th>                        
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if($producto){
+                            foreach ($producto as $value) {
+                                    ?>
+                                     <tr>
+                                        <td><?php echo $value->nombre_producto;  ?></td>
+                                        <td><?php echo $value->nombre_categoria_producto;  ?></td>
+                                        <td><?php echo $value->customnum;  ?></td>
+                                        <td><?php echo $value->numerico1;  ?></td>
+                                        <td><?php echo $value->precio_minimo;  ?></td>
+                                        <td>
+                                            <?php if($value->prodStado == 1){
+                                                ?><span class="btn btn-success btn-sm">Activo</span><?php
+                                            }else{
+                                                ?><span class="btn btn-warning btn-sm">Inactivo</span><?php
+                                            }?>
+                                                
+                                            </td>
+                                        <td>
+                                            <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
+                                                    <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+
+                                                    </a> 
+                                                    <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
+                                                    <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
+                                                    <!--
+                                                    <a class="btn btn-primary  btn-sm modifyP" style="margin-left: -9px;" role="button"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                                      <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                                                    </a>-->
+
+                                                    <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                      <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
+                                                      <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
+                                                    </a>
+                                                  <?php if($value->ingredientes_completos != 0)
+                                                                  {?>
+                                                    <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
+
+                                             <?php }
+                                            else{?>
+                                                   <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
+                                            <?php
+                                            } 
+                                            ?> 
+                                        </td>                                                           
+                                     </tr>
+                                    
+                                    <?php
+                                  }
+                                }
+                            ?>                      
+                            </tbody>
+                    </table>
+
+            </div> 
         </div>
-          <div class="load-categoryProductos" style="display:none;"></div>
-          <div class="row col-lg-12 conten-productos">
-        <?php
-            if (!empty($producto)) 
+
+        <div class="tab-pane includ fade" id="tab1_2" spellcheck="true">
+            <div class="row line col-md-12">
+                <div class="col-md-6">                    
+                        <span class="input input--hoshi">
+                              <input class="input__field input__field--hoshi" type="text" id="nombre" name="nombre" required/>
+                              <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                              <span class="input__label-content">Nombre Producto<strong>*</strong></span>
+                              </label>
+                        </span>   
+          
+                        <span class="input input--hoshi">
+                                <span class="input__label-content">Categoria<strong>*</strong></span>
+                                <select style="width: 60%;" class="form-control form-grey" name="categoria" id="categoria" data-style="white" data-placeholder="Seleccion una categoria" required>
+                                <?php
+                                foreach ($categoria as $value) {
+                                  ?>
+                                  <option value="<?php echo $value->id_categoria_producto ?>"><?php echo $value->nombre_categoria_producto?>
+                                  </option>
+                                  <?php
+                                }
+                                ?>                      
+                                </select>
+                                <p id="addCategoria" style="margin-top: 9px;margin-left: 4px;background-color: #c75757;" class="btn btn-success">Agregar</p>
+                                
+                             </span>
+
+
+                        <span class="input input--hoshi">
+                              <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" spellcheck="true" />
+                              <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                              <span class="input__label-content">Descripción</span>
+                              </label>
+                        </span>
+                          
+                        <span class="input input--hoshi">
+                              <input class="input__field input__field--hoshi" type="file" id="video" name="video[]" />
+                              <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                              <span class="input__label-content">Video</span>
+                              </label>
+                        </span>
+
+                  
+                        <span class="input input--hoshi">
+                             <button type="button" id="saveProducto" class="btn btn-primary">Guardar</button>
+                        </span>                
+                </div> 
+
+                <form enctype="multipart/form-data" id="productos" method="POST">  
+                <div class="col-md-6">                
+                    <div class="panel panel-info"> 
+                        <div class="panel-heading"><h3 class="panel-title">Vista previa Imagen</h3></div>
+                        <span class="input input--hoshi">
+                            <input class="input__field input__field--hoshi" type="file" id="files" name="files[]" required />
+                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                <span class="input__label-content">Imagen<strong>*</strong></span>
+                            </label>
+                        </span>
+                             
+                            <div class="panel-body" id="list" style="display:none;"> 
+                                <center>
+                           
+                                </center>
+                             </div> 
+                    </div>
+
+                    <div class="panel panel-info"> 
+                            <div class="panel-heading"><h3 class="panel-title">Estatus</h3></div> 
+                            <div class="panel-body" id="list">
+                                <center> 
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw loading" style="display:none;"></i>
+                                    <span class="sr-only">Loading...</span> 
+
+                                    <div class="msg alert alert-success" role="alert" style="display:none;">Guardado correctamente</div>
+                                </center>  
+                            </div> 
+                    </div>              
+                    </div>
+                </form> 
+            </div>   
+        </div>
+
+
+        <div class="tab-pane includ fade" id="tab1_3">
+           <div class="row line col-md-12">
+              <div class="row col-lg-12 conten-sucursales">
+           <?php
+            if (!empty($sucursales)) 
             {
-              //var_dump($producto);
-              foreach ($producto as $value) 
+              foreach ($sucursales as $value) 
               {
               ?>
                 
               <!--  Vista dinamica de prodcutos --> 
-                <div class="col-md-4" style="">
-                    <div class="action-btn-img" style="padding: 12px;text-align: center;background: #ecedee;">
-                      <a class="btn btn-primary  btn-sm associateBranch" style="margin-left: -9px;" role="button">Asociar
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-
-                        </a> 
-                        <a class="btn btn-primary  btn-sm viewDetalle" style="margin-left: -9px;" role="button">Detalle
-                        <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>"></a>
-                        
-                        <a class="btn btn-primary  btn-sm modifyP" style="margin-left: -9px;" role="button"><i class="fa fa-pencil" aria-hidden="true"></i>
-                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-                        </a>
-
-                        <a class="btn btn-primary  btn-sm deleteP" style="margin-left: -9px;" role="button"><i class="fa fa-trash" aria-hidden="true"></i>
-                          <input type="hidden" name="idProducto" class="idProducto" value="<?php echo $value->id_producto ?>">
-                          <input type="hidden" name="ImageName" class="ImageName" value="<?php echo $value->image ?>">
-                        </a>
-                      <?php if($value->ingredientes_completos != 0)
-                                      {?>
-                        <span class="fa fa-check-circle icoAlert" style="position: absolute; float: right;" title="Ingredientes completos" aria-hidden="true"></span>
-
-                 <?php }
-                else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita completar ingredientes" aria-hidden="true"></p>
-                <?php
-                } 
-                ?> 
-                    </div>
-
-                    <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
-                  
-                  <h3 style="font-weight: bold;color: white; position: absolute; background-color: #D82787; width: 90%;margin-top: 0px; "><?php echo $value->nombre_producto ?>
-                    
-                  </h3>
-                    
-                    <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px;">
-                      
-                      <p style="height:100px; overflow: auto;"><?php //echo $value->description_producto ?></p>
-                    </div>
-
-                   
-
-                  </div>
-                
+                <div class="cont-sucursales">
+                     <input type="hidden" name="idSucursal" class="idSucursal" value="<?php echo $value->id_sucursal ?>"></a>
+                    <i class='fa fa-home' style="font-size: 150px;color:#D82787;"></i>
+                    <div class="name-sucursal"><?php echo $value->nombre_sucursal ?></div>
                 </div>
-                <!--  Vista dinamica de prodcutos -->
+              <!--  Vista dinamica de prodcutos -->
               <?php
                 }
-                ?><?php
             }
             else
             {
               echo '<div class="alert alert-danger" role="alert">No hay datos para mostrar :(</div>';
             }    
           ?> 
-          </div> 
-    </div>
 
-
-
-    <div class="tab-pane includ fade" id="tab1_2" spellcheck="true">
-     <div class="row line col-md-12">
-            <div class="col-md-6">
-                 <form enctype="multipart/form-data" id="productos" method="POST">
-                  <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="nombre" name="nombre" required/>
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Nombres<strong>*</strong></span>
-                      </label>
-                  </span>
-    
+          </div>
           
-                   <span class="input input--hoshi">
-                        <span class="input__label-content">Categoria<strong>*</strong></span>
-                        <select style="width: 60%;" class="form-control form-grey" name="categoria" id="categoria" data-style="white" data-placeholder="Seleccion una categoria" required>
-                        <?php
-                        foreach ($categoria as $value) {
-                          ?>
-                          <option value="<?php echo $value->id_categoria_producto ?>"><?php echo $value->nombre_categoria_producto?>
-                          </option>
-                          <?php
-                        }
-                        ?>                      
-                        </select>
-                        <p id="addCategoria" style="margin-top: 9px;margin-left: 4px;background-color: #c75757;" class="btn btn-success">Agregar</p>
-                        
-                     </span>
+             <div class="load-productoBySucursal" style="display:none;"></div>    
 
-
-                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="text" id="descripcion" name="descripcion" spellcheck="true" />
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Descripción</span>
-                      </label>
-                  </span>
-
-                   <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="file" id="video" name="video[]" />
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Video</span>
-                      </label>
-                  </span>
-
-                  
-                   <span class="input input--hoshi">
-                     <button type="button" id="saveProducto" class="btn btn-primary">Guardar</button>
-                  </span>
-                
-          </div> 
-
-                <div class="col-md-6">
-                   
-                    <div class="panel panel-info"> 
-                      <div class="panel-heading"><h3 class="panel-title">Vista previa Imagen</h3> 
-                        </div>
-                        <span class="input input--hoshi">
-                      <input class="input__field input__field--hoshi" type="file" id="files" name="files[]" required />
-                      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                      <span class="input__label-content">Imagen<strong>*</strong></span>
-                      </label>
-                     </span>
-                         
-                        <div class="panel-body" id="list" style="display:none;"> 
-                        <center>
-                       
-                        </center>
-                         </div> 
-                    </div>
-
-                    <div class="panel panel-info"> 
-                      <div class="panel-heading"><h3 class="panel-title">Estatus</h3> 
-                        </div> 
-                        <div class="panel-body" id="list">
-                        <center> 
-                           <i class="fa fa-spinner fa-spin fa-3x fa-fw loading" style="display:none;"></i>
-                          <span class="sr-only">Loading...</span> 
-
-                          <div class="msg alert alert-success" role="alert" style="display:none;">Guardado correctamente</div>
-                        </center>  
-                        </div> 
-                    </div>
-          
-                </div>
-                </form> 
           </div>   
         </div>
 
-
-
-
-
-
-  <div class="tab-pane includ fade" id="tab1_3">
-       <div class="row line col-md-12">
-          <div class="row col-lg-12 conten-sucursales">
-       <?php
-        if (!empty($sucursales)) 
-        {
-          foreach ($sucursales as $value) 
-          {
-          ?>
-            
-          <!--  Vista dinamica de prodcutos --> 
-            <div class="cont-sucursales">
-                 <input type="hidden" name="idSucursal" class="idSucursal" value="<?php echo $value->id_sucursal ?>"></a>
-                <i class='fa fa-home' style="font-size: 150px;color:#88b32f;"></i>
-                <div class="name-sucursal"><?php echo $value->nombre_sucursal ?></div>
-            </div>
-          <!--  Vista dinamica de prodcutos -->
-          <?php
-            }
-        }
-        else
-        {
-          echo '<div class="alert alert-danger" role="alert">No hay datos para mostrar :(</div>';
-        }    
-      ?> 
-
-      </div>
-      
-         <div class="load-productoBySucursal" style="display:none;"></div>    
-
-      </div>   
-  </div>
-
-
-
-
-
-
-
-
-
-   <div class="tab-pane fade" id="tab1_4">
+        <div class="tab-pane fade" id="tab1_4">
          
-         <table class="table table-hover table-dynamic filter-head">
+            <table class="table table-hover table-dynamic filter-head">
                 <thead class='titulos'>
                     <tr>
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Fecha Creacion</th>                                                    
                         <th>Acciones</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                      <?php
-                      //var_dump($categoria);
-                          if (!empty($categoria)) 
-                          {
-                            foreach ($categoria as $value) 
-                            {
-                            ?>
-                          <tr>
-                              <td><?php echo $value->nombre_categoria_producto;  ?></td>
-                              <td><?php echo $value->descripcion;  ?></td>
-                              <td><?php echo $value->fecha_creacion;  ?></td>
-                              <td>
-                                <button type="button" class="btn btn-primary  btn-sm EditData">
-                                  <input type="hidden" name="editValID" class="editValID" value="<?php echo $value->id_categoria_producto ?>">Modificar
-                                  </button>
-                                  <button type="button" class="btn btn-primary  btn-sm deleteBTN">
-                                  <input type="hidden" name="deleteValID" class="deleteValID" value="<?php echo $value->id_categoria_producto ?>">Eliminar
-                                  </button>
-                                  <button type="button" class="btn btn-primary  btn-sm viewData">
-                                  <input type="hidden" name="viewDataID" class="viewDataID" value="<?php echo $value->id_categoria_producto ?>">Ver
-                                  </button>
-                              </td>
-                          </tr>        
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    //var_dump($categoria);
+                    if (!empty($categoria)) 
+                    {
+                        foreach ($categoria as $value) 
+                        {
+                    ?>
+                    <tr>
+                        <td><?php echo $value->nombre_categoria_producto;  ?></td>
+                        <td><?php echo $value->descripcion;  ?></td>
+                        <td><?php echo $value->fecha_creacion;  ?></td>
+                        <td>
+                            <button type="button" class="btn btn-primary  btn-sm EditData">
+                            <input type="hidden" name="editValID" class="editValID" value="<?php echo $value->id_categoria_producto ?>">Modificar
+                            </button>
+                            <button type="button" class="btn btn-primary  btn-sm deleteBTN">
+                            <input type="hidden" name="deleteValID" class="deleteValID" value="<?php echo $value->id_categoria_producto ?>">Eliminar
+                            </button>
+                            <button type="button" class="btn btn-primary  btn-sm viewData">
+                            <input type="hidden" name="viewDataID" class="viewDataID" value="<?php echo $value->id_categoria_producto ?>">Ver
+                            </button>
+                        </td>
+                    </tr>        
                        <!--  Vista dinamica de prodcutos -->
-                <?php
-                  }
-              }
-
-            ?> 
-                         
-          </tbody>   
-        </table>
-  </div>
+                        <?php
+                        }
+                    }
+                    ?>         
+                </tbody>   
+            </table>
+        </div>
 
 
 
+    </div> 
 </div>
+
 
 
 

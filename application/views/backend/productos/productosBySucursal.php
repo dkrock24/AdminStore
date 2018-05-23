@@ -1,3 +1,20 @@
+ <!-- END PRELOADER -->
+
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+ <link href="../../../assets/plugins/input-text/style.min.css" rel="stylesheet">
+    <!-- BEGIN PAGE SCRIPT -->
+   <script src="../../../assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../../../assets/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>    
+    <script src="../../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="../../../assets/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../../../assets/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../../../assets/js/pages/search.js"></script> <!-- Search Script -->
+    <!-- BEGIN PAGE SCRIPT -->
+    <script src="../../../assets/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
+    <script src="../../../assets/js/pages/table_dynamic.js"></script>
+    <!-- BEGIN PAGE SCRIPT -->
+
 <script>
   
   $(".backSucursales").click(function()
@@ -135,97 +152,92 @@
 <div class="cont-loadProductos">
   
   <div class="row col-lg-12 conten-productos">
-    <?php
-        if (!empty($productoByS)) 
-        {
-          //var_dump($productoByS);
-          foreach ($productoByS as $value) 
-          {
-          ?>
-            
-          <!--  Vista dinamica de prodcutos --> 
-            <div class="col-md-4" >
-               <div class="thumbnail" style="height: 300px;padding: 0px; background-image: url('/kaprichos/uploaded/mod_productos/<?php echo $value->image ?>'); background-position: 50% 10%; background-size: cover;">
-              
-              <?php if($value->verifiDetalle == 0)
-                {?>
-                    <p class="fa fa-list-ol icoAlert" title="Los ingredientes son correctos" aria-hidden="true"></p>
-                <?php }
-                else{?>
-                       <p class="vdetalle" title="Algunos ingredientes no estan en inventario" style="cursor: pointer;">VD</p>
-                <?php
-                } 
-                ?>
-              <?php if($value->precio != 0)
-                {?>
-                    <p class="fa fa fa-money icoAlert" title="Precio agregado correctamente" aria-hidden="true"></p>
-                <?php }
-                else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita agregar un precio" aria-hidden="true"></p>
-                <?php
-                } 
-                ?>
-                <?php if($value->ingredientes_completos != 0)
-                {?>
-                    <p class="fa fa-check-circle icoAlert" title="Ingrendiente completados" aria-hidden="true"></p>
-                <?php }
-                else{?>
-                       <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita validar que estan completos los ingredientes" aria-hidden="true"></p>
-                <?php
-                } 
-                ?>
-                <img src="../../../assets/images/productos/<?php echo $value->image ?>"  height="150" width="170">
-                <div class="caption" style="word-wrap: break-word;padding: 0px;padding: 6px; background-color: white; ">
-                  <h3><?php echo $value->nombre_producto ?></h3>
-                  <!--
-                   <span class="precioData">Precio: <?php echo $precio = ($value->precio == null) ? "Null" : $value->precio; ?></span>
-                  <p>
-                    <a class="btn btn-primary  btn-sm assignarPrecio"  role="button">
-                    Precio 
-                    <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
 
-                    </a> -->
-<!--
-                    <a class="btn btn-primary  btn-sm validarIngre"  role="button" title="Valida existencia de ingredientes en inventario">
-                    Ingredientes 
-                    <input type="hidden" name="IdValidar" class="IdValidar" value="<?php echo $value->id_producto ?>">
-                    <input type="hidden" name="IdProductoSucursal" class="IdProductoSucursal" value="<?php echo $value->id ?>">
-                     <input type="hidden" name="IdSucursal" class="IdSucursal" value="<?php echo $value->id_sucursal ?>">
-                    </a> -->
 
-                      <?php if($value->nodoID != null)
-                      {
-                    ?>    
-                        <button class="btn btn-primary  btn-sm assignarNodo"  role="button">Nodo 
-                        <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
-                        <li class="fa fa-check-circle" style="color: #fff;font-size: 16px;"></li>
-                        </button>
+    <table class="table table-hover table-dynamic ">
+                    <thead class='titulos'>
+                      <tr>
+                        <th>Nombre</th>                                          
+                        <th>Categoria</th>
+                        <th>Sucursal</th>
+                        <th>Precio Sugerido</th>
+                        <th>Precio Minimo</th>
+                        <th>Detalle</th>                        
+                      </tr>
+                    </thead>
+                    <tbody>
                     <?php
-                    }
-                     else
-                     {
-                     ?> 
-                        <button class="btn btn-primary  btn-sm assignarNodo"  role="button">Nodo 
-                        <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
-                        </button>
-                     
-                    <?php
-                     } 
-                    ?>
-                      
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!--  Vista dinamica de prodcutos -->
-          <?php
-            }
-        }
-        else
-        {
-          echo '<div class="alert alert-danger" role="alert">No hay datos para mostrar :(</div>';
-        }    
-      ?> 
+                    if($productoByS){
+                    foreach ($productoByS as $value) {
+                            ?>
+                             <tr>
+                                <td><?php echo $value->nombre_producto;  ?></td>
+                                <td><?php echo $value->nombre_categoria_producto;  ?></td>
+                                 <td><?php echo $value->nombre_sucursal;  ?></td>
+                                <td><?php echo $value->numerico1;  ?></td>
+                                <td><?php echo $value->precio_minimo;  ?></td>
+                                <td>
+                                    <?php if($value->verifiDetalle == 0)
+                                    {?>
+                                        <p class="fa fa-list-ol icoAlert" title="Los ingredientes son correctos" aria-hidden="true"></p>
+                                    <?php }
+                                    else{?>
+                                           <p class="vdetalle" title="Algunos ingredientes no estan en inventario" style="cursor: pointer;">VD</p>
+                                    <?php
+                                    } 
+                                    ?>
+
+                                    <?php if($value->precio != 0)
+                                    {?>
+                                        <p class="fa fa fa-money icoAlert" title="Precio agregado correctamente" aria-hidden="true"></p>
+                                    <?php }
+                                    else{?>
+                                           <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita agregar un precio" aria-hidden="true"></p>
+                                    <?php
+                                    } 
+                                    ?>
+
+                                    <?php if($value->ingredientes_completos != 0)
+                                    {?>
+                                        <p class="fa fa-check-circle icoAlert" title="Ingrendiente completados" aria-hidden="true"></p>
+                                    <?php }
+                                    else{?>
+                                           <p class="fa fa-exclamation-triangle icoAlertError" title="Necesita validar que estan completos los ingredientes" aria-hidden="true"></p>
+                                    <?php
+                                    } 
+                                    ?>
+
+
+                                    <?php if($value->nodoID != null)
+                                      {
+                                    ?>    
+                                        <button class="btn btn-primary  btn-sm assignarNodo"  role="button">Nodo 
+                                        <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
+                                        <li class="fa fa-check-circle" style="color: #fff;font-size: 16px;"></li>
+                                        </button>
+                                    <?php
+                                    }
+                                     else
+                                     {
+                                     ?> 
+                                        <button class="btn btn-primary  btn-sm assignarNodo"  role="button">Nodo 
+                                        <input type="hidden" name="idIntermedia" class="idIntermedia" value="<?php echo $value->id ?>">
+                                        </button>
+                                     
+                                    <?php
+                                     } 
+                                    ?>
+
+
+                                </td>                                                           
+                             </tr>
+                            
+                            <?php
+                          }
+                        }
+                    ?>                      
+                    </tbody>
+    </table>
 
       </div> 
 </div>
