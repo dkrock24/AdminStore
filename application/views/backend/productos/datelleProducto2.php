@@ -21,7 +21,7 @@
                     formData.append('precio2', $('#p_precio_minimo').val());
                     formData.append('estado', $('#estado').val());
                     formData.append('id', $(this).attr('name'));
-
+                    formData.append('2checkout', $('#p_2checkout').val());
                     
               
             $.ajax({
@@ -109,6 +109,10 @@
         <tr>
             <td>Precio Minimo</td>
             <td><input type="" class="form-control" name="" id="p_precio_minimo"  value="<?php echo $detalle[0]->precio_minimo; ?>"></td>
+        </tr>
+        <tr>
+            <td>2Checkout Code</td>
+            <td><input type="" class="form-control" name="" id="p_2checkout"  value="<?php echo $detalle[0]->customnum; ?>"></td>
         </tr>
         <tr>
             <td>Categoria</td>

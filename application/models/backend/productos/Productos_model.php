@@ -139,6 +139,7 @@ class productos_model extends CI_Model
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
             'prodStado'   => $produc['estado'],
+            'customnum'   => $produc['2checkout'],            
             'image' => $name
             
             );
@@ -150,7 +151,8 @@ class productos_model extends CI_Model
             'description_producto'   => $produc['descripcion'],
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
-            'prodStado'   => $produc['estado']                      
+            'prodStado'   => $produc['estado'],
+            'customnum'   => $produc['2checkout']                     
             );
         }
 
