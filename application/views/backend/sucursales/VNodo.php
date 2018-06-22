@@ -15,7 +15,7 @@
 
 	<script type="text/javascript" src="../../../../../../assets/jquery.min.js"></script>
 	<script type="text/javascript" src="../../../../../../assets/jquery1.11.min.js"></script>
-	<script type="text/javascript" src="/lapizzeria/assets/js/jquery.fullscreen.min.js"></script>
+	<script type="text/javascript" src="/control/assets/js/jquery.fullscreen.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../../../../../assets/bootstrap.min.css">
 
 	<!--[if IE]>
@@ -23,11 +23,11 @@
 	<![endif]-->
 	<!-- <script src="http://45.33.3.227/lapizzeria/js/longpoll.js"></script> -->
 
-	<script src="/lapizzeria/js/longpoll.js"></script>
+	<script src="/control/js/longpoll.js"></script>
 
 	<script>
 		//var requestUrl = "http://45.33.3.227/lapizzeria/demo.php";
-		var requestUrl = "/lapizzeria/demo.php";
+		var requestUrl = "/control/demo.php";
 		/*	set user to 2 here	*/
 		var id_sucursal = $("#id_sucursal").val();
 		var id_nodo 	= $("#id_nodo").val();
@@ -40,7 +40,7 @@
 		var response;
 		function init(){
 				$.ajax({
-		            url: "/lapizzeria/demo2.php",
+		            url: "/control/demo2.php",
 		            type:"post",
 		            data:data,
 		            success: function(data){     

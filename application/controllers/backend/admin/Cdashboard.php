@@ -65,7 +65,7 @@ class Cdashboard extends CI_Controller {
 
 	public function drawChart($dataChart,$type_chart,$function,$description,$contador){
 			//$url = 'http://45.33.3.227/lapizzeria/assets/globalreport/js/generatorCharts2.js';
-			$url = '../../../../../lapizzeria/assets/globalreport/js/generatorCharts2.js';
+			$url = '../../../../../control/assets/globalreport/js/generatorCharts2.js';
 	        echo '<script type="text/javascript" src="'.$url.'"></script>';
 	        $data 	= array();
 	        $cont 	=0;
@@ -201,7 +201,7 @@ class Cdashboard extends CI_Controller {
 
 	public function myChart($dataChart,$type_chart,$function,$description)
 	{
-			$url = 'http://localhost/lapizzeria/assets/globalreport/js/generatorCharts.js';
+			$url = 'http://localhost/control/assets/globalreport/js/generatorCharts.js';
 	        echo '<script type="text/javascript" src="'.$url.'">    
 	        </script>';
 	        $data 	= array();
