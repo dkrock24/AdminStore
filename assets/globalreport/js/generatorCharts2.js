@@ -26,7 +26,70 @@ function typeChart(data,typeChart,functionChart,descripcion,contador){
         case 'SemiCircleDonut':
             SemiCircleDonut(data,descripcion,contador);
             break;
+        case 'doubleLine':
+            doubleLine(data,descripcion,contador);
+            break;
 	}
+}
+
+function doubleLine(data,descripcion,contador){
+
+    var data_array = [];
+    var total1 = [];
+    var categories = [];
+    var serie1 = [];
+    var serie2 = [];
+   $.each(data, function(key, value)
+   {
+       //var total_value = value.total;
+       //delete value.total;
+       value.y = value.total;
+       value.y = value.total2
+       categories.push(value.name);
+       serie1.push(value.total);
+       serie2.push(value.total2);
+   });
+
+    $(function ()
+    {
+        // Create the chart
+        Highcharts.chart("container"+contador, {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Monthly Average Temperature'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                categories: categories
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature (°C)'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: 'Serie1',
+                data: serie1
+            },{
+                name: 'Serie2',
+                data: serie2
+            }]
+        });
+
+    });
+  
 }
 
 
