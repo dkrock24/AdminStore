@@ -110,8 +110,12 @@
    $(".btn-crear").click(function()
     {
         $(".sk-three-bounce").show();
-        var url = $(this).attr('id');      
-        $(".pages").load(url);  
+        var url = $(this).attr('id');    
+        var year = $("#year").val();
+        if(year == ''){
+          year = '2018';
+        }
+        $(".pages").load(url+year);  
         setTimeout(function() {
                         $(".sk-three-bounce").css('display','none');
                     }, 1000);      
@@ -158,14 +162,16 @@
     position: relative;
     margin-right: 3%;
   }
-
+#year{
+  float: right;
+}
 
 
 </style>
 
 <form action="../usuarios/Cusuarios/guardar_usuario" id="usuario" method="POST">
   <div class="tab-content">
-  <a href="#" id="../admin/Cpais/crear" class="btn btn-danger btn-crear" name="">Nuevo  Año</a><br>
+  <a href="#" id="../admin/Cestimados/createYear/" class="btn btn-danger btn-crear" name="">Nuevo  Año</a><input type="text" name="year" size="8" value="" id="year" class=""><br>
     <div class="tab-pane fade active in" id="tab1_1">
       <table class="table table-hover table-dynamic filter-head">
                     <thead class='titulos'>

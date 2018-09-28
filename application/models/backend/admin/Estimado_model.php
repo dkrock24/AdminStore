@@ -23,7 +23,7 @@ class Estimado_model extends CI_Model
        
     }
 
-    public function updateMes( $mes ){
+    public function updateMes( $mes , $anio ){
 
 
 
@@ -36,8 +36,58 @@ class Estimado_model extends CI_Model
                 );
 
                 $this->db->where('id', $key );      
+                //$this->db->where('anio', $anio ); 
                 $this->db->update('sys_prevision_datos',$data);
             }            
         }        
+    }
+
+    public function setYear( $year ){
+        echo $year;
+        // obtenemos todos los meses con el total de dias por cada uno
+        $query  = $this->db->query('select * from sys_prevision_mes as mes');
+        $mes    = $query->result();
+
+        $anio = $this->getLastYear( $year );
+
+        if( $anio == 0 )
+        {
+            // recorreremos por mes para crear el nuevo anio
+            foreach ($mes as $nuevoMes) {
+
+                //Valores del mes a crear para el nuevo anio
+                $mes_id     = $nuevoMes->id_prev;
+                $mes_num    = $nuevoMes->numero_mes;
+                $mes_dias   = $nuevoMes->dia_mes;
+
+                $cont_dias_mes = 1;
+                while( $cont_dias_mes <= $mes_dias ){
+
+                    $data = array(
+                        'anio'  => $year,       
+                        'id_mes' => $mes_id,
+                        'dia_mes' => $cont_dias_mes,
+                        'estimado_dia' =>   350    ,   
+                        'fecha_creado' => date('Y-m-d'),
+                        'fecha_actualizado' => date('Y-m-d'),
+                        'estado'    => 1
+                    );
+                    $this->db->insert('sys_prevision_datos',$data);
+
+                    $cont_dias_mes++;
+                }
+            }
+        }
+    }
+
+    public function getLastYear( $year ){
+        $query  = $this->db->query('select * from sys_prevision_datos where anio ='. $year );
+        $exits_year = $query->result();
+
+        if( $exits_year != null ){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

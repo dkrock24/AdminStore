@@ -92,12 +92,13 @@
     $(".detalle_pais").click(function(){
        $(".sk-three-bounce").show();
         var estimado = $(this).attr("id");
+        var anio = $(this).attr("name");
         $.ajax({
-            url: "../admin/Cestimados/updateMes",
+            url: "../admin/Cestimados/updateMes/"+anio,
             type:"post",
             data: $("#edit_estimado").serialize(),
             success: function(){     
-              $(".pages").load("../admin/Cestimados/updateMes");   
+              $(".pages").load("../admin/Cestimados/updateMes/"+anio);   
               setTimeout(function() {
                         $(".sk-three-bounce").css('display','none');
                     }, 1000);      
@@ -191,7 +192,7 @@
                                 <td><?php echo $meses->anio;  ?></td>
                                 <td><?php echo $meses->nombre_mes;  ?></td>
                                 <td><?php echo $meses->dia_mes;  ?></td>
-                                <td><input type="text" name="<?php echo $meses->id; ?>" id="<?php echo $meses->id; ?>" value="<?php echo $meses->estimado_dia;  ?>"></td>
+                                <td><input type="text" name="<?php echo $meses->id; ?>" id="<?php echo $meses->anio; ?>" value="<?php echo $meses->estimado_dia;  ?>"></td>
                                 <td><?php $date = date_create($meses->fecha_creado); echo date_format($date,"Y/m/d");  ?></td>                             
                                 <td><?php $date = date_create($meses->fecha_actualizado); echo date_format($date,"Y/m/d");  ?></td>
                                 <td>

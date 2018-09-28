@@ -32,12 +32,24 @@ class Cestimados extends CI_Controller {
 		$this->load->view('backend/admin/Vestimado_editar.php',$data);
 	}
 
-	public function updateMes(){
+	public function updateMes( $anio ){
 
-		$this->estimado_model->updateMes( $_POST );
+		// Actualizar los registro para el mes solicitado
+
+		$this->estimado_model->updateMes( $_POST , $anio );
 
 		$data['data'] 	= $this->estimado_model->getYear();
 
 		$this->load->view('backend/admin/Vestimado.php',$data);
+	}
+
+	public function createYear( $year ){
+
+		if( $year != '' or isset($year) ){
+			$this->estimado_model->setYear( $year );
+			$this->index();
+		}else{
+			$this->index();
+		}
 	}
 }
