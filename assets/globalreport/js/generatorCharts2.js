@@ -58,17 +58,14 @@ function doubleLine(data,descripcion,contador){
                 type: 'line'
             },
             title: {
-                text: 'Monthly Average Temperature'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
+                text: descripcion
             },
             xAxis: {
                 categories: categories
             },
             yAxis: {
                 title: {
-                    text: 'Temperature (°C)'
+                    text: ''
                 }
             },
             plotOptions: {
@@ -224,15 +221,12 @@ function barraChart(data,descripcion,contador)
 	        title: {
 	            text: descripcion
 	        },
-	        subtitle: {
-	            text:descripcion
-	        },
 	        xAxis: {
 	            type: 'category'
 	        },
 	        yAxis: {
 	            title: {
-	                text: 'Escala'
+	                text: ''
 	            }
 
 	        },
@@ -399,10 +393,6 @@ function BasicLine(data,descripcion,contador){
             title: {
             text: descripcion,
             x: -20 //center
-        },
-        subtitle: {
-            text: descripcion,
-            x: -20
         },
         xAxis: {
             categories: [

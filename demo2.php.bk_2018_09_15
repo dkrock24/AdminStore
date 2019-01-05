@@ -17,28 +17,6 @@ $pass = "y84VEkozrTNl";
 	//mysqli_select_db($con, "db_lap")or die(mysqli_error($con));
 
 	mysqli_query($con,"SET NAMES utf8");  
-
-	//mysqli_query de comandas y validacion para ser mostradas cuando estan pendientes
-
-	$sql_pedido_prioridad = "select * from sys_pedido where prioridad = 0 AND id_sucursal = '".$_POST['id_sucursal']."'";
-
-	$statement_pedido = mysqli_query( $con , $sql_pedido_prioridad )or die (mysql_error($con));
-	$date1 = date("Y-m-d");
-
-	while($rows = mysqli_fetch_array( $statement_pedido )){
-		
-		$elaborado = $rows['fechahora_elaborado'];
-
-		$abc = date_format(date_create($elaborado),"Y-m-d");
-		if( $abc == $date1 ){
-			$sql_update_pedido = "update sys_pedido set prioridad=1 where id_pedido ='". $rows['id_pedido']."'";
-			mysqli_query( $con , $sql_update_pedido );
-		}
-	}
-
-	//End mysqli_query
-
-
 	
 	//create response array
 	$response = array();
@@ -46,9 +24,9 @@ $pass = "y84VEkozrTNl";
 	$response['success'] = 1;
 	$iter = 1;
 	do{
-		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa,pedido.fechahora_pedido,pedido.secuencia_orden from sys_pedido as pedido	
+		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa,pedido.fechahora_pedido,pedido.secuencia_orden, pedido.fecha_creado from sys_pedido as pedido	
 						join sys_pedido_detalle as PD on pedido.id_pedido=PD.id_pedido
-						where pedido.id_sucursal=".$_POST['id_sucursal']." AND pedido.prioridad=1 AND PD.producto_elaborado=0 AND (PD.pedido_estado=2 or PD.pedido_estado=1) AND PD.id_nodo=".$_POST['id_nodo']." group by PD.id_pedido  order by PD.id_pedido asc";
+						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.producto_elaborado=0  AND PD.id_nodo=".$_POST['id_nodo']." group by PD.id_pedido order by PD.id_pedido asc";
 		$res = mysqli_query($con, $sql_pedido)or die(mysqli_error($con));
 
 		if(mysqli_num_rows($res) > 0){

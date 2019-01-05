@@ -68,7 +68,7 @@
       position: relative;
       border:dashed;
       display: inline-block;  
-        background:url(../../../../../assets/images/regalo.jpg) no-repeat ;
+        background:url(../../../../../assets/images/regalo1.png) no-repeat ;
 
     }
     .banda{
@@ -109,7 +109,9 @@
 
         background: none;
         position: absolute;
-        bottom:0;
+        /*bottom:0;*/
+        float: left;
+        display: block;
 
     }
 
@@ -123,6 +125,26 @@
         //$(".demo").editable(option, function(e){
         //});
 
+        $("#range").change(function(){
+
+            var longitud = $(this).val();
+
+            if(longitud==1){
+                $(".demo").css('width','466');
+            }
+            if(longitud==2){
+                $(".demo").css('width','366');
+            }
+            if(longitud==3){
+                $(".demo").css('width','266');
+            }
+            if(longitud==4){
+                $(".demo").css('width','166');
+            }
+
+
+        });
+
         
         $("#tarjeta").change(function(){
 
@@ -130,11 +152,11 @@
 
                 // Impresion Modo Tarjeta Regalo
 
-                $(".action").css("margin-top","300");            
+                $(".action").css("margin-top","100");            
                 $(".bloc").css("width","566");
                 $(".bloc").css("height","377");
                 $(".bloc").css("border","dashed");
-                var imageUrl = "../../../../../assets/images/condolencia.jpg";
+                var imageUrl = "../../../../../assets/images/condolencia.png";
                 $(".bloc").css("background-image", 'url(' + imageUrl + ')' );
             }
             else
@@ -146,7 +168,7 @@
                 $(".bloc").css("height","510");
                 $("#elem").css("left","0");
                 $(".bloc").css("border","dashed");
-                var imageUrl = "../../../../../assets/images/regalo.jpg";
+                var imageUrl = "../../../../../assets/images/regalo1.png";
                 $(".bloc").css("background-image", 'url(' + imageUrl + ')' );
 
                 //background:url() no-repeat ;
@@ -286,6 +308,8 @@
                 <a href="#" class="btn btn-primary" id="zoomOut"> <i class="fa fa-search-plus"> </i> Zoom </a>
                 <a href="#" class="btn btn-primary" id="zoomIn"> <i class="fa fa-search-minus"> </i> Zoom </a>
                 <a href="#" class="btn btn-primary" id="center"> <i class="fa fa-align-center"> </i> Center </a>
+
+                <span href="#" class="btn btn-primary" id="ajustar"> <i class="fa fa-align-center"><input type="range" min="0" max="10" name="" id="range" value="0"> </i>  </span>
                 </fieldset>
                 
                 <hr>

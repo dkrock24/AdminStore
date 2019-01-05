@@ -4,6 +4,7 @@
 
     <script src="../../../assets/globalreport/js/generatorCharts.js"></script>
 
+
     <script type="text/javascript">
     $(document).ready(function(){
 

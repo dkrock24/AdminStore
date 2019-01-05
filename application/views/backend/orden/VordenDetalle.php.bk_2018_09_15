@@ -5,8 +5,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        
-        
         $('#actualizar_orden').click(function(){
             $.ajax({
                 url: "../orden/CListarorden/actualizarOrden",
@@ -19,23 +17,6 @@
                 },
                 error:function(){
                     alert("failure1");
-                }
-            });
-        });
-
-        $('#eliminar_orden').click(function(){
-            var id_pedido = $(this).attr('name');
-            $(".sk-three-bounce").show();
-            $.ajax({
-                url: "../orden/CListarorden/eliminarOrden/"+id_pedido,
-                type:"post",
-                
-                success: function(data){
-                    $(".pages").load("../orden/CListarorden/index");   
-                    $(".sk-three-bounce").hide();                  
-                },
-                error:function(){
-                    alert("Orden No fue Eliminada");
                 }
             });
         });
@@ -59,7 +40,6 @@
         
 
         $('#regresar').click(function(){
-            $(".sk-three-bounce").show();
             $.ajax({
                 //url: "../orden/CListarorden/actualizarOrden",
                 //type:"post",
@@ -67,9 +47,7 @@
 
                 
                 success: function(data){
-                    $(".sk-three-bounce").hide();      
-                    $(".pages").load("../orden/CListarorden/index"); 
-
+                    $(".pages").load("../orden/CListarorden/index");                    
                 },
                 error:function(){
                     alert("failure1");
@@ -92,16 +70,14 @@
                     <table class="table">
                         <tr>
                             <td>
-                                <select class="form-control" name="estado" id="miestado">
-                                    <option value="<?php echo $orden[0]->id_pedido_estado;  ?>"><?php echo $orden[0]->pedido_estado;  ?></option>
-                                        <?php
-                                        foreach ($estados as $value)
-                                        {
-                                        ?>
+                                <select class="form-control" name="estado">
+                                    <?php
+                                        foreach ($estados as $value) {
+                                            ?>
                                             <option value='<?php echo $value->id_pedido_estado;  ?>'><?php echo $value->pedido_estado;  ?></option>
-                                        <?php
+                                            <?php
                                         }
-                                        ?>
+                                    ?>
                                 </select>
                                 <input type="hidden" name="idOrden" value="<?php echo $orden[0]->id_pedido ?> ">
                             </td>
@@ -109,32 +85,6 @@
                                 <a href="#" class="btn btn-info" name="" id="actualizar_orden">Actualizar</a>
                                 <a href="../orden/CListarorden/impresion/<?php echo $orden[0]->id_pedido ?>" class="btn btn-primary" id="" target="_blank" name="<?php echo $orden[0]->id_pedido ?>">Imprimir</a>
                                 <a href="#" class="btn btn-danger" id="regresar">Regresar</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                    <input type="date" class="form-control" name="fecha" id="mifecha" value="<?php echo date('Y-m-d'); ?>"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Cuenta Pagada <br>
-
-                                <select name="pagado" class="form-control">
-                                    <?php
-                                        if($orden[0]->flag_cancelado ==1){
-                                            ?>
-                                            <option value="1">Pagado</option>
-                                            <option value="0">Pendiente</option>
-                                            <?php
-                                        }else{
-                                            ?>
-                                            <option value="0">Pendiente</option>
-                                            <option value="1">Pagado</option>
-                                            <?php
-                                        }
-                                    ?>
-                                </select>
                             </td>
                         </tr>
                     </table>
@@ -157,9 +107,9 @@
                                                     <table class="table table-striped">
                                                         <tr>
                                                             <td>Producto</td>
-                                                            <td>Precio Original</td>
                                                             <td>Cantidad</td>                                                            
-                                                            <td>Precio Grabado</td>                                                            
+                                                            <td>Precio Original</td>
+                                                            <td>Precio Grabado</td>
                                                         </tr>
                                                         <?php
                                                             foreach ($orden as $value) {
@@ -168,12 +118,11 @@
                                                                     <td>
                                                                         <b><?php echo $value->nombre_producto; ?></b>
                                                                     </td>
+                                                                    <td><?php echo $value->cantidad; ?></td>
+                                                                    <td><?php echo $value->moneda .' '. number_format($value->precio_grabado,2); ?></td>
                                                                     <td>
                                                                         <?php echo $value->moneda .' '. number_format($value->precio_original,2); ?>
                                                                     </td>
-                                                                    <td><?php echo $value->cantidad; ?></td>
-                                                                    <td><?php echo $value->moneda .' '. number_format($value->precio_grabado,2); ?></td>
-                                                                    
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -182,19 +131,6 @@
                                                         <tr>
         
                                                             <td>Totales</td>
-                                                            
-                                                            <td>
-                                                                <b>
-                                                                    <?php
-                                                                    $total =0;
-                                                                    foreach ($orden as $value) {
-                                                                        $total += $value->precio_original * $value->cantidad;
-                                                                    }
-                                                                   
-                                                                    //echo $orden[0]->moneda .' '. number_format($total, 2);
-                                                                    ?>
-                                                                </b>
-                                                            </td>
                                                             <td>
                                                                 <?php
                                                                     $total_cantidad = 0;
@@ -205,13 +141,25 @@
                                                                     echo $total_cantidad ;
 
                                                                 ?>
-                                                            </td>   
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <?php
+                                                                    $total =0;
+                                                                    foreach ($orden as $value) {
+                                                                        $total += $value->precio_original * $value->cantidad;
+                                                                    }
+                                                                   
+                                                                    echo $orden[0]->moneda .' '. number_format($total, 2);
+                                                                    ?>
+                                                                </b>
+                                                            </td>
                                                             <td>
                                                                 <b>
                                                                 <?php
                                                                     $total =0;
                                                                     foreach ($orden as $value) {
-                                                                        $total += $value->precio_original * $value->cantidad;
+                                                                        $total += $value->precio_grabado * $value->cantidad;
                                                                     }
                                                                     
                                                                     echo $orden[0]->moneda .' '. number_format($total, 2);
@@ -229,7 +177,7 @@
                                                             <?php
                                                             $total =0;
                                                             foreach ($orden as $value) {
-                                                                $total += $value->precio_original * $value->cantidad;
+                                                                $total += $value->precio_grabado * $value->cantidad;
                                                             }
                                                             echo $orden[0]->moneda .' '. number_format($total, 2);
                                                             ?>
@@ -303,22 +251,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span class="">Fecha Sugerida</span>                                                
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->fecha_sugerida_entrega; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="">Tipo Pago</span>
-                                            </td>
-                                            <td>
-                                                <?php echo $orden[0]->nombre; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <span class="">Tarjeta</span> 
                                                 
 
@@ -387,10 +319,6 @@
                                         <div class="panel-body">
                                             <table class="table">
                                         <tr>
-                                            <td>Costo Envio </td>
-                                            <td><?php echo $orden[0]->numero_mesa; ?></td>
-                                        </tr>
-                                        <tr>
                                             <td>Pais </td>
                                             <td><?php echo $orden[0]->nombre_pais; ?></td>
                                         </tr>
@@ -408,31 +336,21 @@
                                         </tr>
                                         <tr>
                                             <td>Encargado de Produccion </td>
-                                            <td><?php echo $orden[0]->Uno; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Encargado de Entrega </td>
                                             <td><?php echo $orden[0]->Dos; ?></td>
                                         </tr>
                                         <tr>
-                                            <td>Fecha Elaboracion</td>
-                                            <?php
-                                                $date = date_create($orden[0]->fechahora_elaborado);
-                                            ?>
-                                            <td><?php echo date_format($date,"d M Y | </b>"); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <a href="#" id="eliminar_orden" name="<?php echo $orden[0]->id_pedido ?>" class="btn btn-default">Eliminar Orden</a>
-                                            </td>
+                                            <td>Encargado de Entrega </td>
+                                            <td><?php echo $orden[0]->Uno; ?></td>
                                         </tr>
                                     </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-    
+      
+
+        
+                               
                             </div>
 
                          

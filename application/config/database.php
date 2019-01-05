@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost:3306',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_global_lapizzeria2',
+	'hostname' => 'localhost',
+	'username' => 'kapricho_wbcms',
+	'password' => 'y84VEkozrTNl',
+	'database' => 'kapricho_control',
 	//'port'=>'3307',
 	//'password' => 'lapizzeria2016!',
 	//'database' => 'db_global_lapizzeria',

@@ -135,11 +135,11 @@ class productos_model extends CI_Model
             $data = array(
             'nombre_producto'   => $produc['nombre'],
             'categoria_id'   => $produc['categoria'],
-            'description_producto'   => $produc['descripcion'],
+            'descripcion_producto'   => $produc['descripcion'],
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
             'prodStado'   => $produc['estado'],
-            'customnum'   => $produc['2checkout'],            
+            'customnum'   => $produc['2checkout'], 
             'image' => $name
             
             );
@@ -148,11 +148,11 @@ class productos_model extends CI_Model
             $data = array(
             'nombre_producto'   => $produc['nombre'],
             'categoria_id'   => $produc['categoria'],
-            'description_producto'   => $produc['descripcion'],
+            'descripcion_producto'   => $produc['descripcion'],
             'numerico1'   => $produc['precio1'],
             'precio_minimo'   => $produc['precio2'],
             'prodStado'   => $produc['estado'],
-            'customnum'   => $produc['2checkout']                     
+            'customnum'   => $produc['2checkout']                  
             );
         }
 
@@ -216,7 +216,7 @@ class productos_model extends CI_Model
             $productos = array(
              'nombre_producto'      => $produc['nombre'],
              'categoria_id'    => $produc['categoria'],
-             'description_producto'      => $produc['descripcion'],
+             'descripcion_producto'      => $produc['descripcion'],
              //'video'          => $nameVideo,
              'image'     => $name,
              'fecha_creacion'     => $dateCreated
@@ -608,7 +608,7 @@ class productos_model extends CI_Model
         $data = array( 
             'nombre_producto'   => $producto['nombre'],
             'categoria_id'   => $producto['categoria'],
-            'description_producto'   => $producto['descripcion'], 
+            'descripcion_producto'   => $producto['descripcion'], 
         );
         $this->db->where('id_producto', $producto['idProducto']);    
         $this->db->update(self::producto,$data);

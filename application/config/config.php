@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //$config['base_url'] = 'http://45.33.3.227/lapizzeria/index.php/';
-$config['base_url'] = 'http://localhost/lapizzeria/index.php/';
+$config['base_url'] = 'http://www.kaprichosfloristeria.com/control/index.php/';
 
 /*
 |--------------------------------------------------------------------------

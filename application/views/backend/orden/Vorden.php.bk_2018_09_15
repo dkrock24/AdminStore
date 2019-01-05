@@ -5,7 +5,7 @@ function myFunction(id_producto){
     $(document).ready(function(){
 
             $.ajax({
-                url: "../orden/Corden/getProductoById2/"+id_producto,
+                url: "../orden/Corden/getProductoById/"+id_producto,
                 type:"get",
                  dataType : "json",
                 
@@ -148,7 +148,7 @@ $(document).ready(function(){
     // Procesar Orden
     $("#procesar_orden").click(function(){
 
-        if($("#cliente").val() != '' && $("#de").val() != '' && $("#para").val() != ''){
+        if($("#cliente").val() != '' && $("#email").val() != '' && $("#de").val() != '' && $("#para").val() != ''){
         
             $.ajax({
                 url: "../orden/Corden/procesarOrden",
@@ -163,12 +163,12 @@ $(document).ready(function(){
                     
                 },
                 error:function(){
-                    alert("failure123");
+                    alert("failure1");
                 }
             });
         }
         else{
-            alert('Datos del Cliente Incompletos : [Cliente:] - [De:] - [Para:]');
+            alert('Datos del Cliente Incompletos');
         }
     });
 
@@ -307,7 +307,7 @@ $(document).ready(function(){
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
-                                Dé : <input type="text" name="de" placeholder="De" id="de" class="form-control">
+                                De : <input type="text" name="de" placeholder="De" id="de" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 Para : <input type="text" name="para" id="para" placeholder="Para" class="form-control">
@@ -317,7 +317,7 @@ $(document).ready(function(){
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        Dirección de Entrega: <textarea name="direccion" class="form-control"></textarea>
+                        Direccion de Entrega: <textarea name="direccion" class="form-control"></textarea>
                     </div>
                     <div class="col-md-6">
                         Dedicatoria : <textarea name="texto" class="form-control"></textarea>
@@ -327,41 +327,21 @@ $(document).ready(function(){
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">Fecha Entrega : <input type="date" name="fecha_entrega" value="<?php echo date('Y-m-d'); ?>" class="form-control"></div>
-
-                            <div class="col-md-6">Fecha Elaboración : <input type="date" name="fecha_elaboracion" value="<?php echo date('Y-m-d'); ?>" class="form-control"></div>
-                            
-                        </div>                        
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
                             <div class="col-md-6">Pagado?<br>
                                 <select class="form-control" name="pagado">
                                     <option value="1">Cancelado</option>
                                     <option value="0">Pendiente</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">Tipo de Pago<br>
-                                <select class="form-control" name="tipo">
-                                    <?php
-                                    foreach ($tipos as $tipoPago) {
-                                        ?>
-                                        <option value="<?php echo $tipoPago->id_pago; ?>">
-                                            <?php echo $tipoPago->nombre; ?>               
-                                        </option>
-                                        <?php
-                                    }
-                                    ?>
-                                    
-                                </select>
-                            </div>
-                            <div class="col-md-12">
+                        </div>                        
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
                                 Tarjeta Bancaria: <input type="text" name="tarjeta" placeholder="Tarjeta" class="form-control">
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 CVS : <input type="text" name="cvs" placeholder="CVS" class="form-control">
-                            </div>
-                            <div class="col-md-12">
-                                Costo Envio : <input type="text" name="costo_envio" placeholder="Envio" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -467,6 +447,7 @@ $(document).ready(function(){
                             <td>Descripcion : </td>
                             <td><label id="producto_descripcion"></label></td>
                         </tr>
+                        <!--
                         <tr>
                             <td>Activar Precio Sugerido</td>
                             <td><input type="checkbox" name="precioSugerido" value="0" class="form-check-input"></td>
@@ -475,6 +456,7 @@ $(document).ready(function(){
                             <td></td>
                             <td><a href="#" class="btn btn-default producto_id" name="">Agregar</a></td>
                         </tr>
+                        -->
                     </table>
                 </div>
             </div>

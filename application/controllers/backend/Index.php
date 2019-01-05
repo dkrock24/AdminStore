@@ -24,6 +24,8 @@ class Index extends CI_Controller {
 		
 	}
 	public function autenticacion(){
+	    
+	    date_default_timezone_set('America/El_Salvador');
 		
 		//echo base_url();
 		if(isset($_SESSION['usuario']) and isset($_SESSION['password']))
@@ -45,23 +47,26 @@ class Index extends CI_Controller {
 		}
 	}
 
-	public function home($rol,$idUsuario){	
+	public function home($rol,$idUsuario){
 
-		$_SESSION['idUser']		=$idUsuario;
+			$_SESSION['idUser']		=$idUsuario;
 		
-		if($_POST)
-		{
-			$this->logs_model->setLog(1,null,$idUsuario);	
-			$_SESSION['usuario'] 	= $_POST['usuario'];
-			$_SESSION['password'] 	= $_POST['password'];
-		}	
+			if($_POST)
+			{
+				$this->logs_model->setLog(1,null,$idUsuario);	
+				$_SESSION['usuario'] 	= $_POST['usuario'];
+				$_SESSION['password'] 	= $_POST['password'];
+			}	
 
-		$configuracion['lib_login'] = $this->login_model->laodLib("dashboard","header");	
-		$configuracion['menu'] 		= $this->login_model->menu($rol);	
-		$configuracion['submenu']	= $this->login_model->submenu($rol);
-		$configuracion['empresa'] 	= $this->login_model->empresa();	
-		$configuracion['usuario'] 	= $this->login_model->getUserByID($idUsuario);	
-		$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);		
+			$configuracion['lib_login'] = $this->login_model->laodLib("dashboard","header");	
+			$configuracion['menu'] 		= $this->login_model->menu($rol);	
+			$configuracion['submenu']	= $this->login_model->submenu($rol);
+			$configuracion['empresa'] 	= $this->login_model->empresa();	
+			$configuracion['usuario'] 	= $this->login_model->getUserByID($idUsuario);	
+			$configuracion['sucursal'] 	= $this->login_model->getSucursal($idUsuario);		
+
+
+		
 
 		$this->load->view('backend/home/home',$configuracion);	
 	}

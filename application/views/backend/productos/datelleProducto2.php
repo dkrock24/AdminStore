@@ -22,6 +22,7 @@
                     formData.append('estado', $('#estado').val());
                     formData.append('id', $(this).attr('name'));
                     formData.append('2checkout', $('#p_2checkout').val());
+
                     
               
             $.ajax({
@@ -93,14 +94,14 @@
     <table class="table table-hover table-dynamic">
         <tr>
             <td rowspan="10" width="30%">
-                <img src="/kaprichos/uploaded/mod_productos/<?php echo $detalle[0]->image; ?>" width="100%">
+                <img src="/uploaded/mod_productos/<?php echo $detalle[0]->image; ?>" width="100%">
             </td>
             <td>Producto</td>
             <td><input type="" class="form-control" name="" id="p_name" value="<?php echo $detalle[0]->nombre_producto; ?>"></td>
         </tr>
         <tr>
             <td>Descripcion</td>
-            <td><input type="" class="form-control" name="" id="p_descripcion" value="<?php echo $detalle[0]->description_producto; ?>"></td>
+            <td><input type="" class="form-control" name="" id="p_descripcion" value="<?php echo $detalle[0]->descripcion_producto; ?>"></td>
         </tr>
         <tr>
             <td>Precio Sugerido</td>

@@ -322,7 +322,7 @@ class CglobalReporte extends CI_Controller {
 		$headers="";	 
 		//indicamos las cabeceras del correo
 		$headers = "MIME-Version: 1.0\r\n";
-		$headers .= "From: Alerta-Inventario@lapizzeria.com \r\n";
+		$headers .= "From: Alerta-Inventario@kaprichos.com \r\n";
 		$headers .= "Subject: Alertas\r\n";
 
 		$headers .= "Content-Type: multipart/alternative;boundary=" . $uniqueid. "\r\n";
@@ -334,7 +334,7 @@ class CglobalReporte extends CI_Controller {
 		 
 		$html .= "\r\n\r\n--" . $uniqueid. "\r\n";
 		$html .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-		$html .= "MINIMOS EN INVENTARIOS . <b>LAPIZZERIA</b><br>.";
+		$html .= "MINIMOS EN INVENTARIOS . <b>KAPRICHOS</b><br>.";
 
 
 		$html.="<table width='100%'>
@@ -389,7 +389,7 @@ class CglobalReporte extends CI_Controller {
 		$html .= "\r\n\r\n--" . $uniqueid. "--";
 
 
-		mail('rgutierreztejada@gmail.com,blen7777@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
+		mail('rgutierreztejada@gmail.com', 'Alerta - Minimos en Inventarios', $html, $headers);
 	}
 
 

@@ -4,9 +4,9 @@ global $passwd ;
 global $db ;
 global $host ;
 
-$user = 'root';
-$passwd = '';
-$db = 'db_global_lapizzeria2';
+$user = 'kapricho_wbcms';
+$passwd = 'y84VEkozrTNl';
+$db = 'kapricho_control';
 $host = 'localhost';
 
 ?>

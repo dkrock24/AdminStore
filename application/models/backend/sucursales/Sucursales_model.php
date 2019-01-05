@@ -149,6 +149,7 @@ class sucursales_model extends CI_Model
     }
 
     public function getEmpleadosBySucursal( $id_sucursal ){
+
         $this->db->select('*');
         $this->db->from(self::sys_sucursal_int_usuarios);     
 
@@ -166,9 +167,10 @@ class sucursales_model extends CI_Model
 
         $this->db->where(self::sys_sucursal_int_usuarios.'.id_sucursal',$id_sucursal);        
         $this->db->where(self::usuarios.'.rol <>',1);
+        $this->db->where(self::usuarios.'.rol <>',15);
+        $this->db->where(self::usuarios.'.rol <>',20);
 
-        $query = $this->db->get();
-        
+        $query = $this->db->get();        
         
         if($query->num_rows() > 0 )
         {

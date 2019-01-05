@@ -16,8 +16,10 @@ class CListarorden extends CI_Controller {
 	public function index(){
 
 		session_start();
-		if(!isset($_SESSION['idUser'])){
-			$this->load->view('backend/login.php');
+		if(!isset($_SESSION['idUser']))	{
+			//header('Location: '.'../../index/index');
+			echo "Usuario Inactivo : Vuelva a Iniciar Session <a href='http://www.kaprichosfloristeria.com/control/index.php/backend/index/index' class='btn btn-default'>Salir</a>";
+			die;
 		}
 		$data['sucursales'] = $this->Sucursales_model->getSucursalesByUser($_SESSION['idUser']);
 		$sucursales = array();
@@ -63,15 +65,6 @@ class CListarorden extends CI_Controller {
 		return $this->detalle( $orden['idOrden'] );
 		//$this->load->view('backend/orden/VordenDetalle.php',$data);
 	}
-
-	public function eliminarOrden( $id_orden ){
-
-		$this->orden_model->eliminarOrden( $id_orden );
-		
-		return $this->index();
-		//$this->load->view('backend/orden/VordenDetalle.php',$data);
-	}
-
 
 	
 }

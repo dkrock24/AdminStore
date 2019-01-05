@@ -68,7 +68,7 @@ $(document).ready(function(){
                                 <td><?php echo $backups->nombre_bk;  ?></td>
                                 <td><?php echo $backups->fecha_bk;  ?></td>
                                 <td>
-                                <a href="http://45.33.3.227/lapizzeria/pages/respaldo/<?php echo $backups->link_bk;  ?>" class="btn btn-default">Download</a>
+                                <a href="http://localhost/control/pages/respaldo/<?php echo $backups->link_bk;  ?>" class="btn btn-default">Download</a>
                                 </td>                                
                              </tr>                            
                             <?php

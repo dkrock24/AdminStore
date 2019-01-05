@@ -17,19 +17,11 @@ class Corden extends CI_Controller {
 		session_start();
 		$data['sucursales'] = $this->Sucursales_model->getSucursalesByUser($_SESSION['idUser']);
 		$data['categorias'] = $this->Productos_model->categoria();
-		$data['tipos'] = $this->orden_model->getTipoPago();
 		
 		$this->load->view('backend/orden/Vorden.php', $data);
 	}
 
 	public function getProductoById($id){
-		if(isset($id)){
-			$data = $this->orden_model->getProductoById($id);
-		}
-		echo json_encode( $data );
-	}
-
-	public function getProductoById2($id){
 		if(isset($id)){
 			$data = $this->orden_model->getProductoById2($id);
 		}
@@ -54,7 +46,7 @@ class Corden extends CI_Controller {
 	}
 
 	public function showCart(){
-
+		//session_start();
 		$html1 = '';
 		$total = 0;
 		$shipping = 0;
@@ -62,6 +54,7 @@ class Corden extends CI_Controller {
 		$contadorTabla =1;
 		$precio_minimo=0;
 
+		if(isset($_SESSION['cart'])){
 		foreach ($_SESSION['cart'] as $value) {
 
 			foreach ($value as $demo) {
@@ -95,6 +88,7 @@ class Corden extends CI_Controller {
 				$contadorTabla++;
 			}					
 		}	
+
 		$html1 .= '<tr>';
 		$html1 .= '<td class="highrow"></td>';
 		$html1 .= '<td class="highrow"></td>';
@@ -123,6 +117,7 @@ class Corden extends CI_Controller {
 		$html1 .= '<td class="emptyrow text-center"><strong>Total</strong></td>';
 		$html1 .= '<td class="emptyrow text-right">'. $subtotal .'</td>';
 		$html1 .= '</tr>';
+		}
                                   
           
 		echo $html1;

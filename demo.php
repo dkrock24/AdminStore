@@ -7,16 +7,39 @@ $mysql_password = "lapizzeria2016!";
 $mysql_database = "db_global_lapizzeria";
 $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password,$mysql_database) or die("Could not connect database 2");
 die;*/
-$host = "localhost:3306";
-$db = "db_global_lapizzeria2";
-$pass = "";
+$host = "localhost";
+$db = "kapricho_control";
+$pass = "y84VEkozrTNl";
 
-	$con = mysqli_connect($host, "root", $pass)or die(mysqli_error($con));
+	$con = mysqli_connect($host, "kapricho_wbcms", $pass)or die(mysqli_error($con));
 	//$con = mysqli_connect("localhost", "root", "")or die(mysqli_error($con));
 	mysqli_select_db($con, $db)or die(mysqli_error($con));
 	//mysqli_select_db($con, "db_lap")or die(mysqli_error($con));
 
 	mysqli_query($con,"SET NAMES utf8"); 
+
+	//mysqli_query de comandas y validacion para ser mostradas cuando estan pendientes
+
+	$sql_pedido_prioridad = "select * from sys_pedido where prioridad = 0 AND id_sucursal = '".$_POST['id_sucursal']."'";
+
+	$statement_pedido = mysqli_query( $con , $sql_pedido_prioridad )or die (mysql_error($con));
+	$date1 = date("Y-m-d");
+
+	while($rows = mysqli_fetch_array( $statement_pedido )){
+		
+		$elaborado = $rows['fechahora_elaborado'];
+
+		$abc = date_format(date_create($elaborado),"Y-m-d");
+		if( $abc == $date1 ){
+			$sql_update_pedido = "update sys_pedido set prioridad=1 where id_pedido ='". $rows['id_pedido']."'";
+			mysqli_query( $con , $sql_update_pedido );
+
+			$sentencia = "update sys_pedido_detalle set mostrado=0 where id_pedido=".$rows['id_pedido'];
+						mysqli_query($con, $sentencia)or die(mysqli_error($con));
+		}
+	}
+
+	//End mysqli_query
 	
 	//create response array
 	$response = array();
@@ -26,7 +49,8 @@ $pass = "";
 	do{
 		$sql_pedido = "	select pedido.llevar_pedido,pedido.id_usuario,pedido.id_pedido,pedido.numero_mesa,pedido.fechahora_pedido,pedido.secuencia_orden from sys_pedido as pedido	
 						join sys_pedido_detalle as PD on pedido.id_pedido=PD.id_pedido
-						where pedido.id_sucursal=".$_POST['id_sucursal']." and PD.mostrado=0  AND PD.id_nodo=".$_POST['id_nodo']." order by PD.id_pedido asc limit 1";
+						where pedido.id_sucursal=".$_POST['id_sucursal']." AND PD.mostrado=0 AND pedido.prioridad=1 AND PD.id_nodo=".$_POST['id_nodo']." AND   
+						(PD.pedido_estado=2 or PD.pedido_estado=1) order by PD.id_pedido asc limit 1";
 		$res = mysqli_query($con, $sql_pedido)or die(mysqli_error($con));
 		if(mysqli_num_rows($res) > 0){
 			$response['success'] = 0;
@@ -35,7 +59,7 @@ $pass = "";
 				$response['pedido'][$i] = $row;
 
 				// Pedido Detalle				
-				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar, estados.pedido_estado, productos.nombre_producto,   pedido_d.nota_interna,pedido_d.precio_grabado,pedido_d.precio_original,pedido_d.cantidad,productos.image,productos.description_producto, pedido_d.id_pedido, P.secuencia_orden from sys_pedido_detalle as pedido_d 
+				$sql_pedido_detalle = 	"select pedido_d.id_detalle,pedido_d.id_producto,pedido_d.llevar, estados.pedido_estado, productos.nombre_producto,   pedido_d.nota_interna,pedido_d.precio_grabado,pedido_d.precio_original,pedido_d.cantidad,productos.image,productos.descripcion_producto, pedido_d.id_pedido, P.secuencia_orden from sys_pedido_detalle as pedido_d 
 										JOIN sys_pedido as P on P.id_pedido = pedido_d.id_pedido
 										join productsv1 as productos on productos.id_producto=pedido_d.id_producto
 										join sys_pedido_estados as estados on estados.id_pedido_estado=pedido_d.pedido_estado
@@ -59,7 +83,7 @@ $pass = "";
 								$response['detalle'][$j]['items'][$k] = $row3;
 							}
 						}
-						$sentencia = "update sys_pedido_detalle set mostrado=1, pedido_estado=2 where id_detalle=".$row2['id_detalle'];
+						$sentencia = "update sys_pedido_detalle set mostrado=1 where id_detalle=".$row2['id_detalle'];
 						mysqli_query($con, $sentencia)or die(mysqli_error($con));	
 					}
 				}

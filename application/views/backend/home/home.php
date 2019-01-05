@@ -30,7 +30,7 @@ if(!isset($_SESSION['usuario'])){
       <script src="../../../<?php echo $value->url_libreria; ?>"></script>      
       <?php
     }
-    ?>z
+    ?>
     <link href="../../../assets/css/style.css" rel="stylesheet">
     <link href="../../../assets/css/theme.css" rel="stylesheet">
     <link href="../../../assets/css/ui.css" rel="stylesheet">
@@ -39,7 +39,7 @@ if(!isset($_SESSION['usuario'])){
     <link href="../../../assets/plugins/maps-amcharts/ammap/ammap.min.css" rel="stylesheet">
     <!-- END PAGE STYLE -->
     <script src="../../../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="/control/assets/globalreport/js/generatorCharts2.js"></script>
+    <script src="../../../assets/globalreport/js/generatorCharts2.js"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -233,14 +233,12 @@ if(!isset($_SESSION['usuario'])){
         <div class="topbar">
           <div class="header-left">
             <div class="topnav">
-              <!--
-              <a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
-              -->
+              <!--<a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>-->
               <ul class="nav nav-icons">
               <h3>
                 <?php
                 foreach ($empresa as $value) {
-                  echo "  ".$value->nombre_empresa.' '.$value->departamento;
+                  echo $value->nombre_empresa.' '.$value->departamento;
                 }
                 
                 ?>
@@ -385,7 +383,7 @@ if(!isset($_SESSION['usuario'])){
   </body>
 </html>
 
-<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo $sucursal[0]->id_sucursal ?>">
+<input type="hidden" name="sucursal" id="id_sucursal" value="<?php echo @$sucursal[0]->id_sucursal ?>">
 <script src="../../../js/longpoll.js"></script>
 
 <script>

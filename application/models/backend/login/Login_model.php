@@ -92,6 +92,7 @@ class login_model extends CI_Model
     }
     public function login($usuario,$password)
     {
+        date_default_timezone_set('America/El_Salvador');
         $pass = $this->encrypt($password);
         $this->db->select('*');
         $this->db->from(self::usuarios);

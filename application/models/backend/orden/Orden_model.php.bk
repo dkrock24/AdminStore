@@ -1,6 +1,6 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Orden_model extends CI_Model
+class orden_model extends CI_Model
 {
     const categoria = 'sys_categoria_producto';
     const sys_pedido = 'sys_pedido'; 
@@ -42,18 +42,8 @@ class Orden_model extends CI_Model
         
     } 
 
-    public function getProductoById2($id)
-    {
-        $query = $this->db->query('Select * from productsv1 as p left join categoria as c ON c.id_categoria_producto=p.categoria_id where p.id_producto = "'. $id .'"');
-
-        //echo $this->db->queries[0];
-        return $query->result();       
-        
-    } 
-
     // SAve Encabezado de la orden
     public function saveOrden( $datos_orden , $productos){
-        date_default_timezone_set('America/El_Salvador');
 
         // obtener la secuencia de la secursal
         $date = date("Y-m-d");
@@ -87,27 +77,18 @@ class Orden_model extends CI_Model
 
         //session_start();
         $date = date("Y-m-d H:i:s");
-        $fecha_entrega = $datos_orden['fecha_entrega'];
-        $entrega_en_espera = 0;
-        $estado_pedido = 7;
-        if( date("Y-m-d") == $fecha_entrega ){
-            $entrega_en_espera = 1;
-            $estado_pedido = 1;
-        }
         $data = array(
             'secuencia_orden'   => $valor_secuencia,
             'id_sucursal'       => $datos_orden['sucursalActiva'],           
             'id_usuario'        => $_SESSION['idUser'],
-            'id_mesero'         => $datos_orden['tipo'], 
-            'numero_mesa'       => $datos_orden['costo_envio'],  
+            'id_mesero'         => 0, 
+            'numero_mesa'       => 0,  
             'elaborado'         => 0,
             'flag_cancelado'    => $datos_orden['pagado'],
             'fechahora_pedido'  => $date,
-            'fechahora_elaborado'=>$datos_orden['fecha_elaboracion'],
             'flag_elaborado'    => 1,
             'flag_despachado'   => 0,
             'flag_pausa'        => 0,
-            'prioridad'         => $entrega_en_espera,
             'estado'            => 1,
             'cliente'           => $datos_orden['cliente'],
             'email'             => $datos_orden['email'],
@@ -126,14 +107,13 @@ class Orden_model extends CI_Model
 
         //Insertando pedido Detalle
         $id_orden = $this->db->insert_id();
-        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva'] , $productos, $datos_orden['nota_interna'], $estado_pedido );
+        $this->InsertPedidoDetalle(  $id_orden , $datos_orden['sucursalActiva'] , $productos, $datos_orden['nota_interna']);
 
         return $id_orden;
     }
 
-    public function InsertPedidoDetalle( $id_orden , $id_sucursal , $productos ,$nota_interna ,$estado_pedido ){
+    public function InsertPedidoDetalle( $id_orden , $id_sucursal , $productos ,$nota_interna ){
         // Insertando el detalle de producto por orden
-        date_default_timezone_set('America/El_Salvador');
         $date = date("Y-m-d H:m:s");
 
         $total = 0;
@@ -164,7 +144,7 @@ class Orden_model extends CI_Model
                     $total = $demo->numerico1 * $demo->cnt;
                     $precio_minimo = 0;
                 } 
-                $original = $demo->numerico1 ;//* $demo->cnt;
+                $original = $demo->numerico1 * $demo->cnt;
 
                 $data = array(
                     'id_pedido'         => $id_orden,           
@@ -175,9 +155,9 @@ class Orden_model extends CI_Model
                     'precio_original'   => $original,
                     'cantidad'          => $demo->cnt,
                     'llevar'            => 0,
-                    'pedido_estado'     => $estado_pedido,
+                    'pedido_estado'     => 1,
                     'nota_interna'      => $nota_interna,
-                    'estado'            => 2,
+                    'estado'            => 1,
                 );     
                 $this->db->insert(self::sys_pedido_detalle,$data);         
             }                   
@@ -203,7 +183,6 @@ class Orden_model extends CI_Model
 
     public function UpdateSecuencia($Id_Sucursal,$valor_secuencia)
     {
-        date_default_timezone_set('America/El_Salvador');
         $date = date("Y-m-d H:m:s");
         $data = array(
             'fecha_secuencia'   => $date,
@@ -231,7 +210,7 @@ class Orden_model extends CI_Model
 
     public function detaelleOrden( $idOrden ){
 
-        $query = $this->db->query('select *,P.telefono as telefono1,P.celular as celular1 , Us.nickname as Uno, U.nickname as Dos , es.pedido_estado, tp.nombre from sys_pedido AS P
+        $query = $this->db->query('select *, Us.nickname as Uno, U.nickname as Dos , es.pedido_estado from sys_pedido AS P
                     left join sys_pedido_detalle AS PD on P.id_pedido = PD.id_pedido
                     left join productsv1 AS Pr on Pr.id_producto = PD.id_producto
                     left join sys_sucursal AS S on S.id_sucursal = P.id_sucursal
@@ -239,7 +218,6 @@ class Orden_model extends CI_Model
                     left join sys_pais as Pais on Pais.id_pais = dep.id_pais
                     left join sr_usuarios as U on U.id_usuario = PD.elaborado_por
                     left join sr_usuarios as Us on Us.id_usuario = PD.entregado_por
-                    left join sys_tipo_pago as tp on tp.id_pago = P.id_mesero
                     left join sys_pedido_estados as es on es.id_pedido_estado=PD.pedido_estado
                     where P.id_pedido = '. $idOrden );
         //echo $this->db->queries[3];
@@ -270,62 +248,13 @@ class Orden_model extends CI_Model
 
     public function actualizarOrden( $orden )
     {
-        date_default_timezone_set('America/El_Salvador');
         //$date = date("Y-m-d H:m:s");
         $data = array(
             'pedido_estado'   => $orden['estado'],
-            'producto_elaborado' => 0,
-            'mostrado' => 0,
             
         );
         $this->db->where('id_pedido', $orden['idOrden']);                
         $this->db->update(self::sys_pedido_detalle,$data);
-
-        // ACtualizar estado de la orden para ser mostrada como pendiente
-        
-
-        if( $orden['estado'] == 7 ){
-
-            $data = array(
-                'flag_cancelado' => $orden['pagado'],
-                'prioridad' => 0,                
-                'fechahora_elaborado' => $orden['fecha'],
-            );
-
-            $this->db->where('id_pedido', $orden['idOrden']);
-            $this->db->update(self::sys_pedido,$data);
-
-        }else{
-
-            $data = array(
-                'flag_cancelado' => $orden['pagado'],
-                'prioridad' => 1,
-                'fechahora_elaborado' => $orden['fecha'],
-            );
-
-            $this->db->where('id_pedido', $orden['idOrden']);
-            $this->db->update(self::sys_pedido,$data);
-        }
-    }
-
-    public function getTipoPago(){
-        
-        $query = $this->db->query('select * from sys_tipo_pago where estado =1' );
-        
-        return $query->result();  
-    }
-
-    public function eliminarOrden( $id_orden ){
-
-        $data = array(
-            'id_pedido' => $id_orden
-        );
-        $this->db->delete(self::sys_pedido_detalle, $data); 
-
-        $data = array(
-            'id_pedido' => $id_orden
-        );
-        $this->db->delete(self::sys_pedido, $data);  
     }
 
 

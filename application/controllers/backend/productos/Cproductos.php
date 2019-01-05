@@ -8,7 +8,7 @@ class Cproductos extends CI_Controller {
 		parent::__construct();		
 		$this->load->helper('url');		
 		$this->load->database('default');	
-		$this->load->model('backend/productos/productos_model');	
+		$this->load->model('backend/productos/productos_model');			
 	}
 
 	public function index()
@@ -16,8 +16,6 @@ class Cproductos extends CI_Controller {
 		$data['categoria'] = $this->productos_model->categoria();
 		$data['producto'] = $this->productos_model->getProductos();
 		$data['sucursales'] = $this->productos_model->getAllSucursales();
-		$data['productoByS'] = $this->productos_model->getProductosBySucursal(21);
-
 		$this->load->view('backend/productos/VproductosAdd.php',$data);
 	}
 
